@@ -1,0 +1,186 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fbfbfb">
+
+	<LinearLayout 
+    android:id="@+id/tab_container"
+    android:layout_width="fill_parent"
+    android:layout_height="72.0dip"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/tt_tab_bar_bg"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@id/channel1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:layout_marginTop="8.0dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/tt_tab_bar_selected_bg_s"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/tt_tab_recommend_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tt_tab_bar_recommend_n" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dip"
+            android:text="@string/tab_bar_duanzi"
+            android:textColor="@color/TextColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/channel2"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:layout_marginTop="8.0dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/tt_tab_bar_selected_bg_s"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/tt_tab_best_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tt_tab_bar_best_n" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dip"
+            android:text="@string/tab_bar_image"
+            android:textColor="@color/TextColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/channel3"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-1.0dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/tt_tab_bar_guide_selected_bg_n"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/tt_tab_guide_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tt_tab_bar_guide_n" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6.0dip"
+            android:layout_marginTop="3.0dip"
+            android:text="XXX"
+            android:textColor="@color/TextColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/channel4"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:layout_marginTop="8.0dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/tt_tab_bar_selected_bg_s"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/tt_tab_community_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tt_tab_bar_community_n" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dip"
+            android:text="@string/tab_bar_mine"
+            android:textColor="@color/TextColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/channel5"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:layout_marginTop="8.0dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/tt_tab_bar_selected_bg_s"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/tt_tab_more_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/tt_tab_bar_more_n" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dip"
+            android:text="@string/tab_bar_more"
+            android:textColor="@color/TextColor" />
+    </RelativeLayout>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_container"
+        android:orientation="vertical" >
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/content_container2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+
+</RelativeLayout>

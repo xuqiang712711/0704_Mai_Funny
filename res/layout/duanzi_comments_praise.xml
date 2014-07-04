@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/duanzi_comments_praise_count"
+        style="@style/wrap"
+        android:text="313" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/duanzi_comments_praise_count"
+        android:id="@+id/duanzi_comments_praise_icon"
+        style="@style/wrap"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_digg_normal" />
+
+</RelativeLayout>

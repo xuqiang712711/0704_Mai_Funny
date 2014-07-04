@@ -1,0 +1,291 @@
+package com.example.tab;
+
+import com.example.fragment.Tab_DuanZi_Frag;
+import com.example.fragment.Tab_Image_Frag;
+import com.example.fragment.Tab_More_Frag;
+import com.example.fragment.Tab_My_Frag;
+import com.example.fragment.Tab_Search_Frag;
+
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+public class XYFTEST extends FragmentActivity implements OnClickListener {
+	 private Tab_DuanZi_Frag Frag_duanzi;
+	 private Tab_Image_Frag Frag_image;
+	 private Tab_More_Frag Frag_more;
+	 private Tab_My_Frag Frag_my;
+	 private Tab_Search_Frag Frag_search;
+
+//	private Fragment Frag_duanzi, Frag_more, Frag_image, Frag_my, Frag_search;
+
+	private RelativeLayout c1, c2, c3, c4, c5;
+	private LinearLayout mTab_item_container, content_container,
+			content_container2;
+	private FragmentManager mFM = null;
+	private Intent mintent;
+//	private android.support.v4.app.FragmentTransaction ft;
+	private boolean IsFirst = true;
+
+	@Override
+	protected void onCreate(Bundle arg0) {
+		// TODO Auto-generated method stub
+		super.onCreate(arg0);
+		setContentView(R.layout.main);
+		initView();
+		// changeDuanZi();
+	}
+
+	private void initView() {
+		c1 = (RelativeLayout) findViewById(R.id.channel1);
+		c2 = (RelativeLayout) findViewById(R.id.channel2);
+		c3 = (RelativeLayout) findViewById(R.id.channel3);
+		c4 = (RelativeLayout) findViewById(R.id.channel4);
+		c5 = (RelativeLayout) findViewById(R.id.channel5);
+
+		c1.setOnClickListener(this);
+		c2.setOnClickListener(this);
+		c3.setOnClickListener(this);
+		c4.setOnClickListener(this);
+		c5.setOnClickListener(this);
+
+		content_container = (LinearLayout) findViewById(R.id.content_container);
+		content_container2 = (LinearLayout) findViewById(R.id.content_container2);
+	}
+
+	// private void changeDuanZi(){
+	// Fragment f = new Tab_DuanZi_Frag();
+	// if (IsFirst) {
+	// CurrFragment = f;
+	// IsFirst = false;
+	// }
+	// initFM(CurrFragment, f);
+	// c1.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+	// c2.setBackgroundResource(0);
+	// c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
+	// c4.setBackgroundResource(0);
+	// c5.setBackgroundResource(0);
+	//
+	// }
+
+	// private void changeImage(){
+	// Fragment f = new Tab_Image_Frag();
+	// // initFM(f);
+	// initFM(CurrFragment, f);
+	// }
+	//
+	// private void changeSearch(){
+	// Fragment f = new Tab_Search_Frag();
+	// // initFM(f);
+	// initFM(CurrFragment, f);
+	// }
+	//
+	// private void changeMine(){
+	// Fragment f = new Tab_My_Frag();
+	// // initFM(f);
+	// initFM(CurrFragment, f);
+	// }
+	//
+	// private void changeMore(){
+	// Fragment fragment = new Tab_More_Frag();
+	// // initFM(fragment);
+	// initFM(CurrFragment, fragment);
+	// }
+	//
+	// private void initFM(Fragment from, Fragment to){
+	// if (mFM == null) {
+	// mFM = getSupportFragmentManager();
+	// }
+	// ft = mFM.beginTransaction();
+	// if (ft == null) {
+	// }
+	// if (CurrFragment != to) {
+	// CurrFragment = to;
+	// if (to.isAdded()) {
+	// Log.i("XXX", "add");
+	// ft.hide(from).show(to).commit();
+	// }else {
+	// Log.i("XXX", "noooo");
+	// ft.hide(from).add(R.id.content_container, to).commit();
+	// }
+	// }else {
+	// ft.add(R.id.content_container, from).commit();
+	// }
+	// // ft.replace(R.id.content_container, f);
+	// // ft.commit();
+	// }
+	/**
+	 * 选中tab之后进行的操作
+	 * 
+	 * @param index
+	 */
+	public void selectTab(int index) {
+		clearTab();
+		FragmentTransaction fragtrain = getFragmentManager().beginTransaction();
+		hideFragment(fragtrain);
+
+		switch (index) {
+		case 1:
+			c1.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			if (Frag_duanzi == null) {
+				Frag_duanzi = new Tab_DuanZi_Frag();
+				fragtrain.add(R.id.content_container, Frag_duanzi);
+			} else {
+				fragtrain.show(Frag_duanzi);
+			}
+			break;
+
+		case 2:
+			c2.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			if (Frag_image == null) {
+				Frag_image = new Tab_Image_Frag();
+				fragtrain.add(R.id.content_container, Frag_image);
+			} else {
+				fragtrain.show(Frag_image);
+			}
+			break;
+		case 3:
+			c3.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			if (Frag_search == null) {
+				Frag_search = new Tab_Search_Frag();
+				fragtrain.add(R.id.content_container, Frag_search);
+			} else {
+				fragtrain.show(Frag_search);
+			}
+			break;
+		case 4:
+			c4.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			if (Frag_my== null) {
+				Frag_my = new Tab_My_Frag();
+				fragtrain.add(R.id.content_container, Frag_my);
+			} else {
+				fragtrain.show(Frag_my);
+			}
+			break;
+		case 5:
+			c5.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			if (Frag_more == null) {
+				Frag_more = new Tab_More_Frag();
+				fragtrain.add(R.id.content_container, Frag_more);
+			} else {
+				fragtrain.show(Frag_more);
+			}
+			break;
+		}
+		fragtrain.commit();
+	}
+
+	// 清楚所有事务
+	private void hideFragment(FragmentTransaction fragtrain) {
+		if (Frag_duanzi != null) {
+			fragtrain.hide(Frag_duanzi);
+		}
+		if (Frag_image != null) {
+			fragtrain.hide(Frag_image);
+		}
+		if (Frag_my != null) {
+			fragtrain.hide(Frag_my);
+		}
+		if (Frag_more != null) {
+			fragtrain.hide(Frag_more);
+		}
+		if (Frag_search != null) {
+			fragtrain.hide(Frag_search);
+		}
+	}
+
+	// 清楚所有按钮的状态
+	private void clearTab() {
+		c1.setBackgroundResource(0);
+		c2.setBackgroundResource(0);
+		c3.setBackgroundResource(0);
+		c4.setBackgroundResource(0);
+		c5.setBackgroundResource(0);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		Log.i("FFF", "Onclick");
+		switch (v.getId()) {
+		case R.id.channel1:
+			// changeDuanZi();
+			selectTab(1);
+			break;
+
+		case R.id.channel2:
+			// changeImage();
+//			c1.setBackgroundResource(0);
+//			c2.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
+//			c4.setBackgroundResource(0);
+//			c5.setBackgroundResource(0);
+			selectTab(2);
+			break;
+		case R.id.channel3:
+			// changeSearch();
+//			c1.setBackgroundResource(0);
+//			c2.setBackgroundResource(0);
+//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
+//			c4.setBackgroundResource(0);
+//			c5.setBackgroundResource(0);
+			selectTab(3);
+			break;
+		case R.id.channel4:
+			// changeMine();
+//			c1.setBackgroundResource(0);
+//			c2.setBackgroundResource(0);
+//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
+//			c4.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+//			c5.setBackgroundResource(0);
+			selectTab(4);
+			break;
+		case R.id.channel5:
+			// changeMore();
+//			c1.setBackgroundResource(0);
+//			c2.setBackgroundResource(0);
+//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
+//			c4.setBackgroundResource(0);
+//			c5.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
+			selectTab(5);
+			break;
+
+		}
+	}
+
+	public void switchContent(android.support.v4.app.Fragment fragment) {
+//		getSupportFragmentManager().beginTransaction()
+//				.replace(R.id.content_container, fragment).addToBackStack(null)
+//				.commit();
+	}
+
+	public void switchContentFull(android.support.v4.app.Fragment fragment) {
+//		getSupportFragmentManager().beginTransaction()
+//				.replace(R.id.content_container2, fragment)
+//				.addToBackStack(null).commit();
+	}
+
+	// public void switchContent(Fragment mContent, Fragment from, Fragment to)
+	// {
+	// if (mContent != to) {
+	// mContent = to;
+	// android.support.v4.app.FragmentTransaction transaction =
+	// getSupportFragmentManager().beginTransaction().setCustomAnimations(
+	// android.R.anim.fade_in, android.R.anim.fade_out);
+	// if (!to.isAdded()) { // 先判断是否被add过
+	// transaction.hide(from).add(R.id.content_frame, to).commit(); //
+	// 隐藏当前的fragment，add下一个到Activity中
+	// } else {
+	// transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+	// }
+	// }
+	// }
+}

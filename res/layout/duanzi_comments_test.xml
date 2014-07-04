@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff" >
+
+    <EditText
+        android:id="@+id/duanzi_comments_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/my_write_hint"
+        android:imeOptions="actionDone"
+        android:lineSpacingExtra="6.0dp"
+        android:scrollbars="vertical" >
+    </EditText>
+    
+    <Button 
+        android:text="发送"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/duanzi_comments_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

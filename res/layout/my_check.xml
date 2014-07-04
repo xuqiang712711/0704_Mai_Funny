@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/my_background"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/include1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        layout="@layout/back_style_no_submit" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="#cccccc" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/my_check_content"
+                style="@style/match"
+                android:layout_margin="5dp"
+                android:background="#ffffff"
+                android:padding="3dp"
+                android:text="@string/my_Test" />
+
+            <ImageView
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/my_check_content"
+                android:id="@+id/my_check_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/maimob" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+
+        <com.example.util.CustomImage
+            android:id="@+id/my_check_trash"
+            style="@style/my_check_bottem_bg" >
+        </com.example.util.CustomImage>
+
+        <com.example.util.CustomImage
+            android:id="@+id/my_check_sex"
+            style="@style/my_check_bottem_bg" >
+        </com.example.util.CustomImage>
+
+        <com.example.util.CustomImage
+            android:id="@+id/my_check_boring"
+            style="@style/my_check_bottem_bg" >
+        </com.example.util.CustomImage>
+
+        <com.example.util.CustomImage
+            android:id="@+id/my_check_neihan"
+            style="@style/my_check_bottem_bg" >
+        </com.example.util.CustomImage>
+
+        <com.example.util.CustomImage
+            android:id="@+id/my_check_skip"
+            style="@style/my_check_bottem_bg" >
+        </com.example.util.CustomImage>
+    </LinearLayout>
+
+</LinearLayout>

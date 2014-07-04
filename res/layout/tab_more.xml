@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/gery" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@color/my_back"
+		    android:orientation="vertical">
+		    <TextView
+		        android:layout_gravity="center_horizontal"
+           	 	style="@style/Title"
+            		android:text="@string/tab_bar_more" />
+		</LinearLayout>
+		
+        
+
+        <LinearLayout style="@style/my_action" >
+
+            <include
+                android:clickable="true"
+                android:id="@+id/more_recommond"
+                layout="@layout/more_style1" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_feedback"
+                layout="@layout/more_style1" />
+        </LinearLayout>
+
+       <LinearLayout style="@style/my_action" >
+
+            <include
+                android:id="@+id/more_update"
+                layout="@layout/more_style2" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_zhuanfa"
+                layout="@layout/more_style3" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_bookmarker"
+                layout="@layout/more_style3" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_dark"
+                layout="@layout/more_style3" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_fontSize"
+                layout="@layout/more_style4" />
+
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_push"
+                layout="@layout/more_style3" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_Cache"
+                layout="@layout/more_style1" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_contact"
+                layout="@layout/more_style1" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <include
+                android:id="@+id/more_help"
+                layout="@layout/more_style1" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

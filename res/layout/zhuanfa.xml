@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/wrap"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/wrap" >
+
+        <ImageView
+            android:id="@+id/my_zhuanfa_qzone"
+            style="@style/my_image"
+            android:contentDescription="@null"
+            android:src="@drawable/account_icon_qzone" />
+
+        <ImageView
+            android:id="@+id/my_zhuanfa_sina"
+            style="@style/my_image"
+            android:layout_toRightOf="@+id/my_zhuanfa_qzone"
+            android:src="@drawable/account_icon_weibo" />
+
+        <ImageView
+            android:id="@+id/my_zhuanfa_tencent"
+            style="@style/my_image"
+            android:layout_toRightOf="@+id/my_zhuanfa_sina"
+            android:src="@drawable/account_icon_tencent" />
+
+        <ImageView
+            android:id="@+id/my_zhuanfa_renren"
+            style="@style/my_image"
+            android:layout_toRightOf="@+id/my_zhuanfa_tencent"
+            android:src="@drawable/account_icon_renren" />
+
+        <ImageView
+            android:id="@+id/my_zhuanfa_kaixin"
+            style="@style/my_image"
+            android:layout_toRightOf="@+id/my_zhuanfa_renren"
+            android:src="@drawable/account_icon_kaixin" />
+    </RelativeLayout>
+
+</LinearLayout>

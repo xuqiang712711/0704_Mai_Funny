@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/my_action_cotent">
+
+    <ImageView
+        android:clickable="false"
+        android:contentDescription="@null"
+        android:id="@+id/my_image_left"
+        style="@style/my_action_cotent"
+        android:src="@drawable/my_write_icon" />
+
+    <TextView
+        android:clickable="false"
+        android:id="@+id/my_text"
+        style="@style/my_action_cotent"
+        android:layout_toRightOf="@+id/my_image_left"
+        android:text="@string/my_write" />
+
+    <ImageView
+        android:contentDescription="@null"
+        style="@style/my_action_cotent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/icon_arrow" />
+
+</RelativeLayout>

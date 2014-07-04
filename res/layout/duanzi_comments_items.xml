@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	<RelativeLayout 
+    		android:background="#666999"
+	    style="@style/match_horizontal"
+	    android:id="@+id/duanzi_comments_top">
+	    <ImageView 
+	        android:background="#cccccc"
+	        android:src="@drawable/game"
+	        android:contentDescription="@null"
+	        style="@style/wrap"
+	        android:id="@+id/duanzi_comments_icon"/>
+	    <TextView 
+	        style="@style/wrap"
+	        android:layout_toRightOf="@+id/duanzi_comments_icon"
+	        android:text="用户名"
+	        android:id="@+id/duanzi_comments_name"/>
+	    <TextView 
+	        style="@style/wrap"
+	        android:layout_toRightOf="@+id/duanzi_comments_icon"
+	        android:layout_below="@+id/duanzi_comments_name"
+	        android:text="XX小时之前"
+	        android:id="@+id/duanzi_comments_time"/>
+	    <TextView 
+	        style="@style/match_horizontal"
+	        android:id="@+id/duanzi_comments_content"
+	        android:layout_toRightOf="@+id/duanzi_comments_icon"
+	        android:layout_below="@+id/duanzi_comments_time"
+	        android:text="评论内容"/>
+	        
+	</RelativeLayout>  
+	
+	<com.example.util.DuanZi_Comments_Praise 
+	    android:id="@+id/duanzi_comments_praise"
+	    style="@style/wrap"
+	    android:layout_alignParentRight="true" />
+	    
+
+</RelativeLayout>

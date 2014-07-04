@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fbfbfb"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/Title"
+        android:text="我的" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dip"
+        android:background="#33CCFF" >
+
+        <ImageView
+            android:id="@+id/userinfo_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@null"
+            android:src="@drawable/game" />
+
+        <RelativeLayout
+            android:id="@+id/myinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/userinfo_icon"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/userinfo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/userinfo_points"
+                style="@style/user_info"
+                android:layout_below="@+id/userinfo_name"
+                android:text="积分:" />
+
+            <TextView
+                style="@style/user_info"
+                android:layout_below="@+id/userinfo_points"
+                android:text="个人介绍" />
+
+            <TextView
+                android:id="@+id/user_points_num"
+                style="@style/user_info"
+                android:layout_alignBottom="@+id/userinfo_points"
+                android:layout_toRightOf="@+id/userinfo_points"
+                android:text="313" />
+        </RelativeLayout>
+
+        <TextView
+            android:focusable="true"
+            android:id="@+id/user_info_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/userinfo_icon"
+            android:text="编辑信息"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/my_action"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/my_write"
+            layout="@layout/my_content_horizontal" />
+
+        <include layout="@layout/line_horizontal" />
+
+        <include
+            android:id="@+id/my_check"
+            layout="@layout/my_content_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/my_action"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/my_publish"
+            layout="@layout/my_content_horizontal" />
+
+        <View style="@style/my_action_line" />
+
+        <include
+            android:id="@+id/my_comment"
+            layout="@layout/my_content_horizontal" />
+
+        <View style="@style/my_action_line" />
+
+        <include
+            android:id="@+id/my_favorite"
+            layout="@layout/my_content_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/my_action"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/my_message"
+            layout="@layout/my_content_horizontal" />
+    </LinearLayout>
+
+</LinearLayout>

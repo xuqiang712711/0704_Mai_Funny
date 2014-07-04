@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tab</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="tt_tab_activity">TTTabActivity</string>
+    <string name="tab_bar_duanzi">段子</string>
+    <string name="tab_bar_image">图片</string>
+    <string name="tab_bar_mine">我的</string>
+    <string name="tab_bar_more">设置</string>
+    <string name="hello_tabone">hello tab!</string>
+    
+    <string name="ActionBar_back">返回</string>
+    <string name="ActionBar_Submit">提交</string>
+    <!-- 段子 -->
+    <string name="duanzi_recommend">推荐</string>
+    <string name="duanzi_new">最新</string>
+    <string name="duanzi_hot">热门</string>
+    <string name="duanzi_essence">精华</string>
+    <string name="duanzi_comment">期待你的神评论</string>
+    <string name="comment_write">如果不想转发，请不要勾选下方图标</string>
+    <!-- 我的 -->
+    <string name="my_write">我要投稿</string>
+    <string name="my_check">我要审核</string>
+    <string name="my_publish">我的投稿</string>
+    <string name="my_comment">我的评论</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="my_app">应用</string>
+    <string name="my_activity">热门活动</string>
+    <string name="my_message">消息</string>
+    <string name="my_zhuanfa">转发到:</string>
+    <string name="my_write_hint">请输入内容，字数不超过XX字</string>
+    <string name="my_trash">垃圾</string>
+    <string name="my_sex">色情</string>
+    <string name="my_neihan">内涵</string>
+    <string name="my_boring">无聊</string>
+    <string name="my_skip">跳过</string>
+    <string name="my_choice">选择图片</string>
+    <string name="my_homepage">主页</string>
+    <string name="my_tencent_wb_unbind">腾讯微博[未绑定]</string>
+    <string name="my_tencent_wb_binded">腾讯微博[已绑定]</string>
+    <string name="my_sina_unbind">新浪微博[未绑定]</string>
+    <string name="my_sina_binded">新浪微博[已绑定]</string>
+    <string name="my_tencent_qq_unbind">腾讯QQ[未绑定]</string>
+    <string name="my_tencent_qq_binged">腾讯QQ[已绑定]</string>
+	    
+    
+    
+    <string name="num">1111</string>
+    <string name="duanzi_test">与原Activity中的Layout分块化,VCBase的分块化道理相同
+灵活准确的生命周期去管理当前View的状态记录以及横竖屏处理
+Fragment管理的View,可同时使用在Phone和Pad上,一份代码两份机器,可重用性高
+Is a View, More than View
+可以从startActivityForResult中接收到返回结果,但是View不能
+唯一Id标识,可以从FragmentManager中获取id对应的Fragment与其说是Fragment的缺点,不如说是每个应用程序模块之间的通讯都面临地耦合问题
+Fragment之间的通讯依赖Activity使用接口管理并通知
+如何解决模块之间的通讯的耦合问题
+1.使用接口,让Activity扮演管理角色,负责分发消息到该窗口的子View
+该方案的缺点
+不方便使用单元测试
+随着应用功能的增加,需要监听的事件越来越多,导致越来越多的接口声明以及绑定
+2.使用LocalBroadcastManager + Inten</string>
+    
+    <string name="my_Test">adding and removing Fragment可以做动画的效果,平滑过度
+自动化堆栈管理,所以返回键可以删除动态添加的Fragment,最后销毁Activity,无需做过多判断
+集成ActionBar的标签,可以替代TabHost,ActivityGrounp,与谷歌设计风格紧密结合</string>
+    
+    <!-- 更多 -->
+    <string name="more_text_font">字体大小</string>
+    <string name="radio_font_size_l">小</string>
+    <string name="radio_font_size_n">中</string>
+    <string name="radio_font_size_b">大</string>
+    <string name="radio_image_size_l">小图</string>
+    <string name="radio_image_size_n">中图</string>
+    <string name="radio_image_size_b">大图</string>
+    <string name="more_text_recommend">推荐给朋友</string>
+    <string name="more_text_feedback">用户反馈</string>
+    <string name="more_text_update">检查新版本</string>
+    <string name="more_text_now_version">当前版本</string>
+    <string name="more_text_zhuanfa">收藏同时转发</string>
+    <string name="more_text_bookmarker">保存浏览进度</string>
+    <string name="more_text_dark">夜间模式</string>
+    <string name="more_text_net">2G/3G图片显示模式</string>
+    <string name="more_text_push">精彩段子推送</string>
+    <string name="more_text_cache">清楚缓存</string>
+    <string name="more_text_contact">联系我们</string>
+    <string name="more_text_help">帮助</string>
+    <string name="more_suggest">意见反馈</string>
+    <string name="more_Mysuggest">我的意见</string>
+    <string name="more_common">常见问题</string>
+    
+</resources>

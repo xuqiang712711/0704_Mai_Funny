@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   	style="@style/my_background"
+    android:orientation="vertical" >
+	<include
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/back" />
+    <RelativeLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:background="@color/item_default" >
+        
+         <ImageView 
+            android:contentDescription="@null"
+            android:clickable="true"
+            android:src="@drawable/ugc_publish_upload_icon"
+            android:layout_alignParentRight="true"
+            android:id="@+id/my_write_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+
+        <EditText
+            android:scrollbars="vertical"
+            android:background="@null"
+            android:layout_toLeftOf="@+id/my_write_image"
+            android:id="@+id/my_write_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autoLink="web"
+            android:gravity="top"
+            android:hint="@string/my_write_hint"
+            android:imeOptions="actionDone"
+            android:lineSpacingExtra="6.0dp" >
+
+        </EditText>
+
+        <TextView
+            android:id="@+id/my_write_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/item_default"
+            android:gravity="right" />
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/my_zhuanfa_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/my_zhuanfa" />
+
+      	<include 
+      	    android:layout_toRightOf="@+id/my_zhuanfa_text"
+      	    style="@style/wrap"
+      	    layout="@layout/zhuanfa"/>
+    </RelativeLayout>
+
+</LinearLayout>

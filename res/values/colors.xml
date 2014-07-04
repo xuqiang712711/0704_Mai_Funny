@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="TextColor_bottom">#000000</color>
+    <color name="TextColor">#c1c0c0</color>
+    <color name="item_click">#CCFFFF</color>
+    <color name="item_default">#ffffff</color>
+    <color name="actionBar">#FFFFCC</color>
+    <color name="actionBar_click">#ffebcd</color>
+    
+    <color name="my_check_click">#666666</color>
+    <color name="my_check_default">#006699</color>
+    
+    <color name="duanzi_comment">#cccccc</color>
+    <color name="gery">#cccccc</color>
+    
+    <color name="my_back">#f6f5ec</color>
+    
+    <color name="green">#699669</color>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout 
+        android:id="@+id/my_userinfo_sec_main"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/my_back">
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_sec_name"/>
+        <include 
+            layout="@layout/line_horizontal"/>
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_sec_sex"/>
+        <include 
+            layout="@layout/line_horizontal"/>
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_sec_address"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/my_userinfo_sec_main"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/my_back">
+         <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_bind_sina"/>
+        <include 
+            layout="@layout/line_horizontal"/>
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_bind_tencent_wb"/>
+        <include 
+            layout="@layout/line_horizontal"/>
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_bind_tencent_qq"/>
+    </LinearLayout>
+
+</RelativeLayout>

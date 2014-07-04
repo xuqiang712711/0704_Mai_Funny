@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_checked="true"
+        android:state_pressed="true">
+        <shape >
+            <corners android:radius="5dip"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/item_default"/>
+            <solid android:color="@color/actionBar_click"/>
+        </shape>
+    </item>
+    
+    <item android:state_checked="false"
+        android:state_pressed="false">
+        <shape >
+            <corners android:radius="5dip"/>
+            <padding android:left="2dp"
+                android:top="2dp"
+                android:right="2dp"
+                android:bottom="2dp"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/actionBar"/>
+            <solid android:color="@color/actionBar_click"/>
+        </shape>
+    </item>
+
+</selector>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="tt_tab_bar_container">false</item>
+    <item type="id" name="tt_tab_recommend_bar">false</item>
+    <item type="id" name="tt_tab_best_bar">false</item>
+    <item type="id" name="tt_tab_guide_bar">false</item>
+    <item type="id" name="tt_tab_community_bar">false</item>
+    <item type="id" name="tt_tab_more_bar">false</item>
+    <item type="id" name="tt_tip_area">false</item>
+    <item type="id" name="channel1">false</item>
+    <item type="id" name="channel2">false</item>
+    <item type="id" name="channel3">false</item>
+    <item type="id" name="channel4">false</item>
+    <item type="id" name="channel5">false</item>
+</resources>
