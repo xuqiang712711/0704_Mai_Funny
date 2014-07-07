@@ -60,7 +60,8 @@
         android:background="#000000"
         android:layout_below="@+id/duanzi_item_center_bottom"/>
     
-    <LinearLayout 
+    
+<LinearLayout 
         android:orientation="horizontal"
         android:layout_below="@+id/duanzi_item_center_bottom"
         style="@style/match_horizontal">

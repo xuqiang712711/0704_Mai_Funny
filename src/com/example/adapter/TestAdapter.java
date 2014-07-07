@@ -65,6 +65,8 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 	private UMSocialService mController;
 	private static Handler mHandler;
 	private List<Duanzi> mdata;
+	private LayoutInflater mInflater;
+	private String TAG = "TestAdapter";
 
 	public TestAdapter(List<Duanzi> mdata,Handler handler, UMSocialService mController,Fragment mFragment, Context context, JSONArray array) {
 		this.mdata = mdata;
@@ -73,6 +75,8 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		this.context = context;
 		this.array = array;
 		this.mFragment = mFragment;
+		
+		mInflater = LayoutInflater.from(context);
 
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.maimob)
@@ -154,15 +158,16 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		}
 		int type = getItemViewType(Image_Type);
 		if (convertView == null) {
+			Log.i(TAG, "converView is null  " +type);
 			holder = new Holder();
 			switch (type) {
 			case Image_Type_GIF:
-				convertView = LayoutInflater.from(context).inflate(R.layout.duanzi_item_gif, parent, false);
+				convertView = mInflater.inflate(R.layout.duanzi_item_gif, null);
 				holder.gif = (GifImageView)convertView.findViewById(R.id.gif);
 				break;
 
 			case Image_Type_Other:
-				convertView = LayoutInflater.from(context).inflate(R.layout.duanzi_item, parent, false);
+				convertView = mInflater.inflate(R.layout.duanzi_item, null);
 				holder.image = (ImageView)convertView.findViewById(R.id.duanzi_imageview);
 				break;
 			}
@@ -187,6 +192,7 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 					.findViewById(R.id.duanzi_comment);
 			convertView.setTag(holder);
 		} else {
+			Log.i(TAG, "converView is not null~~~~~");
 			holder = (Holder) convertView.getTag();
 		}
 		
@@ -208,14 +214,14 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		holder.layout_hot.setImageResource(R.drawable.hot_commenticon_textpage);
 		
 		try {
-//			holder.layout_parise
-//					.setTextView_String(zan);
-//			holder.layout_bury
-//					.setTextView_String(cai);
-//
+			holder.layout_parise
+					.setTextView_String(zan);
+			holder.layout_bury
+					.setTextView_String(cai);
+
 			holder.user_name.setText(name);
 			holder.content.setText(content);
-//			holder.content.setTextSize(fontSize);
+			holder.content.setTextSize(fontSize);
 			
 			if (!imgUri.equals("") && imgUri != null) {
 				imageLoader = ImageLoader.getInstance();

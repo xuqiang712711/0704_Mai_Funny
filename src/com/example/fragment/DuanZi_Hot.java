@@ -105,13 +105,13 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	Handler handler = new Handler(){
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			String json = (String) msg.obj;
+//			String json = (String) msg.obj;
 			switch (msg.what) {
 			case 313:
 				ChangeFont();
 				break;
 			default:
-				updateListView(json);
+				updateListView();
 				break;
 			}
 			
@@ -122,13 +122,13 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		adapter.notifyDataSetChanged();
 	}
 	
-	private void updateListView(String data){
-//		adapter = new DuanZiAdapter(handler,mController,DuanZi_Hot.this, getActivity(), array);
-//		listView.setAdapter(adapter);
-		Log.i("YYY", "data  " + data);
-		List<Duanzi> list = setDuanziData.getListDuanzi(data);
-		TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity(), null);
+	private void updateListView(){
+		adapter = new DuanZiAdapter(handler,mController,DuanZi_Hot.this, getActivity(), array);
 		listView.setAdapter(adapter);
+//		Log.i("YYY", "data  " + data);
+//		List<Duanzi> list = setDuanziData.getListDuanzi(data);
+//		TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity(), null);
+//		listView.setAdapter(adapter);
 	}
 	
 	private void getDate(){
@@ -160,12 +160,18 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-//				array = new JSONArray(result);
+				try {
+					array = new JSONArray(result);
+					Message message = Message.obtain();
+//					message.obj = array;
+					handler.sendMessage(message);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 //				DuanZiAdapter adapter = new DuanZiAdapter(DuanZi_Hot.this, getActivity(), array);
 //				listView.setAdapter(adapter);
-				Message message = Message.obtain();
-				message.obj = result;
-				handler.sendMessage(message);
+				
 //				Log.i("FFF", "array  " + array + "  length  "+ array.length());
 		}
 		

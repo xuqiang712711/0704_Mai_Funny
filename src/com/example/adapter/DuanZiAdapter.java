@@ -212,11 +212,11 @@ public class DuanZiAdapter extends BaseAdapter implements OnClickListener {
 			holder.layout_bury
 					.setTextView_String(cai);
 
-//			holder.user_name.setText(name);
+			holder.user_name.setText(name);
 			//¶Î×ÓÄÚÈÝ
-//			holder.content.setText(content);
+			holder.content.setText(content);
 //			Log.i("YYY", "font  " + fontSize);
-//			holder.content.setTextSize(fontSize);
+			holder.content.setTextSize(fontSize);
 			
 			if (!imgUri.equals("") && imgUri != null) {
 				imageLoader = ImageLoader.getInstance();
