@@ -167,7 +167,7 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 				break;
 
 			case Image_Type_Other:
-				convertView = mInflater.inflate(R.layout.duanzi_item, null);
+				convertView = mInflater.inflate(R.layout.mitem, null);
 				holder.image = (ImageView)convertView.findViewById(R.id.duanzi_imageview);
 				break;
 			}
@@ -181,15 +181,15 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 					.findViewById(R.id.duanzi_more);
 
 			holder.user_icon = (ImageView) convertView
-					.findViewById(R.id.duanzi_user_icon);
+					.findViewById(R.id.mitem_icon);
 			holder.user_name = (TextView) convertView
-					.findViewById(R.id.duanzi_user_name);
+					.findViewById(R.id.mitem_username);
 
 			holder.content = (TextView) convertView
-					.findViewById(R.id.duanzi_textview);
+					.findViewById(R.id.mitem_content);
 
-			holder.comment = (TextView) convertView
-					.findViewById(R.id.duanzi_comment);
+//			holder.comment = (TextView) convertView
+//					.findViewById(R.id.duanzi_comment);
 			convertView.setTag(holder);
 		} else {
 			Log.i(TAG, "converView is not null~~~~~");
@@ -242,7 +242,6 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		}
 		holder.more.setTag(position);
 		holder.content.setTag(position);
-		holder.comment.setTag(position);
 
 //		addListenWidget(holder, position, type);
 		return convertView;
