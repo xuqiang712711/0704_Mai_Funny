@@ -53,17 +53,18 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 	public static int fontSize = 14;
 	Holder holder = null;
 	private Context context;
-	private List<Map<String, Object>> data;
 	private static Map<Integer, Boolean> isChecked_Cai;
 	private static Map<Integer, Boolean> isChecked_Zan;
 	private DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	private JSONArray array;
 	private ImageLoader imageLoader;
 	private Fragment mFragment;
 	private static final int IMAGE_TYPE_NONE = 2;
 	private static final int IMAGE_TYPE_GIF = 0;
 	private static final int IMAGE_TYPE_OTHER = 1;
+	private static final int VIEW_TYPE_TEXT = 3;
+	private static final int VIEW_TYPE_IMG = 4;
+	private static final int VIEW_TYPE_GIF = 5;
 	private int Image_Type = 0;
 	private UMSocialService mController;
 	private static Handler mHandler;
@@ -77,16 +78,22 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 	public static final int CAI_PRESSED = 4;
 
 	public TestAdapter(List<Duanzi> mdata, Handler handler,
-			UMSocialService mController, Fragment mFragment, Context context,
-			JSONArray array) {
+			UMSocialService mController, Fragment mFragment, Context context) {
 		this.mdata = mdata;
 		this.mHandler = handler;
 		this.mController = mController;
 		this.context = context;
-		this.array = array;
 		this.mFragment = mFragment;
 
+		options = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.maimob)
+		.showImageForEmptyUri(R.drawable.maimob)
+		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
+		.cacheOnDisk(true).considerExifParams(true)
+		.displayer(new SimpleBitmapDisplayer()).build();
 		mInflater = LayoutInflater.from(context);
+		
+		imageLoader = ImageLoader.getInstance();
 
 		init();
 
@@ -118,28 +125,48 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		return position;
 	}
 
+	@Override
+	public int getItemViewType(int position) {
+		// TODO Auto-generated method stub
+		String imgUri = mdata.get(position).getImageUrl();
+		int p = 0;
+		if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
+			p = VIEW_TYPE_GIF;
+		} else if (imgUri.equals("") || imgUri == null) {
+			p = VIEW_TYPE_TEXT;
+		}else {
+			p = VIEW_TYPE_IMG;
+		}
+		return p;
+	}
 
 	@Override
 	public int getViewTypeCount() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 3;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Duanzi duanzi = mdata.get(position);
-		String imgUri = duanzi.getImageUrl();
-		String name = duanzi.getUserName();
-		String content = duanzi.getContent();
-		String cai = duanzi.getCai();
-		String zan = duanzi.getZan();
-		String hot = duanzi.getComment();
+		int View_Type = getItemViewType(position);
 		if (convertView == null) {
+			switch (View_Type) {
+			case VIEW_TYPE_TEXT:
+				
+				break;
+
+			default:
+				break;
+			}
 			Log.i(TAG, "converView is null  " + Image_Type);
 			holder = new Holder();
 			convertView = mInflater.inflate(R.layout.mitem, null);
 			// holder.user_icon = (ImageView) convertView
 			// .findViewById(R.id.mitem_icon);
+			
+			holder.image = (ImageView)convertView.findViewById(R.id.mitem_img);
+			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_gif);
+			
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
 
@@ -155,6 +182,27 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		} else {
 			Log.i(TAG, "converView is not null~~~~~");
 			holder = (Holder) convertView.getTag();
+		}
+		
+		Duanzi duanzi = mdata.get(position);
+		String imgUri = duanzi.getImageUrl();
+		String name = duanzi.getUserName();
+		String content = duanzi.getContent();
+		String cai = duanzi.getCai();
+		String zan = duanzi.getZan();
+		String hot = duanzi.getComment();
+		
+		if (imgUri != null && !imgUri.equals("")) {
+			if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
+//				Image_Type = IMAGE_TYPE_GIF;
+				holder.gif.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(imgUri,
+						holder.gif, options);
+			} else {
+//				Image_Type = IMAGE_TYPE_OTHER;
+				holder.image.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(imgUri, holder.image, options);
+			}
 		}
 
 		if (isChecked_Cai.get(position) == false) {
@@ -180,7 +228,7 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		holder.content.setText(content);
 		holder.content.setTextSize(fontSize);
 
-//		addListen(position);
+		addListen(position);
 		return convertView;
 	}
 

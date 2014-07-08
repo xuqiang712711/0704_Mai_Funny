@@ -116,7 +116,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 //		adapter = new DuanZiAdapter(handler,mController,DuanZi_Hot.this, getActivity(), array);
 //		listView.setAdapter(adapter);
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity(), null);
+		TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	
@@ -124,7 +124,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		try {
 			String data = HttpUtil.getRequest("http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0");
 			List<Duanzi> list = setDuanziData.getListDuanzi(data);
-			TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity(), null);
+			TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
 			listView.setAdapter(adapter);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

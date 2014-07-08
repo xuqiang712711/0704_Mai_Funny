@@ -66,7 +66,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity(), null);
+		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	
