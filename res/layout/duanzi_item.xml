@@ -41,6 +41,12 @@
             android:contentDescription="@null"
             android:id="@+id/duanzi_imageview"
             style="@style/match_horizontal"/>
+        <pl.droidsonroids.gif.GifImageView
+            android:visibility="gone"
+            android:layout_below="@+id/duanzi_imageview"
+            android:id="@+id/gif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
     
     <RelativeLayout 

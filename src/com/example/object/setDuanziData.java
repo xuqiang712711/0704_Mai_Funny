@@ -21,13 +21,14 @@ public class setDuanziData {
 			JSONArray array = new JSONArray(json);
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject item = array.getJSONObject(i);
-				String name = item.getString("nick");
-				String zan = item.getString("zan");
-				String cai = item.getString("cai");
-				String content = item.getString("content");
-				String imageUrl = item.getString("img");
-				Log.i(Tag, "name " + name + "  content  " +content);
-				Duanzi duanzi = new Duanzi(imageUrl ,name, cai, zan, content);
+				String name = item.getString("nick");//昵称
+				String zan = item.getString("zan");//赞——个数
+				String cai = item.getString("cai");//踩——个数
+				String content = item.getString("content");//内容
+				String imageUrl = item.getString("img");//图片链接
+				String comment = item.getString("comment");//评论数
+				String poid = item.getString("poid");//段子ID
+				Duanzi duanzi = new Duanzi(imageUrl ,name, cai, zan, content, comment,poid);
 				list.add(duanzi);
 			}
 			return list;

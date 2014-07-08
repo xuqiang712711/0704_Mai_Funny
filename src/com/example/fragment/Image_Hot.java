@@ -17,7 +17,10 @@ import org.json.JSONException;
 
 import com.example.AsyTask.MyAsyTask;
 import com.example.adapter.DuanZiAdapter;
+import com.example.adapter.TestAdapter;
 import com.example.maiUtil.CustomHttpClient;
+import com.example.object.Duanzi;
+import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
@@ -51,17 +54,21 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			Bundle data = msg.getData();
-			try {
-				JSONArray array = new JSONArray(data.getString("json"));
-				adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,Image_Hot.this, getActivity(), array);
+				String json = data.getString("json");
+				Log.i("YYY", "json  img  " + json);
+				SetListData(json);
+//				JSONArray array = new JSONArray(data.getString("json"));
+//				adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,Image_Hot.this, getActivity(), array);
 //				adapter = new DuanZiAdapter(Image_Hot.this,getActivity(), array);
-				listView.setAdapter(adapter);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//				listView.setAdapter(adapter);
 		}
 	};
+	
+	private void SetListData(String json){
+		List<Duanzi> list = setDuanziData.getListDuanzi(json);
+		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity(), null);
+		listView.setAdapter(adapter);
+	}
 	
 	
 	@Override

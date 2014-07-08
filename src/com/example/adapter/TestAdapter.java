@@ -14,6 +14,7 @@ import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,58 +44,60 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.tencent.a.b.h;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
 
-public class TestAdapter extends BaseAdapter implements OnClickListener{
+public class TestAdapter extends BaseAdapter implements OnClickListener {
 	public static int fontSize = 14;
 	Holder holder = null;
 	private Context context;
 	private List<Map<String, Object>> data;
-	private static Map<Integer, Boolean> isChecked_bury;
-	private static Map<Integer, Boolean> isChecked_praise;
+	private static Map<Integer, Boolean> isChecked_Cai;
+	private static Map<Integer, Boolean> isChecked_Zan;
 	private DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private JSONArray array;
 	private ImageLoader imageLoader;
 	private Fragment mFragment;
-	private static final int Image_Type_GIF = 0;
-	private static final int Image_Type_Other = 1;
-	private int Image_Type = 1;
+	private static final int IMAGE_TYPE_NONE = 2;
+	private static final int IMAGE_TYPE_GIF = 0;
+	private static final int IMAGE_TYPE_OTHER = 1;
+	private int Image_Type = 0;
 	private UMSocialService mController;
 	private static Handler mHandler;
 	private List<Duanzi> mdata;
 	private LayoutInflater mInflater;
 	private String TAG = "TestAdapter";
 
-	public TestAdapter(List<Duanzi> mdata,Handler handler, UMSocialService mController,Fragment mFragment, Context context, JSONArray array) {
+	public static final int ZAN_NORMAL = 1;
+	public static final int ZAN_PRESSED = 2;
+	public static final int CAI_NORMAL = 3;
+	public static final int CAI_PRESSED = 4;
+
+	public TestAdapter(List<Duanzi> mdata, Handler handler,
+			UMSocialService mController, Fragment mFragment, Context context,
+			JSONArray array) {
 		this.mdata = mdata;
 		this.mHandler = handler;
 		this.mController = mController;
 		this.context = context;
 		this.array = array;
 		this.mFragment = mFragment;
-		
-		mInflater = LayoutInflater.from(context);
 
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.maimob)
-				.showImageForEmptyUri(R.drawable.maimob)
-				.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
-				.cacheOnDisk(true).considerExifParams(true)
-				.displayer(new SimpleBitmapDisplayer()).build();
+		mInflater = LayoutInflater.from(context);
 
 		init();
 
 	}
 
 	private void init() {
-		isChecked_bury = new HashMap<Integer, Boolean>();
-		isChecked_praise = new HashMap<Integer, Boolean>();
+		isChecked_Cai = new HashMap<Integer, Boolean>();
+		isChecked_Zan = new HashMap<Integer, Boolean>();
 		for (int i = 0; i < mdata.size(); i++) {
-			isChecked_bury.put(i, false);
-			isChecked_praise.put(i, false);
+			isChecked_Cai.put(i, false);
+			isChecked_Zan.put(i, false);
 		}
 
 	}
@@ -114,17 +117,8 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 	public long getItemId(int position) {
 		return position;
 	}
-	
-	@Override
-	public int getItemViewType(int position) {
-		// TODO Auto-generated method stub
-		if (position == Image_Type_GIF) {
-			return Image_Type_GIF;
-		}else {
-			return Image_Type_Other;
-		}
-	}
-	
+
+
 	@Override
 	public int getViewTypeCount() {
 		// TODO Auto-generated method stub
@@ -139,121 +133,75 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		String content = duanzi.getContent();
 		String cai = duanzi.getCai();
 		String zan = duanzi.getZan();
-//		try {
-////			imgUri = ((JSONObject) getItem(position)).getString("img");
-////			name = ((JSONObject) getItem(position)).getString("nick");
-////			content = ((JSONObject) getItem(position)).getString("content");
-////			cai = ((JSONObject) getItem(position)).getString("cai");
-////			zan = ((JSONObject) getItem(position)).getString("zan");
-//		} catch (JSONException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		if (imgUri != null && !imgUri.equals("")) {
-			if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
-				Image_Type = Image_Type_GIF;
-			} else {
-				Image_Type = Image_Type_Other;
-			}
-		}
-		int type = getItemViewType(Image_Type);
+		String hot = duanzi.getComment();
 		if (convertView == null) {
-			Log.i(TAG, "converView is null  " +type);
+			Log.i(TAG, "converView is null  " + Image_Type);
 			holder = new Holder();
-			switch (type) {
-			case Image_Type_GIF:
-				convertView = mInflater.inflate(R.layout.duanzi_item_gif, null);
-				holder.gif = (GifImageView)convertView.findViewById(R.id.gif);
-				break;
-
-			case Image_Type_Other:
-				convertView = mInflater.inflate(R.layout.mitem, null);
-				holder.image = (ImageView)convertView.findViewById(R.id.duanzi_imageview);
-				break;
-			}
-			holder.layout_parise = (CustomImage) convertView
-					.findViewById(R.id.duanzi_praise);
-			holder.layout_bury = (CustomImage) convertView
-					.findViewById(R.id.duanzi_bury);
-			holder.layout_hot = (CustomImage) convertView
-					.findViewById(R.id.duanzi_hot);
-			holder.more = (ImageView) convertView
-					.findViewById(R.id.duanzi_more);
-
-			holder.user_icon = (ImageView) convertView
-					.findViewById(R.id.mitem_icon);
+			convertView = mInflater.inflate(R.layout.mitem, null);
+			// holder.user_icon = (ImageView) convertView
+			// .findViewById(R.id.mitem_icon);
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
 
 			holder.content = (TextView) convertView
 					.findViewById(R.id.mitem_content);
 
-//			holder.comment = (TextView) convertView
-//					.findViewById(R.id.duanzi_comment);
+			holder.zan = (TextView) convertView.findViewById(R.id.zan_txt);
+			holder.cai = (TextView) convertView.findViewById(R.id.cai_txt);
+			holder.hot = (TextView) convertView.findViewById(R.id.hot_txt);
+			holder.more = (ImageView) convertView.findViewById(R.id.more_img);
+
 			convertView.setTag(holder);
 		} else {
 			Log.i(TAG, "converView is not null~~~~~");
 			holder = (Holder) convertView.getTag();
 		}
-		
-		holder.layout_parise.setTag(position);
-		if (isChecked_praise.get(position) == true) {
-			holder.layout_parise.setImageResource(R.drawable.ic_digg_pressed);
+
+		if (isChecked_Cai.get(position) == false) {
+			Drawable drawable = ChangePic(CAI_NORMAL);
+			holder.cai.setCompoundDrawables(drawable, null, null, null);
 		} else {
-			holder.layout_parise.setImageResource(R.drawable.ic_digg_normal);
+			Drawable drawable = ChangePic(CAI_PRESSED);
+			holder.cai.setCompoundDrawables(drawable, null, null, null);
 		}
 
-		holder.layout_bury.setTag(position);
-		if (isChecked_bury.get(position) == true) {
-			holder.layout_bury.setImageResource(R.drawable.ic_bury_pressed);
+		if (isChecked_Zan.get(position) == false) {
+			Drawable drawable = ChangePic(ZAN_NORMAL);
+			holder.zan.setCompoundDrawables(drawable, null, null, null);
 		} else {
-			holder.layout_bury.setImageResource(R.drawable.ic_bury_normal);
+			Drawable drawable = ChangePic(ZAN_PRESSED);
+			holder.zan.setCompoundDrawables(drawable, null, null, null);
 		}
 
-		holder.layout_hot.setTag(position);
-		holder.layout_hot.setImageResource(R.drawable.hot_commenticon_textpage);
-		
-		try {
-			holder.layout_parise
-					.setTextView_String(zan);
-			holder.layout_bury
-					.setTextView_String(cai);
+		holder.cai.setText(cai);
+		holder.zan.setText(zan);
+		holder.hot.setText(hot);
+		holder.user_name.setText(name);
+		holder.content.setText(content);
+		holder.content.setTextSize(fontSize);
 
-			holder.user_name.setText(name);
-			holder.content.setText(content);
-			holder.content.setTextSize(fontSize);
-			
-			if (!imgUri.equals("") && imgUri != null) {
-				imageLoader = ImageLoader.getInstance();
-				if (type == Image_Type_GIF) {
-					imageLoader.displayImage(((JSONObject) getItem(position)).getString("img"),
-							holder.gif, options);
-				}
-				else {
-					imageLoader.displayImage(((JSONObject) getItem(position)).getString("img"),
-							holder.image, options);
-					holder.image.setTag(position);
-					holder.image.setOnClickListener(this);
-				}
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		holder.more.setTag(position);
-		holder.content.setTag(position);
-
-//		addListenWidget(holder, position, type);
+//		addListen(position);
 		return convertView;
 	}
-	
-	private void initData(){
-		
+
+	private void addListen(int position) {
+		holder.cai.setOnClickListener(this);
+		holder.zan.setOnClickListener(this);
+		holder.hot.setOnClickListener(this);
+		holder.more.setOnClickListener(this);
+
+		holder.zan.setTag(position);
+		holder.cai.setTag(position);
+		holder.hot.setTag(position);
+		holder.more.setTag(position);
+
+		holder.content.setOnClickListener(this);
+		holder.content.setTag(position);
 	}
 
-
-	private void addListenWidget(final Holder holder, final int position, int type) {
-		if (type == Image_Type_GIF) {
+	private void addListenWidget(final Holder holder, final int position,
+			int type) {
+		if (type == IMAGE_TYPE_GIF) {
 			holder.gif.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -276,83 +224,6 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 				}
 			});
 		}
-		holder.layout_bury.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				try {
-					int num = Integer.parseInt(((JSONObject) getItem(position))
-							.getString("cai"));
-//					if (num == 0) {
-//						return;
-//					}
-					if (isChecked_bury.get(position) == false) {
-						isChecked_bury.put(position, true);
-						holder.layout_bury
-								.setImageResource(R.drawable.ic_bury_pressed);
-						holder.layout_bury.setTextView_String(String
-								.valueOf(num - 1));
-					} else {
-						isChecked_bury.put(position, false);
-						holder.layout_bury
-								.setImageResource(R.drawable.ic_bury_normal);
-						holder.layout_bury.setTextView_String(String
-								.valueOf(num));
-					}
-					String uri = Uris.Cai
-							+ "/uuid/"
-							+ Uris.uuid
-							+ "/pid/"
-							+ ((JSONObject) getItem(position))
-									.getString("poid");
-					Do_http(uri);
-
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-
-		holder.layout_parise.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				try {
-					int num = Integer.parseInt(((JSONObject) getItem(position))
-							.getString("zan"));
-					if (isChecked_praise.get(position) == false) {
-						isChecked_praise.put(position, true);
-						holder.layout_parise.setTextView_String(String
-								.valueOf(num + 1));
-						holder.layout_parise
-								.setImageResource(R.drawable.ic_digg_pressed);
-					} else {
-						isChecked_praise.put(position, false);
-						holder.layout_parise.setTextView_String(String
-								.valueOf(num));
-						holder.layout_parise
-								.setImageResource(R.drawable.ic_digg_normal);
-					}
-					String uri = Uris.Zan
-							+ "/uuid/"
-							+ Uris.uuid
-							+ "/pid/"
-							+ ((JSONObject) getItem(position))
-									.getString("poid");
-					Do_http(uri);
-				} catch (JSONException e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-			}
-		});
-
-		holder.layout_hot.setOnClickListener(this);
-		// holder.user_icon.setOnClickListener(this);
-		holder.content.setOnClickListener(this);
-		// holder.comment.setOnClickListener(this);
-		holder.more.setOnClickListener(this);
 	}
 
 	@Override
@@ -360,56 +231,112 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		// TODO Auto-generated method stub
 		int position = (Integer) v.getTag();
 		Bundle bundle = new Bundle();
-		bundle.putString("json", ((JSONObject) getItem(position)).toString());
+		Duanzi duanzi = (Duanzi) getItem(position);
+		bundle.putSerializable("duanzi", duanzi);
 		switch (v.getId()) {
-		
-		case R.id.duanzi_imageview:
-			DuanZi_Comment comment4 = new DuanZi_Comment();
-			switchFragment(mFragment, comment4, bundle);
-			break;
-		case R.id.duanzi_more:
-			DuanZi_More more = new DuanZi_More();
-			// mcontext.switchFragment(mcontext,more);
-			try {
-				UMShare(((JSONObject)getItem(position)).getString("content"), ((JSONObject)getItem(position)).getString("img"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		case R.id.zan_txt:
+			Log.e(TAG, "Zan " + position);
+			if (isChecked_Zan.get(position) == false) {
+				if (isChecked_Cai.get(position) == true) {
+					Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
+					break;
+				}
+				Drawable drawable = context.getResources().getDrawable(
+						R.drawable.ic_digg_pressed);
+				drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						drawable.getMinimumHeight());
+				((TextView) v).setCompoundDrawables(drawable, null, null, null);
+				int Zan_num = Integer.parseInt(mdata.get(position).getZan());
+				((TextView) v).setText(String.valueOf(Zan_num + 1));
+				isChecked_Zan.put(position, true);
+				String uri = Uris.Zan + "/uuid/" + Uris.uuid + "/pid/"
+						+ mdata.get(position).getPoid();
+				Do_http(uri);
+			} else {
+				Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
 			}
-			mController.getConfig().removePlatform( SHARE_MEDIA.RENREN, SHARE_MEDIA.DOUBAN);
-			mController.openShare((Activity) context, false);
 			break;
-		case R.id.duanzi_hot:
+
+		case R.id.cai_txt:
+			if (isChecked_Cai.get(position) == false) {
+				if (isChecked_Zan.get(position) == true) {
+					Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
+					break;
+				}
+				Drawable drawable = ChangePic(CAI_PRESSED);
+				((TextView) v).setCompoundDrawables(drawable, null, null, null);
+				int Cai_num = Integer.parseInt(mdata.get(position).getCai());
+				((TextView) v).setText(String.valueOf(Cai_num - 1));
+				isChecked_Cai.put(position, true);
+
+				String uri = Uris.Cai + "/uuid/" + Uris.uuid + "/pid/"
+						+ mdata.get(position).getPoid();
+				Do_http(uri);
+			} else {
+				Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
+			}
+			break;
+
+		case R.id.hot_txt:
 			DuanZi_Comment comment3 = new DuanZi_Comment();
-			Log.i("FFF",
-					"json   " + ((JSONObject) getItem(position)).toString());
 			switchFragment(mFragment, comment3, bundle);
 			Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 					.show();
 			break;
+
+		case R.id.more_img:
+			try {
+				UMShare(((JSONObject) getItem(position)).getString("content"),
+						((JSONObject) getItem(position)).getString("img"));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Log.e(TAG, "tuituibangdexiwang");
+			}
+			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+					SHARE_MEDIA.DOUBAN);
+			mController.openShare((Activity) context, false);
+			break;
+		case R.id.duanzi_imageview:
+			DuanZi_Comment comment4 = new DuanZi_Comment();
+			switchFragment(mFragment, comment4, bundle);
+			break;
 		case R.id.duanzi_comment:
-			int comment_p = (Integer) v.getTag();
-			Toast.makeText(context, "点击评论  +  " + comment_p, Toast.LENGTH_SHORT)
-					.show();
-//			DuanZi_Comment_write comment2 = new DuanZi_Comment_write();
+			// int comment_p = (Integer) v.getTag();
+			// Toast.makeText(context, "点击评论  +  " + comment_p,
+			// Toast.LENGTH_SHORT)
+			// .show();
+			// DuanZi_Comment_write comment2 = new DuanZi_Comment_write();
 			// mcontext.switchFragment(mcontext,comment2);
 			break;
 
 		case R.id.duanzi_user_icon:
-			Toast.makeText(context, "点击用户头像  + " + position, Toast.LENGTH_SHORT)
-					.show();
-			DuanZI_UserInfo userInfo = new DuanZI_UserInfo();
+			// Toast.makeText(context, "点击用户头像  + " + position,
+			// Toast.LENGTH_SHORT)
+			// .show();
+			// DuanZI_UserInfo userInfo = new DuanZI_UserInfo();
 			// mcontext.switchFragment(mcontext,userInfo);
 			break;
 		case R.id.duanzi_textview:
 			Toast.makeText(context, "点击段子  + " + position, Toast.LENGTH_SHORT)
 					.show();
 			DuanZi_Comment comment = new DuanZi_Comment();
-
-			Log.i("FFF",
-					"json   " + ((JSONObject) getItem(position)).toString());
 			switchFragment(mFragment, comment, bundle);
 			break;
+		// case R.id.mitem_img:
+		// File cache = DiskCacheUtils.findInCache(
+		// mdata.get(position).getImageUrl(), imageLoader
+		// .getDiskCache());
+		// GifDrawable drawable = null;
+		// try {
+		// drawable = new GifDrawable(cache);
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// holder.gif.setImageDrawable(drawable);
+		// break;
 		}
 	}
 
@@ -422,22 +349,50 @@ public class TestAdapter extends BaseAdapter implements OnClickListener{
 		XYFTEST xyftest = (XYFTEST) context;
 		xyftest.switchContentFullwithBundle(from, to, bundle);
 	}
+
 	public static class Holder {
 		CustomImage layout_parise, layout_bury, layout_hot;
 		ImageView user_icon, more, image;
 		TextView user_name, content, comment;
 		GifImageView gif;
+		TextView cai, zan, hot;
+		ImageView cai_img, zan_img;
 	}
-	
-	private void UMShare(String content,String uri){
+
+	private void UMShare(String content, String uri) {
 		mController.setShareContent(content);
 		mController.setShareMedia(new UMImage(context, uri));
 	}
-	
-	public static void SetNormal(){
+
+	public static void SetNormal() {
 		Message msg = Message.obtain();
 		msg.what = 313;
 		mHandler.sendMessage(msg);
+	}
+
+	public Drawable ChangePic(int type) {
+		Drawable drawable = null;
+		switch (type) {
+		case CAI_PRESSED:
+			drawable = context.getResources().getDrawable(
+					R.drawable.ic_bury_pressed);
+			break;
+		case CAI_NORMAL:
+			drawable = context.getResources().getDrawable(
+					R.drawable.ic_bury_normal);
+			break;
+		case ZAN_PRESSED:
+			drawable = context.getResources().getDrawable(
+					R.drawable.ic_digg_pressed);
+			break;
+		case ZAN_NORMAL:
+			drawable = context.getResources().getDrawable(
+					R.drawable.ic_digg_normal);
+			break;
+		}
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+				drawable.getMinimumHeight());
+		return drawable;
 	}
 
 }

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.CustomImage;
@@ -31,6 +32,7 @@ public class DuanZi_Comment extends Fragment{
 	private CustomImage layout_Zan, layout_Cai, layout_Hot;
 	private LinearLayout layout;
 	private DisplayImageOptions options;
+	private Duanzi duanzi;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class DuanZi_Comment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		json = getArguments().getString("json");
+		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		initView();
 	}
 	
@@ -64,30 +67,19 @@ public class DuanZi_Comment extends Fragment{
 		layout_Zan = (CustomImage)view.findViewById(R.id.duanzi_praise);
 		image = (ImageView)view.findViewById(R.id.duanzi_imageview);
 		
-		try {
-			JSONObject jsonObject = new JSONObject(json);
-			if (jsonObject.getString("icon") != null) {
-				
-			}
-			user_name.setText(jsonObject.getString("nick"));
-			content.setText(jsonObject.getString("content"));
-			layout_Cai.setTextView_String(jsonObject.getString("cai"));
-			layout_Cai.setImageResource(R.drawable.ic_bury_normal);
-			layout_Zan.setTextView_String(jsonObject.getString("zan"));
-			layout_Zan.setImageResource(R.drawable.ic_digg_normal);
-			layout_Hot.setTextView_String(jsonObject.getString("comment"));
-			layout_Hot.setImageResource(R.drawable.hot_commenticon_textpage);
-			String content = (String) jsonObject.get("content");
-			Log.i("FFF", "img  "  + jsonObject.getString("img") );
-			if (jsonObject.getString("img") != null) {
-				ImageLoader imageLoader = ImageLoader.getInstance();
-				imageLoader.displayImage(jsonObject.getString("img"), image,options);
-			}
-			Log.i("FFF", "content  " + content);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		user_name.setText(duanzi.getUserName());
+		content.setText(duanzi.getContent());
+		layout_Cai.setTextView_String(duanzi.getCai());
+		layout_Cai.setImageResource(R.drawable.ic_bury_normal);
+		layout_Zan.setTextView_String(duanzi.getZan());
+		layout_Zan.setImageResource(R.drawable.ic_digg_normal);
+		layout_Hot.setTextView_String(duanzi.getComment());
+		layout_Hot.setImageResource(R.drawable.hot_commenticon_textpage);
+		if (duanzi.getImageUrl() != null) {
+			ImageLoader imageLoader = ImageLoader.getInstance();
+			imageLoader.displayImage(duanzi.getImageUrl(), image, options);
 		}
+		Log.i("FFF", "content  " + content);
 		
 		layout.setOnClickListener(new OnClickListener() {
 			

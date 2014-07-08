@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="2.0dip"
+            android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_duanzi"
             android:textColor="@color/TextColor_bottom" />
     </RelativeLayout>
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="2.0dip"
+            android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_image"
            android:textColor="@color/TextColor_bottom" />
     </RelativeLayout>
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="2.0dip"
+            android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_mine"
             android:textColor="@color/TextColor_bottom" />
     </RelativeLayout>
@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="2.0dip"
+            android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_more"
             android:textColor="@color/TextColor_bottom" />
     </RelativeLayout>
