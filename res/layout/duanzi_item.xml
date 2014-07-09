@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp" 
+    android:background="@color/my_back">
+    <RelativeLayout 
+        android:layout_margin="@dimen/duanzi_margin"
+        android:id="@+id/duanzi_item_top"
+        style="@style/match_horizontal">
+        <ImageView 
+            android:background="#cccccc"
+            android:layout_centerVertical="true"
+            android:id="@+id/duanzi_user_icon"
+            android:contentDescription="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_profile_night"/>
+        <TextView 
+            android:layout_marginLeft="@dimen/duanzi_margin"
+            android:id="@+id/duanzi_user_name"
+            android:layout_toRightOf="@+id/duanzi_user_icon"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跌跌跌"/>
+    </RelativeLayout>
+
+    
+    <RelativeLayout 
+        android:layout_margin="@dimen/duanzi_margin"
+        android:layout_below="@+id/duanzi_item_top"
+        android:id="@+id/duanzi_item_center"
+        style="@style/match_horizontal">
+        <TextView 
+            android:id="@+id/duanzi_textview"
+            style="@style/match_horizontal"
+            android:text="@string/duanzi_test"/>
+        <ImageView 
+            android:layout_below="@+id/duanzi_textview"
+            android:contentDescription="@null"
+            android:id="@+id/duanzi_imageview"
+            style="@style/match_horizontal"/>
+        <pl.droidsonroids.gif.GifImageView
+            android:visibility="gone"
+            android:layout_below="@+id/duanzi_imageview"
+            android:id="@+id/gif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/duanzi_item_center_bottom"
+        style="@style/match_horizontal"
+        android:layout_below="@+id/duanzi_item_center">
+        <TextView 
+            android:padding="@dimen/duanzi_margin"
+            android:id="@+id/duanzi_comment"
+            style="@style/match_horizontal"
+            android:layout_margin="@dimen/duanzi_margin"/>
+    </RelativeLayout>
+    
+    <View android:id="@+id/duanzi_item_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_below="@+id/duanzi_item_center_bottom"/>
+    
+    
+<LinearLayout 
+        android:orientation="horizontal"
+        android:layout_below="@+id/duanzi_item_center_bottom"
+        style="@style/match_horizontal">
+        <com.example.util.CustomImage 
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/duanzi_margin"
+            android:background="@color/my_back"
+            android:id="@+id/duanzi_praise"
+            style="@style/wrap">
+            
+        </com.example.util.CustomImage>
+        
+        <include 
+            layout="@layout/line_vertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        
+        <com.example.util.CustomImage 
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/duanzi_margin"
+            android:background="@color/my_back"
+            android:id="@+id/duanzi_bury"
+            style="@style/wrap">
+            
+        </com.example.util.CustomImage>
+        
+        <include 
+            layout="@layout/line_vertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        
+        <com.example.util.CustomImage 
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/duanzi_margin"
+            android:background="@color/my_back"
+            android:id="@+id/duanzi_hot"
+            style="@style/wrap">
+            
+        </com.example.util.CustomImage>
+        
+        <include 
+            layout="@layout/line_vertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/duanzi_margin"
+            android:background="@color/my_back"
+            android:contentDescription="@null"
+            android:id="@+id/duanzi_more"
+            android:src="@drawable/ic_more_action_normal_night"
+            style="@style/wrap">
+            
+        </ImageView>
+    </LinearLayout>
+</RelativeLayout>
