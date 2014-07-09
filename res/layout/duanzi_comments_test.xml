@@ -3,25 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff" >
-
+	<include 
+	    android:id="@+id/commit_write_top"
+	    layout="@layout/back"/>
     <EditText
+        android:layout_below="@+id/commit_write_top"
+        android:background="@color/my_back"
         android:id="@+id/duanzi_comments_edit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:autoLink="web"
-        android:background="@null"
         android:gravity="top"
         android:hint="@string/my_write_hint"
         android:imeOptions="actionDone"
         android:lineSpacingExtra="6.0dp"
         android:scrollbars="vertical" >
     </EditText>
+    <LinearLayout 
+        android:layout_below="@+id/duanzi_comments_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView 
+            android:text="@string/duanzi_comment_zhuanfa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <CheckBox 
+            android:text="新浪微博"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duanzi_comment_sian"/>
+        <CheckBox 
+            android:text="腾讯微博"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duanzi_comment_tencent"/>
+    </LinearLayout>
     
-    <Button 
-        android:text="发送"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/duanzi_comments_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 </RelativeLayout>

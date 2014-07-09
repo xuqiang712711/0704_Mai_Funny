@@ -5,7 +5,7 @@
     android:background="@color/actionBar" >
 
     <RelativeLayout
-        android:layout_margin="@dimen/my_margin"
+        android:layout_margin="@dimen/Top_margin"
         android:id="@+id/My_ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -20,7 +20,7 @@
 
         <TextView
             android:textSize="18sp"
-            android:id="@+id/action_text"
+            android:id="@+id/back_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -28,7 +28,7 @@
             android:text="QWERTY" />
 
         <Button
-            android:id="@+id/action_submit"
+            android:id="@+id/back_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

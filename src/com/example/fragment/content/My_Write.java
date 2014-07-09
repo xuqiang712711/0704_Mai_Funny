@@ -91,10 +91,10 @@ public class My_Write extends Fragment {
 	}
 	
 	private void initView(){
-		TextView title = (TextView)view.findViewById(R.id.action_text);
+		TextView title = (TextView)view.findViewById(R.id.back_text);
 		title.setText(R.string.my_write);
 		
-		submit = (Button)view.findViewById(R.id.action_submit);
+		submit = (Button)view.findViewById(R.id.back_submit);
 		editText = (EditText)view.findViewById(R.id.my_write_edit);
 		TextView textView = (TextView)view.findViewById(R.id.my_write_count);
 		mimageView = (ImageView)view.findViewById(R.id.my_write_image);

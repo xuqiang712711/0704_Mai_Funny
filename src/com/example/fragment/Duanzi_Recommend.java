@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adapter.DuanZiAdapter;
+import com.example.application.MaimobApplication;
 import com.example.fragment.DuanZi_Hot.MyAsyTask;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.tab.R;
@@ -98,7 +99,7 @@ public class Duanzi_Recommend extends Fragment implements OnRefreshListener{
 	};
 	
 	private void updateListView(){
-		adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,Duanzi_Recommend.this, getActivity(), array);
+		adapter = new DuanZiAdapter(handler,MaimobApplication.mController,Duanzi_Recommend.this, getActivity(), array);
 //		adapter = new DuanZiAdapter(Duanzi_Recommend.this, getActivity(), array);
 		listView.setAdapter(adapter);
 	}

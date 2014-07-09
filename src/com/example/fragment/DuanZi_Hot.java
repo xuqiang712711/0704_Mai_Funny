@@ -1,10 +1,7 @@
 package com.example.fragment;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -12,12 +9,10 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.example.adapter.DuanZiAdapter;
-import com.example.adapter.TestAdapter;
+import com.example.adapter.XAdapter;
+import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.maiUtil.Getuuid;
 import com.example.object.Duanzi;
@@ -31,6 +26,7 @@ import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -50,14 +46,13 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+
 public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	View view;
 	private ListView listView;
 	private int[] icon = {R.drawable.game, R.drawable.game, R.drawable.game,R.drawable.game};
 	private SwipeRefreshLayout refreshLayout;
 	private DuanZiAdapter adapter;
-	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
-            RequestType.SOCIAL);
 	private Dialog dialog;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +66,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
@@ -116,21 +112,11 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 //		adapter = new DuanZiAdapter(handler,mController,DuanZi_Hot.this, getActivity(), array);
 //		listView.setAdapter(adapter);
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
+//		TextAdapter adapter = new TextAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
+		XAdapter adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	
-	private void getDate(){
-		try {
-			String data = HttpUtil.getRequest("http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0");
-			List<Duanzi> list = setDuanziData.getListDuanzi(data);
-			TestAdapter adapter = new TestAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
-			listView.setAdapter(adapter);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	private void inithttp(){
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";

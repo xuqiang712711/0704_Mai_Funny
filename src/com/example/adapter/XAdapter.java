@@ -6,52 +6,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.AsyTask.MyTask_No_Result;
-import com.example.fragment.content.DuanZI_UserInfo;
 import com.example.fragment.content.DuanZi_Comment;
-import com.example.fragment.content.DuanZi_More;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
-import com.example.util.CustomImage;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.tencent.a.b.h;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
 
-public class TestAdapter extends BaseAdapter implements OnClickListener {
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class XAdapter extends BaseAdapter implements OnClickListener{
 	public static int fontSize = 14;
-	Holder holder = null;
 	private Context context;
 	private static Map<Integer, Boolean> isChecked_Cai;
 	private static Map<Integer, Boolean> isChecked_Zan;
@@ -59,26 +53,22 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private ImageLoader imageLoader;
 	private Fragment mFragment;
-	private static final int IMAGE_TYPE_NONE = 2;
-	private static final int IMAGE_TYPE_GIF = 0;
-	private static final int IMAGE_TYPE_OTHER = 1;
-	private static final int VIEW_TYPE_TEXT = 3;
-	private static final int VIEW_TYPE_IMG = 4;
-	private static final int VIEW_TYPE_GIF = 5;
+	private static final int VIEW_TYPE_IMG = 0;
+	private static final int VIEW_TYPE_GIF = 1;
 	private int Image_Type = 0;
 	private UMSocialService mController;
 	private static Handler mHandler;
 	private List<Duanzi> mdata;
 	private LayoutInflater mInflater;
-	private String TAG = "TestAdapter";
-
+	private String TAG = "PicAdapter";
+	
 	public static final int ZAN_NORMAL = 1;
 	public static final int ZAN_PRESSED = 2;
 	public static final int CAI_NORMAL = 3;
 	public static final int CAI_PRESSED = 4;
-
-	public TestAdapter(List<Duanzi> mdata, Handler handler,
-			UMSocialService mController, Fragment mFragment, Context context) {
+	
+	public XAdapter(List<Duanzi> mdata, Handler handler,
+			UMSocialService mController, Fragment mFragment, Context context){
 		this.mdata = mdata;
 		this.mHandler = handler;
 		this.mController = mController;
@@ -98,7 +88,7 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		init();
 
 	}
-
+	
 	private void init() {
 		isChecked_Cai = new HashMap<Integer, Boolean>();
 		isChecked_Zan = new HashMap<Integer, Boolean>();
@@ -106,9 +96,7 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 			isChecked_Cai.put(i, false);
 			isChecked_Zan.put(i, false);
 		}
-
 	}
-
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -117,71 +105,38 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public Object getItem(int position) {
+		// TODO Auto-generated method stub
 		return mdata.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
+		// TODO Auto-generated method stub
 		return position;
 	}
 
 	@Override
-	public int getItemViewType(int position) {
-		// TODO Auto-generated method stub
-		String imgUri = mdata.get(position).getImageUrl();
-		int p = 0;
-		if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
-			p = VIEW_TYPE_GIF;
-		} else if (imgUri.equals("") || imgUri == null) {
-			p = VIEW_TYPE_TEXT;
-		}else {
-			p = VIEW_TYPE_IMG;
-		}
-		return p;
-	}
-
-	@Override
-	public int getViewTypeCount() {
-		// TODO Auto-generated method stub
-		return 3;
-	}
-
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		int View_Type = getItemViewType(position);
-		if (convertView == null) {
-			switch (View_Type) {
-			case VIEW_TYPE_TEXT:
-				
-				break;
-
-			default:
-				break;
-			}
-			Log.i(TAG, "converView is null  " + Image_Type);
-			holder = new Holder();
-			convertView = mInflater.inflate(R.layout.mitem, null);
-			// holder.user_icon = (ImageView) convertView
-			// .findViewById(R.id.mitem_icon);
-			
-			holder.image = (ImageView)convertView.findViewById(R.id.mitem_img);
-			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_gif);
-			
+		// TODO Auto-generated method stub
+		ViewHolder holder = null;
+		if (convertView ==null) {
+			holder = new ViewHolder();
+			convertView = mInflater.inflate(R.layout.mitem_test, null);
+			holder.image = (ImageView)convertView.findViewById(R.id.mitem_test_img);
+			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_test_gif);
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
 
 			holder.content = (TextView) convertView
-					.findViewById(R.id.mitem_content);
+					.findViewById(R.id.mitem_test_content);
 
 			holder.zan = (TextView) convertView.findViewById(R.id.zan_txt);
 			holder.cai = (TextView) convertView.findViewById(R.id.cai_txt);
 			holder.hot = (TextView) convertView.findViewById(R.id.hot_txt);
 			holder.more = (ImageView) convertView.findViewById(R.id.more_img);
-
 			convertView.setTag(holder);
-		} else {
-			Log.i(TAG, "converView is not null~~~~~");
-			holder = (Holder) convertView.getTag();
+		}else {
+			holder = (ViewHolder)convertView.getTag();
 		}
 		
 		Duanzi duanzi = mdata.get(position);
@@ -192,86 +147,57 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
 		
-		if (imgUri != null && !imgUri.equals("")) {
-			if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
-//				Image_Type = IMAGE_TYPE_GIF;
-				holder.gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri,
-						holder.gif, options);
-			} else {
-//				Image_Type = IMAGE_TYPE_OTHER;
-				holder.image.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri, holder.image, options);
-			}
+		imageLoader = ImageLoader.getInstance();
+		
+		if (imgUri.equals("") || imgUri == null) {
+			holder.image.setVisibility(View.GONE);
+			holder.gif.setVisibility(View.GONE);
+			Log.e(TAG, "Text");
+		}else if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
+			holder.image.setVisibility(View.GONE);
+			holder.gif.setVisibility(View.VISIBLE);
+			imageLoader.displayImage(imgUri, holder.gif, options);
+			Log.e(TAG, "GIF");
+		}else {
+			holder.gif.setVisibility(View.GONE);
+			holder.image.setVisibility(View.VISIBLE);
+			imageLoader.displayImage(imgUri, holder.image, options);
+			Log.e(TAG, "image");
 		}
-
-		if (isChecked_Cai.get(position) == false) {
-			Drawable drawable = ChangePic(CAI_NORMAL);
-			holder.cai.setCompoundDrawables(drawable, null, null, null);
-		} else {
-			Drawable drawable = ChangePic(CAI_PRESSED);
-			holder.cai.setCompoundDrawables(drawable, null, null, null);
-		}
-
-		if (isChecked_Zan.get(position) == false) {
-			Drawable drawable = ChangePic(ZAN_NORMAL);
-			holder.zan.setCompoundDrawables(drawable, null, null, null);
-		} else {
-			Drawable drawable = ChangePic(ZAN_PRESSED);
-			holder.zan.setCompoundDrawables(drawable, null, null, null);
-		}
-
+		
 		holder.cai.setText(cai);
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
 		holder.user_name.setText(name);
 		holder.content.setText(content);
 		holder.content.setTextSize(fontSize);
-
-		addListen(position);
+		AddListen(holder, position);
 		return convertView;
 	}
-
-	private void addListen(int position) {
-		holder.cai.setOnClickListener(this);
-		holder.zan.setOnClickListener(this);
-		holder.hot.setOnClickListener(this);
-		holder.more.setOnClickListener(this);
-
-		holder.zan.setTag(position);
+	
+	public void AddListen(ViewHolder holder, int position){
 		holder.cai.setTag(position);
+		holder.cai.setOnClickListener(this);
+		holder.zan.setTag(position);
+		holder.zan.setOnClickListener(this);
 		holder.hot.setTag(position);
+		holder.hot.setOnClickListener(this);
 		holder.more.setTag(position);
-
-		holder.content.setOnClickListener(this);
-		holder.content.setTag(position);
+		holder.more.setOnClickListener(this);
+		holder.image.setTag(position);
+		holder.image.setOnClickListener(this);
+		holder.gif.setTag(position);
+		holder.gif.setOnClickListener(this);
+		
+		//未对头像、用户名进行监听
 	}
-
-	private void addListenWidget(final Holder holder, final int position,
-			int type) {
-		if (type == IMAGE_TYPE_GIF) {
-			holder.gif.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					try {
-						File cache = DiskCacheUtils.findInCache(
-								((JSONObject) getItem(position))
-										.getString("img"), imageLoader
-										.getDiskCache());
-						GifDrawable drawable = new GifDrawable(cache);
-						holder.gif.setImageDrawable(drawable);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
-		}
+	
+	public static class ViewHolder{
+		GifImageView gif;
+		ImageView user_icon, more,image;
+		TextView user_name, content, comment;
+		TextView cai, zan, hot;
+		ImageView cai_img, zan_img;
 	}
 
 	@Override
@@ -282,7 +208,25 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 		Duanzi duanzi = (Duanzi) getItem(position);
 		bundle.putSerializable("duanzi", duanzi);
 		switch (v.getId()) {
+		case R.id.mitem_test_gif:
+			File cache = DiskCacheUtils.findInCache(mdata.get(position)
+					.getImageUrl(), imageLoader.getDiskCache());
+			try {
+				GifDrawable gifDrawable = new GifDrawable(cache);
+				((GifImageView)v).setImageDrawable(gifDrawable);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			break;
 
+		case R.id.mitem_test_img:
+
+			break;
+		case R.id.mitem_test_content:
+
+			break;
 		case R.id.zan_txt:
 			Log.e(TAG, "Zan " + position);
 			if (isChecked_Zan.get(position) == false) {
@@ -332,62 +276,33 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 			Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 					.show();
 			break;
-
 		case R.id.more_img:
-			try {
-				UMShare(((JSONObject) getItem(position)).getString("content"),
-						((JSONObject) getItem(position)).getString("img"));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				Log.e(TAG, "tuituibangdexiwang");
+			String imgUri = mdata.get(position).getImageUrl();
+			Log.e(TAG, "imgUri  "+ imgUri);
+			if (imgUri.equals("") || imgUri == null) {
+				UMShare(mdata.get(position).getContent(), null);
+			}else {
+				UMShare(mdata.get(position).getContent(),
+						imgUri);
 			}
 			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
 					SHARE_MEDIA.DOUBAN);
 			mController.openShare((Activity) context, false);
 			break;
-		case R.id.duanzi_imageview:
-			DuanZi_Comment comment4 = new DuanZi_Comment();
-			switchFragment(mFragment, comment4, bundle);
-			break;
-		case R.id.duanzi_comment:
-			// int comment_p = (Integer) v.getTag();
-			// Toast.makeText(context, "点击评论  +  " + comment_p,
-			// Toast.LENGTH_SHORT)
-			// .show();
-			// DuanZi_Comment_write comment2 = new DuanZi_Comment_write();
-			// mcontext.switchFragment(mcontext,comment2);
-			break;
-
-		case R.id.duanzi_user_icon:
-			// Toast.makeText(context, "点击用户头像  + " + position,
-			// Toast.LENGTH_SHORT)
-			// .show();
-			// DuanZI_UserInfo userInfo = new DuanZI_UserInfo();
-			// mcontext.switchFragment(mcontext,userInfo);
-			break;
-		case R.id.duanzi_textview:
-			Toast.makeText(context, "点击段子  + " + position, Toast.LENGTH_SHORT)
-					.show();
-			DuanZi_Comment comment = new DuanZi_Comment();
-			switchFragment(mFragment, comment, bundle);
-			break;
-		// case R.id.mitem_img:
-		// File cache = DiskCacheUtils.findInCache(
-		// mdata.get(position).getImageUrl(), imageLoader
-		// .getDiskCache());
-		// GifDrawable drawable = null;
-		// try {
-		// drawable = new GifDrawable(cache);
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// holder.gif.setImageDrawable(drawable);
-		// break;
 		}
 	}
-
+	/**
+	 * 分享功能
+	 * @param content
+	 * @param uri
+	 */
+	private void UMShare(String content, String uri) {
+		mController.setShareContent(content);
+		if (uri != null) {
+			mController.setShareMedia(new UMImage(context, uri));
+		}
+	}
+	
 	private void Do_http(String uri) {
 		MyTask_No_Result myTask = new MyTask_No_Result();
 		myTask.execute(uri);
@@ -396,26 +311,6 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 	public void switchFragment(Fragment from, Fragment to, Bundle bundle) {
 		XYFTEST xyftest = (XYFTEST) context;
 		xyftest.switchContentFullwithBundle(from, to, bundle);
-	}
-
-	public static class Holder {
-		CustomImage layout_parise, layout_bury, layout_hot;
-		ImageView user_icon, more, image;
-		TextView user_name, content, comment;
-		GifImageView gif;
-		TextView cai, zan, hot;
-		ImageView cai_img, zan_img;
-	}
-
-	private void UMShare(String content, String uri) {
-		mController.setShareContent(content);
-		mController.setShareMedia(new UMImage(context, uri));
-	}
-
-	public static void SetNormal() {
-		Message msg = Message.obtain();
-		msg.what = 313;
-		mHandler.sendMessage(msg);
 	}
 
 	public Drawable ChangePic(int type) {
@@ -442,5 +337,4 @@ public class TestAdapter extends BaseAdapter implements OnClickListener {
 				drawable.getMinimumHeight());
 		return drawable;
 	}
-
 }

@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.example.adapter.DuanZiAdapter;
+import com.example.application.MaimobApplication;
 import com.example.fragment.DuanZi_Hot.MyAsyTask;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.tab.R;
@@ -95,7 +96,7 @@ public class DuanZI_Essence extends Fragment implements OnRefreshListener{
 	};
 	
 	private void updateListView(){
-		adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,DuanZI_Essence.this, getActivity(), array);
+		adapter = new DuanZiAdapter(handler,MaimobApplication.mController,DuanZI_Essence.this, getActivity(), array);
 //		adapter = new DuanZiAdapter(DuanZI_Essence.this, getActivity(), array);
 		listView.setAdapter(adapter);
 	}

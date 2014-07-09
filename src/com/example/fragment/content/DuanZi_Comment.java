@@ -24,12 +24,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 public class DuanZi_Comment extends Fragment{
-	private String json;
 	private View view;
 	private ImageView user_icon,image;
-	private TextView user_name;
+	private TextView user_name,Zan,Cai,Hot,More;
 	private TextView content;
-	private CustomImage layout_Zan, layout_Cai, layout_Hot;
 	private LinearLayout layout;
 	private DisplayImageOptions options;
 	private Duanzi duanzi;
@@ -45,12 +43,14 @@ public class DuanZi_Comment extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		json = getArguments().getString("json");
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		initView();
 	}
 	
 	private void initView(){
+		TextView textView = (TextView)view.findViewById(R.id.back2_text);
+		textView.setText(getResources().getString(R.string.app_name));
+		
 		options = new DisplayImageOptions.Builder()
 		.showImageOnLoading(R.drawable.maimob)
 		.showImageForEmptyUri(R.drawable.maimob)
@@ -59,27 +59,18 @@ public class DuanZi_Comment extends Fragment{
 		.displayer(new SimpleBitmapDisplayer()).build();
 		
 		layout = (LinearLayout)view.findViewById(R.id.duanzi_comment_write);
-		user_icon = (ImageView)view.findViewById(R.id.duanzi_user_icon);
-		user_name = (TextView)view.findViewById(R.id.duanzi_user_name);
-		content = (TextView)view.findViewById(R.id.duanzi_textview);
-		layout_Cai = (CustomImage)view.findViewById(R.id.duanzi_bury);
-		layout_Hot = (CustomImage)view.findViewById(R.id.duanzi_hot);
-		layout_Zan = (CustomImage)view.findViewById(R.id.duanzi_praise);
-		image = (ImageView)view.findViewById(R.id.duanzi_imageview);
+		user_icon = (ImageView)view.findViewById(R.id.mitem_icon);
+		user_name = (TextView)view.findViewById(R.id.mitem_username);
+		content = (TextView)view.findViewById(R.id.mitem_test_content);
+		image = (ImageView)view.findViewById(R.id.mitem_test_img);
 		
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
-		layout_Cai.setTextView_String(duanzi.getCai());
-		layout_Cai.setImageResource(R.drawable.ic_bury_normal);
-		layout_Zan.setTextView_String(duanzi.getZan());
-		layout_Zan.setImageResource(R.drawable.ic_digg_normal);
-		layout_Hot.setTextView_String(duanzi.getComment());
-		layout_Hot.setImageResource(R.drawable.hot_commenticon_textpage);
 		if (duanzi.getImageUrl() != null) {
+			image.setVisibility(View.VISIBLE);
 			ImageLoader imageLoader = ImageLoader.getInstance();
 			imageLoader.displayImage(duanzi.getImageUrl(), image, options);
 		}
-		Log.i("FFF", "content  " + content);
 		
 		layout.setOnClickListener(new OnClickListener() {
 			
@@ -94,7 +85,7 @@ public class DuanZi_Comment extends Fragment{
 	}
 	private void switchFrag(Fragment from, Fragment to){
 		Bundle bundle = new Bundle();
-		bundle.putString("comment", json);
+		bundle.putSerializable("commit", duanzi);
 		XYFTEST xyftest = (XYFTEST) getActivity();
 		xyftest.switchContentFullwithBundle(from, to, bundle);
 	}

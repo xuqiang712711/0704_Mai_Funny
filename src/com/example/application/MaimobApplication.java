@@ -11,6 +11,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
 
 import android.app.Application;
 import android.content.Context;
@@ -18,6 +21,8 @@ import android.os.Environment;
 import android.util.Log;
 
 public class MaimobApplication extends Application{
+	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
+            RequestType.SOCIAL);
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -50,5 +55,6 @@ public class MaimobApplication extends Application{
 		Getuuid getuuid = new Getuuid(context);
 		Uris.uuid = getuuid.getDeviceIdentity();
 		Log.i("XXX", "uuid  " + Uris.uuid);
+		
 	}
 }

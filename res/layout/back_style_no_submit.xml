@@ -4,7 +4,7 @@
     android:layout_height="wrap_content" 
     android:background="@color/my_back">
         <RelativeLayout
-        android:layout_margin="@dimen/my_margin"
+        android:layout_margin="@dimen/Top_margin"
         android:id="@+id/My_ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/back2_text"
+            android:textSize="@dimen/top_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

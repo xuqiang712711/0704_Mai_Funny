@@ -17,7 +17,8 @@ import org.json.JSONException;
 
 import com.example.AsyTask.MyAsyTask;
 import com.example.adapter.DuanZiAdapter;
-import com.example.adapter.TestAdapter;
+import com.example.adapter.XAdapter;
+import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
@@ -49,7 +50,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private String [] ImageUris ;
 	DisplayImageOptions options;
 	private SwipeRefreshLayout refreshLayout;
-	private DuanZiAdapter adapter;
+	private XAdapter adapter;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -66,7 +67,9 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
+//		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
+//		PicAdapter adapter = new PicAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
+		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	

@@ -25,20 +25,37 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
+import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.bean.StatusCode;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.media.UMImage;
 
 
-public class DuanZi_Comment_Write extends Fragment{
+public class DuanZi_Comment_Write extends Fragment implements OnClickListener, OnCheckedChangeListener{
 	private View view;
 	private Button submit;
 	private EditText editText;
 	private String pid = "15";
+	private String Tag = "DuanZi_Comment_Write";
+	private CheckBox sina,tencent;
+	private boolean isCheck_sina= false;
+	private boolean isCheck_tencent = false;
+	private String content,imgUri;
+	private String editContent;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -58,28 +75,22 @@ public class DuanZi_Comment_Write extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		initView();
-		String json = getArguments().getString("comment");
-		try {
-			JSONObject jsonObject = new JSONObject(json);
-			pid = jsonObject.getString("poid");
-			Log.i("XXX", "poid  " + pid);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Duanzi duanzi = (Duanzi) getArguments().getSerializable("commit");
+		pid = duanzi.getPoid();
+		imgUri = duanzi.getImageUrl();
+		content= duanzi.getContent();
 	}
 	private void initView(){
-		submit = (Button)view.findViewById(R.id.duanzi_comments_submit);
+		sina = (CheckBox)view.findViewById(R.id.duanzi_comment_sian);
+		sina.setOnCheckedChangeListener(this);
+		tencent = (CheckBox)view.findViewById(R.id.duanzi_comment_tencent);
+		
+		TextView title = (TextView)view.findViewById(R.id.back_text);
+		title.setText(getResources().getString(R.string.duanzi_comment_title));
+		
+		submit = (Button)view.findViewById(R.id.back_submit);
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
-		submit.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new Thread(new SubMitThread()).start();
-			}
-		});
+		submit.setOnClickListener(this);
 	}
 	
 	class SubMitThread implements Runnable{
@@ -133,5 +144,64 @@ public class DuanZi_Comment_Write extends Fragment{
 //		}
 		return code;
 }
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.back_submit:
+			editContent = editText.getText().toString();
+//			new Thread(new SubMitThread()).start();
+			Log.e(Tag, "sina  " + isCheck_sina);
+			ShareToSocial();
+			break;
+		}
+	}
+	
+	public void ShareToSocial(){
+		if (isCheck_sina) {
+			Log.e(Tag, "content  " + editContent + "  " + content);
+			MaimobApplication.mController.setShareContent(editContent + "~~~~~" + content + "~~~~来自大麦段子");
+			if (imgUri != null || !imgUri.equals("")) {
+				MaimobApplication.mController.setShareMedia(new UMImage(getActivity(), imgUri));
+			}
+			MaimobApplication.mController.directShare(getActivity(), SHARE_MEDIA.SINA, new SnsPostListener() {
+				
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					 Toast.makeText(getActivity(), "分享开始",Toast.LENGTH_SHORT).show();
+				}
+				
+				@Override
+				public void onComplete(SHARE_MEDIA arg0, int eCode, SocializeEntity arg2) {
+					// TODO Auto-generated method stub
+					 if(eCode == StatusCode.ST_CODE_SUCCESSED){
+		                    Toast.makeText(getActivity(), "分享成功",Toast.LENGTH_SHORT).show();
+		                }else{
+		                    Toast.makeText(getActivity(), "分享失败",Toast.LENGTH_SHORT).show();
+		                }
+				}
+			});
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		// TODO Auto-generated method stub
+		switch (buttonView.getId()) {
+		case R.id.duanzi_comment_sian:
+			if (isChecked) {
+				isCheck_sina = true;
+			}else {
+				isCheck_sina = false;
+			}
+			Log.e(Tag, "红眼睛  " + isCheck_sina);
+			break;
+
+		default:
+			break;
+		}
+	}
 	
 }

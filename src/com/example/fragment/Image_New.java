@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import com.example.AsyTask.MyAsyTask;
 import com.example.adapter.DuanZiAdapter;
+import com.example.application.MaimobApplication;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
@@ -43,7 +44,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 			Bundle data = msg.getData();
 			try {
 				JSONArray array = new JSONArray(data.getString("json"));
-				adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,Image_New.this, getActivity(), array);
+				adapter = new DuanZiAdapter(handler,MaimobApplication.mController,Image_New.this, getActivity(), array);
 //				adapter = new DuanZiAdapter(Image_New.this,getActivity(), array);
 				listView.setAdapter(adapter);
 			} catch (JSONException e) {
