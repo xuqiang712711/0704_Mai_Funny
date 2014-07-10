@@ -31,7 +31,8 @@
         android:layout_height="wrap_content"
         android:text="i am content" />
 	<ImageView 
-	    android:layout_gravity="center_horizontal"
+	    android:layout_gravity="center"
+	    android:scaleType="centerInside"
 	    android:id="@+id/mitem_test_img"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"/>

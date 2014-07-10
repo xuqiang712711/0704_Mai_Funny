@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="5dip"
             android:layout_centerHorizontal="true"
             android:src="@drawable/mai_duanzi" />
 
@@ -55,6 +56,7 @@
         android:orientation="vertical" >
 
         <ImageView
+            android:layout_marginTop="5dip"
             android:id="@id/tt_tab_best_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,6 +114,7 @@
         android:orientation="vertical" >
 
         <ImageView
+            android:layout_marginTop="5dip"
             android:id="@id/tt_tab_community_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,6 +145,7 @@
         android:orientation="vertical" >
 
         <ImageView
+            android:layout_marginTop="5dip"
             android:id="@id/tt_tab_more_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -985,6 +985,7 @@ int style Theme_UMDefault 0x7f06000f
 int style Theme_UMDialog 0x7f06000e
 int style Title 0x7f06001c
 int style checkbox 0x7f060022
+int style item_line 0x7f060028
 int style lan_DialogWindowAnim 0x7f060001
 int style layout_full 0x7f060013
 int style layout_horizontal 0x7f060015

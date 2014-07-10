@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000" />
+        android:background="@color/gery" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,7 @@
             android:text="zan" />
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
+            style="@style/item_line" />
 
         <com.example.util.DrawableCenterTextView
             android:id="@+id/bottom_cai"
@@ -39,9 +37,7 @@
             android:text="cai" />
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
+             style="@style/item_line"/>
 
         <com.example.util.DrawableCenterTextView
             android:id="@+id/bottom_hot"
@@ -53,9 +49,7 @@
             android:text="hot" />
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
+            style="@style/item_line" />
 
         <ImageView
             android:id="@+id/bottom_more"

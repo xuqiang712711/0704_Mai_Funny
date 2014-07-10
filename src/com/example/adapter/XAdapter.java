@@ -22,6 +22,7 @@ import com.example.util.ConnToServer;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
@@ -77,6 +78,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		this.mFragment = mFragment;
 
 		options = new DisplayImageOptions.Builder()
+		.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 		.showImageOnLoading(R.drawable.maimob)
 		.showImageForEmptyUri(R.drawable.maimob)
 		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
