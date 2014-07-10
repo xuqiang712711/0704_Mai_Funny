@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView 
+        android:textSize="@dimen/top_title"
+        android:padding="10dp"
+        android:background="@color/skyblue"
+        android:id="@+id/tab_top_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="xxx"/>
+
+    <LinearLayout
+        android:id="@+id/duanzi_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_top_text"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</RelativeLayout>

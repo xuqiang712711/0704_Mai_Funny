@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/user_face"
+        android:drawable="@drawable/account_icon_weibo">
+    </item>
+    <item 
+        android:id="@+id/user_faceback"
+        android:top="30dp"
+        android:left="30dp"
+        android:drawable="@drawable/ss_check_on"></item>
+
+</layer-list>

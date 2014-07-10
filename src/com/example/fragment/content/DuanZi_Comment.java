@@ -18,17 +18,19 @@ import android.widget.Toast;
 import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.umeng.socialize.controller.utils.ToastUtil;
 
-public class DuanZi_Comment extends Fragment{
+public class DuanZi_Comment extends Fragment implements OnClickListener{
+	private String Tag = "DuanZi_Comment";
 	private View view;
-	private ImageView user_icon,image;
-	private TextView user_name,Zan,Cai,Hot,More;
+	private ImageView user_icon,image,More;
+	private TextView user_name,Zan,Cai,Hot;
 	private TextView content;
-	private LinearLayout layout;
 	private DisplayImageOptions options;
 	private Duanzi duanzi;
 	@Override
@@ -58,36 +60,78 @@ public class DuanZi_Comment extends Fragment{
 		.cacheOnDisk(true).considerExifParams(true)
 		.displayer(new SimpleBitmapDisplayer()).build();
 		
-		layout = (LinearLayout)view.findViewById(R.id.duanzi_comment_write);
 		user_icon = (ImageView)view.findViewById(R.id.mitem_icon);
 		user_name = (TextView)view.findViewById(R.id.mitem_username);
 		content = (TextView)view.findViewById(R.id.mitem_test_content);
 		image = (ImageView)view.findViewById(R.id.mitem_test_img);
+		Cai = (TextView)view.findViewById(R.id.bottom_cai);
+		Zan = (TextView)view.findViewById(R.id.bottom_zan);
+		Hot = (TextView)view.findViewById(R.id.bottom_hot);
+		More = (ImageView)view.findViewById(R.id.bottom_more);
 		
+		Log.e("yyy", "name  " + duanzi.getUserName());
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
+		Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
+		
+		Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
+		Hot.setText(duanzi.getComment());
+		
+		if (duanzi.isZanPressed()) {
+			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_PRESSED), null, null, null);
+			Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
+		}else {
+			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_NORMAL), null, null, null);
+			Zan.setText(duanzi.getZan());
+		}
+		
+		if (duanzi.isCaiPressed()) {
+			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_PRESSED), null, null, null);
+			Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
+		}else {
+			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_NORMAL), null, null, null);
+			Cai.setText(duanzi.getCai());
+		}
+		Cai.setOnClickListener(this);
+		Zan.setOnClickListener(this);
+		Hot.setOnClickListener(this);
+		More.setOnClickListener(this);
+		
+		
 		if (duanzi.getImageUrl() != null) {
 			image.setVisibility(View.VISIBLE);
 			ImageLoader imageLoader = ImageLoader.getInstance();
 			imageLoader.displayImage(duanzi.getImageUrl(), image, options);
 		}
 		
-		layout.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), "去评论", Toast.LENGTH_SHORT).show();
-				DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
-				switchFrag(DuanZi_Comment.this, comment_Test);
-			}
-		});
 	}
 	private void switchFrag(Fragment from, Fragment to){
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("commit", duanzi);
 		XYFTEST xyftest = (XYFTEST) getActivity();
 		xyftest.switchContentFullwithBundle(from, to, bundle);
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.bottom_cai:
+			duanzi.CanPress(Duanzi.CAI, ((TextView)v), getActivity());
+			break;
+
+		case R.id.bottom_hot:
+			Toast.makeText(getActivity(), "去评论", Toast.LENGTH_SHORT).show();
+			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
+			switchFrag(DuanZi_Comment.this, comment_Test);
+			break;
+		case R.id.bottom_more:
+
+			break;
+		case R.id.bottom_zan:
+			duanzi.CanPress(Duanzi.ZAN, ((TextView)v), getActivity());
+			break;
+		}
 	}
 	
 }

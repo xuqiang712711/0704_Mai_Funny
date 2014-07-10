@@ -18,6 +18,7 @@ import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.ConnToServer;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -130,10 +131,10 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			holder.content = (TextView) convertView
 					.findViewById(R.id.mitem_test_content);
 
-			holder.zan = (TextView) convertView.findViewById(R.id.zan_txt);
-			holder.cai = (TextView) convertView.findViewById(R.id.cai_txt);
-			holder.hot = (TextView) convertView.findViewById(R.id.hot_txt);
-			holder.more = (ImageView) convertView.findViewById(R.id.more_img);
+			holder.zan = (TextView) convertView.findViewById(R.id.bottom_zan);
+			holder.cai = (TextView) convertView.findViewById(R.id.bottom_cai);
+			holder.hot = (TextView) convertView.findViewById(R.id.bottom_hot);
+			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder)convertView.getTag();
@@ -148,7 +149,6 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		String hot = duanzi.getComment();
 		
 		imageLoader = ImageLoader.getInstance();
-		
 		if (imgUri.equals("") || imgUri == null) {
 			holder.image.setVisibility(View.GONE);
 			holder.gif.setVisibility(View.GONE);
@@ -165,6 +165,17 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			Log.e(TAG, "image");
 		}
 		
+		if (duanzi.isZanPressed()== true) {
+			holder.zan.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.ZAN_PRESSED), null, null, null);
+		}else {
+			holder.zan.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.ZAN_NORMAL), null, null, null);
+		}
+		if (duanzi.isCaiPressed() == true) {
+			holder.cai.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.CAI_PRESSED), null, null, null);
+		}else {
+			holder.cai.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.CAI_NORMAL), null, null, null);
+		}
+		
 		holder.cai.setText(cai);
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
@@ -174,7 +185,11 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		AddListen(holder, position);
 		return convertView;
 	}
-	
+	/**
+	 * 监听
+	 * @param holder
+	 * @param position
+	 */
 	public void AddListen(ViewHolder holder, int position){
 		holder.cai.setTag(position);
 		holder.cai.setOnClickListener(this);
@@ -227,56 +242,49 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		case R.id.mitem_test_content:
 
 			break;
-		case R.id.zan_txt:
+		case R.id.bottom_zan:
 			Log.e(TAG, "Zan " + position);
-			if (isChecked_Zan.get(position) == false) {
-				if (isChecked_Cai.get(position) == true) {
+			if (duanzi.isZanPressed()== false) {
+				if (duanzi.isCaiPressed() == true) {
 					Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
 					break;
 				}
-				Drawable drawable = context.getResources().getDrawable(
-						R.drawable.ic_digg_pressed);
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-						drawable.getMinimumHeight());
+				Drawable drawable = duanzi.ChangePic(context, Duanzi.ZAN_PRESSED);
 				((TextView) v).setCompoundDrawables(drawable, null, null, null);
 				int Zan_num = Integer.parseInt(mdata.get(position).getZan());
 				((TextView) v).setText(String.valueOf(Zan_num + 1));
-				isChecked_Zan.put(position, true);
-				String uri = Uris.Zan + "/uuid/" + Uris.uuid + "/pid/"
-						+ mdata.get(position).getPoid();
-				Do_http(uri);
+//				isChecked_Zan.put(position, true);
+				duanzi.setZanPressed(true);
+				ConnToServer.DohttpNoResult(ConnToServer.ZAN, duanzi.getPoid());
 			} else {
 				Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
 			}
 			break;
 
-		case R.id.cai_txt:
-			if (isChecked_Cai.get(position) == false) {
-				if (isChecked_Zan.get(position) == true) {
+		case R.id.bottom_cai:
+			if (duanzi.isCaiPressed() == false) {
+				if (duanzi.isZanPressed() == true) {
 					Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
 					break;
 				}
-				Drawable drawable = ChangePic(CAI_PRESSED);
+				Drawable drawable = duanzi.ChangePic(context, Duanzi.CAI_PRESSED);
 				((TextView) v).setCompoundDrawables(drawable, null, null, null);
 				int Cai_num = Integer.parseInt(mdata.get(position).getCai());
-				((TextView) v).setText(String.valueOf(Cai_num - 1));
-				isChecked_Cai.put(position, true);
-
-				String uri = Uris.Cai + "/uuid/" + Uris.uuid + "/pid/"
-						+ mdata.get(position).getPoid();
-				Do_http(uri);
+				((TextView) v).setText(String.valueOf(Cai_num + 1));
+				duanzi.setCaiPressed(true);
+				ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
 			} else {
 				Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
 			}
 			break;
 
-		case R.id.hot_txt:
+		case R.id.bottom_hot:
 			DuanZi_Comment comment3 = new DuanZi_Comment();
 			switchFragment(mFragment, comment3, bundle);
 			Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 					.show();
 			break;
-		case R.id.more_img:
+		case R.id.bottom_more:
 			String imgUri = mdata.get(position).getImageUrl();
 			Log.e(TAG, "imgUri  "+ imgUri);
 			if (imgUri.equals("") || imgUri == null) {
@@ -302,39 +310,10 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			mController.setShareMedia(new UMImage(context, uri));
 		}
 	}
-	
-	private void Do_http(String uri) {
-		MyTask_No_Result myTask = new MyTask_No_Result();
-		myTask.execute(uri);
-	}
 
 	public void switchFragment(Fragment from, Fragment to, Bundle bundle) {
 		XYFTEST xyftest = (XYFTEST) context;
 		xyftest.switchContentFullwithBundle(from, to, bundle);
 	}
 
-	public Drawable ChangePic(int type) {
-		Drawable drawable = null;
-		switch (type) {
-		case CAI_PRESSED:
-			drawable = context.getResources().getDrawable(
-					R.drawable.ic_bury_pressed);
-			break;
-		case CAI_NORMAL:
-			drawable = context.getResources().getDrawable(
-					R.drawable.ic_bury_normal);
-			break;
-		case ZAN_PRESSED:
-			drawable = context.getResources().getDrawable(
-					R.drawable.ic_digg_pressed);
-			break;
-		case ZAN_NORMAL:
-			drawable = context.getResources().getDrawable(
-					R.drawable.ic_digg_normal);
-			break;
-		}
-		drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-				drawable.getMinimumHeight());
-		return drawable;
-	}
 }

@@ -16,7 +16,7 @@
         android:orientation="horizontal" >
 
         <com.example.util.DrawableCenterTextView
-            android:id="@+id/zan_txt"
+            android:id="@+id/bottom_zan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -30,7 +30,7 @@
             android:background="#000000" />
 
         <com.example.util.DrawableCenterTextView
-            android:id="@+id/cai_txt"
+            android:id="@+id/bottom_cai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -44,7 +44,7 @@
             android:background="#000000" />
 
         <com.example.util.DrawableCenterTextView
-            android:id="@+id/hot_txt"
+            android:id="@+id/bottom_hot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -58,7 +58,7 @@
             android:background="#000000" />
 
         <ImageView
-            android:id="@+id/more_img"
+            android:id="@+id/bottom_more"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"

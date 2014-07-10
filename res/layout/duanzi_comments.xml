@@ -13,25 +13,9 @@
 	    layout="@layout/mitem_top"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"/>
-	<LinearLayout 
-	    android:id="@+id/duanzi_comment_write"
-	    android:layout_alignParentBottom="true"
-	    android:orientation="horizontal"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="#ffffff">
-	    <ImageView 
-	        android:visibility="gone"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"/>
-	    <TextView 
-	        android:layout_margin="5dp"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/duanzi_comment"/>
-	</LinearLayout>
+
 	<include 
-	    android:layout_above="@+id/duanzi_comment_write"
+	    android:layout_alignParentBottom="true"
 	    layout="@layout/mitem_bottom"
 	    android:layout_height="wrap_content"
 	    android:layout_width="match_parent"/>

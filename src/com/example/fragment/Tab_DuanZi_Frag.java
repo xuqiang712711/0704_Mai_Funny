@@ -1,14 +1,20 @@
 package com.example.fragment;
 
+import org.w3c.dom.Text;
+
 import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +22,10 @@ import android.view.ViewGroup;
 import android.view.animation.Transformation;
 import android.webkit.WebView.FindListener;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 //	private Fragment duanzi_hot;
@@ -28,12 +37,15 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	private LinearLayout layout;
 	private FragmentTransaction  ft;
 	private View view;
+	private TextView textView, text_new, text_hot;
+	
+	private PopupWindow pop;// 0710Ìí¼Ó
 //	private FragmentManager mFM = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		view = inflater.inflate(R.layout.duanzi_4_tab, container, false);
+		view = inflater.inflate(R.layout.duanzi_top_item, container, false);
 		return view;
 	}
 	
@@ -41,78 +53,55 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		initView();
-		selectTab(1);
+//		initView();
+//		selectTab(1);
+		initPop();
+		selectTab2(1);
 	}
 	
-	
-	private void initView(){
-		R1 = (RelativeLayout)view.findViewById(R.id.channel1);
-		R2 = (RelativeLayout)view.findViewById(R.id.channel2);
-		R3 = (RelativeLayout)view.findViewById(R.id.channel3);
-		R4 = (RelativeLayout)view.findViewById(R.id.channel4);
-		R1.setOnClickListener(this);
-		R2.setOnClickListener(this);
-		R3.setOnClickListener(this);
-		R4.setOnClickListener(this);
-		
-		layout = (LinearLayout)view.findViewById(R.id.duanzi_container);
+	private void initPop(){
+		textView = (TextView)view.findViewById(R.id.tab_top_text);
+		textView.setOnClickListener(this);
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		View PopView = inflater.inflate(R.layout.top_pop, null);
+		text_hot = (TextView)PopView.findViewById(R.id.top_hot);
+		text_hot.setOnClickListener(this);
+		text_new = (TextView)PopView.findViewById(R.id.top_new);
+		text_new.setOnClickListener(this);
+		pop = new PopupWindow(PopView, 200, LayoutParams.WRAP_CONTENT, true);
+		pop.setBackgroundDrawable(new BitmapDrawable());
 	}
 	
-	protected void selectTab(int index){
-		clearTab();
+	private void selectTab2(int index){
+		clearTextColor();
 		ft = getChildFragmentManager().beginTransaction();
 		hideFrag(ft);
-		
 		switch (index) {
 		case 1:
-			R1.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
 			if (duanZi_Hot == null) {
 				duanZi_Hot = new DuanZi_Hot();
 				ft.add(R.id.duanzi_container, duanZi_Hot);
 			}else {
 				ft.show(duanZi_Hot);
 			}
+			text_hot.setTextColor(getResources().getColor(R.color.teal));
 			break;
 
 		case 2:
-			R2.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (duanzi_Recommend == null) {
-				duanzi_Recommend = new Duanzi_Recommend();
-				ft.add(R.id.duanzi_container, duanzi_Recommend);
-			}else {
-				ft.show(duanzi_Recommend);
-			}
-			break;
-			
-		case 3:
-			R3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (duanZI_Essence == null) {
-				duanZI_Essence = new DuanZI_Essence();
-				ft.add(R.id.duanzi_container, duanZI_Essence);
-			}else {
-				ft.show(duanZI_Essence);
-			}
-			break;
-			
-		case 4:
-			R4.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
 			if (duanZi_New == null) {
 				duanZi_New = new DuanZi_New();
 				ft.add(R.id.duanzi_container, duanZi_New);
 			}else {
 				ft.show(duanZi_New);
 			}
+			text_new.setTextColor(getResources().getColor(R.color.teal));
 			break;
 		}
+		if (pop.isShowing()) {
+			pop.dismiss();
+		}
+		SetTitle(index);
 		ft.commit();
-	}
-
-	private void clearTab(){
-		R1.setBackgroundResource(0);
-		R2.setBackgroundResource(0);
-		R3.setBackgroundResource(0);
-		R4.setBackgroundResource(0);
 	}
 	
 	private void hideFrag(FragmentTransaction ft){
@@ -134,20 +123,36 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.channel1:
-			selectTab(1);
+		
+		case R.id.tab_top_text:
+			DisplayMetrics metrics = new DisplayMetrics();
+			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			int width = metrics.widthPixels/2 - pop.getWidth()/2;
+			pop.showAsDropDown(v, width, 10);
+			break;
+		case R.id.top_hot:
+			selectTab2(1);
+			break;
+		case R.id.top_new:
+			selectTab2(2);
+			
+			break;
+		}
+	}
+	
+	private void clearTextColor(){
+		text_hot.setTextColor(getResources().getColor(R.color.white));
+		text_new.setTextColor(getResources().getColor(R.color.white));
+	}
+	
+	private void SetTitle(int index){
+		switch (index) {
+		case 1:
+			textView.setText(getResources().getString(R.string.duanzi_hot));
 			break;
 
-		case R.id.channel2:
-			selectTab(2);
-			break;
-		
-		case R.id.channel3:
-			selectTab(3);
-			break;
-		
-		case R.id.channel4:
-			selectTab(4);
+		case 2:
+			textView.setText(getResources().getString(R.string.duanzi_new));
 			break;
 		}
 	}

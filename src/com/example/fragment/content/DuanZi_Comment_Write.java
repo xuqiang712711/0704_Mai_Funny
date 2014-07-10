@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,17 +46,17 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListene
 import com.umeng.socialize.media.UMImage;
 
 
-public class DuanZi_Comment_Write extends Fragment implements OnClickListener, OnCheckedChangeListener{
+public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private View view;
 	private Button submit;
 	private EditText editText;
 	private String pid = "15";
 	private String Tag = "DuanZi_Comment_Write";
-	private CheckBox sina,tencent;
 	private boolean isCheck_sina= false;
 	private boolean isCheck_tencent = false;
 	private String content,imgUri;
 	private String editContent;
+	private ImageView sina_img;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -81,9 +82,22 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener, O
 		content= duanzi.getContent();
 	}
 	private void initView(){
-		sina = (CheckBox)view.findViewById(R.id.duanzi_comment_sian);
-		sina.setOnCheckedChangeListener(this);
-		tencent = (CheckBox)view.findViewById(R.id.duanzi_comment_tencent);
+		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
+		sina_img.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (!isCheck_sina) {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
+					isCheck_sina = true;
+				}else {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer));
+					isCheck_sina = false;
+				}
+			}
+		});
+		
 		
 		TextView title = (TextView)view.findViewById(R.id.back_text);
 		title.setText(getResources().getString(R.string.duanzi_comment_title));
@@ -151,21 +165,24 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener, O
 		switch (v.getId()) {
 		case R.id.back_submit:
 			editContent = editText.getText().toString();
-//			new Thread(new SubMitThread()).start();
-			Log.e(Tag, "sina  " + isCheck_sina);
-			ShareToSocial();
+			new Thread(new SubMitThread()).start();
+			Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
+			if (isCheck_sina) {
+				ShareToSocial(SHARE_MEDIA.SINA);
+			}else if (isCheck_tencent) {
+				ShareToSocial(SHARE_MEDIA.TENCENT);
+			}
 			break;
 		}
 	}
 	
-	public void ShareToSocial(){
-		if (isCheck_sina) {
+	public void ShareToSocial(SHARE_MEDIA media){
 			Log.e(Tag, "content  " + editContent + "  " + content);
 			MaimobApplication.mController.setShareContent(editContent + "~~~~~" + content + "~~~~来自大麦段子");
 			if (imgUri != null || !imgUri.equals("")) {
 				MaimobApplication.mController.setShareMedia(new UMImage(getActivity(), imgUri));
 			}
-			MaimobApplication.mController.directShare(getActivity(), SHARE_MEDIA.SINA, new SnsPostListener() {
+			MaimobApplication.mController.directShare(getActivity(), media, new SnsPostListener() {
 				
 				@Override
 				public void onStart() {
@@ -183,25 +200,6 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener, O
 		                }
 				}
 			});
-		}
-	}
-
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		// TODO Auto-generated method stub
-		switch (buttonView.getId()) {
-		case R.id.duanzi_comment_sian:
-			if (isChecked) {
-				isCheck_sina = true;
-			}else {
-				isCheck_sina = false;
-			}
-			Log.e(Tag, "红眼睛  " + isCheck_sina);
-			break;
-
-		default:
-			break;
-		}
 	}
 	
 }

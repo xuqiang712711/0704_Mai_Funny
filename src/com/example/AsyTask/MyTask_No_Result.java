@@ -25,7 +25,7 @@ public class MyTask_No_Result extends AsyncTask<String, Void, Void> {
 	}
 
 	/**
-	 * 从服务器获取数据（字符串）
+	 * 
 	 * 
 	 * @param urls
 	 * @return

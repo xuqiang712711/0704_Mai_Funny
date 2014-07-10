@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent" >
+
+    <com.example.util.DrawableCenterTextView
+        style="@style/top_pop_item"
+        android:id="@+id/top_hot"
+        android:drawableLeft="@drawable/mai_activity"
+        android:text="@string/duanzi_hot"
+        android:textColor="@color/white" />
+
+    <View
+        android:id="@+id/top_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_hot"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/greenyellow" />
+
+    <com.example.util.DrawableCenterTextView
+        style="@style/top_pop_item"
+        android:id="@+id/top_new"
+        android:layout_below="@+id/top_hot"
+        android:drawableLeft="@drawable/mai_check"
+        android:text="@string/duanzi_new"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/top_new"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+</RelativeLayout>
