@@ -6,8 +6,8 @@
     </item>
     <item 
         android:id="@+id/user_faceback"
-        android:top="30dp"
-        android:left="30dp"
+        android:top="20dp"
+        android:left="20dp"
         android:drawable="@drawable/ss_check_on"></item>
 
 </layer-list>

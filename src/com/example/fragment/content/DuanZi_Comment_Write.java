@@ -42,8 +42,10 @@ import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
+import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
 
 
 public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
@@ -54,9 +56,12 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment_Write";
 	private boolean isCheck_sina= false;
 	private boolean isCheck_tencent = false;
+	private boolean isCheck_qzone = false;
+	private boolean isCheck_douban = false;
 	private String content,imgUri;
 	private String editContent;
-	private ImageView sina_img;
+	private ImageView sina_img, tencent_img, qzone_img, douban;
+	private UMSocialService mcontroller;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -75,6 +80,8 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		mcontroller = MaimobApplication.mController;
+		mcontroller.getConfig().setSsoHandler(new QZoneSsoHandler(getActivity(), "APP ID", "APP KEY"));
 		initView();
 		Duanzi duanzi = (Duanzi) getArguments().getSerializable("commit");
 		pid = duanzi.getPoid();
@@ -83,20 +90,45 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	}
 	private void initView(){
 		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
-		sina_img.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (!isCheck_sina) {
-					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
-					isCheck_sina = true;
-				}else {
-					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer));
-					isCheck_sina = false;
-				}
-			}
-		});
+		tencent_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_tencent);
+		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
+		douban = (ImageView)view.findViewById(R.id.duanzi_comment_write_douban);
+		
+		sina_img.setOnClickListener(this);
+		tencent_img.setOnClickListener(this);
+		qzone_img.setOnClickListener(this);
+		douban.setOnClickListener(this);
+//		sina_img.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				
+//				if (MaimobApplication.Jelly_Bean) {
+//					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
+//				}else {
+//					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer_check));
+//				}
+//				if (!isCheck_sina) {
+//					if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//						sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer_check));
+//					}else {
+//						sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
+//					}
+//					
+//					isCheck_sina = true;
+//				}else {
+//					if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//						sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer));
+//					}else {
+//						sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer));
+//					}
+//					
+//					
+//					isCheck_sina = false;
+//				}
+//			}
+//		});
 		
 		
 		TextView title = (TextView)view.findViewById(R.id.back_text);
@@ -171,6 +203,80 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				ShareToSocial(SHARE_MEDIA.SINA);
 			}else if (isCheck_tencent) {
 				ShareToSocial(SHARE_MEDIA.TENCENT);
+			}else if (isCheck_qzone) {
+				Log.e(Tag, "QZONE");
+				ShareToSocial(SHARE_MEDIA.RENREN);
+			}else if (isCheck_douban) {
+				ShareToSocial(SHARE_MEDIA.DOUBAN);
+			}
+			break;
+		case R.id.duanzi_comment_write_sina:
+			if (!isCheck_sina) {
+				if (MaimobApplication.Jelly_Bean) {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo2_72x72));
+				}else {
+					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo2_72x72));
+				}
+				isCheck_sina = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo_72x72));
+				}else {
+					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo_72x72));
+				}
+				isCheck_sina = false;
+			}
+			break;
+		case R.id.duanzi_comment_write_qzone:
+			if (!isCheck_qzone) {
+				if (MaimobApplication.Jelly_Bean) {
+					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren2_72x72));
+				}else {
+					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren2_72x72));
+				}
+				isCheck_qzone = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren_72x72));
+				}else {
+					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren_72x72));
+				}
+				isCheck_qzone =false;
+			}
+			break;
+		case R.id.duanzi_comment_write_tencent:
+			if (!isCheck_tencent) {
+				if (MaimobApplication.Jelly_Bean) {
+					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencent2_72x72));
+				}else {
+					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencent2_72x72));
+				}
+				isCheck_tencent = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencen_72x72));
+				}else {
+					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencen_72x72));
+				}
+				isCheck_tencent =false;
+			}
+			break;
+			
+		case R.id.duanzi_comment_write_douban:
+			if (!isCheck_douban) {
+				if (MaimobApplication.Jelly_Bean) {
+					douban.setBackground(getResources().getDrawable(R.drawable.douban2_72x72));
+				}else {
+					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban2_72x72));
+				}
+				isCheck_douban = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					douban.setBackground(getResources().getDrawable(R.drawable.douban_72x72));
+				}else {
+					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban_72x72));
+				}
+				isCheck_douban =false;
 			}
 			break;
 		}
@@ -179,9 +285,6 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	public void ShareToSocial(SHARE_MEDIA media){
 			Log.e(Tag, "content  " + editContent + "  " + content);
 			MaimobApplication.mController.setShareContent(editContent + "~~~~~" + content + "~~~~来自大麦段子");
-			if (imgUri != null || !imgUri.equals("")) {
-				MaimobApplication.mController.setShareMedia(new UMImage(getActivity(), imgUri));
-			}
 			MaimobApplication.mController.directShare(getActivity(), media, new SnsPostListener() {
 				
 				@Override

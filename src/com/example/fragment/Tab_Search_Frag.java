@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 public class Tab_Search_Frag extends Fragment implements OnClickListener {
 
-	private String Tag = "XWKKX";
+	private String Tag = "Tab_Search_Frag";
 	private View view;
 	private CustomImage trash, sex, neihan, funny, skip;
 	private TextView textView;
@@ -50,6 +50,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		Log.e(Tag, "Tab_Search_Frag");
 		view = inflater.inflate(R.layout.my_check, container, false);
 		return view;
 	}

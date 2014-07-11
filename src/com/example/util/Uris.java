@@ -162,5 +162,5 @@ public final class Uris {
 	
 	
 	public static int MSG_UPDATE = 1;
-	public static int MSG_GETDATA = 2;
+	public static int MSG_GETDATA = 2222;//获取服务器上的数据
 }

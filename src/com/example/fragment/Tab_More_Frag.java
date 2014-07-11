@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adapter.DuanZiAdapter;
+import com.example.adapter.XAdapter;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.More_Help;
 import com.example.fragment.content.More_feedback;
+import com.example.fragment.content.My_Favorite;
+import com.example.fragment.content.My_Write;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 
@@ -100,16 +103,16 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 				// TODO Auto-generated method stub
 				if (checkedId == R.id.radio0) {
 					Toast.makeText(getActivity(), "Ð¡", Toast.LENGTH_SHORT).show();
-					DuanZiAdapter.fontSize = 14;
-					DuanZiAdapter.SetNormal();
+					XAdapter.fontSize = 14;
+					XAdapter.SetNormal();
 				}else if (checkedId == R.id.radio1) {
 					Toast.makeText(getActivity(), "ÖÐ", Toast.LENGTH_SHORT).show();
-					DuanZiAdapter.fontSize = 18;
-					DuanZiAdapter.SetNormal();
+					XAdapter.fontSize = 18;
+					XAdapter.SetNormal();
 				}else if (checkedId == R.id.radio2) {
 					Toast.makeText(getActivity(), "´ó", Toast.LENGTH_SHORT).show();
-					DuanZiAdapter.fontSize = 22;
-					DuanZiAdapter.SetNormal();
+					XAdapter.fontSize = 22;
+					XAdapter.SetNormal();
 				}
 			}
 		});
@@ -152,7 +155,9 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		case R.id.more_contact:
 			More_Contact contact = new More_Contact();
 			switchFragment(this,contact);
-			Toast.makeText(getActivity(), "more_contact", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getActivity(), "more_contact", Toast.LENGTH_SHORT).show();
+//			My_Favorite favorite = new My_Favorite();
+//			switchFragment(this, favorite);
 			break;
 		default:
 			break;

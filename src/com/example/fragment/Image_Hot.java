@@ -58,17 +58,11 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 				String json = data.getString("json");
 				Log.i("YYY", "json  img  " + json);
 				SetListData(json);
-//				JSONArray array = new JSONArray(data.getString("json"));
-//				adapter = new DuanZiAdapter(handler,DuanZi_Hot.mController,Image_Hot.this, getActivity(), array);
-//				adapter = new DuanZiAdapter(Image_Hot.this,getActivity(), array);
-//				listView.setAdapter(adapter);
 		}
 	};
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-//		TestAdapter adapter = new TestAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
-//		PicAdapter adapter = new PicAdapter(list, handler, DuanZi_Hot.mController, this, getActivity());
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}

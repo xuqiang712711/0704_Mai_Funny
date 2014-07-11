@@ -35,6 +35,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -314,8 +315,19 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 	}
 
 	public void switchFragment(Fragment from, Fragment to, Bundle bundle) {
-		XYFTEST xyftest = (XYFTEST) context;
-		xyftest.switchContentFullwithBundle(from, to, bundle);
+		if (context == null) {
+			return;
+		}
+		if (context instanceof XYFTEST) {
+			XYFTEST xyftest = (XYFTEST) context;
+			xyftest.switchContentFullwithBundle(from, to, bundle);
+		}
+	}
+	
+	public static void SetNormal(){
+		Message msg = Message.obtain();
+		msg.what = 313;
+		mHandler.sendMessage(msg);
 	}
 
 }

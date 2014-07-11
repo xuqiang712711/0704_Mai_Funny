@@ -1,7 +1,7 @@
 package com.example.fragment;
 
+import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
-import com.example.fragment.content.My_Comment;
 import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Message;
 import com.example.fragment.content.My_Publish;
@@ -72,7 +72,7 @@ private TextView edit;
 	}
 	
 	/**
-	 * …Ë÷√widgetµƒ—˘ Ω
+	 * ËÆæÁΩÆwidgetÁöÑÊ†∑Âºè
 	 * @param layout
 	 * @param textID
 	 * @param ImageID
@@ -138,8 +138,10 @@ private TextView edit;
 			Toast.makeText(getActivity(), "my_publish", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_favorite_new:
-			My_Favorite favorite = new My_Favorite();
-			switchFragment(this, favorite);
+//			My_Favorite favorite = new My_Favorite();
+//			switchFragment(this, favorite);
+			More_Contact contact = new More_Contact();
+			switchFragment(this,contact);
 			Toast.makeText(getActivity(), "my_favorite", Toast.LENGTH_SHORT).show();
 			break;
 		}
@@ -154,4 +156,5 @@ private TextView edit;
 			xyf.switchContentFull(from, to);
 		}
 	}
+	
 }

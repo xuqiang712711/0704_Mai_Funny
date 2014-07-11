@@ -52,7 +52,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	private ListView listView;
 	private int[] icon = {R.drawable.game, R.drawable.game, R.drawable.game,R.drawable.game};
 	private SwipeRefreshLayout refreshLayout;
-	private DuanZiAdapter adapter;
+	private XAdapter adapter;
 	private Dialog dialog;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,11 +109,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	}
 	
 	private void updateListView(String json){
-//		adapter = new DuanZiAdapter(handler,mController,DuanZi_Hot.this, getActivity(), array);
-//		listView.setAdapter(adapter);
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-//		TextAdapter adapter = new TextAdapter(list, handler, mController, DuanZi_Hot.this, getActivity());
-		XAdapter adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	

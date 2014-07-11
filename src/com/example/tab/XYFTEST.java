@@ -1,5 +1,6 @@
 package com.example.tab;
 
+import com.example.fragment.DuanZi_Hot;
 import com.example.fragment.Tab_DuanZi_Frag;
 import com.example.fragment.Tab_Image_Frag2;
 import com.example.fragment.Tab_More_Frag;
@@ -19,11 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class XYFTEST extends FragmentActivity implements OnClickListener {
+	 private String Tag = "MainActivity";
 	 private Tab_DuanZi_Frag Frag_duanzi;
 	 private Tab_Image_Frag2 Frag_image;
 	 private Tab_More_Frag Frag_more;
 	 private Tab_My_Frag_New Frag_my;
 	 private Tab_Search_Frag Frag_search;
+	 private DuanZi_Hot duanZi_Hot;
 
 	private RelativeLayout c1, c2, c3, c4, c5;
 	private LinearLayout mTab_item_container, content_container,
@@ -186,24 +189,28 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		FragmentTransaction ft = fm.beginTransaction();
 		to.setArguments(bundle);
 		if (from != to) {
+			Log.e(Tag, "First");
 			if (to.isAdded()) {
+				Log.e(Tag, "Sec");
 				ft.hide(from).show(to).commit();
 			}else {
 				ft.hide(from).add(R.id.content_container2, to).addToBackStack(null).commit();
-				Log.i("XXX", "add");
+				Log.i(Tag, "add With Bundle");
 			}
 		}
 	}
 
 	public void switchContentFull(Fragment from, Fragment to) {
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
+		FragmentManager fm2 = getSupportFragmentManager();
+		FragmentTransaction ft2 = fm2.beginTransaction();
 		if (from != to) {
+			Log.e(Tag, "First");
 			if (to.isAdded()) {
-				ft.hide(from).show(to).commit();
+				Log.e(Tag, "Sec");
+				ft2.hide(from).show(to).commit();
 			}else {
-				ft.hide(from).add(R.id.content_container2, to).addToBackStack(null).commit();
-				Log.i("XXX", "add");
+				ft2.hide(from).add(R.id.content_container2, to).addToBackStack(null).commit();
+				Log.i(Tag, "add");
 			}
 		}
 	}

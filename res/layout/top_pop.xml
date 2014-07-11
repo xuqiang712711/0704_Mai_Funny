@@ -12,6 +12,7 @@
         android:textColor="@color/white" />
 
     <View
+        android:layout_centerHorizontal="true"
         android:id="@+id/top_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"

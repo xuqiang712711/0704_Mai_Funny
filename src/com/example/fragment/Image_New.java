@@ -9,8 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.example.AsyTask.MyAsyTask;
+import com.example.AsyTask.RequestData;
 import com.example.adapter.DuanZiAdapter;
+import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
+import com.example.object.Duanzi;
+import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
@@ -41,16 +45,8 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			Bundle data = msg.getData();
-			try {
-				JSONArray array = new JSONArray(data.getString("json"));
-				adapter = new DuanZiAdapter(handler,MaimobApplication.mController,Image_New.this, getActivity(), array);
-//				adapter = new DuanZiAdapter(Image_New.this,getActivity(), array);
-				listView.setAdapter(adapter);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			String json = (String) msg.obj;
+			SetListData(json);
 		}
 	};
 	
@@ -62,8 +58,9 @@ public class Image_New extends Fragment implements OnRefreshListener{
 //		return super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
 		initView();
-		MyAsyTask asyTask = new MyAsyTask(handler);
-		asyTask.execute(Uris.Img_uri);
+		
+		RequestData data = new RequestData(handler);
+		data.execute(Uris.Img_uri);
 		return view;
 	}
 	
@@ -76,35 +73,20 @@ public class Image_New extends Fragment implements OnRefreshListener{
 		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);
 	}
 	
+	private void SetListData(String json){
+		List<Duanzi> list = setDuanziData.getListDuanzi(json);
+		XAdapter adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+		listView.setAdapter(adapter);
+	}
+	
 	private void setData(){
 		ImageUris = Uris.IMAGES;
-		data = new ArrayList<Map<String,Object>>();
-		for (int i = 0; i < ImageUris.length; i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("content" + i, String.valueOf(i));
-			map.put("image" + i, ImageUris[i]);
-			data.add(map);
-		}
 	}
 	private void initView(){
 		setData();
 		
-//		options = new DisplayImageOptions.Builder()
-//		.showImageOnLoading(R.drawable.maimob)
-//		.showImageForEmptyUri(R.drawable.maimob)
-//		.showImageOnFail(R.drawable.maimob)
-//		.cacheInMemory(true)
-//		.cacheOnDisk(true)
-//		.considerExifParams(true)
-//		.displayer(new SimpleBitmapDisplayer())
-//		.bitmapConfig(Config.RGB_565)
-//		.build();
 		
 		listView = (ListView)view.findViewById(R.id.listview);
-//		MyAdapter adapter = new MyAdapter(data, getActivity(), options);
-//		listView.setAdapter(adapter);
-//		ImageAdapter adapter = new ImageAdapter(Tab_Image_Frag.this, getActivity(), data, options);
-//		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

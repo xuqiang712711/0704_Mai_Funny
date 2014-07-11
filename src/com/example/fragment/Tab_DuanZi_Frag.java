@@ -68,7 +68,10 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		text_hot.setOnClickListener(this);
 		text_new = (TextView)PopView.findViewById(R.id.top_new);
 		text_new.setOnClickListener(this);
-		pop = new PopupWindow(PopView, 400, LayoutParams.WRAP_CONTENT, true);
+		DisplayMetrics metrics = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int width = metrics.widthPixels/3;
+		pop = new PopupWindow(PopView, width, LayoutParams.WRAP_CONTENT, true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 	}
 	

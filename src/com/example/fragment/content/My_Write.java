@@ -60,6 +60,7 @@ import com.example.util.StringUtils;
 import com.example.util.Uris;
 
 public class My_Write extends Fragment {
+	private String Tag = "My_Write";
 	private View view;
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_FILE = 2;
@@ -82,6 +83,7 @@ public class My_Write extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.my_write, container, false);
+		Log.e(Tag, Tag);
 		return view;
 	}
 	@Override

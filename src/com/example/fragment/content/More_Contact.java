@@ -1,21 +1,16 @@
 package com.example.fragment.content;
 
-import org.w3c.dom.Text;
 
-import com.example.fragment.Tab_More_Frag;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.TextView;
 
-public class More_Contact extends Fragment implements OnClickListener{
+public class More_Contact extends Fragment{
 	private View view;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +23,7 @@ public class More_Contact extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		initView();
+//		initView();
 	}
 	
 	private void initView(){
@@ -37,22 +32,4 @@ public class More_Contact extends Fragment implements OnClickListener{
 //		view.findViewById(R.id.back2_back).setOnClickListener(this);
 	}
 	
-	public void switchFragment(Fragment from , Fragment to){
-		if (getActivity() == null) {
-			return;
-		}
-		if (getActivity() instanceof XYFTEST) {
-			XYFTEST xyf = (XYFTEST) getActivity();
-			xyf.switchContentFull(from, to);
-		}
-	}
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-
-		default:
-			break;
-		}
-	}
 }

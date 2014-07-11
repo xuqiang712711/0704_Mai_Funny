@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.example.AsyTask.MyTask_No_Result;
 import com.example.fragment.content.DuanZI_UserInfo;
 import com.example.fragment.content.DuanZi_Comment;
-import com.example.fragment.content.DuanZi_More;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.tab.R;
 import com.example.tab.R.layout;
@@ -364,7 +363,6 @@ public class DuanZiAdapter extends BaseAdapter implements OnClickListener {
 			switchFragment(mFragment, comment4, bundle);
 			break;
 		case R.id.duanzi_more:
-			DuanZi_More more = new DuanZi_More();
 			// mcontext.switchFragment(mcontext,more);
 			try {
 				UMShare(((JSONObject)getItem(position)).getString("content"), ((JSONObject)getItem(position)).getString("img"));

@@ -14,20 +14,26 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.QZoneSsoHandler;
 
+import android.R.anim;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class MaimobApplication extends Application{
 	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
             RequestType.SOCIAL);
+	public static boolean Jelly_Bean;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		initImageLoader(getApplicationContext());
+		Jelly_Bean = Version();
 	}
 	public static int page = 1;
 	public static int count = 5;
@@ -57,4 +63,15 @@ public class MaimobApplication extends Application{
 		Log.i("XXX", "uuid  " + Uris.uuid);
 		
 	}
+	
+	public static boolean Version (){
+		int num = android.os.Build.VERSION.SDK_INT;
+		int ice = android.os.Build.VERSION_CODES.JELLY_BEAN;
+		if (num > ice) {
+			return true;
+		}
+			return false;
+	}
+	
+
 }
