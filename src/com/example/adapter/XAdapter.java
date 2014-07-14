@@ -32,6 +32,7 @@ import com.umeng.socialize.media.UMImage;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,8 +43,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -160,6 +163,8 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			holder.image.setVisibility(View.GONE);
 			holder.gif.setVisibility(View.VISIBLE);
 			imageLoader.displayImage(imgUri, holder.gif, options);
+//			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 4);
+//			convertView.setLayoutParams(params);
 			Log.e(TAG, "GIF");
 		}else {
 			holder.gif.setVisibility(View.GONE);

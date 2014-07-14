@@ -1,8 +1,14 @@
 package com.example.fragment.content;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,7 +28,9 @@ import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.umeng.socialize.controller.utils.ToastUtil;
 
 public class DuanZi_Comment extends Fragment implements OnClickListener{
@@ -33,6 +41,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private TextView content;
 	private DisplayImageOptions options;
 	private Duanzi duanzi;
+	private GifImageView gif;
+	private ImageLoader imageLoader;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -53,13 +63,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		TextView textView = (TextView)view.findViewById(R.id.back2_text);
 		textView.setText(getResources().getString(R.string.app_name));
 		
-		options = new DisplayImageOptions.Builder()
-		.showImageOnLoading(R.drawable.maimob)
-		.showImageForEmptyUri(R.drawable.maimob)
-		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
-		.cacheOnDisk(true).considerExifParams(true)
-		.displayer(new SimpleBitmapDisplayer()).build();
-		
+		gif = (GifImageView)view.findViewById(R.id.mitem_test_gif);
 		user_icon = (ImageView)view.findViewById(R.id.mitem_icon);
 		user_name = (TextView)view.findViewById(R.id.mitem_username);
 		content = (TextView)view.findViewById(R.id.mitem_test_content);
@@ -96,12 +100,25 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		Zan.setOnClickListener(this);
 		Hot.setOnClickListener(this);
 		More.setOnClickListener(this);
+		gif.setOnClickListener(this);
 		
-		
-		if (duanzi.getImageUrl() != null) {
+		String imgUri = duanzi.getImageUrl();
+		Log.e(Tag, "Imguri  " + imgUri);
+		if (image != null && !imgUri.equals("")) {
+			options = new DisplayImageOptions.Builder()
+			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+			.showImageOnLoading(R.drawable.maimob)
+			.showImageForEmptyUri(R.drawable.maimob)
+			.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
+			.cacheOnDisk(true).considerExifParams(true)
+			.displayer(new SimpleBitmapDisplayer()).build();
 			image.setVisibility(View.VISIBLE);
-			ImageLoader imageLoader = ImageLoader.getInstance();
-			imageLoader.displayImage(duanzi.getImageUrl(), image, options);
+			imageLoader = ImageLoader.getInstance();
+			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
+				imageLoader.displayImage(duanzi.getImageUrl(), gif, options);
+			}else {
+				imageLoader.displayImage(duanzi.getImageUrl(), image, options);
+			}
 		}
 		
 	}
@@ -130,6 +147,17 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			break;
 		case R.id.bottom_zan:
 			duanzi.CanPress(Duanzi.ZAN, ((TextView)v), getActivity());
+			break;
+		case R.id.mitem_test_gif:
+			File cache = DiskCacheUtils.findInCache(duanzi.getImageUrl(), imageLoader.getDiskCache());
+			try {
+				Log.e(Tag, "xwkkx");
+				GifDrawable gifDrawable = new GifDrawable(cache);
+				((GifImageView)v).setImageDrawable(gifDrawable);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		}
 	}

@@ -6,6 +6,7 @@ import com.example.fragment.Tab_Image_Frag2;
 import com.example.fragment.Tab_More_Frag;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.fragment.Tab_Search_Frag;
+import com.example.fragment.content.My_Write;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,7 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 private Tab_More_Frag Frag_more;
 	 private Tab_My_Frag_New Frag_my;
 	 private Tab_Search_Frag Frag_search;
-	 private DuanZi_Hot duanZi_Hot;
+	 private My_Write my_Write;
 
 	private RelativeLayout c1, c2, c3, c4, c5;
 	private LinearLayout mTab_item_container, content_container,
@@ -100,11 +101,17 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		case 3:
 //			c3.setBackgroundResource(R.color.duanzi_comment);
 //			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (Frag_search == null) {
-				Frag_search = new Tab_Search_Frag();
-				fragtrain.add(R.id.content_container, Frag_search);
-			} else {
-				fragtrain.show(Frag_search);
+//			if (Frag_search == null) {
+//				Frag_search = new Tab_Search_Frag();
+//				fragtrain.add(R.id.content_container, Frag_search);
+//			} else {
+//				fragtrain.show(Frag_search);
+//			}
+			if (my_Write == null) {
+				my_Write = new My_Write();
+				fragtrain.add(R.id.content_container,my_Write);
+			}else {
+				fragtrain.show(my_Write);
 			}
 			break;
 		case 4:
@@ -147,6 +154,9 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		}
 		if (Frag_search != null) {
 			fragtrain.hide(Frag_search);
+		}
+		if (my_Write !=null) {
+			fragtrain.hide(my_Write);
 		}
 	}
 

@@ -15,7 +15,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.AsyTask.MyAsyTask;
+import com.example.AsyTask.RequestDataTask;
 import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
@@ -54,10 +54,9 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			Bundle data = msg.getData();
-				String json = data.getString("json");
-				Log.i("YYY", "json  img  " + json);
-				SetListData(json);
+			String json = (String) msg.obj;
+			Log.i("YYY", "json  img  " + json);
+			SetListData(json);
 		}
 	};
 	
@@ -75,9 +74,14 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 //		return super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
 		initView();
-		MyAsyTask asyTask = new MyAsyTask(handler);
-		asyTask.execute(Uris.Img_uri);
+		
+		initHttp();
 		return view;
+	}
+	
+	private void initHttp(){
+		RequestDataTask mTask = new RequestDataTask(handler);
+		mTask.execute(Uris.Img_uri);
 	}
 	
 	@Override
@@ -149,8 +153,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
-				MyAsyTask asyTask = new MyAsyTask(handler);
-				asyTask.execute(Uris.Img_uri);
+				initHttp();
 				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
 				adapter.notifyDataSetChanged();
 			}

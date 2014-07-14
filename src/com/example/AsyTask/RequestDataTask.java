@@ -16,9 +16,9 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
-public class RequestData extends AsyncTask<String, Void, String>{
+public class RequestDataTask extends AsyncTask<String, Void, String>{
 	private Handler mHandler;
-	public RequestData(Handler handler){
+	public RequestDataTask(Handler handler){
 		this.mHandler = handler;
 	}
 	@Override

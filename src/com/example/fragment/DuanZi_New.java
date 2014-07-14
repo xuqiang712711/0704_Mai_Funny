@@ -15,7 +15,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.AsyTask.RequestData;
+import com.example.AsyTask.RequestDataTask;
 import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
@@ -93,7 +93,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	
 	private void inithttp(){
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
-		RequestData requestData = new RequestData(mHandler);
+		RequestDataTask requestData = new RequestDataTask(mHandler);
 		requestData.execute(postUri);
 	}
 	

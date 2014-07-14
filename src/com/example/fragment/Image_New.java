@@ -8,8 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.AsyTask.MyAsyTask;
-import com.example.AsyTask.RequestData;
+import com.example.AsyTask.RequestDataTask;
 import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
@@ -59,7 +58,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
 		initView();
 		
-		RequestData data = new RequestData(handler);
+		RequestDataTask data = new RequestDataTask(handler);
 		data.execute(Uris.Img_uri);
 		return view;
 	}
@@ -118,8 +117,8 @@ public class Image_New extends Fragment implements OnRefreshListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
-				MyAsyTask asyTask = new MyAsyTask(handler);
-				asyTask.execute(Uris.Img_uri);
+				RequestDataTask data = new RequestDataTask(handler);
+				data.execute(Uris.Img_uri);
 				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
 				adapter.notifyDataSetChanged();
 			}

@@ -6,13 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.AsyTask.MyAsyTask;
 import com.example.AsyTask.MyTask_No_Result;
+import com.example.AsyTask.RequestDataTask;
 import com.example.tab.R;
 import com.example.util.CustomImage;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 import android.os.Bundle;
@@ -69,6 +70,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		title.setText(R.string.my_check);
 		
 		options = new DisplayImageOptions.Builder()
+				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 				.showImageOnLoading(R.drawable.maimob)
 				.showImageForEmptyUri(R.drawable.maimob)
 				.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
@@ -99,8 +101,11 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 
 	private void initHttp() {
 		String check = Uris.Check + "/uuid/" + Uris.uuid + "/maxID/" + 0;
-		MyAsyTask asyTask = new MyAsyTask(handler);
-		asyTask.execute(check);
+		Log.i(Tag, check);
+//		MyAsyTask asyTask = new MyAsyTask(handler);
+//		asyTask.execute(check);
+		RequestDataTask mTask = new RequestDataTask(handler);
+		mTask.execute(check);
 	}
 
 	private void listenerWidget() {
@@ -113,16 +118,15 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-
 			switch (msg.what) {
 			case 1:
 				num = (int) ((Math.random()) * array.length());
 				break;
 
-			case 2:
-				Bundle data = msg.getData();
+			default:
+				String data = (String) msg.obj;
 				try {
-					array = new JSONArray(data.getString("json"));
+					array = new JSONArray(data);
 					Log.i(Tag, "Check_array  " + array);
 					num = (int) ((Math.random()) * array.length());
 					// JSONObject jsonObject = new
@@ -133,13 +137,14 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 				}
 				break;
 			}
+			
 			Log.i(Tag, "Num  " + num);
 			String text = null;
 			String img = null;
 			try {
 				text = ((JSONObject) array.get(num)).getString("content");
 				img = ((JSONObject) array.get(num)).getString("img");
-				pid = ((JSONObject)array.get(num)).getInt("id");
+				pid = ((JSONObject) array.get(num)).getInt("id");
 				textView.setText(text);
 				ImageLoader imageLoader = ImageLoader.getInstance();
 				if (img != null && !img.equals("")) {

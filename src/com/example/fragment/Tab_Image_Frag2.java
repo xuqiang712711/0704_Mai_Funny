@@ -20,9 +20,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	private Image_Hot image_Hot;
-	private Image_Essence image_Essence;
 	private Image_New image_New;
-	private Image_Recommend image_Recommend;
 	private RelativeLayout R1,R2,R3,R4;
 	private TextView textView, text_new, text_hot;
 	private PopupWindow pop;// 0710Ìí¼Ó
@@ -111,75 +109,12 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 		}
 	}
 	
-	protected void selectTab(int index){
-		clearTab();
-		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-		hideFrag(ft);
-		
-		switch (index) {
-		case 1:
-			R1.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (image_Hot == null) {
-				image_Hot = new Image_Hot();
-				ft.add(R.id.duanzi_container, image_Hot);
-			}else {
-				ft.show(image_Hot);
-			}
-			break;
-
-		case 2:
-			R2.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (image_Recommend == null) {
-				image_Recommend = new Image_Recommend();
-				ft.add(R.id.duanzi_container, image_Recommend);
-			}else {
-				ft.show(image_Recommend);
-			}
-			break;
-			
-		case 3:
-			R3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (image_Essence == null) {
-				image_Essence = new Image_Essence();
-				ft.add(R.id.duanzi_container, image_Essence);
-			}else {
-				ft.show(image_Essence);
-			}
-			break;
-			
-		case 4:
-			R4.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-			if (image_New == null) {
-				image_New = new Image_New();
-				ft.add(R.id.duanzi_container, image_New);
-			}else {
-				ft.show(image_New);
-			}
-			break;
-		}
-		ft.commit();
-	}
-	
-	
-	private void clearTab(){
-		R1.setBackgroundResource(0);
-		R2.setBackgroundResource(0);
-		R3.setBackgroundResource(0);
-		R4.setBackgroundResource(0);
-	}
-	
 	private void hideFrag(FragmentTransaction ft){
-		if (image_Essence != null) {
-			ft.hide(image_Essence);
-		}
 		if (image_Hot != null) {
 			ft.hide(image_Hot);
 		}
 		if (image_New != null) {
 			ft.hide(image_New);
-		}
-		if (image_Recommend != null) {
-			ft.hide(image_Recommend);
 		}
 	}
 

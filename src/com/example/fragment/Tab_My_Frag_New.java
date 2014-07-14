@@ -112,7 +112,8 @@ private TextView edit;
 		case R.id.my_activity_new:
 			break;
 		case R.id.my_check_new:
-			My_Check check = new My_Check();
+//			My_Check check = new My_Check();
+			Tab_Search_Frag check = new Tab_Search_Frag();
 			switchFragment(this, check);
 			Toast.makeText(getActivity(), "my_check", Toast.LENGTH_SHORT).show();
 			break;

@@ -86,7 +86,7 @@ Fragment之间的通讯依赖Activity使用接口管理并通知
     <string name="more_text_dark">夜间模式</string>
     <string name="more_text_net">2G/3G图片显示模式</string>
     <string name="more_text_push">精彩段子推送</string>
-    <string name="more_text_cache">清楚缓存</string>
+    <string name="more_text_cache">清除缓存</string>
     <string name="more_text_contact">联系我们</string>
     <string name="more_text_help">帮助</string>
     <string name="more_suggest">意见反馈</string>

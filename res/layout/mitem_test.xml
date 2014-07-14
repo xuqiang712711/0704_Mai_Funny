@@ -5,8 +5,12 @@
     android:orientation="vertical"
     android:background="@color/greenyellow" >
 
-    <include layout="@layout/mitem_top"/>
+    <include
+        layout="@layout/mitem_top"/>
 
-	<include 
-	    layout="@layout/mitem_bottom"/>
+	<include
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    layout="@layout/mitem_bottom" />
+
 </LinearLayout>
