@@ -35,11 +35,24 @@
 	    android:id="@+id/mitem_test_img"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"/>
-	<pl.droidsonroids.gif.GifImageView
-	    android:adjustViewBounds="true"
-	    android:scaleType="fitStart"
-        android:id="@+id/mitem_test_gif"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+	<FrameLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/mitem_test_gif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart" />
+        <ImageView 
+            android:id="@+id/hint_img"
+            android:visibility="gone"
+            android:contentDescription="@null"
+            android:src="@drawable/mai_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+	</FrameLayout>
+	
 
 </LinearLayout>

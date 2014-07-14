@@ -6,20 +6,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-import com.example.AsyTask.MyTask_No_Result;
+import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
-import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -32,7 +30,6 @@ import com.umeng.socialize.media.UMImage;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,10 +40,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AbsListView.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -141,6 +137,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			holder.cai = (TextView) convertView.findViewById(R.id.bottom_cai);
 			holder.hot = (TextView) convertView.findViewById(R.id.bottom_hot);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
+			holder.hint_img = (ImageView)convertView.findViewById(R.id.hint_img);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder)convertView.getTag();
@@ -156,21 +153,33 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		
 		imageLoader = ImageLoader.getInstance();
 		if (imgUri.equals("") || imgUri == null) {
+			holder.hint_img.setVisibility(View.GONE);
 			holder.image.setVisibility(View.GONE);
 			holder.gif.setVisibility(View.GONE);
+			AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+					AbsListView.LayoutParams.MATCH_PARENT);
+			convertView.setLayoutParams(params);
 			Log.e(TAG, "Text");
 		}else if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
+			holder.hint_img.setVisibility(View.VISIBLE);
 			holder.image.setVisibility(View.GONE);
 			holder.gif.setVisibility(View.VISIBLE);
+			File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(), imageLoader.getDiskCache());
+			int h = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
+			AbsListView.LayoutParams params = new AbsListView.LayoutParams(MaimobApplication.DeviceW,
+					h+200);
+			convertView.setLayoutParams(params);
 			imageLoader.displayImage(imgUri, holder.gif, options);
-//			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 4);
-//			convertView.setLayoutParams(params);
 			Log.e(TAG, "GIF");
 		}else {
+			holder.hint_img.setVisibility(View.GONE);
 			holder.gif.setVisibility(View.GONE);
 			holder.image.setVisibility(View.VISIBLE);
 			imageLoader.displayImage(imgUri, holder.image, options);
 			Log.e(TAG, "image");
+			AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+					AbsListView.LayoutParams.MATCH_PARENT);
+			convertView.setLayoutParams(params);
 		}
 		
 		if (duanzi.isZanPressed()== true) {
@@ -198,7 +207,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 	 * @param holder
 	 * @param position
 	 */
-	public void AddListen(ViewHolder holder, int position){
+	public void AddListen(final ViewHolder holder, final int position){
 		holder.cai.setTag(position);
 		holder.cai.setOnClickListener(this);
 		holder.zan.setTag(position);
@@ -209,8 +218,27 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		holder.more.setOnClickListener(this);
 		holder.image.setTag(position);
 		holder.image.setOnClickListener(this);
-		holder.gif.setTag(position);
-		holder.gif.setOnClickListener(this);
+//		holder.gif.setTag(position);
+//		holder.gif.setOnClickListener(this);
+//		holder.hint_img.setTag(position);
+//		holder.hint_img.setOnClickListener(this);
+		holder.gif.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				holder.hint_img.setVisibility(View.GONE);
+				File cache = DiskCacheUtils.findInCache(mdata.get(position)
+						.getImageUrl(), imageLoader.getDiskCache());
+				try {
+					GifDrawable gifDrawable = new GifDrawable(cache);
+					((GifImageView)v).setImageDrawable(gifDrawable);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		//未对头像、用户名进行监听
 	}
@@ -220,7 +248,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		ImageView user_icon, more,image;
 		TextView user_name, content, comment;
 		TextView cai, zan, hot;
-		ImageView cai_img, zan_img;
+		ImageView cai_img, zan_img, hint_img;
 	}
 
 	@Override
@@ -232,18 +260,15 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		bundle.putSerializable("duanzi", duanzi);
 		switch (v.getId()) {
 		case R.id.mitem_test_gif:
-			File cache = DiskCacheUtils.findInCache(mdata.get(position)
-					.getImageUrl(), imageLoader.getDiskCache());
-			try {
-				GifDrawable gifDrawable = new GifDrawable(cache);
-				((GifImageView)v).setImageDrawable(gifDrawable);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			Log.e(TAG, "mitem_test_gif");
+			
 			
 			break;
-
+		case R.id.hint_img:
+			Log.e(TAG, "hint_img");
+//			((ImageView)v).setVisibility(View.GONE);
+			
+			break;
 		case R.id.mitem_test_img:
 
 			break;

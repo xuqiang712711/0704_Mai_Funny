@@ -67,4 +67,5 @@ public class BitmapOptions {
 		options.inJustDecodeBounds = false;
 		return reqHeight;
 	}
+	
 }

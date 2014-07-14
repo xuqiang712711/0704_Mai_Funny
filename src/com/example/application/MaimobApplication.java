@@ -28,12 +28,15 @@ public class MaimobApplication extends Application{
 	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
             RequestType.SOCIAL);
 	public static boolean Jelly_Bean;
+	public static int DeviceW ;
+	public static int DeviceH;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		initImageLoader(getApplicationContext());
 		Jelly_Bean = Version();
+		
 	}
 	public static int page = 1;
 	public static int count = 5;
@@ -72,6 +75,5 @@ public class MaimobApplication extends Application{
 		}
 			return false;
 	}
-	
 
 }

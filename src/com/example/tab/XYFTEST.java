@@ -1,5 +1,6 @@
 package com.example.tab;
 
+import com.example.application.MaimobApplication;
 import com.example.fragment.DuanZi_Hot;
 import com.example.fragment.Tab_DuanZi_Frag;
 import com.example.fragment.Tab_Image_Frag2;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,6 +42,10 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.main);
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		MaimobApplication.DeviceW = dm.widthPixels;
+		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
 		selectTab(1);
 	}
