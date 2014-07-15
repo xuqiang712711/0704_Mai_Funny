@@ -170,7 +170,7 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		}
 		if (getActivity() instanceof XYFTEST) {
 			XYFTEST xyf = (XYFTEST) getActivity();
-			xyf.switchContentFull(from, to);
+			xyf.switchContentFull(from, to, null);
 		}
 	}
 }

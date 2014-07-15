@@ -17,10 +17,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 private String Tag = "MainActivity";
@@ -35,6 +37,7 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	private LinearLayout mTab_item_container, content_container,
 			content_container2;
 
+	private long exitTime = 0;
 //	private FragmentManager fm;
 //	private FragmentTransaction fragtrain;
 	@Override
@@ -199,7 +202,12 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 
 		}
 	}
-	
+	/**
+	 * FragmentÇÐ»»£¬´ø²ÎÊý
+	 * @param from
+	 * @param to
+	 * @param bundle
+	 */
 	public void switchContentFullwithBundle(Fragment from, Fragment to, Bundle bundle) {
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
@@ -215,8 +223,15 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			}
 		}
 	}
-
-	public void switchContentFull(Fragment from, Fragment to) {
+	/**
+	 * FragmentÇÐ»»
+	 * @param from
+	 * @param to
+	 */
+	public void switchContentFull(Fragment from, Fragment to, Bundle bundle) {
+		if (bundle != null) {
+		to.setArguments(bundle);
+		}
 		FragmentManager fm2 = getSupportFragmentManager();
 		FragmentTransaction ft2 = fm2.beginTransaction();
 		if (from != to) {
@@ -231,5 +246,4 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		}
 	}
 	
-
 }

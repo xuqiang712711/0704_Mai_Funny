@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,14 +25,13 @@ import android.webkit.WebView.FindListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 //	private Fragment duanzi_hot;
 	private DuanZi_Hot duanZi_Hot;
-	private Duanzi_Recommend duanzi_Recommend;
-	private DuanZI_Essence duanZI_Essence;
 	private DuanZi_New duanZi_New;
 	private RelativeLayout R1,R2,R3,R4;
 	private LinearLayout layout;
@@ -108,14 +108,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	}
 	
 	private void hideFrag(FragmentTransaction ft){
-		if (duanzi_Recommend != null) {
-			ft.hide(duanzi_Recommend);
-		}
 		if (duanZi_Hot != null) {
 			ft.hide(duanZi_Hot);
-		}
-		if (duanZI_Essence != null) {
-			ft.hide(duanZI_Essence);
 		}
 		if (duanZi_New != null) {
 			ft.hide(duanZi_New);

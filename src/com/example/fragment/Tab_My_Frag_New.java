@@ -154,7 +154,7 @@ private TextView edit;
 		}
 		if (getActivity() instanceof XYFTEST) {
 			XYFTEST xyf = (XYFTEST) getActivity();
-			xyf.switchContentFull(from, to);
+			xyf.switchContentFull(from, to , null);
 		}
 	}
 	

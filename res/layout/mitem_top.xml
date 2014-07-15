@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/my_back" >
+    android:orientation="vertical">
     <LinearLayout
         android:layout_margin="5dp"
         android:layout_width="match_parent"
@@ -25,6 +24,7 @@
     </LinearLayout>
     
     <TextView
+        android:background="#699669"
         android:layout_margin="10dp"
         android:id="@+id/mitem_test_content"
         android:layout_width="match_parent"
@@ -39,19 +39,19 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent">
         <pl.droidsonroids.gif.GifImageView
+            android:scaleType="fitStart"
+            android:adjustViewBounds="true"
             android:id="@+id/mitem_test_gif"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitStart" />
+            android:layout_height="match_parent" />
         <ImageView 
-            android:id="@+id/hint_img"
+            android:id="@+id/mitem_hint_img"
             android:visibility="gone"
+            android:layout_gravity="center"
             android:contentDescription="@null"
             android:src="@drawable/mai_favorite"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:layout_height="wrap_content"/>
 	</FrameLayout>
 	
 

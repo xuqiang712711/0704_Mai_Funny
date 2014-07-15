@@ -137,7 +137,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 			holder.cai = (TextView) convertView.findViewById(R.id.bottom_cai);
 			holder.hot = (TextView) convertView.findViewById(R.id.bottom_hot);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
-			holder.hint_img = (ImageView)convertView.findViewById(R.id.hint_img);
+			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder)convertView.getTag();
@@ -150,36 +150,37 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		String cai = duanzi.getCai();
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
-		
 		imageLoader = ImageLoader.getInstance();
-		if (imgUri.equals("") || imgUri == null) {
-			holder.hint_img.setVisibility(View.GONE);
-			holder.image.setVisibility(View.GONE);
-			holder.gif.setVisibility(View.GONE);
-			AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-					AbsListView.LayoutParams.MATCH_PARENT);
-			convertView.setLayoutParams(params);
-			Log.e(TAG, "Text");
-		}else if ((imgUri.substring(imgUri.length() - 3, imgUri.length())).equals("gif")) {
-			holder.hint_img.setVisibility(View.VISIBLE);
-			holder.image.setVisibility(View.GONE);
-			holder.gif.setVisibility(View.VISIBLE);
-			File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(), imageLoader.getDiskCache());
-			int h = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
-			AbsListView.LayoutParams params = new AbsListView.LayoutParams(MaimobApplication.DeviceW,
-					h+200);
-			convertView.setLayoutParams(params);
-			imageLoader.displayImage(imgUri, holder.gif, options);
-			Log.e(TAG, "GIF");
-		}else {
-			holder.hint_img.setVisibility(View.GONE);
-			holder.gif.setVisibility(View.GONE);
-			holder.image.setVisibility(View.VISIBLE);
-			imageLoader.displayImage(imgUri, holder.image, options);
-			Log.e(TAG, "image");
-			AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-					AbsListView.LayoutParams.MATCH_PARENT);
-			convertView.setLayoutParams(params);
+		if (!imgUri.equals("") && imgUri != null) {
+			Log.e(TAG, "img  " + imgUri);
+			if ((imgUri.substring(imgUri.length() - 3, imgUri.length()))
+					.equals("gif")) {
+				holder.hint_img.setVisibility(View.VISIBLE);
+				holder.image.setVisibility(View.GONE);
+				holder.gif.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(imgUri, holder.gif, options);
+				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
+						imageLoader.getDiskCache());
+				Log.e(TAG, "imgUri  " + imgFile);
+				if (imgFile != null) {
+					int h = BitmapOptions.getWH(imgFile.toString(),
+							MaimobApplication.DeviceW);
+					AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+							MaimobApplication.DeviceW, h + 180);
+					convertView.setLayoutParams(params);
+				}
+				Log.e(TAG, "GIF");
+			} else {
+				holder.hint_img.setVisibility(View.GONE);
+				holder.gif.setVisibility(View.GONE);
+				holder.image.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(imgUri, holder.image, options);
+				Log.e(TAG, "image");
+				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+						AbsListView.LayoutParams.MATCH_PARENT,
+						AbsListView.LayoutParams.MATCH_PARENT);
+				convertView.setLayoutParams(params);
+			}
 		}
 		
 		if (duanzi.isZanPressed()== true) {
@@ -262,11 +263,6 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		case R.id.mitem_test_gif:
 			Log.e(TAG, "mitem_test_gif");
 			
-			
-			break;
-		case R.id.hint_img:
-			Log.e(TAG, "hint_img");
-//			((ImageView)v).setVisibility(View.GONE);
 			
 			break;
 		case R.id.mitem_test_img:

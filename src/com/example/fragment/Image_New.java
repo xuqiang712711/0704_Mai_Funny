@@ -104,7 +104,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 		}
 		if (getActivity() instanceof XYFTEST) {
 			XYFTEST xyf = (XYFTEST) getActivity();
-			xyf.switchContentFull(from, to);
+			xyf.switchContentFull(from, to, null);
 		}
 	}
 

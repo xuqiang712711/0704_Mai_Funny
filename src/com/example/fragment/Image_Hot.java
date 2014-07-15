@@ -140,7 +140,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		}
 		if (getActivity() instanceof XYFTEST) {
 			XYFTEST xyf = (XYFTEST) getActivity();
-			xyf.switchContentFull(from, to);
+			xyf.switchContentFull(from, to, null);
 		}
 	}
 
