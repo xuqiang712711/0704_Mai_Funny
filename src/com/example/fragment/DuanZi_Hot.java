@@ -12,6 +12,7 @@ import org.apache.http.params.HttpParams;
 
 import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
+import com.example.adapter.X_Text_Adapter;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.maiUtil.Getuuid;
@@ -50,9 +51,8 @@ import android.widget.ListView;
 public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	View view;
 	private ListView listView;
-	private int[] icon = {R.drawable.game, R.drawable.game, R.drawable.game,R.drawable.game};
 	private SwipeRefreshLayout refreshLayout;
-	private XAdapter adapter;
+	private X_Text_Adapter adapter;
 	private Dialog dialog;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,7 +110,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	
 	private void updateListView(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+		adapter = new X_Text_Adapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 	}
 	

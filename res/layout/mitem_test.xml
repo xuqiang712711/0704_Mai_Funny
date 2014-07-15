@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/ghostwhite">
 
     <include
-        android:layout_below="@+id/mitem_bottom"
+        android:id="@+id/mitem_test_top"
         layout="@layout/mitem_top"/>
-
 	<include
 	    android:layout_alignParentBottom="true"
-	    android:id="@+id/mitem_bottom"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    layout="@layout/mitem_bottom" />
+	
 
 </RelativeLayout>

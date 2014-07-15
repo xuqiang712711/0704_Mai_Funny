@@ -9,6 +9,7 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.adapter.XAdapter.ViewHolder;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
@@ -46,18 +47,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class XAdapter extends BaseAdapter implements OnClickListener{
+public class X_Text_Adapter extends BaseAdapter implements OnClickListener{
 	public static int fontSize = 14;
 	private Context context;
 	private static Map<Integer, Boolean> isChecked_Cai;
 	private static Map<Integer, Boolean> isChecked_Zan;
-	private DisplayImageOptions options;
-	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	private ImageLoader imageLoader;
 	private Fragment mFragment;
-	private static final int VIEW_TYPE_IMG = 0;
-	private static final int VIEW_TYPE_GIF = 1;
-	private int Image_Type = 0;
 	private UMSocialService mController;
 	private static Handler mHandler;
 	private List<Duanzi> mdata;
@@ -69,25 +64,14 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 	public static final int CAI_NORMAL = 3;
 	public static final int CAI_PRESSED = 4;
 	
-	public XAdapter(List<Duanzi> mdata, Handler handler,
+	public X_Text_Adapter(List<Duanzi> mdata, Handler handler,
 			UMSocialService mController, Fragment mFragment, Context context){
 		this.mdata = mdata;
 		this.mHandler = handler;
 		this.mController = mController;
 		this.context = context;
 		this.mFragment = mFragment;
-
-		options = new DisplayImageOptions.Builder()
-		.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-		.showImageOnLoading(R.drawable.maimob)
-		.showImageForEmptyUri(R.drawable.maimob)
-		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
-		.cacheOnDisk(true).considerExifParams(true)
-		.displayer(new SimpleBitmapDisplayer()).build();
 		mInflater = LayoutInflater.from(context);
-		
-		imageLoader = ImageLoader.getInstance();
-
 		init();
 
 	}
@@ -124,9 +108,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		ViewHolder holder = null;
 		if (convertView ==null) {
 			holder = new ViewHolder();
-			convertView = mInflater.inflate(R.layout.mitem_test, null);
-			holder.image = (ImageView)convertView.findViewById(R.id.mitem_test_img);
-			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_test_gif);
+			convertView = mInflater.inflate(R.layout.mitem_text, null);
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
 
@@ -150,39 +132,6 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		String cai = duanzi.getCai();
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
-		imageLoader = ImageLoader.getInstance();
-		if (!imgUri.equals("") && imgUri != null) {
-			Log.e(TAG, "img  " + imgUri);
-			if ((imgUri.substring(imgUri.length() - 3, imgUri.length()))
-					.equals("gif")) {
-				holder.hint_img.setVisibility(View.VISIBLE);
-				holder.image.setVisibility(View.GONE);
-				holder.gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri, holder.gif, options);
-				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
-						imageLoader.getDiskCache());
-				Log.e(TAG, "imgUri  " + imgFile);
-				if (imgFile != null) {
-					int h = BitmapOptions.getWH(imgFile.toString(),
-							MaimobApplication.DeviceW);
-					AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-							MaimobApplication.DeviceW, h + 220);
-					convertView.setLayoutParams(params);
-				}
-				Log.e(TAG, "GIF");
-			} else {
-				holder.hint_img.setVisibility(View.GONE);
-				holder.gif.setVisibility(View.GONE);
-				holder.image.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri, holder.image, options);
-				Log.e(TAG, "image");
-				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-						AbsListView.LayoutParams.MATCH_PARENT,
-						AbsListView.LayoutParams.MATCH_PARENT);
-				convertView.setLayoutParams(params);
-			}
-			
-		}
 		
 		if (duanzi.isZanPressed()== true) {
 			holder.zan.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.ZAN_PRESSED), null, null, null);
@@ -218,36 +167,16 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		holder.hot.setOnClickListener(this);
 		holder.more.setTag(position);
 		holder.more.setOnClickListener(this);
-		holder.image.setTag(position);
-		holder.image.setOnClickListener(this);
 //		holder.gif.setTag(position);
 //		holder.gif.setOnClickListener(this);
 //		holder.hint_img.setTag(position);
 //		holder.hint_img.setOnClickListener(this);
-		holder.gif.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				holder.hint_img.setVisibility(View.GONE);
-				File cache = DiskCacheUtils.findInCache(mdata.get(position)
-						.getImageUrl(), imageLoader.getDiskCache());
-				try {
-					GifDrawable gifDrawable = new GifDrawable(cache);
-					((GifImageView)v).setImageDrawable(gifDrawable);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		
 		//未对头像、用户名进行监听
 	}
 	
 	public static class ViewHolder{
-		GifImageView gif;
-		ImageView user_icon, more,image;
+		ImageView user_icon, more;
 		TextView user_name, content, comment;
 		TextView cai, zan, hot;
 		ImageView cai_img, zan_img, hint_img;
@@ -261,11 +190,6 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		Duanzi duanzi = (Duanzi) getItem(position);
 		bundle.putSerializable("duanzi", duanzi);
 		switch (v.getId()) {
-		case R.id.mitem_test_gif:
-			Log.e(TAG, "mitem_test_gif");
-			
-			
-			break;
 		case R.id.mitem_test_img:
 
 			break;

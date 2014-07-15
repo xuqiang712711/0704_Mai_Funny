@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" 
-    android:background="@color/my_back">
+    android:background="@color/white">
 
     <View
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
         android:orientation="horizontal" >
 
         <com.example.util.DrawableCenterTextView
+            android:textColor="@color/darkgray"
             android:id="@+id/bottom_zan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
             style="@style/item_line" />
 
         <com.example.util.DrawableCenterTextView
+            android:textColor="@color/darkgray"
             android:id="@+id/bottom_cai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
              style="@style/item_line"/>
 
         <com.example.util.DrawableCenterTextView
+            android:textColor="@color/darkgray"
             android:id="@+id/bottom_hot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
