@@ -14,7 +14,7 @@
         android:text="xxx"/>
 
     <LinearLayout
-        
+        android:background="@color/burlywood"
         android:id="@+id/duanzi_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
