@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
+import com.example.adapter.X_Text_Adapter;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.More_Help;
 import com.example.fragment.content.More_feedback;
@@ -22,6 +23,7 @@ import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Write;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.Uris;
 
 public class Tab_More_Frag extends Fragment implements OnClickListener{
 	private View view;
@@ -103,16 +105,20 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 				// TODO Auto-generated method stub
 				if (checkedId == R.id.radio0) {
 					Toast.makeText(getActivity(), "Ð¡", Toast.LENGTH_SHORT).show();
-					XAdapter.fontSize = 14;
+//					X_Text_Adapter.fontSize = 14;
+					Uris.Font_Size = Uris.Font_Size_small;
 					XAdapter.SetNormal();
+					X_Text_Adapter.SetNormal();
 				}else if (checkedId == R.id.radio1) {
 					Toast.makeText(getActivity(), "ÖÐ", Toast.LENGTH_SHORT).show();
-					XAdapter.fontSize = 18;
+					Uris.Font_Size = Uris.Font_Size_normal;
 					XAdapter.SetNormal();
+					X_Text_Adapter.SetNormal();
 				}else if (checkedId == R.id.radio2) {
 					Toast.makeText(getActivity(), "´ó", Toast.LENGTH_SHORT).show();
-					XAdapter.fontSize = 22;
+					Uris.Font_Size = Uris.Font_Size_big;
 					XAdapter.SetNormal();
+					X_Text_Adapter.SetNormal();
 				}
 			}
 		});

@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     android:background="#cccccc" >
 
-    <TextView
-        android:id="@+id/my_top"
-        style="@style/match_horizontal"
-        android:layout_centerHorizontal="true"
-        android:background="@color/my_back"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/tab_bar_mine"
-        android:textSize="@dimen/title" />
-
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/my_nologin"
@@ -50,6 +40,8 @@
     
     <RelativeLayout
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/my_logined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -152,6 +144,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_margin="5dp"
         android:layout_below="@+id/my_logined"
         android:background="@color/my_back"
         android:layout_width="match_parent"
@@ -198,5 +191,12 @@
 		<include layout="@layout/line_vertical"/>
 		
     </LinearLayout>
+
+    <TextView 
+        style="@style/Top_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/my_top"
+        android:text="@string/tab_bar_mine"/>
 
 </RelativeLayout>

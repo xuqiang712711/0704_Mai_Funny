@@ -3,22 +3,23 @@
     android:layout_height="match_parent" >
 
     <TextView 
-        android:textColor="@color/slategray"
-        android:textSize="@dimen/top_title"
-        android:padding="10dp"
-        android:background="@color/skyblue"
+        style="@style/Top_title"
         android:id="@+id/tab_top_text"
+        android:text="xxx"/>
+    <ImageView 
+        android:id="@+id/tab_top_img"
+        android:layout_below="@id/tab_top_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="xxx"/>
+        android:src="@drawable/down_arrow_titlebar"
+        android:background="@color/skyblue"/>
 
     <LinearLayout
-        android:background="@color/burlywood"
+        android:background="@color/gainsboro"
         android:id="@+id/duanzi_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tab_top_text"
+        android:layout_below="@id/tab_top_img"
         android:orientation="vertical" >
     </LinearLayout>
 

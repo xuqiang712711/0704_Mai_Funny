@@ -73,8 +73,8 @@
 	<style 
 	    name="my_action_line">
 	    <item name="android:layout_width">match_parent</item>
-	    <item name="android:layout_height">1dp</item>
-	    <item name="android:background">#000000</item>
+	    <item name="android:layout_height">0.1dp</item>
+	    <item name="android:background">@color/slategray</item>
 	</style>
 	<!-- 更多——版本号、缓存 -->
 	<style  name="more_text">
@@ -142,4 +142,28 @@
 	    <item name="android:layout_height">48dp</item>
 	    <item name="android:clickable">true</item>
 	</style>
+	
+	<!-- 段子——底部踩、赞等图片-->
+	<style name="duanzi_item_bottom_img">
+	    <item name="android:layout_width">20dp</item>
+	    <item name="android:layout_height">20dp</item>
+	</style>
+	
+	<!-- 段子——踩、赞文字 -->
+		<style name="duanzi_item_bottom_text">
+	    <item name="android:layout_width">20dp</item>
+	    <item name="android:layout_height">20dp</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textColor">@color/darkblue</item>
+	</style>
+	
+	<!-- 标题 -->
+		<style name="Top_title" parent="@style/match_horizontal">
+		    <item name="android:textSize">@dimen/top_title</item>
+		    <item name="android:background">@color/skyblue</item>
+		    <item name="android:gravity">center_horizontal</item>
+		    <item name="android:paddingLeft">10dp</item>
+		    <item name="android:paddingRight">10dp</item>
+		    <item name="android:paddingTop">10dp</item>
+		</style>
 </resources>

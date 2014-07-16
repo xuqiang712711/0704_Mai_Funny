@@ -2,62 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical" >
 
     <View
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gery" />
+        android:layout_height="0.1dp"
+        android:background="@color/slategray" />
 
     <LinearLayout
+        android:padding="@dimen/margin_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <com.example.util.DrawableCenterTextView
-            android:textColor="@color/darkgray"
-            android:id="@+id/bottom_zan"
+        <RelativeLayout
+            android:id="@+id/mitem_bottom_zan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_digg_normal"
-            android:text="zan" />
+            android:gravity="center" >
 
-        <View
-            style="@style/item_line" />
+            <ImageView
+                android:id="@+id/mitem_bottom_zan_img"
+				style="@style/duanzi_item_bottom_img"
+                android:src="@drawable/ic_digg_normal" />
 
-        <com.example.util.DrawableCenterTextView
-            android:textColor="@color/darkgray"
-            android:id="@+id/bottom_cai"
+            <TextView
+                android:id="@+id/mitem_bottom_zan_txt"
+                style="@style/duanzi_item_bottom_text"
+                android:layout_toRightOf="@+id/mitem_bottom_zan_img"
+                android:text="131" />
+        </RelativeLayout>
+
+        <View style="@style/item_line" />
+
+        <RelativeLayout
+            android:id="@+id/mitem_bottom_cai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_bury_normal"
-            android:text="cai" />
+            android:gravity="center" >
 
-        <View
-             style="@style/item_line"/>
+            <ImageView
+                android:id="@+id/mitem_bottom_cai_img"
+                style="@style/duanzi_item_bottom_img"
+                android:src="@drawable/ic_bury_normal" />
 
-        <com.example.util.DrawableCenterTextView
-            android:textColor="@color/darkgray"
-            android:id="@+id/bottom_hot"
+            <TextView
+                style="@style/duanzi_item_bottom_text"
+                android:id="@+id/mitem_bottom_cai_txt"
+                android:layout_toRightOf="@+id/mitem_bottom_cai_img"
+                android:text="131" />
+        </RelativeLayout>
+
+        <View style="@style/item_line" />
+
+        <RelativeLayout
+            android:id="@+id/mitem_bottom_hot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/hot_commenticon_textpage"
-            android:text="hot" />
+            android:gravity="center" >
 
-        <View
-            style="@style/item_line" />
+            <ImageView
+                style="@style/duanzi_item_bottom_img"
+                android:id="@+id/mitem_bottom_hot_img"
+                android:src="@drawable/hot_commenticon_textpage" />
+
+            <TextView
+                style="@style/duanzi_item_bottom_text"
+                android:id="@+id/mitem_bottom_hot_txt"
+                android:layout_toRightOf="@+id/mitem_bottom_hot_img"
+                android:text="131" />
+        </RelativeLayout>
+
+        <View style="@style/item_line" />
 
         <ImageView
             android:id="@+id/bottom_more"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:src="@drawable/ic_more_action_normal_night" />

@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,14 +42,14 @@ import com.umeng.socialize.controller.utils.ToastUtil;
 public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment";
 	private View view;
-	private ImageView user_icon,image,More,hint_img;
-	private TextView user_name,Zan,Cai,Hot;
+	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img;
+	private TextView user_name,Zan_txt,Cai_txt,Hot_txt;
 	private TextView content;
+	private RelativeLayout Zan_layout, Cai_layout, Hot_layout;
 	private DisplayImageOptions options;
 	private Duanzi duanzi;
 	private GifImageView gif;
 	private ImageLoader imageLoader;
-	private LinearLayout mitem_top;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -76,37 +77,50 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		user_name = (TextView)view.findViewById(R.id.mitem_username);
 		content = (TextView)view.findViewById(R.id.mitem_test_content);
 		image = (ImageView)view.findViewById(R.id.mitem_test_img);
-		Cai = (TextView)view.findViewById(R.id.bottom_cai);
-		Zan = (TextView)view.findViewById(R.id.bottom_zan);
-		Hot = (TextView)view.findViewById(R.id.bottom_hot);
+		Cai_txt = (TextView)view.findViewById(R.id.mitem_bottom_cai_txt);
+		Zan_txt = (TextView)view.findViewById(R.id.mitem_bottom_zan_txt);
+		Hot_txt = (TextView)view.findViewById(R.id.mitem_bottom_hot_txt);
 		More = (ImageView)view.findViewById(R.id.bottom_more);
+		Cai_img = (ImageView)view.findViewById(R.id.mitem_bottom_cai_img);
+		Zan_img = (ImageView)view.findViewById(R.id.mitem_bottom_zan_img);
+		Zan_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_zan);
+		Cai_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_cai);
+		Hot_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_hot);
 		
 		Log.e("yyy", "name  " + duanzi.getUserName());
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
-		Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
+		Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
 		
-		Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
-		Hot.setText(duanzi.getComment());
+		Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
+		Hot_txt.setText(duanzi.getComment());
 		
 		if (duanzi.isZanPressed()) {
-			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_PRESSED), null, null, null);
-			Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
+//			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_PRESSED), null, null, null);
+//			Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
+			Zan_img.setImageResource(R.drawable.ic_digg_pressed);
+			Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
 		}else {
-			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_NORMAL), null, null, null);
-			Zan.setText(duanzi.getZan());
+//			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_NORMAL), null, null, null);
+//			Zan.setText(duanzi.getZan());
+			Zan_img.setImageResource(R.drawable.ic_digg_normal);
+			Zan_txt.setText(duanzi.getZan());
 		}
 		
 		if (duanzi.isCaiPressed()) {
-			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_PRESSED), null, null, null);
-			Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
+//			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_PRESSED), null, null, null);
+//			Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
+			Cai_img.setImageResource(R.drawable.ic_digg_pressed);
+			Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
 		}else {
-			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_NORMAL), null, null, null);
-			Cai.setText(duanzi.getCai());
+//			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_NORMAL), null, null, null);
+//			Cai.setText(duanzi.getCai());
+			Cai_img.setImageResource(R.drawable.ic_bury_normal);
+			Cai_txt.setText(duanzi.getCai());
 		}
-		Cai.setOnClickListener(this);
-		Zan.setOnClickListener(this);
-		Hot.setOnClickListener(this);
+		Cai_txt.setOnClickListener(this);
+		Zan_txt.setOnClickListener(this);
+		Hot_txt.setOnClickListener(this);
 		More.setOnClickListener(this);
 		gif.setOnClickListener(this);
 		
@@ -155,11 +169,11 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.bottom_cai:
-			duanzi.CanPress(Duanzi.CAI, ((TextView)v), getActivity());
+		case R.id.mitem_bottom_cai_txt:
+			duanzi.CanPress(Duanzi.CAI, Cai_txt,Cai_img, getActivity());
 			break;
 
-		case R.id.bottom_hot:
+		case R.id.mitem_bottom_hot_txt:
 			Toast.makeText(getActivity(), "È¥ÆÀÂÛ", Toast.LENGTH_SHORT).show();
 			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
 			switchFrag(DuanZi_Comment.this, comment_Test);
@@ -167,8 +181,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		case R.id.bottom_more:
 
 			break;
-		case R.id.bottom_zan:
-			duanzi.CanPress(Duanzi.ZAN, ((TextView)v), getActivity());
+		case R.id.mitem_bottom_zan_txt:
+			duanzi.CanPress(Duanzi.ZAN, Zan_txt,Zan_img, getActivity());
 			break;
 		case R.id.mitem_test_gif:
 			Log.e(Tag, "imgUri  " + duanzi.getImageUrl());
@@ -188,5 +202,6 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			break;
 		}
 	}
+	
 	
 }

@@ -185,16 +185,26 @@ public class My_Write extends Fragment {
 
 		@Override
 		public void run() {
-			File file = new File(currImgPath);
-			try {
-				String compressFile = IMG_Compress.Compress(currImgPath, 480);
-				Log.i("FFF", "comFile  " + compressFile);
-				PostWithPic(Uris.Post_Draft, file, Uris.uuid);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			File file = null;
+			if (currImgPath == null) {
+				try {
+					PostWithPic(Uris.Post_Draft, null, Uris.uuid);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				file = new File(currImgPath);
+				try {
+					String compressFile = IMG_Compress.Compress(currImgPath, 480);
+					Log.i("FFF", "comFile  " + compressFile);
+					PostWithPic(Uris.Post_Draft, file, Uris.uuid);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			Message message = Message.obtain();
 			message.what = POST_SUC;
@@ -244,9 +254,11 @@ public class My_Write extends Fragment {
     		MultipartEntity entity = new MultipartEntity();
     		entity.addPart("uuid", new StringBody(uuid));
     		entity.addPart("content", new StringBody(content));
-    		FileBody body = new FileBody(imgFile);
-    		entity.addPart("img", body);
-    		httpPost.setEntity(entity);
+    		if (imgFile != null) {
+    			FileBody body = new FileBody(imgFile);
+    			entity.addPart("img", body);
+    			httpPost.setEntity(entity);
+			}
     		try {
     				Log.i("FFF", "投稿___uri" + httpPost.getURI());
 				HttpResponse response = client.execute(httpPost);

@@ -9,6 +9,8 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.adapter.X_Text_Adapter.ViewHolder;
+import com.example.adapter.X_Text_Adapter.mOnclick;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
@@ -17,6 +19,7 @@ import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
+import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -43,10 +46,11 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class XAdapter extends BaseAdapter implements OnClickListener{
+public class XAdapter extends BaseAdapter{
 	public static int fontSize = 14;
 	private Context context;
 	private static Map<Integer, Boolean> isChecked_Cai;
@@ -132,12 +136,18 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 
 			holder.content = (TextView) convertView
 					.findViewById(R.id.mitem_test_content);
+			
+			holder.zan_img = (ImageView)convertView.findViewById(R.id.mitem_bottom_zan_img);
+			holder.cai_img = (ImageView)convertView.findViewById(R.id.mitem_bottom_cai_img);
 
-			holder.zan = (TextView) convertView.findViewById(R.id.bottom_zan);
-			holder.cai = (TextView) convertView.findViewById(R.id.bottom_cai);
-			holder.hot = (TextView) convertView.findViewById(R.id.bottom_hot);
+			holder.zan = (TextView) convertView.findViewById(R.id.mitem_bottom_zan_txt);
+			holder.cai = (TextView) convertView.findViewById(R.id.mitem_bottom_cai_txt);
+			holder.hot = (TextView) convertView.findViewById(R.id.mitem_bottom_hot_txt);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
 			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
+			holder.layout_cai = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_cai);
+			holder.layout_zan = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_zan);
+			holder.layout_hot = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_hot);
 			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder)convertView.getTag();
@@ -171,28 +181,28 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 				}
 				Log.e(TAG, "GIF");
 			} else {
+//				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+//						AbsListView.LayoutParams.MATCH_PARENT,
+//						AbsListView.LayoutParams.WRAP_CONTENT);
+//				convertView.setLayoutParams(params);
 				holder.hint_img.setVisibility(View.GONE);
 				holder.gif.setVisibility(View.GONE);
 				holder.image.setVisibility(View.VISIBLE);
 				imageLoader.displayImage(imgUri, holder.image, options);
 				Log.e(TAG, "image");
-				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-						AbsListView.LayoutParams.MATCH_PARENT,
-						AbsListView.LayoutParams.MATCH_PARENT);
-				convertView.setLayoutParams(params);
 			}
 			
 		}
 		
 		if (duanzi.isZanPressed()== true) {
-			holder.zan.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.ZAN_PRESSED), null, null, null);
+			holder.zan_img.setImageResource(R.drawable.ic_digg_pressed);
 		}else {
-			holder.zan.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.ZAN_NORMAL), null, null, null);
+			holder.zan_img.setImageResource(R.drawable.ic_digg_normal);
 		}
 		if (duanzi.isCaiPressed() == true) {
-			holder.cai.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.CAI_PRESSED), null, null, null);
+			holder.cai_img.setImageResource(R.drawable.ic_bury_pressed);
 		}else {
-			holder.cai.setCompoundDrawables(duanzi.ChangePic(context, Duanzi.CAI_NORMAL), null, null, null);
+			holder.cai_img.setImageResource(R.drawable.ic_bury_normal);
 		}
 		
 		holder.cai.setText(cai);
@@ -200,7 +210,7 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		holder.hot.setText(hot);
 		holder.user_name.setText(name);
 		holder.content.setText(content);
-		holder.content.setTextSize(fontSize);
+		holder.content.setTextSize(Uris.Font_Size);
 		AddListen(holder, position);
 		return convertView;
 	}
@@ -210,25 +220,34 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 	 * @param position
 	 */
 	public void AddListen(final ViewHolder holder, final int position){
-		holder.cai.setTag(position);
-		holder.cai.setOnClickListener(this);
-		holder.zan.setTag(position);
-		holder.zan.setOnClickListener(this);
-		holder.hot.setTag(position);
-		holder.hot.setOnClickListener(this);
-		holder.more.setTag(position);
-		holder.more.setOnClickListener(this);
-		holder.image.setTag(position);
-		holder.image.setOnClickListener(this);
-//		holder.gif.setTag(position);
-//		holder.gif.setOnClickListener(this);
-//		holder.hint_img.setTag(position);
-//		holder.hint_img.setOnClickListener(this);
-		holder.gif.setOnClickListener(new OnClickListener() {
+		
+		holder.layout_cai.setOnClickListener(new mOnclick(position, holder));
+		holder.layout_hot.setOnClickListener(new mOnclick(position, holder));
+		holder.layout_zan.setOnClickListener(new mOnclick(position, holder));
+		holder.more.setOnClickListener(new mOnclick(position, holder));
+		holder.image.setOnClickListener(new mOnclick(position, holder));
+		holder.gif.setOnClickListener(new mOnclick(position, holder));
+		//未对头像、用户名进行监听
+	}
+	
+	class mOnclick implements OnClickListener{
+		ViewHolder holder = null;
+		int position = 0;
+		Duanzi duanzi;
+		Bundle bundle;
+		public mOnclick(int position ,ViewHolder holder){
+			this.holder = holder;
+			this.position = position;
+			bundle = new Bundle();
+			duanzi = (Duanzi) getItem(position);
+			bundle.putSerializable("duanzi", duanzi);
+		}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
 			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+			case R.id.mitem_test_gif:
 				holder.hint_img.setVisibility(View.GONE);
 				File cache = DiskCacheUtils.findInCache(mdata.get(position)
 						.getImageUrl(), imageLoader.getDiskCache());
@@ -239,10 +258,57 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				break;
+			
+			case R.id.bottom_more:
+				String imgUri = mdata.get(position).getImageUrl();
+				Log.e(TAG, "imgUri  "+ imgUri);
+				if (imgUri.equals("") || imgUri == null) {
+					UMShare(mdata.get(position).getContent(), null);
+				}else {
+					UMShare(mdata.get(position).getContent(),
+							imgUri);
+				}
+				mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+						SHARE_MEDIA.DOUBAN);
+				mController.openShare((Activity) context, false);
+				break;
+			
+			case R.id.mitem_bottom_zan:
+				if (duanzi.isZanPressed()== false) {
+					if (duanzi.isCaiPressed() == true) {
+						Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
+						break;
+					}
+					duanzi.CanPress(Duanzi.ZAN, holder.zan, holder.zan_img, context);
+					ConnToServer.DohttpNoResult(ConnToServer.ZAN, duanzi.getPoid());
+				} else {
+					Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
+				}
+				break;
+
+			case R.id.mitem_bottom_cai:
+				if (duanzi.isCaiPressed() == false) {
+					if (duanzi.isZanPressed() == true) {
+						Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
+						break;
+					}
+					duanzi.CanPress(Duanzi.CAI, holder.cai, holder.cai_img, context);
+					ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
+				} else {
+					Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
+				}
+				break;
+
+			case R.id.mitem_bottom_hot:
+				DuanZi_Comment comment3 = new DuanZi_Comment();
+				switchFragment(mFragment, comment3, bundle);
+				Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
+						.show();
+				break;
 			}
-		});
+		}
 		
-		//未对头像、用户名进行监听
 	}
 	
 	public static class ViewHolder{
@@ -250,85 +316,10 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 		ImageView user_icon, more,image;
 		TextView user_name, content, comment;
 		TextView cai, zan, hot;
-		ImageView cai_img, zan_img, hint_img;
+		ImageView cai_img, zan_img, hot_img, hint_img;
+		RelativeLayout layout_cai, layout_zan, layout_hot;
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		int position = (Integer) v.getTag();
-		Bundle bundle = new Bundle();
-		Duanzi duanzi = (Duanzi) getItem(position);
-		bundle.putSerializable("duanzi", duanzi);
-		switch (v.getId()) {
-		case R.id.mitem_test_gif:
-			Log.e(TAG, "mitem_test_gif");
-			
-			
-			break;
-		case R.id.mitem_test_img:
-
-			break;
-		case R.id.mitem_test_content:
-
-			break;
-		case R.id.bottom_zan:
-			Log.e(TAG, "Zan " + position);
-			if (duanzi.isZanPressed()== false) {
-				if (duanzi.isCaiPressed() == true) {
-					Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
-					break;
-				}
-				Drawable drawable = duanzi.ChangePic(context, Duanzi.ZAN_PRESSED);
-				((TextView) v).setCompoundDrawables(drawable, null, null, null);
-				int Zan_num = Integer.parseInt(mdata.get(position).getZan());
-				((TextView) v).setText(String.valueOf(Zan_num + 1));
-//				isChecked_Zan.put(position, true);
-				duanzi.setZanPressed(true);
-				ConnToServer.DohttpNoResult(ConnToServer.ZAN, duanzi.getPoid());
-			} else {
-				Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
-			}
-			break;
-
-		case R.id.bottom_cai:
-			if (duanzi.isCaiPressed() == false) {
-				if (duanzi.isZanPressed() == true) {
-					Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
-					break;
-				}
-				Drawable drawable = duanzi.ChangePic(context, Duanzi.CAI_PRESSED);
-				((TextView) v).setCompoundDrawables(drawable, null, null, null);
-				int Cai_num = Integer.parseInt(mdata.get(position).getCai());
-				((TextView) v).setText(String.valueOf(Cai_num + 1));
-				duanzi.setCaiPressed(true);
-				ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
-			} else {
-				Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
-			}
-			break;
-
-		case R.id.bottom_hot:
-			DuanZi_Comment comment3 = new DuanZi_Comment();
-			switchFragment(mFragment, comment3, bundle);
-			Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.bottom_more:
-			String imgUri = mdata.get(position).getImageUrl();
-			Log.e(TAG, "imgUri  "+ imgUri);
-			if (imgUri.equals("") || imgUri == null) {
-				UMShare(mdata.get(position).getContent(), null);
-			}else {
-				UMShare(mdata.get(position).getContent(),
-						imgUri);
-			}
-			mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
-					SHARE_MEDIA.DOUBAN);
-			mController.openShare((Activity) context, false);
-			break;
-		}
-	}
 	/**
 	 * 分享功能
 	 * @param content
@@ -352,8 +343,11 @@ public class XAdapter extends BaseAdapter implements OnClickListener{
 	}
 	
 	public static void SetNormal(){
+		if (mHandler == null) {
+			return;
+		}
 		Message msg = Message.obtain();
-		msg.what = 313;
+		msg.what = Uris.MSG_CHANGEFONT;
 		mHandler.sendMessage(msg);
 	}
 

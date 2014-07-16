@@ -9,6 +9,7 @@ import com.umeng.socialize.controller.utils.ToastUtil;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 @SuppressWarnings("serial")
@@ -46,7 +47,7 @@ public class Duanzi implements Serializable {
 		this.isCaiPressed = isCaiPressed;
 	}
 	
-	public void CanPress(int type,TextView view, Context context){
+	public void CanPress(int type,TextView txtview,ImageView  imgView,Context context){
 		switch (type) {
 		case Duanzi.ZAN:
 			if (isZanPressed() == false) {
@@ -54,8 +55,9 @@ public class Duanzi implements Serializable {
 					ToastUtil.showToast(context, ISCAIED);
 					break;
 				}
-				view.setCompoundDrawables(ChangePic(context, ZAN_PRESSED), null, null, null);
-				view.setText(String.valueOf(Integer.parseInt(zan) +1));
+//				txtview.setCompoundDrawables(ChangePic(context, ZAN_PRESSED), null, null, null);
+				imgView.setImageResource(R.drawable.ic_digg_pressed);
+				txtview.setText(String.valueOf(Integer.parseInt(zan) +1));
 				setZanPressed(true);
 			}else {
 				ToastUtil.showToast(context, ISZANED);
@@ -69,8 +71,9 @@ public class Duanzi implements Serializable {
 					break;
 				}
 				Log.e(Tag, "Cai~~~~");
-				view.setCompoundDrawables(ChangePic(context, CAI_PRESSED), null, null, null);
-				view.setText(String.valueOf(Integer.parseInt(getCai())+ 1));
+//				txtview.setCompoundDrawables(ChangePic(context, CAI_PRESSED), null, null, null);
+				imgView.setImageResource(R.drawable.ic_bury_pressed);
+				txtview.setText(String.valueOf(Integer.parseInt(getCai())+ 1));
 				this.setCaiPressed(true);
 			}else {
 				ToastUtil.showToast(context, ISCAIED);

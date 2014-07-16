@@ -54,11 +54,24 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			String json = (String) msg.obj;
-			Log.i("YYY", "json  img  " + json);
-			SetListData(json);
+			if (msg.what == Uris.MSG_CHANGEFONT) {
+				ChangeFontSize();
+			}else {
+				String json = (String) msg.obj;
+				Log.i("YYY", "json  img  " + json);
+				SetListData(json);
+			}
+			
 		}
 	};
+	
+	private void ChangeFontSize(){
+		if (adapter == null) {
+			return;
+		}else {
+			adapter.notifyDataSetChanged();
+		}
+	}
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);

@@ -1,5 +1,7 @@
 package com.example.util;
 
+import com.example.adapter.XAdapter;
+
 
 public final class Uris {
 	public static final String[] IMAGES = new String[] {
@@ -164,4 +166,11 @@ public final class Uris {
 	public static int MSG_UPDATE = 1;
 	public static int MSG_GETDATA = 2222;//获取服务器上的数据
 	public static int MSG_CHECKDATA = 2;
+	public static int MSG_CHANGEFONT = 33;//更改字体大小的msg.what
+	public static int Font_Size = 14;
+	public static int Font_Size_small = 14;//字体大小
+	public static int Font_Size_normal = 18;
+	public static int Font_Size_big = 22;
+	
+	
 }
