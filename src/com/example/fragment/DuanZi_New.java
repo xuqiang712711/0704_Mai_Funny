@@ -45,14 +45,14 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	View view;
 	private ListView listView;
 	private SwipeRefreshLayout refreshLayout;
-	private DuanZiAdapter adapter;
+	private XAdapter adapter;
+	private Handler TabHandler;
 	
 	private Handler mHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			String json = (String) msg.obj;
 			updateListView(json);
-			Log.e("XXX", "fuck  " );
 		}
 	};
 	@Override
@@ -79,8 +79,13 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	
 	private void updateListView(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		XAdapter adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
+		adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
+		if (TabHandler != null) {
+			Message msg = Message.obtain();
+			msg.what = Uris.MSG_REFRESH;
+			TabHandler.sendMessage(msg);
+		}
 	}
 	
 	private void initView(){
@@ -124,4 +129,9 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 		}, 5000);
 	}
 	
+	public void Refresh(Handler tabHandler){
+		inithttp();
+		adapter.notifyDataSetChanged();
+		this.TabHandler = tabHandler;
+	}
 }

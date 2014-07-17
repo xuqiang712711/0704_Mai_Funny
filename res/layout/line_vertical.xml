@@ -6,8 +6,8 @@
     <View 
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#000000"
-        android:layout_width="1dp"
+        android:background="@color/slategray"
+        android:layout_width="0.1dp"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

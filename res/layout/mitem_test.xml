@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white" >
+
     <include
-        android:id="@+id/mitem_test_top"
-        layout="@layout/mitem_top"/>
-	<include
-	    android:layout_alignParentBottom="true"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    layout="@layout/mitem_bottom" />
-	
+        android:id="@+id/mitem_top"
+        layout="@layout/mitem_top" />
+
+    <include
+        android:layout_below="@+id/mitem_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/mitem_bottom" />
 
 </RelativeLayout>

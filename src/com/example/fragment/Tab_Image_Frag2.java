@@ -1,10 +1,12 @@
 package com.example.fragment;
 
 import com.example.tab.R;
+import com.example.util.Uris;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -25,6 +28,8 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	private TextView textView, text_new, text_hot;
 	private PopupWindow pop;// 0710Ìí¼Ó
 	private FragmentTransaction  ft;
+	private boolean isHot = true;
+	private ImageView iv_refresh;
 	View view;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +50,8 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	}
 	
 	private void initPop(){
+		iv_refresh = (ImageView)view.findViewById(R.id.tab_refresh);
+		iv_refresh.setOnClickListener(this);
 		textView = (TextView)view.findViewById(R.id.tab_top_text);
 		textView.setOnClickListener(this);
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -123,18 +130,40 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.tab_top_text:
-			DisplayMetrics metrics = new DisplayMetrics();
-			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-			int width = metrics.widthPixels/2 - pop.getWidth()/2;
-			pop.showAsDropDown(v, width, 10);
+//			DisplayMetrics metrics = new DisplayMetrics();
+//			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//			int width = metrics.widthPixels/2 - pop.getWidth()/2;
+			int text_w = textView.getWidth()/2;
+			int pop_w = pop.getWidth() / 2;
+			int w = pop_w - text_w ;
+			pop.showAsDropDown(v, -w, 10);
 			break;
 		case R.id.top_hot:
 			selectTab2(1);
+			isHot = true;
 			break;
 		case R.id.top_new:
 			selectTab2(2);
+			isHot = false;
 			break;
-
+		case R.id.tab_refresh:
+			iv_refresh.setImageResource(R.drawable.refresh_normal);
+			if (isHot) {
+				image_Hot.Refresh(Tabhandler);
+			}else {
+				image_New.Refresh(Tabhandler);
+			}
+			break;
 		}
 	}
+	
+	Handler Tabhandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			
+			if (msg.what == Uris.MSG_REFRESH) {
+				iv_refresh.setImageResource(R.drawable.refresh_pre);
+			}
+			
+		}
+	};
 }

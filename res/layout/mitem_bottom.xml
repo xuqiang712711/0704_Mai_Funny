@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:orientation="vertical" >
 
     <View
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="@color/slategray" />
+        android:background="@color/gery" />
 
     <LinearLayout
         android:padding="@dimen/margin_5"

@@ -162,7 +162,7 @@ public final class Uris {
 	public static String Check_handle = "http://md.maimob.net/index.php/player/Verify";
 	
 	
-	
+	public static int MSG_REFRESH = 53433;
 	public static int MSG_UPDATE = 1;
 	public static int MSG_GETDATA = 2222;//获取服务器上的数据
 	public static int MSG_CHECKDATA = 2;

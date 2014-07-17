@@ -52,8 +52,10 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	View view;
 	private ListView listView;
 	private SwipeRefreshLayout refreshLayout;
-	private X_Text_Adapter adapter;
+//	private X_Text_Adapter adapter;
+	private XAdapter adapter;
 	private Dialog dialog;
+	private Handler TabHandler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 			case 313:
 				ChangeFont();
 				break;
-			default:
+			case 5656:
 				dialog.dismiss();
 				updateListView(json);
 				break;
@@ -110,12 +112,17 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	
 	private void updateListView(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		adapter = new X_Text_Adapter(list, handler, MaimobApplication.mController, this, getActivity());
+		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
+		if (TabHandler != null) {
+			Message msg = Message.obtain();
+			msg.what = 444;
+			TabHandler.sendMessage(msg);
+		}
 	}
 	
 	
-	private void inithttp(){
+	public void inithttp(){
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
 		new MyAsyTask().execute(postUri);
 	}
@@ -135,6 +142,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 //					array = new JSONArray(result);
 					Message message = Message.obtain();
 					message.obj = result;
+					message.what = 5656;
 					handler.sendMessage(message);
 //				DuanZiAdapter adapter = new DuanZiAdapter(DuanZi_Hot.this, getActivity(), array);
 //				listView.setAdapter(adapter);
@@ -184,10 +192,16 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
 				inithttp();
-//				adapter.notifyDataSetChanged();
+				adapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
 			}
 		}, 5000);
+	}
+	
+	public void Refresh(Handler Tabhandler){
+		inithttp();
+		adapter.notifyDataSetChanged();
+		this.TabHandler = Tabhandler;
 	}
 	
 }

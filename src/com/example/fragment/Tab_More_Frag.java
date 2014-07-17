@@ -108,17 +108,17 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 //					X_Text_Adapter.fontSize = 14;
 					Uris.Font_Size = Uris.Font_Size_small;
 					XAdapter.SetNormal();
-					X_Text_Adapter.SetNormal();
+//					X_Text_Adapter.SetNormal();
 				}else if (checkedId == R.id.radio1) {
 					Toast.makeText(getActivity(), "жа", Toast.LENGTH_SHORT).show();
 					Uris.Font_Size = Uris.Font_Size_normal;
 					XAdapter.SetNormal();
-					X_Text_Adapter.SetNormal();
+//					X_Text_Adapter.SetNormal();
 				}else if (checkedId == R.id.radio2) {
 					Toast.makeText(getActivity(), "Дѓ", Toast.LENGTH_SHORT).show();
 					Uris.Font_Size = Uris.Font_Size_big;
 					XAdapter.SetNormal();
-					X_Text_Adapter.SetNormal();
+//					X_Text_Adapter.SetNormal();
 				}
 			}
 		});

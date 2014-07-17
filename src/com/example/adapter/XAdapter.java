@@ -43,7 +43,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,7 +59,6 @@ public class XAdapter extends BaseAdapter{
 	private static Map<Integer, Boolean> isChecked_Zan;
 	private DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	private ImageLoader imageLoader;
 	private Fragment mFragment;
 	private static final int VIEW_TYPE_IMG = 0;
 	private static final int VIEW_TYPE_GIF = 1;
@@ -73,6 +74,8 @@ public class XAdapter extends BaseAdapter{
 	public static final int CAI_NORMAL = 3;
 	public static final int CAI_PRESSED = 4;
 	
+	private ImageLoader imageLoader;
+	
 	public XAdapter(List<Duanzi> mdata, Handler handler,
 			UMSocialService mController, Fragment mFragment, Context context){
 		this.mdata = mdata;
@@ -86,24 +89,11 @@ public class XAdapter extends BaseAdapter{
 		.showImageOnLoading(R.drawable.maimob)
 		.showImageForEmptyUri(R.drawable.maimob)
 		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
-		.cacheOnDisk(true).considerExifParams(true)
-		.displayer(new SimpleBitmapDisplayer()).build();
+		.cacheOnDisk(true)
+		.build();
 		mInflater = LayoutInflater.from(context);
-		
-		imageLoader = ImageLoader.getInstance();
-
-		init();
-
 	}
 	
-	private void init() {
-		isChecked_Cai = new HashMap<Integer, Boolean>();
-		isChecked_Zan = new HashMap<Integer, Boolean>();
-		for (int i = 0; i < mdata.size(); i++) {
-			isChecked_Cai.put(i, false);
-			isChecked_Zan.put(i, false);
-		}
-	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -131,6 +121,7 @@ public class XAdapter extends BaseAdapter{
 			convertView = mInflater.inflate(R.layout.mitem_test, null);
 			holder.image = (ImageView)convertView.findViewById(R.id.mitem_test_img);
 			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_test_gif);
+			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
 
@@ -144,7 +135,6 @@ public class XAdapter extends BaseAdapter{
 			holder.cai = (TextView) convertView.findViewById(R.id.mitem_bottom_cai_txt);
 			holder.hot = (TextView) convertView.findViewById(R.id.mitem_bottom_hot_txt);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
-			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
 			holder.layout_cai = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_cai);
 			holder.layout_zan = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_zan);
 			holder.layout_hot = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_hot);
@@ -161,6 +151,7 @@ public class XAdapter extends BaseAdapter{
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
 		imageLoader = ImageLoader.getInstance();
+		
 		if (!imgUri.equals("") && imgUri != null) {
 			Log.e(TAG, "img  " + imgUri);
 			if ((imgUri.substring(imgUri.length() - 3, imgUri.length()))
@@ -175,16 +166,20 @@ public class XAdapter extends BaseAdapter{
 				if (imgFile != null) {
 					int h = BitmapOptions.getWH(imgFile.toString(),
 							MaimobApplication.DeviceW);
-					AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-							MaimobApplication.DeviceW, h + 220);
-					convertView.setLayoutParams(params);
+//					AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+//							MaimobApplication.DeviceW, h + 220);
+//					convertView.setLayoutParams(params);
+					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) holder.gif.getLayoutParams();
+					params.height = h;
+					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+					holder.gif.setLayoutParams(params);
 				}
 				Log.e(TAG, "GIF");
 			} else {
-//				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-//						AbsListView.LayoutParams.MATCH_PARENT,
-//						AbsListView.LayoutParams.WRAP_CONTENT);
-//				convertView.setLayoutParams(params);
+				AbsListView.LayoutParams params = new AbsListView.LayoutParams(
+						AbsListView.LayoutParams.MATCH_PARENT,
+						AbsListView.LayoutParams.MATCH_PARENT);
+				convertView.setLayoutParams(params);
 				holder.hint_img.setVisibility(View.GONE);
 				holder.gif.setVisibility(View.GONE);
 				holder.image.setVisibility(View.VISIBLE);

@@ -10,6 +10,7 @@ import com.example.util.Uris;
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Transformation;
 import android.webkit.WebView.FindListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -38,6 +40,9 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	private FragmentTransaction  ft;
 	private View view;
 	private TextView textView, text_new, text_hot;
+	private boolean check_1 = true;
+	private ImageView iv_refresh;
+	public static final int Msg_Refresh = Uris.MSG_REFRESH;
 	
 	private PopupWindow pop;// 0710Ìí¼Ó
 //	private FragmentManager mFM = null;
@@ -60,6 +65,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	}
 	
 	private void initPop(){
+		iv_refresh = (ImageView)view.findViewById(R.id.tab_refresh);
+		iv_refresh.setOnClickListener(this);
 		textView = (TextView)view.findViewById(R.id.tab_top_text);
 		textView.setOnClickListener(this);
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -125,14 +132,26 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 			DisplayMetrics metrics = new DisplayMetrics();
 			getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 			int width = metrics.widthPixels/2 - pop.getWidth()/2;
-			pop.showAsDropDown(v, width, 10);
+			int text_w = textView.getWidth()/2;
+			int pop_w = pop.getWidth() / 2;
+			int w = pop_w - text_w ;
+			pop.showAsDropDown(v, -w, 10);
 			break;
 		case R.id.top_hot:
 			selectTab2(1);
+			check_1 = true;
 			break;
 		case R.id.top_new:
 			selectTab2(2);
-			
+			check_1 = false;
+			break;
+		case R.id.tab_refresh:
+			iv_refresh.setImageResource(R.drawable.refresh_normal);
+			if (check_1) {
+				duanZi_Hot.Refresh(Tabhandler);
+			}else {
+				duanZi_New.Refresh(Tabhandler);
+			}
 			break;
 		}
 	}
@@ -154,4 +173,13 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		}
 	}
 	
+	Handler Tabhandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			
+			if (msg.what == Uris.MSG_REFRESH) {
+				iv_refresh.setImageResource(R.drawable.refresh_pre);
+			}
+			
+		}
+	};
 }

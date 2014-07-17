@@ -124,7 +124,6 @@ public class X_Text_Adapter extends BaseAdapter{
 			holder.cai = (TextView) convertView.findViewById(R.id.mitem_bottom_cai_txt);
 			holder.hot = (TextView) convertView.findViewById(R.id.mitem_bottom_hot_txt);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
-			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
 			holder.layout_cai = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_cai);
 			holder.layout_zan = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_zan);
 			holder.layout_hot = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_hot);

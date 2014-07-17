@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	private String [] ImageUris ;
 	DisplayImageOptions options;
 	private SwipeRefreshLayout refreshLayout;
-	private DuanZiAdapter adapter;
+	private XAdapter adapter;
+	private Handler tabHandler;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -74,16 +76,16 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
-		XAdapter adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
+		if (tabHandler != null) {
+			Log.i("XXX", "NEW_REFRESH");
+			tabHandler.sendEmptyMessage(Uris.MSG_REFRESH);
+		}
+		
 	}
 	
-	private void setData(){
-		ImageUris = Uris.IMAGES;
-	}
 	private void initView(){
-		setData();
-		
 		
 		listView = (ListView)view.findViewById(R.id.listview);
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -123,5 +125,12 @@ public class Image_New extends Fragment implements OnRefreshListener{
 				adapter.notifyDataSetChanged();
 			}
 		}, 5000);
+	}
+	
+	public void Refresh(Handler tabHandler){
+		this.tabHandler = tabHandler;
+		RequestDataTask data = new RequestDataTask(handler);
+		data.execute(Uris.Img_uri);
+		adapter.notifyDataSetChanged();
 	}
 }

@@ -137,22 +137,22 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			image.setVisibility(View.VISIBLE);
 			imageLoader = ImageLoader.getInstance();
 			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
-//				FrameLayout.LayoutParams lp = (android.widget.FrameLayout.LayoutParams) hint_img.getLayoutParams();
-//				Log.e(Tag, "w  " + MaimobApplication.DeviceW / 2);
-//				lp.setMargins(MaimobApplication.DeviceW / 2, 150, 0, 0);
-//				hint_img.setLayoutParams(lp);
-				
-//				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(), imageLoader.getDiskCache());
-//				if (imgFile != null) {
-//					int h = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
-//					AbsListView.LayoutParams params = new AbsListView.LayoutParams(MaimobApplication.DeviceW,
-//							h+180);
-//					mitem_top.setLayoutParams(params);
-//				}
-				
-//				hint_img.setVisibility(View.VISIBLE);
+				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
+						imageLoader.getDiskCache());
+				if (imgFile != null && !imgFile.equals("")) {
+					int ReqHeight = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
+					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
+					params.height = ReqHeight;
+					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+					gif.setLayoutParams(params);
+				}
+				hint_img.setVisibility(View.VISIBLE);
+				image.setVisibility(View.GONE);
+				gif.setVisibility(View.VISIBLE);
 				imageLoader.displayImage(duanzi.getImageUrl(), gif, options);
 			}else {
+				hint_img.setVisibility(View.GONE);
+				gif.setVisibility(View.GONE);
 				imageLoader.displayImage(duanzi.getImageUrl(), image, options);
 			}
 		}

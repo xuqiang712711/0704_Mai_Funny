@@ -51,6 +51,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	DisplayImageOptions options;
 	private SwipeRefreshLayout refreshLayout;
 	private XAdapter adapter;
+	private Handler tabHandler;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -77,6 +78,10 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		List<Duanzi> list = setDuanziData.getListDuanzi(json);
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
+		if (tabHandler != null) {
+			Log.i("XXX", "HOT_REFRESH");
+			tabHandler.sendEmptyMessage(Uris.MSG_REFRESH);
+		}
 	}
 	
 	
@@ -171,5 +176,11 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 				adapter.notifyDataSetChanged();
 			}
 		}, 5000);
+	}
+	
+	public void Refresh(Handler tabHandler){
+		this.tabHandler = tabHandler;
+		initHttp();
+		adapter.notifyDataSetChanged();
 	}
 }

@@ -1,11 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <LinearLayout
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -16,44 +17,48 @@
             android:src="@drawable/ic_edit_profile_night" />
 
         <TextView
-            android:textColor="@color/darkgray"
-            android:layout_marginLeft="@dimen/margin_5"
             android:id="@+id/mitem_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/ts_20"
-            android:text="xxx" />
+            android:layout_marginLeft="@dimen/margin_5"
+            android:text="xxx"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/ts_20" />
     </LinearLayout>
-    
+
     <TextView
-        android:layout_margin="10dp"
         android:id="@+id/mitem_test_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="i am content" />
-	<ImageView 
-	    android:layout_gravity="center"
-	    android:id="@+id/mitem_test_img"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
-	<FrameLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/mitem_test_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
         <pl.droidsonroids.gif.GifImageView
-            android:scaleType="fitStart"
-            android:adjustViewBounds="true"
+            android:layout_margin="@dimen/margin_10"
             android:id="@+id/mitem_test_gif"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <ImageView 
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart" />
+
+        <ImageView
             android:id="@+id/mitem_hint_img"
-            android:visibility="gone"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:contentDescription="@null"
-            android:src="@drawable/mai_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-	</FrameLayout>
-
+            android:src="@drawable/gifbutton_textpage_normal"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>

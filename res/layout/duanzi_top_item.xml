@@ -2,25 +2,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView 
-        style="@style/Top_title"
-        android:id="@+id/tab_top_text"
-        android:text="xxx"/>
-    <ImageView 
-        android:id="@+id/tab_top_img"
-        android:layout_below="@id/tab_top_text"
+    <RelativeLayout
+        android:id="@+id/tab_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/down_arrow_titlebar"
-        android:background="@color/skyblue"/>
+        android:background="@color/skyblue" >
+
+        <TextView
+            android:id="@+id/tab_top_text"
+            style="@style/Top_title"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="xxx" />
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/tab_refresh"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:src="@drawable/refresh_pre" />
+    </RelativeLayout>
 
     <LinearLayout
-        android:background="@color/gainsboro"
         android:id="@+id/duanzi_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tab_top_img"
+        android:layout_below="@+id/tab_top_img"
+        android:background="@color/gainsboro"
         android:orientation="vertical" >
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tab_top_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_top"
+        android:background="@color/skyblue"
+        android:src="@drawable/down_arrow_titlebar" />
 
 </RelativeLayout>
