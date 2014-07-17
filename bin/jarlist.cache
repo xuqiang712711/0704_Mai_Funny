@@ -1,7 +1,7 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1404265245000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 /Users/xieyifan/MyWork/funny-new-tab-master/libs/httpmime-4.1.3.jar
-1401203246000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 /Users/xieyifan/Android/Umeng/umeng_android_social_sdk_3.3.8_custom/social_sdk_library_project/libs/httpmime-4.1.3.jar
-1401951483000 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd /Users/xieyifan/Android/Umeng/umeng_android_social_sdk_3.3.8_custom/social_sdk_library_project/libs/android-support-v4.jar
-1404265245000 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd /Users/xieyifan/MyWork/funny-new-tab-master/libs/android-support-v4.jar
+1403546830000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 E:\Library\umeng_android_social_sdk_3.3.8_custom\social_sdk_library_project\libs\httpmime-4.1.3.jar
+1405343824202 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 E:\compary\APP_funny\2\0704_Mai_Funny\libs\httpmime-4.1.3.jar
+1405343824083 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd E:\compary\APP_funny\2\0704_Mai_Funny\libs\android-support-v4.jar
+1404736403359 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd E:\Library\umeng_android_social_sdk_3.3.8_custom\social_sdk_library_project\libs\android-support-v4.jar

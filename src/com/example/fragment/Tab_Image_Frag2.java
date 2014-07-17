@@ -13,6 +13,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,7 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	private FragmentTransaction  ft;
 	private boolean isHot = true;
 	private ImageView iv_refresh;
+	private Animation animation;
 	View view;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +53,7 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	}
 	
 	private void initPop(){
+		animation = AnimationUtils.loadAnimation(getActivity(), R.anim.round_loading);
 		iv_refresh = (ImageView)view.findViewById(R.id.tab_refresh);
 		iv_refresh.setOnClickListener(this);
 		textView = (TextView)view.findViewById(R.id.tab_top_text);
@@ -147,7 +151,8 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 			isHot = false;
 			break;
 		case R.id.tab_refresh:
-			iv_refresh.setImageResource(R.drawable.refresh_normal);
+//			iv_refresh.setImageResource(R.drawable.refresh_normal);
+			iv_refresh.startAnimation(animation);
 			if (isHot) {
 				image_Hot.Refresh(Tabhandler);
 			}else {
@@ -161,7 +166,8 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			
 			if (msg.what == Uris.MSG_REFRESH) {
-				iv_refresh.setImageResource(R.drawable.refresh_pre);
+//				iv_refresh.setImageResource(R.drawable.refresh_pre);
+				iv_refresh.clearAnimation();
 			}
 			
 		}

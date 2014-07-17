@@ -21,6 +21,7 @@ import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.CustomImage;
 import com.example.util.HttpUtil;
+import com.example.util.Uris;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -115,7 +116,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {
 			Message msg = Message.obtain();
-			msg.what = 444;
+			msg.what = Uris.MSG_REFRESH;
 			TabHandler.sendMessage(msg);
 		}
 	}
@@ -198,9 +199,9 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	}
 	
 	public void Refresh(Handler Tabhandler){
+		this.TabHandler = Tabhandler;
 		inithttp();
 		adapter.notifyDataSetChanged();
-		this.TabHandler = Tabhandler;
 	}
 	
 }

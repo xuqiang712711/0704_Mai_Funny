@@ -6,6 +6,7 @@ import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.Uris;
+import com.umeng.socialize.view.abs.am;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;
@@ -21,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
@@ -42,7 +45,7 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	private TextView textView, text_new, text_hot;
 	private boolean check_1 = true;
 	private ImageView iv_refresh;
-	public static final int Msg_Refresh = Uris.MSG_REFRESH;
+	private Animation animation;
 	
 	private PopupWindow pop;// 0710Ìí¼Ó
 //	private FragmentManager mFM = null;
@@ -65,6 +68,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	}
 	
 	private void initPop(){
+		
+		animation = AnimationUtils.loadAnimation(getActivity(), R.anim.round_loading);
 		iv_refresh = (ImageView)view.findViewById(R.id.tab_refresh);
 		iv_refresh.setOnClickListener(this);
 		textView = (TextView)view.findViewById(R.id.tab_top_text);
@@ -146,7 +151,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 			check_1 = false;
 			break;
 		case R.id.tab_refresh:
-			iv_refresh.setImageResource(R.drawable.refresh_normal);
+//			iv_refresh.setImageResource(R.drawable.refresh_normal);
+			iv_refresh.startAnimation(animation);
 			if (check_1) {
 				duanZi_Hot.Refresh(Tabhandler);
 			}else {
@@ -177,7 +183,9 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			
 			if (msg.what == Uris.MSG_REFRESH) {
-				iv_refresh.setImageResource(R.drawable.refresh_pre);
+//				iv_refresh.setImageResource(R.drawable.refresh_pre);
+				Log.i("XXX", "Stop");
+				iv_refresh.clearAnimation();
 			}
 			
 		}
