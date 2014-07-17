@@ -10,7 +10,6 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
 import com.example.adapter.X_Text_Adapter;
 import com.example.application.MaimobApplication;

@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.example.AsyTask.RequestDataTask;
-import com.example.adapter.DuanZiAdapter;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
