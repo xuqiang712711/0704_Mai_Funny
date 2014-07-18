@@ -28,7 +28,7 @@ public class MaimobApplication extends Application{
 	public static ImageLoader imageLoader = ImageLoader.getInstance();
 	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
             RequestType.SOCIAL);
-	public static final UMSocialService loginController = UMServiceFactory.getUMSocialService("com.umeng.login", null);
+//	public static final UMSocialService loginController = UMServiceFactory.getUMSocialService(arg0, arg1)
 	public static boolean Jelly_Bean;
 	public static int DeviceW ;
 	public static int DeviceH;

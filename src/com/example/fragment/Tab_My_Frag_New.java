@@ -1,5 +1,6 @@
 package com.example.fragment;
 
+import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
 import com.example.fragment.content.My_Favorite;
@@ -9,6 +10,7 @@ import com.example.fragment.content.My_Write;
 import com.example.fragment.content.My_userinfo;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.umeng.socialize.common.SocializeConstants;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,6 +51,16 @@ private TextView edit;
 		}
 	
 	private void initView(){
+		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
+		userinfo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+//				MaimobApplication.loginController.openUserCenter(getActivity(), SocializeConstants.FLAG_USER_CENTER_HIDE_LOGININFO);
+			}
+		});
+		
 		write = (RelativeLayout)view.findViewById(R.id.my_writer_new);
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
