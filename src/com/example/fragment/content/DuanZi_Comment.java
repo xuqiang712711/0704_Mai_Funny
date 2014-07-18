@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
@@ -62,14 +64,17 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		imageLoader = MaimobApplication.imageLoader;
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		initView();
 	}
 	
 	private void initView(){
 //		mitem_top = (LinearLayout)view.findViewById(R.id.mitem_top);
-		TextView textView = (TextView)view.findViewById(R.id.back2_text);
+		TextView textView = (TextView)view.findViewById(R.id.top_text);
 		textView.setText(getResources().getString(R.string.app_name));
+		Button back = (Button)view.findViewById(R.id.top_left);
+		Button report = (Button)view.findViewById(R.id.top_right);
 		
 		hint_img = (ImageView)view.findViewById(R.id.mitem_hint_img);
 		gif = (GifImageView)view.findViewById(R.id.mitem_test_gif);
@@ -96,33 +101,27 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		Hot_txt.setText(duanzi.getComment());
 		
 		if (duanzi.isZanPressed()) {
-//			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_PRESSED), null, null, null);
-//			Zan.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
 			Zan_img.setImageResource(R.drawable.ic_digg_pressed);
 			Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
 		}else {
-//			Zan.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.ZAN_NORMAL), null, null, null);
-//			Zan.setText(duanzi.getZan());
 			Zan_img.setImageResource(R.drawable.ic_digg_normal);
 			Zan_txt.setText(duanzi.getZan());
 		}
 		
 		if (duanzi.isCaiPressed()) {
-//			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_PRESSED), null, null, null);
-//			Cai.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
 			Cai_img.setImageResource(R.drawable.ic_digg_pressed);
 			Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
 		}else {
-//			Cai.setCompoundDrawables(duanzi.ChangePic(getActivity(), Duanzi.CAI_NORMAL), null, null, null);
-//			Cai.setText(duanzi.getCai());
 			Cai_img.setImageResource(R.drawable.ic_bury_normal);
 			Cai_txt.setText(duanzi.getCai());
 		}
-		Cai_txt.setOnClickListener(this);
-		Zan_txt.setOnClickListener(this);
-		Hot_txt.setOnClickListener(this);
 		More.setOnClickListener(this);
 		gif.setOnClickListener(this);
+		Zan_layout.setOnClickListener(this);
+		Cai_layout.setOnClickListener(this);
+		Hot_layout.setOnClickListener(this);
+		back.setOnClickListener(this);
+		report.setOnClickListener(this);
 		
 		String imgUri = duanzi.getImageUrl();
 		Log.e(Tag, "Imguri  " + imgUri);
@@ -135,7 +134,6 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			.cacheOnDisk(true).considerExifParams(true)
 			.displayer(new SimpleBitmapDisplayer()).build();
 			image.setVisibility(View.VISIBLE);
-			imageLoader = ImageLoader.getInstance();
 			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
 				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
 						imageLoader.getDiskCache());
@@ -169,11 +167,11 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.mitem_bottom_cai_txt:
+		case R.id.mitem_bottom_cai:
 			duanzi.CanPress(Duanzi.CAI, Cai_txt,Cai_img, getActivity());
 			break;
 
-		case R.id.mitem_bottom_hot_txt:
+		case R.id.mitem_bottom_hot:
 			Toast.makeText(getActivity(), "È¥ÆÀÂÛ", Toast.LENGTH_SHORT).show();
 			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
 			switchFrag(DuanZi_Comment.this, comment_Test);
@@ -181,7 +179,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		case R.id.bottom_more:
 
 			break;
-		case R.id.mitem_bottom_zan_txt:
+		case R.id.mitem_bottom_zan:
 			duanzi.CanPress(Duanzi.ZAN, Zan_txt,Zan_img, getActivity());
 			break;
 		case R.id.mitem_test_gif:
@@ -198,7 +196,12 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 					e1.printStackTrace();
 				}
 			}
-			
+			break;
+		case R.id.top_left:
+			mFragmentManage.BackStatck(getActivity());
+			break;
+		case R.id.top_right:
+			mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new Duanzi_Report(), null);
 			break;
 		}
 	}

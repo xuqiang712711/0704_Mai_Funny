@@ -49,17 +49,22 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
+import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.CommonUtils;
 import com.example.util.EditUtil;
 import com.example.util.IMG_Compress;
 import com.example.util.NetworkUtil;
+import com.example.util.ShareUtil;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
-public class My_Write extends Fragment {
+public class My_Write extends Fragment implements OnClickListener{
 	private String Tag = "My_Write";
 	private View view;
 	private static final int PICK_FROM_CAMERA = 1;
@@ -69,7 +74,6 @@ public class My_Write extends Fragment {
 	private String mPath;
     String currImgPath = null;
 	private ImageView mimageView;
-	private Bitmap bitmap  = null;
 	private Uri mImageCaptureUri;
 	private ArrayAdapter<String> adapter, adapter2;
 	private EditText editText;
@@ -78,6 +82,12 @@ public class My_Write extends Fragment {
 	public static final int POST_SUC = 1;
 	private boolean switch_dialog =false;
 	private AlertDialog.Builder builder, del_builder;
+	private boolean isCheck_sina= false;
+	private boolean isCheck_tencent = false;
+	private boolean isCheck_qzone = false;
+	private boolean isCheck_douban = false;
+	private ImageView sina_img, tencent_img, qzone_img, douban;
+	private String editContent;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,10 +103,25 @@ public class My_Write extends Fragment {
 	}
 	
 	private void initView(){
-		TextView title = (TextView)view.findViewById(R.id.back_text);
+		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
+		tencent_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_tencent);
+		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
+		douban = (ImageView)view.findViewById(R.id.duanzi_comment_write_douban);
+		
+		sina_img.setOnClickListener(this);
+		tencent_img.setOnClickListener(this);
+		qzone_img.setOnClickListener(this);
+		douban.setOnClickListener(this);
+		
+		
+		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.my_write);
 		
-		submit = (Button)view.findViewById(R.id.back_submit);
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(this);
+		
+		submit = (Button)view.findViewById(R.id.top_right);
+		submit.setText(R.string.ActionBar_Submit);
 		editText = (EditText)view.findViewById(R.id.my_write_edit);
 		TextView textView = (TextView)view.findViewById(R.id.my_write_count);
 		mimageView = (ImageView)view.findViewById(R.id.my_write_image);
@@ -128,13 +153,6 @@ public class My_Write extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-//				if (!switch_dialog) {
-//					normal_dialog.show();
-//					switch_dialog = true;
-//				}else {
-//					del_dialog.show();
-//					switch_dialog = false;
-//				}
 				Log.i("FFF", "~~~~~~" + switch_dialog);
 				if (!switch_dialog) {
 					normal_dialog.show();
@@ -154,6 +172,22 @@ public class My_Write extends Fragment {
 					Loadingdialog.setCancelable(true);
 					Loadingdialog.setIndeterminate(true);
 					new Thread(new PostThread()).start();
+					editContent = editText.getText().toString();
+					if (isCheck_sina) {
+						ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent,
+								null, currImgPath, getActivity());
+					} else if (isCheck_tencent) {
+						ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT,
+								editContent, null, currImgPath, getActivity());
+					} else if (isCheck_qzone) {
+						Log.e(Tag, "QZONE");
+						ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN,
+								editContent, null, currImgPath, getActivity());
+					} else if (isCheck_douban) {
+						ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN,
+								editContent, null, currImgPath, getActivity());
+					}
+					backToHome();
 				}
 			}
 		});
@@ -247,8 +281,9 @@ public class My_Write extends Fragment {
 
     
     public void PostWithPic(String uri, File imgFile, String uuid) throws UnsupportedEncodingException{
+    	String content = editText.getText().toString();
+    	
     		HttpClient client = CustomHttpClient.getHttpClient();
-    		String content = editText.getText().toString();
     		Log.i("FFF" + "投稿___content", content + "  投稿___uuid  " + uuid + " 投稿___img  " + imgFile);
     		HttpPost httpPost = new HttpPost(uri);
     		MultipartEntity entity = new MultipartEntity();
@@ -272,10 +307,90 @@ public class My_Write extends Fragment {
 			}  catch (IOException e) {
 				e.printStackTrace();
 				Log.i("FFF", "投稿___IO" + e);
-			} 
-//    			catch (JSONException e) {
-//				Log.i("FFF", "投稿___Json" + e);
-//				e.printStackTrace();
-//			}
+			}
     }
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.top_left:
+			backToHome();
+			break;
+
+		case R.id.duanzi_comment_write_sina:
+			if (!isCheck_sina) {
+				if (MaimobApplication.Jelly_Bean) {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo2_72x72));
+				}else {
+					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo2_72x72));
+				}
+				isCheck_sina = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo_72x72));
+				}else {
+					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo_72x72));
+				}
+				isCheck_sina = false;
+			}
+			break;
+		case R.id.duanzi_comment_write_qzone:
+			if (!isCheck_qzone) {
+				if (MaimobApplication.Jelly_Bean) {
+					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren2_72x72));
+				}else {
+					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren2_72x72));
+				}
+				isCheck_qzone = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren_72x72));
+				}else {
+					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren_72x72));
+				}
+				isCheck_qzone =false;
+			}
+			break;
+		case R.id.duanzi_comment_write_tencent:
+			if (!isCheck_tencent) {
+				if (MaimobApplication.Jelly_Bean) {
+					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencent2_72x72));
+				}else {
+					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencent2_72x72));
+				}
+				isCheck_tencent = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencen_72x72));
+				}else {
+					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencen_72x72));
+				}
+				isCheck_tencent =false;
+			}
+			break;
+			
+		case R.id.duanzi_comment_write_douban:
+			if (!isCheck_douban) {
+				if (MaimobApplication.Jelly_Bean) {
+					douban.setBackground(getResources().getDrawable(R.drawable.douban2_72x72));
+				}else {
+					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban2_72x72));
+				}
+				isCheck_douban = true;
+			}else {
+				if (MaimobApplication.Jelly_Bean) {
+					douban.setBackground(getResources().getDrawable(R.drawable.douban_72x72));
+				}else {
+					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban_72x72));
+				}
+				isCheck_douban =false;
+			}
+			break;
+		}
+	}
+	
+	private void backToHome(){
+		XYFTEST xyftest =(XYFTEST)getActivity();
+		xyftest.WriteBack();
+	}
 }

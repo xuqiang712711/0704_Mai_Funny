@@ -14,6 +14,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,14 +37,17 @@ import android.widget.Toast;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.ShareUtil;
 import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 
@@ -66,6 +70,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
+			mFragmentManage.BackStatck(getActivity());
 		}
 	};
 	@Override
@@ -89,6 +94,14 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		content= duanzi.getContent();
 	}
 	private void initView(){
+		TextView title = (TextView)view.findViewById(R.id.top_text);
+		title.setText(getResources().getString(R.string.my_comment));
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(this);
+		Button submit = (Button)view.findViewById(R.id.top_right);
+		submit.setText(getResources().getString(R.string.ActionBar_Submit));
+		submit.setOnClickListener(this);
+		
 		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
 		tencent_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_tencent);
 		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
@@ -98,45 +111,8 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		tencent_img.setOnClickListener(this);
 		qzone_img.setOnClickListener(this);
 		douban.setOnClickListener(this);
-//		sina_img.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				
-//				if (MaimobApplication.Jelly_Bean) {
-//					sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
-//				}else {
-//					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer_check));
-//				}
-//				if (!isCheck_sina) {
-//					if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//						sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer_check));
-//					}else {
-//						sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer_check));
-//					}
-//					
-//					isCheck_sina = true;
-//				}else {
-//					if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//						sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.sina_layer));
-//					}else {
-//						sina_img.setBackground(getResources().getDrawable(R.drawable.sina_layer));
-//					}
-//					
-//					
-//					isCheck_sina = false;
-//				}
-//			}
-//		});
 		
-		
-		TextView title = (TextView)view.findViewById(R.id.back_text);
-		title.setText(getResources().getString(R.string.duanzi_comment_title));
-		
-		submit = (Button)view.findViewById(R.id.back_submit);
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
-		submit.setOnClickListener(this);
 	}
 	
 	class SubMitThread implements Runnable{
@@ -183,11 +159,6 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			e.printStackTrace();
 			Log.i("FFF", "投稿___IO" + e);
 		} 
-//			catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			Log.i("FFF", "投稿___Json" + e);
-//			e.printStackTrace();
-//		}
 		return code;
 }
 
@@ -195,20 +166,27 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.back_submit:
+		case R.id.top_right:
 			editContent = editText.getText().toString();
-			new Thread(new SubMitThread()).start();
-			Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
-			if (isCheck_sina) {
-				ShareToSocial(SHARE_MEDIA.SINA);
-			}else if (isCheck_tencent) {
-				ShareToSocial(SHARE_MEDIA.TENCENT);
-			}else if (isCheck_qzone) {
-				Log.e(Tag, "QZONE");
-				ShareToSocial(SHARE_MEDIA.RENREN);
-			}else if (isCheck_douban) {
-				ShareToSocial(SHARE_MEDIA.DOUBAN);
+			if (editContent != null && !editContent.equals("")) {
+				new Thread(new SubMitThread()).start();
+				Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
+				if (isCheck_sina) {
+					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity());
+				}else if (isCheck_tencent) {
+					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity());
+				}else if (isCheck_qzone) {
+					Log.e(Tag, "QZONE");
+					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity());
+				}else if (isCheck_douban) {
+					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity());
+				}
+			}else {
+				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
+			break;
+		case R.id.top_left:
+			mFragmentManage.BackStatck(getActivity());
 			break;
 		case R.id.duanzi_comment_write_sina:
 			if (!isCheck_sina) {
@@ -280,29 +258,6 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			}
 			break;
 		}
-	}
-	
-	public void ShareToSocial(SHARE_MEDIA media){
-			Log.e(Tag, "content  " + editContent + "  " + content);
-			MaimobApplication.mController.setShareContent(editContent + "~~~~~" + content + "~~~~来自大麦段子");
-			MaimobApplication.mController.directShare(getActivity(), media, new SnsPostListener() {
-				
-				@Override
-				public void onStart() {
-					// TODO Auto-generated method stub
-					 Toast.makeText(getActivity(), "分享开始",Toast.LENGTH_SHORT).show();
-				}
-				
-				@Override
-				public void onComplete(SHARE_MEDIA arg0, int eCode, SocializeEntity arg2) {
-					// TODO Auto-generated method stub
-					 if(eCode == StatusCode.ST_CODE_SUCCESSED){
-		                    Toast.makeText(getActivity(), "分享成功",Toast.LENGTH_SHORT).show();
-		                }else{
-		                    Toast.makeText(getActivity(), "分享失败",Toast.LENGTH_SHORT).show();
-		                }
-				}
-			});
 	}
 	
 }

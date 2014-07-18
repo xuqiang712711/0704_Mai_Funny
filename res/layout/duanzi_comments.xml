@@ -7,7 +7,7 @@
 
     <include 
         android:id="@+id/duanzi_comments_top"
-        layout="@layout/back_style_no_submit"/>
+        layout="@layout/back_duanzi"/>
 	<include 
 	    android:layout_marginTop="@dimen/margin_10"
 	    android:layout_below="@+id/duanzi_comments_top"

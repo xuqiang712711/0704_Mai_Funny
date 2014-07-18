@@ -90,6 +90,7 @@ public class XAdapter extends BaseAdapter{
 		.showImageForEmptyUri(R.drawable.maimob)
 		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
 		.cacheOnDisk(true)
+		.considerExifParams(true)
 		.build();
 		mInflater = LayoutInflater.from(context);
 	}
@@ -150,7 +151,7 @@ public class XAdapter extends BaseAdapter{
 		String cai = duanzi.getCai();
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
-		imageLoader = ImageLoader.getInstance();
+		imageLoader = MaimobApplication.imageLoader;
 		
 		if (!imgUri.equals("") && imgUri != null) {
 			Log.e(TAG, "img  " + imgUri);

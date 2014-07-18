@@ -50,11 +50,6 @@
 
             <include layout="@layout/line_horizontal" />
 
-            <include
-                android:id="@+id/more_bookmarker"
-                layout="@layout/more_style3" />
-
-            <include layout="@layout/line_horizontal" />
 
             <include
                 android:id="@+id/more_dark"
@@ -68,11 +63,6 @@
 
             <include layout="@layout/line_horizontal" />
 
-            <include
-                android:id="@+id/more_push"
-                layout="@layout/more_style3" />
-
-            <include layout="@layout/line_horizontal" />
 
             <include
                 android:id="@+id/more_Cache"

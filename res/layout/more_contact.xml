@@ -5,7 +5,7 @@
 
     <include
         android:id="@+id/include1"
-        layout="@layout/back_style_no_submit" />
+        layout="@layout/back_duanzi" />
 
     <TextView
         android:id="@+id/textView1"
@@ -15,5 +15,9 @@
         android:layout_marginTop="137dp"
         android:text="联系我们"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+	<Button 
+	    android:id="@+id/bt"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="bt"/>
 </LinearLayout>

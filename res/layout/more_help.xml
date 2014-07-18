@@ -2,11 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true" >
-
-    <include
-        android:id="@+id/include1"
-        layout="@layout/back" />
+    android:clickable="true" 
+    android:background="#699669">
+	<include 
+	    layout="@layout/back_duanzi"/>
 
     <TextView
         android:id="@+id/textView1"

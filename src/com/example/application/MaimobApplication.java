@@ -25,8 +25,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 public class MaimobApplication extends Application{
+	public static ImageLoader imageLoader = ImageLoader.getInstance();
 	public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",
             RequestType.SOCIAL);
+	public static final UMSocialService loginController = UMServiceFactory.getUMSocialService("com.umeng.login", null);
 	public static boolean Jelly_Bean;
 	public static int DeviceW ;
 	public static int DeviceH;
@@ -41,10 +43,6 @@ public class MaimobApplication extends Application{
 	public static int page = 1;
 	public static int count = 5;
 	public static void initImageLoader(Context context) {
-		// This configuration tuning is custom. You can tune every option, you may tune some of them,
-		// or you can create default configuration by
-		//  ImageLoaderConfiguration.createDefault(this);
-		// method.
 		Log.i("XXX", "application" +Environment.getExternalStorageDirectory());
 		File cacheFile = StorageUtils.getOwnCacheDirectory(context, "Mai");
 		
@@ -55,8 +53,6 @@ public class MaimobApplication extends Application{
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
 				.writeDebugLogs() // Remove for release app
 				.diskCache(new UnlimitedDiscCache(cacheFile))
-//				.discCache(new UnlimitedDiscCache(cacheFile))
-//				.discCacheFileNameGenerator(new HashCodeFileNameGenerator())
 				.build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
@@ -75,5 +71,5 @@ public class MaimobApplication extends Application{
 		}
 			return false;
 	}
-
+	
 }

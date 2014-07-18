@@ -1,39 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/wrap"
+    style="@style/match_horizontal"
     android:orientation="vertical" >
 
-    <RelativeLayout style="@style/wrap" >
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/my_zhuanfa_qzone"
-            style="@style/my_image"
-            android:contentDescription="@null"
-            android:src="@drawable/account_icon_qzone" />
+        <TextView
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/duanzi_comment_zhuanfa" />
+        <!--
+             <CheckBox 
+            android:text="新浪微博"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duanzi_comment_sian"/>
+        <CheckBox 
+            android:text="腾讯微博"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duanzi_comment_tencent"/>
+        -->
 
-        <ImageView
-            android:id="@+id/my_zhuanfa_sina"
-            style="@style/my_image"
-            android:layout_toRightOf="@+id/my_zhuanfa_qzone"
-            android:src="@drawable/account_icon_weibo" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
-        <ImageView
-            android:id="@+id/my_zhuanfa_tencent"
-            style="@style/my_image"
-            android:layout_toRightOf="@+id/my_zhuanfa_sina"
-            android:src="@drawable/account_icon_tencent" />
+            <ImageView
+                android:id="@+id/duanzi_comment_write_sina"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/weibo_72x72"
+                android:clickable="true" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/my_zhuanfa_renren"
-            style="@style/my_image"
-            android:layout_toRightOf="@+id/my_zhuanfa_tencent"
-            android:src="@drawable/account_icon_renren" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
-        <ImageView
-            android:id="@+id/my_zhuanfa_kaixin"
-            style="@style/my_image"
-            android:layout_toRightOf="@+id/my_zhuanfa_renren"
-            android:src="@drawable/account_icon_kaixin" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/duanzi_comment_write_tencent"
+                style="@style/share_button"
+                android:background="@drawable/tencen_72x72" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/duanzi_comment_write_qzone"
+                style="@style/share_button"
+                android:background="@drawable/renren_72x72" />
+        </LinearLayout>
+        
+                <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/duanzi_comment_write_douban"
+                style="@style/share_button"
+                android:background="@drawable/douban_72x72" />
+        </LinearLayout>
+        
+    </LinearLayout>
 
 </LinearLayout>

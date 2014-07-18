@@ -1,7 +1,11 @@
 package com.example.fragment;
 
+import java.io.File;
+
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.adapter.XAdapter;
 import com.example.adapter.X_Text_Adapter;
+import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.More_Help;
 import com.example.fragment.content.More_feedback;
@@ -49,11 +54,11 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		
 		
 		setText(R.id.more_feedback, R.string.more_text_feedback);
-		setText(R.id.more_bookmarker, R.string.more_text_bookmarker);
+//		setText(R.id.more_bookmarker, R.string.more_text_bookmarker);
 		setText(R.id.more_Cache, R.string.more_text_cache);
 		setText(R.id.more_contact, R.string.more_text_contact);
 		setText(R.id.more_help, R.string.more_text_help );
-		setText(R.id.more_push, R.string.more_text_push );
+//		setText(R.id.more_push, R.string.more_text_push );
 		setText(R.id.more_dark, R.string.more_text_dark);
 		setText(R.id.more_recommond, R.string.more_text_recommend);
 		setText(R.id.more_update, R.string.more_text_update);
@@ -76,9 +81,9 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	
 	private void listenCheckbox(){
 		setCheckBox(R.id.more_zhuanfa, R.id.more_checkbox);
-		setCheckBox(R.id.more_bookmarker, R.id.more_checkbox);
+//		setCheckBox(R.id.more_bookmarker, R.id.more_checkbox);
 		setCheckBox(R.id.more_dark, R.id.more_checkbox);
-		setCheckBox(R.id.more_push, R.id.more_checkbox);
+//		setCheckBox(R.id.more_push, R.id.more_checkbox);
 	}
 	
 	private void setCheckBox(int id ,int ResID){
@@ -143,18 +148,20 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 			break;
 		case R.id.more_feedback:
 			More_feedback feedback = new More_feedback();
-//			switchFragment(feedback);
+			switchFragment(this, feedback);
 			Toast.makeText(getActivity(), "more_feedback", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.more_help:
 			More_Help help = new More_Help();
-//			switchFragment(help);
+			switchFragment(this, help);
 			Toast.makeText(getActivity(), "more_help", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.more_Cache:
-			Toast.makeText(getActivity(), "more_Cache", Toast.LENGTH_SHORT).show();
+			MaimobApplication.imageLoader.clearDiskCache();
+			Toast.makeText(getActivity(), "SDCard中的图片缓存已经清除", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.more_update:
+//			MaimobApplication.imageLoader.clearDiskCache();
 			Toast.makeText(getActivity(), "more_update", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.more_contact:
@@ -178,4 +185,5 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 			xyf.switchContentFull(from, to, null);
 		}
 	}
+	
 }

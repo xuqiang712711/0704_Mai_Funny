@@ -5,7 +5,7 @@
         <shape >
             <corners android:radius="5dip"/>
             <stroke android:width="0.5dp"
-                android:color="@color/item_default"/>
+                android:color="#699669"/>
             <solid android:color="@color/actionBar_click"/>
         </shape>
     </item>
@@ -19,8 +19,8 @@
                 android:right="2dp"
                 android:bottom="2dp"/>
             <stroke android:width="0.5dp"
-                android:color="@color/actionBar"/>
-            <solid android:color="@color/actionBar_click"/>
+                android:color="@color/gainsboro"/>
+            <solid android:color="@color/gold"/>
         </shape>
     </item>
 

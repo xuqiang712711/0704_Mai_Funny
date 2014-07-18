@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5"
-        layout="@layout/back_style_no_submit" />
+        layout="@layout/back_duanzi" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,6 +17,8 @@
         android:background="#cccccc" >
 
         <RelativeLayout
+            android:background="@color/whitesmoke"
+            android:layout_margin="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -24,15 +26,15 @@
                 android:id="@+id/my_check_content"
                 style="@style/match"
                 android:layout_margin="5dp"
-                android:background="#ffffff"
                 android:padding="3dp"
                 android:text="@string/my_Test" />
 
             <ImageView
+                android:layout_margin="@dimen/margin_5"
                 android:layout_centerInParent="true"
                 android:layout_below="@+id/my_check_content"
                 android:id="@+id/my_check_image"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:src="@drawable/maimob" />

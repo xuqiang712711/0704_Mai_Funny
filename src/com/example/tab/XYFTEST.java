@@ -78,8 +78,6 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 */
 	public void selectTab(int index) {
 		clearTab();
-//		private FragmentManager fm;
-//		private FragmentTransaction fragtrain;
 		FragmentManager fm = getSupportFragmentManager();
 		
 		FragmentTransaction fragtrain = fm.beginTransaction();
@@ -87,8 +85,6 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 
 		switch (index) {
 		case 1:
-//			c1.setBackgroundResource(R.drawable.tt_tab_bar_selected_bg_s);
-//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
 			if (Frag_duanzi == null) {
 				Frag_duanzi = new Tab_DuanZi_Frag();
 				fragtrain.add(R.id.content_container, Frag_duanzi);
@@ -98,8 +94,6 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			break;
 
 		case 2:
-//			c2.setBackgroundResource(R.color.duanzi_comment);
-//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
 			if (Frag_image == null) {
 				Frag_image = new Tab_Image_Frag2();
 				fragtrain.add(R.id.content_container, Frag_image);
@@ -108,24 +102,14 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			}
 			break;
 		case 3:
-//			c3.setBackgroundResource(R.color.duanzi_comment);
-//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_s);
-//			if (Frag_search == null) {
-//				Frag_search = new Tab_Search_Frag();
-//				fragtrain.add(R.id.content_container, Frag_search);
-//			} else {
-//				fragtrain.show(Frag_search);
-//			}
 			if (my_Write == null) {
 				my_Write = new My_Write();
-				fragtrain.add(R.id.content_container,my_Write);
+				fragtrain.add(R.id.content_container2,my_Write);
 			}else {
 				fragtrain.show(my_Write);
 			}
 			break;
 		case 4:
-//			c4.setBackgroundResource(R.color.duanzi_comment);
-//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
 			if (Frag_my== null) {
 				Frag_my = new Tab_My_Frag_New();
 				fragtrain.add(R.id.content_container, Frag_my);
@@ -134,8 +118,6 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			}
 			break;
 		case 5:
-//			c5.setBackgroundResource(R.color.duanzi_comment);
-//			c3.setBackgroundResource(R.drawable.tt_tab_bar_guide_selected_bg_n);
 			if (Frag_more == null) {
 				Frag_more = new Tab_More_Frag();
 				fragtrain.add(R.id.content_container, Frag_more);
@@ -244,6 +226,15 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 				Log.i(Tag, "add");
 			}
 		}
+	}
+	
+	public void hintFragment(){
+		FragmentManager fm2 = getSupportFragmentManager();
+		fm2.popBackStack();
+	}
+	
+	public void WriteBack(){
+		selectTab(1);
 	}
 	
 }

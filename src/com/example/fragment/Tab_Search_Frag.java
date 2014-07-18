@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import com.example.AsyTask.MyTask_No_Result;
 import com.example.AsyTask.RequestDataTask;
+import com.example.application.MaimobApplication;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.CustomImage;
 import com.example.util.Uris;
@@ -25,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -46,6 +49,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	private int num = 0;
 	private int pid = 0;
 	private MyTask_No_Result task = null;
+	private ImageLoader imageLoader;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,11 +67,16 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		initView();
 		initHttp();
 		listenerWidget();
+		imageLoader = MaimobApplication.imageLoader;
 	}
 
 	private void initView() {
-		TextView title = (TextView)view.findViewById(R.id.back2_text);
+		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.my_check);
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(this);
+		Button right = (Button)view.findViewById(R.id.top_right);
+		right.setVisibility(View.GONE);
 		
 		options = new DisplayImageOptions.Builder()
 				.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -146,7 +155,6 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 				img = ((JSONObject) array.get(num)).getString("img");
 				pid = ((JSONObject) array.get(num)).getInt("id");
 				textView.setText(text);
-				ImageLoader imageLoader = ImageLoader.getInstance();
 				if (img != null && !img.equals("")) {
 					imageLoader.displayImage(img, imageView, options);
 				}
@@ -178,6 +186,9 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 			break;
 		case R.id.my_check_trash:
 			check_handle(flag_trash);
+			break;
+		case R.id.top_left:
+			mFragmentManage.BackStatck(getActivity());
 			break;
 		}
 	}

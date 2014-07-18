@@ -6,7 +6,7 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/back" />
+        layout="@layout/back_duanzi" />
     <RelativeLayout
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -55,16 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/my_zhuanfa_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/my_zhuanfa" />
 
       	<include 
-      	    android:layout_toRightOf="@+id/my_zhuanfa_text"
-      	    style="@style/wrap"
+      	    android:layout_width="match_parent"
+      	    android:layout_height="wrap_content"
       	    layout="@layout/zhuanfa"/>
     </RelativeLayout>
 

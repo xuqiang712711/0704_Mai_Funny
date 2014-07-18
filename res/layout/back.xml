@@ -28,6 +28,7 @@
             android:text="QWERTY" />
 
         <Button
+            android:padding="10dp"
             android:id="@+id/back_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

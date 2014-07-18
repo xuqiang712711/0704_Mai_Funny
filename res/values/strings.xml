@@ -19,6 +19,7 @@
     <string name="duanzi_hot">热门</string>
     <string name="duanzi_essence">精华</string>
     <string name="duanzi_comment">期待你的神评论</string>
+    <string name="duanzi_report">举报</string>
     <string name="duanzi_comment_title">我要评论</string>
     <string name="duanzi_comment_zhuanfa">转发到</string>
     <string name="comment_write">如果不想转发，请不要勾选下方图标</string>

@@ -1,14 +1,19 @@
 package com.example.fragment.content;
 
 
-import com.example.tab.R;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.fragment.Tab_More_Frag;
+import com.example.object.mFragmentManage;
+import com.example.tab.R;
+import com.example.tab.XYFTEST;
 
 public class More_Contact extends Fragment{
 	private View view;
@@ -23,13 +28,19 @@ public class More_Contact extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-//		initView();
-	}
-	
-	private void initView(){
-		TextView title = (TextView)view.findViewById(R.id.back2_text);
+		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.more_text_contact);
-//		view.findViewById(R.id.back2_back).setOnClickListener(this);
+		Button right = (Button)view.findViewById(R.id.top_right);
+		right.setVisibility(View.GONE);
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mFragmentManage.BackStatck(getActivity());
+			}
+		});
 	}
 	
 }
