@@ -44,7 +44,12 @@
             layout="@layout/line_horizontal"/>
         <include 
             layout="@layout/more_style1"
-            android:id="@+id/my_userinfo_bind_tencent_qq"/>
+            android:id="@+id/my_userinfo_bind_renren"/>
+        <include 
+            layout="@layout/line_horizontal"/>
+        <include 
+            layout="@layout/more_style1"
+            android:id="@+id/my_userinfo_bind_douban"/>
     </LinearLayout>
 
 </RelativeLayout>

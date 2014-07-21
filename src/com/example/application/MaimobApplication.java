@@ -3,12 +3,15 @@ package com.example.application;
 import java.io.File;
 
 import com.example.maiUtil.Getuuid;
+import com.example.tab.R;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.socialize.controller.RequestType;
@@ -32,6 +35,7 @@ public class MaimobApplication extends Application{
 	public static boolean Jelly_Bean;
 	public static int DeviceW ;
 	public static int DeviceH;
+	public static DisplayImageOptions options;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -72,4 +76,14 @@ public class MaimobApplication extends Application{
 			return false;
 	}
 	
+	public static void getOption(){
+		options = new DisplayImageOptions.Builder()
+		.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+		.showImageOnLoading(R.drawable.maimob)
+		.showImageForEmptyUri(R.drawable.maimob)
+		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
+		.cacheOnDisk(true)
+		.considerExifParams(true)
+		.build();
+		}
 }

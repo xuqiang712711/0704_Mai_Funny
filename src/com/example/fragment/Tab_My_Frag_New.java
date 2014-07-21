@@ -1,5 +1,7 @@
 package com.example.fragment;
 
+import java.util.Set;
+
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
@@ -7,13 +9,19 @@ import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Message;
 import com.example.fragment.content.My_Publish;
 import com.example.fragment.content.My_Write;
+import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userinfo;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.ImageUtil;
 import com.umeng.socialize.common.SocializeConstants;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,18 +35,31 @@ public class Tab_My_Frag_New extends Fragment implements OnClickListener{
 private View view;
 private RelativeLayout write, check, publish, favorite,message,app, activity;
 private TextView edit;
+private RelativeLayout logined, unLogin;
+private String Tag = "Tab_My_Frag_New";
+private TextView tv_user_description,tv_user_name;
+private ImageView iv_user_head;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		Log.e(Tag, "onCreateView");
 		view = inflater.inflate(R.layout.tab_mine_new, container, false);
 		return view;
 	}
 	
 	@Override
+		public void onPause() {
+			// TODO Auto-generated method stub
+			super.onPause();
+			Log.e(Tag, "onPause");
+		}
+	
+	@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 			super.onActivityCreated(savedInstanceState);
+			Log.e(Tag, "onActivityCreated");
 			initView();
 			
 			listenWidget(R.id.my_check_new);
@@ -51,6 +72,31 @@ private TextView edit;
 		}
 	
 	private void initView(){
+		//未登录
+		unLogin = (RelativeLayout)view.findViewById(R.id.my_unlogin);
+		//已登录
+		logined = (RelativeLayout)view.findViewById(R.id.my_logined);
+		iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
+		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
+		tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
+		
+		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+		String user_name = sp.getString("name", null);
+		if (user_name == null) {
+			unLogin.setVisibility(View.VISIBLE);
+			logined.setVisibility(View.GONE);
+			Log.e("FFF", "unLogin");
+		}else {
+			unLogin.setVisibility(View.GONE);
+			logined.setVisibility(View.VISIBLE);
+			tv_user_name.setText(user_name);
+			tv_user_description.setText(sp.getString("description", null));
+			MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
+			Log.e("FFF", "logined");
+		}
+
+		
+		unLogin.setOnClickListener(this);
 		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
 		userinfo.setOnClickListener(new OnClickListener() {
 			
@@ -157,6 +203,9 @@ private TextView edit;
 			switchFragment(this,contact);
 			Toast.makeText(getActivity(), "my_favorite", Toast.LENGTH_SHORT).show();
 			break;
+		case R.id.my_unlogin:
+			 mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), null);
+			break;
 		}
 	}
 	
@@ -167,6 +216,24 @@ private TextView edit;
 		if (getActivity() instanceof XYFTEST) {
 			XYFTEST xyf = (XYFTEST) getActivity();
 			xyf.switchContentFull(from, to , null);
+		}
+	}
+	
+	public void refresh(){
+		Log.e(Tag, "~~~~~~~~~~refresh");
+		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+		String user_name = sp.getString("name", null);
+		if (user_name == null) {
+			unLogin.setVisibility(View.VISIBLE);
+			logined.setVisibility(View.GONE);
+			Log.e("FFF", "unLogin");
+		}else {
+			unLogin.setVisibility(View.GONE);
+			logined.setVisibility(View.VISIBLE);
+			tv_user_name.setText(user_name);
+			tv_user_description.setText(sp.getString("description", null));
+			MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
+			Log.e("FFF", "logined");
 		}
 	}
 	

@@ -3,11 +3,13 @@ package com.example.fragment.content;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.tab.R;
-
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,12 +24,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class My_userinfo extends Fragment{
+import com.example.application.MaimobApplication;
+import com.example.tab.R;
+import com.example.util.ImageUtil;
+
+public class My_userinfo extends Fragment implements OnClickListener{
 	private String Tag = "My_userinfo";
 	private ViewPager vp;
 	private List<Fragment> viewList;
@@ -39,8 +45,11 @@ public class My_userinfo extends Fragment{
 	private int offset = 0;//偏移量
 	private int currIndex = 0;
 	private int bmpW = 0;
-	
+	private AlertDialog.Builder builder;
+	private SharedPreferences sp;
+	private EditText editText;
 	private TextView home,publish;
+	private TextView tv_user_name;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +68,9 @@ public class My_userinfo extends Fragment{
 		initViewPager();
 	}
 	
+	
 	private void  initViewPager(){
+		Log.e(Tag, "InitViewpager");
 		vp = (ViewPager)view.findViewById(R.id.viewpager);
 		
 		LayoutInflater lif = LayoutInflater.from(getActivity());
@@ -80,8 +91,16 @@ public class My_userinfo extends Fragment{
 	}
 	
 	private void initView(){
+		sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+		ImageView iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
+		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
+		TextView tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
+		MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
+		tv_user_name.setText(sp.getString("name", null));
+		tv_user_description.setText(sp.getString("description", null));
+		
 		TextView textView = (TextView)view.findViewById(R.id.back2_text);   
-		textView.setText("User_Name");
+		textView.setText(sp.getString("name", null));
 		
 		
 		home = (TextView)view.findViewById(R.id.my_userinfo_home);
@@ -89,17 +108,24 @@ public class My_userinfo extends Fragment{
 		
 		home.setOnClickListener(new mOnClickListener(0));
 		publish.setOnClickListener(new mOnClickListener(1));
+		
+		iv_user_head.setOnClickListener(this);
+		tv_user_name.setOnClickListener(this);
+		tv_user_description.setOnClickListener(this);
+		
+		tv_user_name.setOnClickListener(this);
+		if (editText == null) {
+			editText = new EditText(getActivity());
+		}
+		editText.setHint(sp.getString("name", null));
+		
 	}
 	class madapter extends FragmentPagerAdapter{
 		
-//		@Override
-//		public CharSequence getPageTitle(int position) {
-//			// TODO Auto-generated method stub
-//			return TitleList.get(position);
-//		}
 		
 		public madapter(FragmentManager fm) {
 			super(fm);
+			Log.e(Tag, "view  " +viewList.size());
 			// TODO Auto-generated constructor stub
 		}
 
@@ -118,21 +144,12 @@ public class My_userinfo extends Fragment{
 	
 	private void initBMP(){
 		iv = (ImageView)view.findViewById(R.id.my_userinfo_tab);
-//		iv.setImageResource(R.drawable.my_userinfo_line);
 		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.my_userinfo_line).getWidth();
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int screenW = dm.widthPixels;
 		offset = screenW / 2;
 		
-//		LayoutParams lp = (RelativeLayout.LayoutParams)iv.getLayoutParams();
-//		lp.width = offset;
-//		lp.height  = 8;
-//		iv.setLayoutParams(lp);
-		Log.i(Tag, "bmp  " + bmpW + "  offset  " + offset);
-//		Matrix matrix = new Matrix();
-//		matrix.postTranslate(offset, 0);
-//		iv.setImageMatrix(matrix);
 		
 	}
 	
@@ -174,5 +191,42 @@ public class My_userinfo extends Fragment{
 			vp.setCurrentItem(i);
 		}
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+//		((TextView)v).setText(content);
+//		switch (v.getId()) {
+//		case R.id.userinfo_name:
+//			EditText medit = new EditText(getActivity());
+//			new AlertDialog.Builder(getActivity()).setTitle("修改昵称").setView(medit).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					// TODO Auto-generated method stub
+//					String content = editText.getText().toString();
+//					Editor editor = sp.edit();
+////					if (content != null && !content.equals("")) {
+////						editor.putString("name", content);
+////						tv_user_name.setText(content);
+////					}
+//					((TextView)v).setText(content);
+//				}
+//			})
+//			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//			}).show();
+//			break;
+//
+//		case R.id.userinfo_icon:
+//			
+//			break;
+//		}
 	}
 }

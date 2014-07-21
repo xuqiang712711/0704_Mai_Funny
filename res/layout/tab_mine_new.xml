@@ -5,12 +5,12 @@
     android:background="@color/gery" >
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/my_nologin"
         style="@style/match_horizontal"
         android:layout_below="@+id/my_top"
         android:layout_marginTop="20dp"
-        android:background="#ffffff" >
+        android:background="#ffffff"
+        android:visibility="gone" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -37,166 +37,209 @@
             android:padding="10dp"
             android:src="@drawable/ic_skip" />
     </RelativeLayout>
-    
+
     <RelativeLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/my_logined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/my_top"
-        android:background="@color/my_back" >
-        <RelativeLayout 
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/my_userinfo_top"
-            >
-            <ImageView
-            android:id="@+id/userinfo_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@null"
-            android:src="@drawable/game" />
+        android:id="@+id/mine_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <RelativeLayout
-            android:id="@+id/myinfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/userinfo_icon"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/userinfo_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="用户名"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/userinfo_points"
-                style="@style/user_info"
-                android:layout_below="@+id/userinfo_name"
-                android:text="积分:" />
-
-
-            <TextView
-                android:id="@+id/user_points_num"
-                style="@style/user_info"
-                android:layout_alignBottom="@+id/userinfo_points"
-                android:layout_toRightOf="@+id/userinfo_points"
-                android:text="313" />
-        </RelativeLayout>
-        
-        <TextView
-            android:id="@+id/user_info_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/userinfo_icon"
-            android:text="编辑资料"
-            android:textColor="#000000"
-            android:textSize="13sp" />
-        </RelativeLayout>
-		<View 
-		    android:layout_marginTop="10dp"
-		    android:background="@color/slategray"
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_above="@+id/my_3"/>
-        <LinearLayout 
-            android:id="@+id/my_3"
-            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:id="@+id/my_unlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/my_userinfo_top"
-            android:orientation="horizontal">
-			<include 
-			    android:id="@+id/my_favorite_new"
-			    android:layout_weight="1"
-			    android:layout_height="wrap_content"
-			    android:layout_width="0dp"
-			    layout="@layout/my_content_tv2"/>
-			<include 
-			    layout="@layout/line_vertical"/>
-			 <include 
-			    android:id="@+id/my_publish_new"
-			    android:layout_weight="1"
-			    android:layout_height="wrap_content"
-			    android:layout_width="0dp"
-			    layout="@layout/my_content_tv2"/>     
-			 <include 
-			    layout="@layout/line_vertical"/> 
-			 <include 
-			    android:id="@+id/my_message_new"
-			    android:layout_weight="1"
-			    android:layout_height="wrap_content"
-			    android:layout_width="0dp"
-			    layout="@layout/my_content_tv2"/>
-        </LinearLayout>
-        
+            
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/my_back" >
+
+            <ImageView
+                android:id="@+id/my_unlogin_icon"
+                android:layout_margin="@dimen/margin_5"
+                android:contentDescription="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/mai_user_head" />
+            <TextView 
+                android:layout_marginLeft="@dimen/margin_10"
+                android:textSize="@dimen/ts_20"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/my_unlogin_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录/注册"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/my_logined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/my_back"
+             >
+
+            <RelativeLayout
+                android:id="@+id/my_userinfo_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
+
+                <ImageView
+                    android:id="@+id/userinfo_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/game" />
+
+                <RelativeLayout
+                    android:id="@+id/myinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/userinfo_icon"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/userinfo_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="用户名"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/userinfo_points"
+                        style="@style/user_info"
+                        android:layout_below="@+id/userinfo_name"
+                        android:text="积分:" />
+
+                    <TextView
+                        android:id="@+id/user_points_num"
+                        style="@style/user_info"
+                        android:layout_alignBottom="@+id/userinfo_points"
+                        android:layout_toRightOf="@+id/userinfo_points"
+                        android:text="313" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/user_info_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/userinfo_icon"
+                    android:text="编辑资料"
+                    android:textColor="#000000"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_above="@+id/my_3"
+                android:layout_marginTop="10dp"
+                android:background="@color/slategray" />
+
+            <LinearLayout
+                android:id="@+id/my_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_userinfo_top"
+                android:layout_margin="10dp"
+                android:orientation="horizontal" >
+
+                <include
+                    android:id="@+id/my_favorite_new"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    layout="@layout/my_content_tv2" />
+
+                <include layout="@layout/line_vertical" />
+
+                <include
+                    android:id="@+id/my_publish_new"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    layout="@layout/my_content_tv2" />
+
+                <include layout="@layout/line_vertical" />
+
+                <include
+                    android:id="@+id/my_message_new"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    layout="@layout/my_content_tv2" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_margin="5dp"
-        android:layout_below="@+id/my_logined"
-        android:background="@color/my_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/mine_login"
+        android:layout_margin="5dp"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-		<include 
-		    android:layout_margin="10dp"
-		    android:layout_gravity="center"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    layout="@layout/my_content_vertical"
-		    android:id="@+id/my_check_new"/>
-		<include layout="@layout/line_vertical"/>
-		
-		<include 
-		    android:layout_margin="10dp"
-		    android:layout_gravity="center"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    layout="@layout/my_content_vertical"
-		    android:id="@+id/my_writer_new"/>
-		<include layout="@layout/line_vertical"/>
-		
-		<include 
-		    android:layout_margin="10dp"
-		    android:layout_gravity="center"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    layout="@layout/my_content_vertical"
-		    android:id="@+id/my_app_new"/>
-		<include layout="@layout/line_vertical"/>
-		<include 
-		    android:layout_margin="10dp"
-		    android:layout_gravity="center"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    layout="@layout/my_content_vertical"
-		    android:id="@+id/my_activity_new"/>
-		<include layout="@layout/line_vertical"/>
-		
+        android:background="@color/my_back"
+        android:orientation="horizontal" >
+
+        <include
+            android:id="@+id/my_check_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            layout="@layout/my_content_vertical" />
+
+        <include layout="@layout/line_vertical" />
+
+        <include
+            android:id="@+id/my_writer_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            layout="@layout/my_content_vertical" />
+
+        <include layout="@layout/line_vertical" />
+
+        <include
+            android:id="@+id/my_app_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            layout="@layout/my_content_vertical" />
+
+        <include layout="@layout/line_vertical" />
+
+        <include
+            android:id="@+id/my_activity_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            layout="@layout/my_content_vertical" />
+
     </LinearLayout>
 
-    <TextView 
+    <TextView
+        android:id="@+id/my_top"
         style="@style/Top_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:id="@+id/my_top"
-        android:text="@string/tab_bar_mine"/>
+        android:text="@string/tab_bar_mine" />
 
 </RelativeLayout>

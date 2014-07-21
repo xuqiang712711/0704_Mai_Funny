@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 public class mFragmentManage {
+	public static int Tag_My = 0;
+	public static int Tag_Userinfo = 1;
 	/**
 	 * ·µ»ØÊÂ¼þ
 	 * @param context
@@ -38,5 +40,14 @@ public class mFragmentManage {
 		}
 	}
 	
+	public static void RefreshFrag(Context context,int FragTag){
+		if (context == null) {
+			return;
+		}
+		if (context instanceof XYFTEST) {
+			XYFTEST xyftest = (XYFTEST)context;
+			xyftest.RefreshFragment(FragTag);
+		}
+	}
 	
 }

@@ -5,7 +5,7 @@
     android:background="#fbfbfb">
 
 	<LinearLayout 
-	    android:background="@drawable/mai_bg"
+	    android:background="@color/ghostwhite"
     android:id="@+id/tab_container"
     android:layout_width="fill_parent"
     android:layout_height="72.0dip"
@@ -75,11 +75,14 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="2.0dip"
+        android:layout_marginRight="2.0dip"
+        android:layout_marginTop="8.0dip"
         android:id="@id/channel3"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:layout_marginBottom="-1.0dip"
         android:layout_weight="1.0"
         android:orientation="vertical" >
 

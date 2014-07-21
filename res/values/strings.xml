@@ -46,8 +46,10 @@
     <string name="my_tencent_wb_binded">腾讯微博[已绑定]</string>
     <string name="my_sina_unbind">新浪微博[未绑定]</string>
     <string name="my_sina_binded">新浪微博[已绑定]</string>
-    <string name="my_tencent_qq_unbind">腾讯QQ[未绑定]</string>
-    <string name="my_tencent_qq_binged">腾讯QQ[已绑定]</string>
+    <string name="my_renren_unbind">人人网[未绑定]</string>
+    <string name="my_renren_binged">人人网[已绑定]</string>
+    <string name="my_douban_unbind">豆瓣网[未绑定]</string>
+    <string name="my_douban_binged">豆瓣网[已绑定]</string>
 	    
     
     

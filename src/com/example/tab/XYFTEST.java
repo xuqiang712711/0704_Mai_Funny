@@ -8,6 +8,9 @@ import com.example.fragment.Tab_More_Frag;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.fragment.Tab_Search_Frag;
 import com.example.fragment.content.My_Write;
+import com.example.fragment.content.My_userInfo_vp_home;
+import com.example.fragment.content.My_userinfo;
+import com.example.object.mFragmentManage;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -235,6 +238,12 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	
 	public void WriteBack(){
 		selectTab(1);
+	}
+	
+	public void RefreshFragment(int FragTag){
+		if (FragTag == mFragmentManage.Tag_My) {
+			Frag_my.refresh();
+		}
 	}
 	
 }

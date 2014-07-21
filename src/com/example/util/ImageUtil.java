@@ -3,6 +3,10 @@ package com.example.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.example.tab.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -13,6 +17,7 @@ import android.util.Log;
 public class ImageUtil {
 	private static AssetManager assetManager;
 	public static final  String file = "images";
+	public static DisplayImageOptions options;
 	//返回原图，不进行压缩
 	public static Bitmap decodeBitmap(Context context,String ImagePath){
 		InputStream is =null;
@@ -76,4 +81,15 @@ public class ImageUtil {
 		return inSampleSize;
 	}
 
+	public static DisplayImageOptions getOption(){
+		options = new DisplayImageOptions.Builder()
+		.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+		.showImageOnLoading(R.drawable.maimob)
+		.showImageForEmptyUri(R.drawable.maimob)
+		.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
+		.cacheOnDisk(true)
+		.considerExifParams(true)
+		.build();
+		return options;
+	}
 }

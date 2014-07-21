@@ -56,7 +56,7 @@
                 android:id="@+id/userinfo_points"
                 style="@style/user_info"
                 android:layout_below="@+id/userinfo_name"
-                android:text="积分:" />
+                android:text="签名:" />
 
             <TextView
                 android:id="@+id/user_points_num"
