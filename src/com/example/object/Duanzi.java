@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.example.tab.R;
 import com.example.tab.R.drawable;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.content.Context;
@@ -32,10 +33,11 @@ public class Duanzi implements Serializable {
 	private String poid;
 	private boolean isZanPressed;// 是否赞过
 	private boolean isCaiPressed;// 是否踩过
+	private SHARE_MEDIA media;
 
 	public Duanzi(String imageUrl, String name, String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
-			boolean isCaiPressed) {
+			boolean isCaiPressed,SHARE_MEDIA media) {
 		this.imageUrl = imageUrl;
 		this.userName = name;
 		this.cai = cai;
@@ -45,6 +47,7 @@ public class Duanzi implements Serializable {
 		this.poid = poid;
 		this.isZanPressed = isZanPressed;
 		this.isCaiPressed = isCaiPressed;
+		this.media = media;
 	}
 	
 	public void CanPress(int type,TextView txtview,ImageView  imgView,Context context){
@@ -82,6 +85,19 @@ public class Duanzi implements Serializable {
 		}
 	}
 	
+	
+	/**
+	 * 分享的平台
+	 * @return
+	 */
+	public SHARE_MEDIA getMedia() {
+		return media;
+	}
+
+	public void setMedia(SHARE_MEDIA media) {
+		this.media = media;
+	}
+
 	/**
 	 * 选择赞、踩的图片
 	 * @param context

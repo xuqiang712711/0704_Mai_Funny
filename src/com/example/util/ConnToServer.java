@@ -18,6 +18,9 @@ public class ConnToServer {
 		case CAI:
 			uri = Uris.Cai + "/uuid/" + Uris.uuid + "/pid/" + poid;
 			break;
+		case FAV:
+			uri = Uris.FAV + "/uuid/" + Uris.uuid + "/pid/" + poid;
+			break;
 		}
 		myTask.execute(uri);
 	}

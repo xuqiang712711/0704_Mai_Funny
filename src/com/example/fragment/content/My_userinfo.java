@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
@@ -24,12 +25,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.application.MaimobApplication;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 
@@ -44,10 +48,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	private ImageView iv;
 	private int offset = 0;//偏移量
 	private int currIndex = 0;
-	private int bmpW = 0;
-	private AlertDialog.Builder builder;
 	private SharedPreferences sp;
-	private EditText editText;
 	private TextView home,publish;
 	private TextView tv_user_name;
 	
@@ -81,16 +82,18 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		viewList.add(new My_userInfo_vp_home());
 		viewList.add(new My_userInfo_Vp_Publish());
 		
-		TitleList = new ArrayList<String>();
-		TitleList.add("主页");
-		TitleList.add("投稿");
+//		TitleList = new ArrayList<String>();
+//		TitleList.add("主页");
+//		TitleList.add("投稿");
 		
-		vp.setAdapter(new madapter(getActivity().getSupportFragmentManager()));
+//		vp.setAdapter(new madapter(getActivity().getSupportFragmentManager()));
+		vp.setAdapter(new fadapter(getChildFragmentManager()));
 		vp.setCurrentItem(0);
 		vp.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
 	
 	private void initView(){
+		//User_Info
 		sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
 		ImageView iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
 		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
@@ -99,10 +102,15 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		tv_user_name.setText(sp.getString("name", null));
 		tv_user_description.setText(sp.getString("description", null));
 		
-		TextView textView = (TextView)view.findViewById(R.id.back2_text);   
-		textView.setText(sp.getString("name", null));
+		//Title
+		TextView tv_title = (TextView)view.findViewById(R.id.top_text);   
+		tv_title.setText(sp.getString("name", null));
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(this);
+		Button right = (Button)view.findViewById(R.id.top_right);
+		right.setVisibility(View.GONE);
 		
-		
+		//Content
 		home = (TextView)view.findViewById(R.id.my_userinfo_home);
 		publish = (TextView)view.findViewById(R.id.my_userinfo_publish);
 		
@@ -113,19 +121,17 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		tv_user_name.setOnClickListener(this);
 		tv_user_description.setOnClickListener(this);
 		
-		tv_user_name.setOnClickListener(this);
-		if (editText == null) {
-			editText = new EditText(getActivity());
-		}
-		editText.setHint(sp.getString("name", null));
+//		if (editText == null) {
+//			editText = new EditText(getActivity());
+//		}
+//		editText.setHint(sp.getString("name", null));
 		
 	}
-	class madapter extends FragmentPagerAdapter{
-		
-		
-		public madapter(FragmentManager fm) {
+	
+	class fadapter extends FragmentStatePagerAdapter{
+
+		public fadapter(FragmentManager fm) {
 			super(fm);
-			Log.e(Tag, "view  " +viewList.size());
 			// TODO Auto-generated constructor stub
 		}
 
@@ -140,17 +146,18 @@ public class My_userinfo extends Fragment implements OnClickListener{
 			// TODO Auto-generated method stub
 			return viewList.size();
 		}
+		
 	}
 	
 	private void initBMP(){
 		iv = (ImageView)view.findViewById(R.id.my_userinfo_tab);
-		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.my_userinfo_line).getWidth();
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int screenW = dm.widthPixels;
 		offset = screenW / 2;
-		
-		
+		RelativeLayout.LayoutParams line_paParams = (LayoutParams) iv.getLayoutParams();
+		line_paParams.width = offset;
+		iv.setLayoutParams(line_paParams);
 	}
 	
 	public class MyOnPageChangeListener implements OnPageChangeListener{
@@ -196,37 +203,13 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-//		((TextView)v).setText(content);
-//		switch (v.getId()) {
-//		case R.id.userinfo_name:
-//			EditText medit = new EditText(getActivity());
-//			new AlertDialog.Builder(getActivity()).setTitle("修改昵称").setView(medit).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					// TODO Auto-generated method stub
-//					String content = editText.getText().toString();
-//					Editor editor = sp.edit();
-////					if (content != null && !content.equals("")) {
-////						editor.putString("name", content);
-////						tv_user_name.setText(content);
-////					}
-//					((TextView)v).setText(content);
-//				}
-//			})
-//			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			}).show();
-//			break;
-//
-//		case R.id.userinfo_icon:
-//			
-//			break;
-//		}
+		switch (v.getId()) {
+		case R.id.top_left:
+			mFragmentManage.BackStatck(getActivity());
+			break;
+
+		default:
+			break;
+		}
 	}
 }

@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +41,7 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.DialogUtil;
 import com.example.util.ShareUtil;
 import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -66,10 +68,11 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private String editContent;
 	private ImageView sina_img, tencent_img, qzone_img, douban;
 	private UMSocialService mcontroller;
+	private Dialog dialog;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
+			dialog.dismiss();
 			mFragmentManage.BackStatck(getActivity());
 		}
 	};
@@ -113,6 +116,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		douban.setOnClickListener(this);
 		
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
+		dialog = DialogUtil.createLoadingDialog(getActivity());
 	}
 	
 	class SubMitThread implements Runnable{
@@ -122,14 +126,17 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			// TODO Auto-generated method stub
 			try {
 				int code = PostWithPic(Uris.Post_Comment, Uris.uuid , pid);
-				if (code == 200) {
-					Message message = Message.obtain();
-					handler.sendMessage(message);
+				Message message = Message.obtain();
+				message.obj = Uris.MSG_SUC;
+				handler.sendMessageDelayed(message, 5000);
+				if (code != 200) {
+					ToastUtil.showToast(getActivity(), "评论失败，请稍后再试");
 				}
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		
 	}
@@ -167,20 +174,22 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.top_right:
+			dialog.show();
 			editContent = editText.getText().toString();
 			if (editContent != null && !editContent.equals("")) {
 				new Thread(new SubMitThread()).start();
 				Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
 				if (isCheck_sina) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity());
+					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity(), null);
 				}else if (isCheck_tencent) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity());
+					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity(), null);
 				}else if (isCheck_qzone) {
 					Log.e(Tag, "QZONE");
-					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity());
+					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity(), null);
 				}else if (isCheck_douban) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity());
+					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity(), null);
 				}
+				
 			}else {
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}

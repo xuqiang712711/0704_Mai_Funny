@@ -2,42 +2,43 @@ package com.example.adapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-import com.example.adapter.X_Text_Adapter.ViewHolder;
-import com.example.adapter.X_Text_Adapter.mOnclick;
+import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
+import com.example.fragment.content.Duanzi_More_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
+import com.example.util.ShareUtil;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class XAdapter extends BaseAdapter{
 	private List<Duanzi> mdata;
 	private LayoutInflater mInflater;
 	private String TAG = "XAdapter";
+	private PopupWindow window;
 	
 	public static final int ZAN_NORMAL = 1;
 	public static final int ZAN_PRESSED = 2;
@@ -208,6 +210,8 @@ public class XAdapter extends BaseAdapter{
 		holder.content.setText(content);
 		holder.content.setTextSize(Uris.Font_Size);
 		AddListen(holder, position);
+//		initPop(position, content);
+		
 		return convertView;
 	}
 	/**
@@ -257,17 +261,19 @@ public class XAdapter extends BaseAdapter{
 				break;
 			
 			case R.id.bottom_more:
-				String imgUri = mdata.get(position).getImageUrl();
-				Log.e(TAG, "imgUri  "+ imgUri);
-				if (imgUri.equals("") || imgUri == null) {
-					UMShare(mdata.get(position).getContent(), null);
-				}else {
-					UMShare(mdata.get(position).getContent(),
-							imgUri);
-				}
-				mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
-						SHARE_MEDIA.DOUBAN);
-				mController.openShare((Activity) context, false);
+//				String imgUri = mdata.get(position).getImageUrl();
+//				Log.e(TAG, "imgUri  "+ imgUri);
+//				if (imgUri.equals("") || imgUri == null) {
+//					UMShare(mdata.get(position).getContent(), null);
+//				}else {
+//					UMShare(mdata.get(position).getContent(),
+//							imgUri);
+//				}
+//				mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+//						SHARE_MEDIA.DOUBAN);
+//				mController.openShare((Activity) context, false);
+				initPop(position, holder);
+				window.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 				break;
 			
 			case R.id.mitem_bottom_zan:
@@ -302,9 +308,49 @@ public class XAdapter extends BaseAdapter{
 				Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 						.show();
 				break;
+			case R.id.duanzi_comment_write_sina:
+				duanzi.setMedia(SHARE_MEDIA.SINA);
+				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+				break;
+			case R.id.duanzi_comment_write_qzone:
+				duanzi.setMedia(SHARE_MEDIA.RENREN);
+				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+				break;
+			case R.id.duanzi_comment_write_tencent:
+				duanzi.setMedia(SHARE_MEDIA.TENCENT);
+				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+				break;
+			case R.id.duanzi_comment_write_douban:
+				duanzi.setMedia(SHARE_MEDIA.DOUBAN);
+				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+				break;
+			case R.id.duanzi_more_fav:
+//				RequestDataTask reqTask = new RequestDataTask(adapterHandler);
+//				reqTask.execute(Uris.FAV);
+				ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
+				break;
 			}
 		}
 		
+	}
+	
+	public void initPop(int position, ViewHolder holder){
+		Log.e(TAG, "position  " + position);
+		View popView = mInflater.inflate(R.layout.duanzi_more_pop, null);
+		ImageView iv_sina = (ImageView)popView.findViewById(R.id.duanzi_comment_write_sina);
+		iv_sina.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_tencent = (ImageView)popView.findViewById(R.id.duanzi_comment_write_tencent);
+		iv_tencent.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_renren = (ImageView)popView.findViewById(R.id.duanzi_comment_write_qzone);
+		iv_renren.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_douban = (ImageView)popView.findViewById(R.id.duanzi_comment_write_douban);
+		iv_douban.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_fav = (ImageView)popView.findViewById(R.id.duanzi_more_fav);
+		iv_fav.setOnClickListener(new mOnclick(position, holder));
+		
+		window = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		window.setBackgroundDrawable(new BitmapDrawable());
+		window.setFocusable(true);
 	}
 	
 	public static class ViewHolder{
@@ -316,17 +362,6 @@ public class XAdapter extends BaseAdapter{
 		RelativeLayout layout_cai, layout_zan, layout_hot;
 	}
 
-	/**
-	 * 分享功能
-	 * @param content
-	 * @param uri
-	 */
-	private void UMShare(String content, String uri) {
-		mController.setShareContent(content);
-		if (uri != null) {
-			mController.setShareMedia(new UMImage(context, uri));
-		}
-	}
 
 	public void switchFragment(Fragment from, Fragment to, Bundle bundle) {
 		if (context == null) {
@@ -346,5 +381,16 @@ public class XAdapter extends BaseAdapter{
 		msg.what = Uris.MSG_CHANGEFONT;
 		mHandler.sendMessage(msg);
 	}
+	
+	private Handler adapterHandler = new Handler(){
+		public void handleMessage(Message msg) {
+			if (msg.what == Uris.MSG_SUC) {
+				ToastUtil.showToast(context, "收藏成功");
+			}else {
+				ToastUtil.showToast(context, "你已经收藏过了");
+			}
+			window.dismiss();
+		}
+	};
 
 }

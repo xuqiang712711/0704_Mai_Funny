@@ -74,6 +74,7 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		iv_refresh.setOnClickListener(this);
 		textView = (TextView)view.findViewById(R.id.tab_top_text);
 		textView.setOnClickListener(this);
+		
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View PopView = inflater.inflate(R.layout.top_pop, null);
 		text_hot = (TextView)PopView.findViewById(R.id.top_hot);

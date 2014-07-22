@@ -7,22 +7,14 @@
     <include
         android:id="@+id/my_user_top"
         android:layout_alignParentTop="true"
-        layout="@layout/back_style_no_submit" />
+        layout="@layout/back_duanzi" />
 
-    <ImageView
-        android:id="@+id/iv_my_user_background"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/my_user_top"
-        android:contentDescription="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/testimage3" />
 
     <RelativeLayout
         android:id="@+id/my_userinfo_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_my_user_background"
+        android:layout_below="@+id/my_user_top"
         android:background="@color/my_back"
         android:padding="10dp" >
 
@@ -104,11 +96,10 @@
         android:background="#699669"
         android:scaleType="matrix"
         android:contentDescription="@null"
-        android:src="@drawable/my_userinfo_line"
         android:layout_below="@+id/sec_title"
         android:id="@+id/my_userinfo_tab"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_5"/>
     <android.support.v4.view.ViewPager
         android:layout_below="@+id/my_userinfo_tab"
         android:id="@+id/viewpager"

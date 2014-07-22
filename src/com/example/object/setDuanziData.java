@@ -28,7 +28,7 @@ public class setDuanziData {
 				String imageUrl = item.getString("img");//图片链接
 				String comment = item.getString("comment");//评论数
 				String poid = item.getString("poid");//段子ID
-				Duanzi duanzi = new Duanzi(imageUrl ,name, cai, zan, content, comment,poid,false, false);
+				Duanzi duanzi = new Duanzi(imageUrl ,name, cai, zan, content, comment,poid,false, false , null);
 				list.add(duanzi);
 			}
 			return list;

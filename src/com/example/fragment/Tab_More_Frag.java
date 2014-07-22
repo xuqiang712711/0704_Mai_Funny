@@ -2,6 +2,8 @@ package com.example.fragment;
 
 import java.io.File;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -144,6 +146,10 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.more_recommond:
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");  
+			intent.putExtra(Intent.EXTRA_TEXT, "大麦段子");   
+			getActivity().startActivity(Intent.createChooser(intent, "精彩推荐"));
 			Toast.makeText(getActivity(), "more_recommond", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.more_feedback:

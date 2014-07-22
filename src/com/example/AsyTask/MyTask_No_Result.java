@@ -9,8 +9,12 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.example.maiUtil.CustomHttpClient;
+import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -40,9 +44,14 @@ public class MyTask_No_Result extends AsyncTask<String, Void, Void> {
 			// HttpResponse httpResponse = httpClient.execute(request);
 			String response = httpClient.execute(request,
 					new BasicResponseHandler());
-			Log.i(Tag, "String  " + response);
+			JSONObject object = new JSONObject(response);
+			String flag = object.optString("flag");
+			Log.i(Tag, "String  " + flag);
 			// return response;
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

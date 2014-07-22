@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.application.MaimobApplication;
@@ -58,6 +60,19 @@ public class My_login_select extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		TextView title = (TextView)view.findViewById(R.id.top_text);
+		title.setText("Æ½Ì¨°ó¶¨");
+		Button back = (Button)view.findViewById(R.id.top_left);
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mFragmentManage.BackStatck(getActivity());
+			}
+		});
+		Button right = (Button)view.findViewById(R.id.top_right);
+		right.setVisibility(View.GONE);
 		mController = MaimobApplication.mController;
 		ImageView imageView = (ImageView)view.findViewById(R.id.my_select_sina);
 		imageView.setOnClickListener(new OnClickListener() {

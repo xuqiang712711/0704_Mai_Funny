@@ -63,6 +63,7 @@ import com.example.util.ShareUtil;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.utils.ToastUtil;
 
 public class My_Write extends Fragment implements OnClickListener{
 	private String Tag = "My_Write";
@@ -175,17 +176,17 @@ public class My_Write extends Fragment implements OnClickListener{
 					editContent = editText.getText().toString();
 					if (isCheck_sina) {
 						ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent,
-								null, currImgPath, getActivity());
+								null, currImgPath, getActivity(),null);
 					} else if (isCheck_tencent) {
 						ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT,
-								editContent, null, currImgPath, getActivity());
+								editContent, null, currImgPath, getActivity(),null);
 					} else if (isCheck_qzone) {
 						Log.e(Tag, "QZONE");
 						ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN,
-								editContent, null, currImgPath, getActivity());
+								editContent, null, currImgPath, getActivity(),null);
 					} else if (isCheck_douban) {
 						ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN,
-								editContent, null, currImgPath, getActivity());
+								editContent, null, currImgPath, getActivity(),null);
 					}
 					backToHome();
 				}
@@ -220,9 +221,10 @@ public class My_Write extends Fragment implements OnClickListener{
 		@Override
 		public void run() {
 			File file = null;
+			int code = 0;
 			if (currImgPath == null) {
 				try {
-					PostWithPic(Uris.Post_Draft, null, Uris.uuid);
+					code = PostWithPic(Uris.Post_Draft, null, Uris.uuid);
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -232,13 +234,16 @@ public class My_Write extends Fragment implements OnClickListener{
 				try {
 					String compressFile = IMG_Compress.Compress(currImgPath, 480);
 					Log.i("FFF", "comFile  " + compressFile);
-					PostWithPic(Uris.Post_Draft, file, Uris.uuid);
+					code =PostWithPic(Uris.Post_Draft, file, Uris.uuid);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			if (code != 200) {
+				ToastUtil.showToast(getActivity(),  "提交失败，请稍后再试");
 			}
 			Message message = Message.obtain();
 			message.what = POST_SUC;
@@ -252,7 +257,7 @@ public class My_Write extends Fragment implements OnClickListener{
 			switch (msg.what) {
 			case POST_SUC:
 				Loadingdialog.dismiss();
-				Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();;
+//				Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();;
 				break;
 			}
 		}
@@ -280,9 +285,9 @@ public class My_Write extends Fragment implements OnClickListener{
     }
 
     
-    public void PostWithPic(String uri, File imgFile, String uuid) throws UnsupportedEncodingException{
+    public int PostWithPic(String uri, File imgFile, String uuid) throws UnsupportedEncodingException{
     	String content = editText.getText().toString();
-    	
+    		int code = 0;
     		HttpClient client = CustomHttpClient.getHttpClient();
     		Log.i("FFF" + "投稿___content", content + "  投稿___uuid  " + uuid + " 投稿___img  " + imgFile);
     		HttpPost httpPost = new HttpPost(uri);
@@ -297,7 +302,7 @@ public class My_Write extends Fragment implements OnClickListener{
     		try {
     				Log.i("FFF", "投稿___uri" + httpPost.getURI());
 				HttpResponse response = client.execute(httpPost);
-				int code = response.getStatusLine().getStatusCode();
+				code = response.getStatusLine().getStatusCode();
     				Log.i("FFF", "投稿___code"+ code);
 				HttpEntity httpEntity = response.getEntity();
 				if (httpEntity != null) {
@@ -308,6 +313,7 @@ public class My_Write extends Fragment implements OnClickListener{
 				e.printStackTrace();
 				Log.i("FFF", "投稿___IO" + e);
 			}
+    		return code;
     }
 	@Override
 	public void onClick(View v) {

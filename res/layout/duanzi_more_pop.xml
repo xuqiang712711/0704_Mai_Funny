@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cadetblue" >
+
+	<include 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="@dimen/margin_10"
+	    android:id="@+id/duanzi_more_share"
+	    layout="@layout/zhuanfa"/>
+	<include 
+	    android:id="@+id/duanzi_more_share_line"
+	    android:layout_marginTop="@dimen/margin_10"
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:layout_below="@+id/duanzi_more_share"
+	    layout="@layout/line_horizontal"/>
+	<ImageView 
+	    android:id="@+id/duanzi_more_fav"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="@dimen/margin_10"
+	    android:layout_below="@+id/duanzi_more_share_line"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/mai_favorite"/>
+	<TextView 
+	    android:id="@+id/duanzi_more_zhuanfa_text"
+	    android:layout_marginBottom="@dimen/margin_10"
+	    android:layout_centerHorizontal="true"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="收藏"
+	    android:layout_below="@+id/duanzi_more_fav"/>
+</RelativeLayout>

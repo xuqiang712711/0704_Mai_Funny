@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_height="match_parent"
+    android:background="@color/my_back" 
+    android:clickable="true"
     android:orientation="vertical">
+    <include 
+        layout="@layout/back_duanzi"/>
     <ImageView 
         android:layout_gravity="center_horizontal"
         android:id="@+id/my_select_sina"
@@ -11,6 +15,7 @@
         android:src="@drawable/weibo_72x72"/>
 
     <ImageView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/my_select_tencent"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -24,6 +29,7 @@
         android:src="@drawable/douban_72x72" />
 
     <ImageView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/my_select_renren"
         android:layout_width="64dp"
         android:layout_height="64dp"

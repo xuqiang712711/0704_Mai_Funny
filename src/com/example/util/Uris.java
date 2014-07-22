@@ -150,6 +150,8 @@ public final class Uris {
 	
 	public static String Zan = "http://md.maimob.net/index.php/player/Zan";
 	public static String Cai = "http://md.maimob.net/index.php/player/Cai";
+	public static String FAV = "http://md.maimob.net/index.php/player/Fav";
+	
 	//uuid
 	public static String uuid = "YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi";
 	//写段子
@@ -167,6 +169,8 @@ public final class Uris {
 	public static int MSG_GETDATA = 2222;//获取服务器上的数据
 	public static int MSG_CHECKDATA = 2;
 	public static int MSG_CHANGEFONT = 33;//更改字体大小的msg.what
+	public static int MSG_SUC = 421;	//发送成功
+	public static int MSG_FAIL = 422;	//失败
 	public static int Font_Size = 14;
 	public static int Font_Size_small = 14;//字体大小
 	public static int Font_Size_normal = 18;
