@@ -238,6 +238,7 @@
     <TextView
         android:id="@+id/my_top"
         style="@style/Top_title"
+        android:paddingBottom="@dimen/margin_5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="@string/tab_bar_mine" />

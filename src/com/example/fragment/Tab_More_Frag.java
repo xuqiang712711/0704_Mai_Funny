@@ -3,6 +3,7 @@ package com.example.fragment;
 import java.io.File;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,6 +30,7 @@ import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Write;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
+import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
 
 public class Tab_More_Frag extends Fragment implements OnClickListener{
@@ -61,7 +63,7 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		setText(R.id.more_contact, R.string.more_text_contact);
 		setText(R.id.more_help, R.string.more_text_help );
 //		setText(R.id.more_push, R.string.more_text_push );
-		setText(R.id.more_dark, R.string.more_text_dark);
+//		setText(R.id.more_dark, R.string.more_text_dark);
 		setText(R.id.more_recommond, R.string.more_text_recommend);
 		setText(R.id.more_update, R.string.more_text_update);
 		setText(R.id.more_zhuanfa, R.string.more_text_zhuanfa);
@@ -84,7 +86,7 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	private void listenCheckbox(){
 		setCheckBox(R.id.more_zhuanfa, R.id.more_checkbox);
 //		setCheckBox(R.id.more_bookmarker, R.id.more_checkbox);
-		setCheckBox(R.id.more_dark, R.id.more_checkbox);
+//		setCheckBox(R.id.more_dark, R.id.more_checkbox);
 //		setCheckBox(R.id.more_push, R.id.more_checkbox);
 	}
 	
@@ -96,8 +98,10 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 				// TODO Auto-generated method stub
 				if (isChecked) {
 					Toast.makeText(getActivity(), "选中", Toast.LENGTH_SHORT).show();
+					SharedPreferencesUtils.setParam("setting", getActivity(), "isZhuanfa", true);
 				}else {
 					Toast.makeText(getActivity(), "未选中", Toast.LENGTH_SHORT).show();
+					SharedPreferencesUtils.setParam("setting", getActivity(), "isZhuanfa", false);
 				}
 			}
 		});

@@ -11,6 +11,7 @@ import pl.droidsonroids.gif.GifImageView;
 import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
+import com.example.fragment.content.DuanZi_Comment_Write;
 import com.example.fragment.content.Duanzi_More_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
@@ -20,6 +21,7 @@ import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.ShareUtil;
+import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,6 +48,7 @@ import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -215,7 +218,7 @@ public class XAdapter extends BaseAdapter{
 		return convertView;
 	}
 	/**
-	 * ¼àÌı
+	 * ç›‘å¬
 	 * @param holder
 	 * @param position
 	 */
@@ -227,7 +230,7 @@ public class XAdapter extends BaseAdapter{
 		holder.more.setOnClickListener(new mOnclick(position, holder));
 		holder.image.setOnClickListener(new mOnclick(position, holder));
 		holder.gif.setOnClickListener(new mOnclick(position, holder));
-		//Î´¶ÔÍ·Ïñ¡¢ÓÃ»§Ãû½øĞĞ¼àÌı
+		//æœªå¯¹å¤´åƒã€ç”¨æˆ·åè¿›è¡Œç›‘å¬
 	}
 	
 	class mOnclick implements OnClickListener{
@@ -279,33 +282,33 @@ public class XAdapter extends BaseAdapter{
 			case R.id.mitem_bottom_zan:
 				if (duanzi.isZanPressed()== false) {
 					if (duanzi.isCaiPressed() == true) {
-						Toast.makeText(context, "ÄãÒÑ¾­²È¹ı", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "ä½ å·²ç»è¸©è¿‡", Toast.LENGTH_SHORT).show();
 						break;
 					}
 					duanzi.CanPress(Duanzi.ZAN, holder.zan, holder.zan_img, context);
 					ConnToServer.DohttpNoResult(ConnToServer.ZAN, duanzi.getPoid());
 				} else {
-					Toast.makeText(context, "ÄãÒÑ¾­ÔŞ¹ı", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "ä½ å·²ç»èµè¿‡", Toast.LENGTH_SHORT).show();
 				}
 				break;
 
 			case R.id.mitem_bottom_cai:
 				if (duanzi.isCaiPressed() == false) {
 					if (duanzi.isZanPressed() == true) {
-						Toast.makeText(context, "ÄãÒÑ¾­ÔŞ¹ı", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "ä½ å·²ç»èµè¿‡", Toast.LENGTH_SHORT).show();
 						break;
 					}
 					duanzi.CanPress(Duanzi.CAI, holder.cai, holder.cai_img, context);
 					ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
 				} else {
-					Toast.makeText(context, "ÄãÒÑ¾­²È¹ı", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, "ä½ å·²ç»è¸©è¿‡", Toast.LENGTH_SHORT).show();
 				}
 				break;
 
 			case R.id.mitem_bottom_hot:
 				DuanZi_Comment comment3 = new DuanZi_Comment();
 				switchFragment(mFragment, comment3, bundle);
-				Toast.makeText(context, "µã»÷ÈÈÃÅ  +  " + position, Toast.LENGTH_SHORT)
+				Toast.makeText(context, "ç‚¹å‡»çƒ­é—¨  +  " + position, Toast.LENGTH_SHORT)
 						.show();
 				break;
 			case R.id.duanzi_comment_write_sina:
@@ -325,9 +328,41 @@ public class XAdapter extends BaseAdapter{
 				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
 			case R.id.duanzi_more_fav:
-//				RequestDataTask reqTask = new RequestDataTask(adapterHandler);
-//				reqTask.execute(Uris.FAV);
-				ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
+				if (duanzi.isFav()) {
+					duanzi.setFav(false);
+					window.dismiss();
+					ToastUtil.showToast(context, "å–æ¶ˆæ”¶è—æˆåŠŸ");
+				}else {
+					Log.e(TAG, "FAV");
+					RequestDataTask reqTask = new RequestDataTask(adapterHandler);
+					reqTask.execute(ConnToServer.getUrl(ConnToServer.FAV, duanzi.getPoid()));
+					duanzi.setFav(true);
+					boolean isZhuanfa = (Boolean) SharedPreferencesUtils.getParam("setting", context, "isZhuanfa", false);
+					//æ˜¯å¦å‹¾é€‰è®¾ç½®ä¸­çš„æ”¶è—åŒæ—¶è½¬å‘
+					if (isZhuanfa) {
+						if ((Integer) SharedPreferencesUtils.getParam("platform", context, "sina", 0)== 1) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "tencent", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "renren", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "douban", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else {
+							ToastUtil.showToast(context, "ä½ å°šæœªç»‘å®šè´¦å·,æ— æ³•è½¬å‘");
+						}
+					}
+				}
+				break;
+			case R.id.duanzi_more_zhuanfa:
+				duanzi.setNeedComment(false);
+				bundle = new Bundle();
+				bundle.putSerializable("commit", duanzi);
+				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
+				window.dismiss();
+				break;
+			case R.id.duanzi_more_back:
+				window.dismiss();
 				break;
 			}
 		}
@@ -335,20 +370,26 @@ public class XAdapter extends BaseAdapter{
 	}
 	
 	public void initPop(int position, ViewHolder holder){
+		Duanzi duanzi = (Duanzi) getItem(position);
 		Log.e(TAG, "position  " + position);
 		View popView = mInflater.inflate(R.layout.duanzi_more_pop, null);
-		ImageView iv_sina = (ImageView)popView.findViewById(R.id.duanzi_comment_write_sina);
-		iv_sina.setOnClickListener(new mOnclick(position, holder));
-		ImageView iv_tencent = (ImageView)popView.findViewById(R.id.duanzi_comment_write_tencent);
-		iv_tencent.setOnClickListener(new mOnclick(position, holder));
-		ImageView iv_renren = (ImageView)popView.findViewById(R.id.duanzi_comment_write_qzone);
-		iv_renren.setOnClickListener(new mOnclick(position, holder));
-		ImageView iv_douban = (ImageView)popView.findViewById(R.id.duanzi_comment_write_douban);
-		iv_douban.setOnClickListener(new mOnclick(position, holder));
+		TextView tv_pop_text = (TextView)popView.findViewById(R.id.duanzi_more_zhuanfa_text);
+		if (duanzi.isFav()) {
+			tv_pop_text.setText("å–æ¶ˆæ”¶è—");
+		}else {
+			tv_pop_text.setText("æ”¶è—");
+		}
+		
+		ImageView iv_zhuanfa = (ImageView)popView.findViewById(R.id.duanzi_more_zhuanfa);
+		iv_zhuanfa.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_Rep = (ImageView)popView.findViewById(R.id.duanzi_more_rep);
+		iv_Rep.setOnClickListener(new mOnclick(position, holder));
 		ImageView iv_fav = (ImageView)popView.findViewById(R.id.duanzi_more_fav);
 		iv_fav.setOnClickListener(new mOnclick(position, holder));
+		Button bt_back = (Button)popView.findViewById(R.id.duanzi_more_back);
+		bt_back.setOnClickListener(new mOnclick(position, holder));
 		
-		window = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		window = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		window.setBackgroundDrawable(new BitmapDrawable());
 		window.setFocusable(true);
 	}
@@ -384,11 +425,10 @@ public class XAdapter extends BaseAdapter{
 	
 	private Handler adapterHandler = new Handler(){
 		public void handleMessage(Message msg) {
-			if (msg.what == Uris.MSG_SUC) {
-				ToastUtil.showToast(context, "ÊÕ²Ø³É¹¦");
-			}else {
-				ToastUtil.showToast(context, "ÄãÒÑ¾­ÊÕ²Ø¹ıÁË");
-			}
+//			if (msg.what == Uris.MSG_GETDATA) {
+//				
+//			}
+			ToastUtil.showToast(context, "æ”¶è—æˆåŠŸ");
 			window.dismiss();
 		}
 	};

@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ private ImageView iv_user_head;
 		}
 	
 	private void initView(){
+		
 		//未登录
 		unLogin = (RelativeLayout)view.findViewById(R.id.my_unlogin);
 		//已登录

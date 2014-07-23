@@ -111,7 +111,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	}
 	
 	private void updateListView(String json){
-		List<Duanzi> list = setDuanziData.getListDuanzi(json);
+		List<Duanzi> list = setDuanziData.getListDuanzi(json,getActivity());
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {

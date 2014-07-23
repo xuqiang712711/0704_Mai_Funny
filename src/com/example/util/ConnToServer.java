@@ -24,4 +24,12 @@ public class ConnToServer {
 		}
 		myTask.execute(uri);
 	}
+	
+	public static String getUrl(int type,String poid){
+		String url = null;
+		if (type == FAV) {
+			url = Uris.FAV + "/uuid/" + Uris.uuid + "/pid/" + poid;
+		}
+		return url;
+	}
 }

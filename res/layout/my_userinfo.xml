@@ -93,7 +93,7 @@
             android:text="@string/my_publish"/>
     </LinearLayout>
     <ImageView 
-        android:background="#699669"
+        android:background="@color/red"
         android:scaleType="matrix"
         android:contentDescription="@null"
         android:layout_below="@+id/sec_title"

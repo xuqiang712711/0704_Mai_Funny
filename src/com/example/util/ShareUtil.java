@@ -2,6 +2,7 @@ package com.example.util;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,7 +60,9 @@ public class ShareUtil {
 							Toast.makeText(context, "分享成功", Toast.LENGTH_SHORT)
 									.show();
 							if (mHandler != null) {
-								mHandler.sendEmptyMessage(SHARE_SUC);
+								Message msg = Message.obtain();
+								msg.what = Uris.MSG_SUC;
+								mHandler.sendMessageDelayed(msg, 5000);
 							}
 						} else {
 							Toast.makeText(context, "分享失败", Toast.LENGTH_SHORT)

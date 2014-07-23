@@ -174,4 +174,13 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
 	</style>
+	
+    <!-- duanzi_more_pop -->
+    <style name="duanzi_more_pop_iv" parent="@style/wrap">
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+    <style name="duanzi_more_pop_tv" parent="@style/wrap">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">@dimen/ts_15</item>
+    </style>
 </resources>

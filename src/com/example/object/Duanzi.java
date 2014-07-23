@@ -24,20 +24,22 @@ public class Duanzi implements Serializable {
 	public static final int ZAN_NORMAL = 201;
 	public static final String ISZANED = "你已经赞过";
 	public static final String ISCAIED = "你已经踩过XXXXXXXX";
-	private String userName;
-	private String cai;
-	private String zan;
-	private String content;
-	private String imageUrl;
-	private String comment;
-	private String poid;
+	private String userName;		//用户名
+	private String cai;			//踩的数量
+	private String zan;			//赞的数量
+	private String content;		//段子内容
+	private String imageUrl;		//图片url
+	private String comment;		//评论数量
+	private String poid;			//段子id
 	private boolean isZanPressed;// 是否赞过
 	private boolean isCaiPressed;// 是否踩过
-	private SHARE_MEDIA media;
+	private SHARE_MEDIA media;	//转发的平台
+	private boolean isFav;		//是否收藏
+	private boolean needComment;  //是否需要发表评论到服务器
 
 	public Duanzi(String imageUrl, String name, String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
-			boolean isCaiPressed,SHARE_MEDIA media) {
+			boolean isCaiPressed,SHARE_MEDIA media,boolean isFav, boolean needComment) {
 		this.imageUrl = imageUrl;
 		this.userName = name;
 		this.cai = cai;
@@ -48,6 +50,8 @@ public class Duanzi implements Serializable {
 		this.isZanPressed = isZanPressed;
 		this.isCaiPressed = isCaiPressed;
 		this.media = media;
+		this.isFav = isFav;
+		this.needComment = needComment;
 	}
 	
 	public void CanPress(int type,TextView txtview,ImageView  imgView,Context context){
@@ -86,6 +90,26 @@ public class Duanzi implements Serializable {
 	}
 	
 	
+	
+	
+	
+
+	public boolean isNeedComment() {
+		return needComment;
+	}
+
+	public void setNeedComment(boolean needComment) {
+		this.needComment = needComment;
+	}
+
+	public boolean isFav() {
+		return isFav;
+	}
+
+	public void setFav(boolean isFav) {
+		this.isFav = isFav;
+	}
+
 	/**
 	 * 分享的平台
 	 * @return

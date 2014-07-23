@@ -69,6 +69,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private ImageView sina_img, tencent_img, qzone_img, douban;
 	private UMSocialService mcontroller;
 	private Dialog dialog;
+	private Duanzi duanzi;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -91,7 +92,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		mcontroller = MaimobApplication.mController;
 		mcontroller.getConfig().setSsoHandler(new QZoneSsoHandler(getActivity(), "APP ID", "APP KEY"));
 		initView();
-		Duanzi duanzi = (Duanzi) getArguments().getSerializable("commit");
+		duanzi = (Duanzi) getArguments().getSerializable("commit");
 		pid = duanzi.getPoid();
 		imgUri = duanzi.getImageUrl();
 		content= duanzi.getContent();
@@ -126,9 +127,9 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			// TODO Auto-generated method stub
 			try {
 				int code = PostWithPic(Uris.Post_Comment, Uris.uuid , pid);
-				Message message = Message.obtain();
-				message.obj = Uris.MSG_SUC;
-				handler.sendMessageDelayed(message, 5000);
+//				Message message = Message.obtain();
+//				message.obj = Uris.MSG_SUC;
+//				handler.sendMessageDelayed(message, 5000);
 				if (code != 200) {
 					ToastUtil.showToast(getActivity(), "评论失败，请稍后再试");
 				}
@@ -177,17 +178,20 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			dialog.show();
 			editContent = editText.getText().toString();
 			if (editContent != null && !editContent.equals("")) {
-				new Thread(new SubMitThread()).start();
+				if (duanzi.isNeedComment()) {
+					Log.e("Duanzi_comment_writer", "需要发送评论到服务器");
+					new Thread(new SubMitThread()).start();
+				}
 				Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
 				if (isCheck_sina) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity(), null);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity(), handler);
 				}else if (isCheck_tencent) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity(), null);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity(), handler);
 				}else if (isCheck_qzone) {
 					Log.e(Tag, "QZONE");
-					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity(), null);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity(), handler);
 				}else if (isCheck_douban) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity(), null);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity(), handler);
 				}
 				
 			}else {

@@ -23,6 +23,12 @@
     <string name="duanzi_comment_title">我要评论</string>
     <string name="duanzi_comment_zhuanfa">转发到</string>
     <string name="comment_write">如果不想转发，请不要勾选下方图标</string>
+    <string name="duanzi_more_zhuanfa">转发</string>
+    <string name="duanzi_more_report">举报</string>
+    <string name="duanzi_more_copy">复制</string>
+    <string name="duanzi_more_fav">收藏</string>
+    <string name="duanzi_more_back">取消</string>
+    
     
     <!-- 我的 -->
     <string name="my_write">我要投稿</string>

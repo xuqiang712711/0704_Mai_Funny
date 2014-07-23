@@ -17,6 +17,7 @@
             <TextView
                 style="@style/Top_title"
                 android:id="@+id/tab_top_text"
+                android:paddingBottom="@dimen/margin_5"
                 android:text="@string/tab_bar_more" />
         </LinearLayout>
 
@@ -51,11 +52,6 @@
             <include layout="@layout/line_horizontal" />
 
 
-            <include
-                android:id="@+id/more_dark"
-                layout="@layout/more_style3" />
-
-            <include layout="@layout/line_horizontal" />
 
             <include
                 android:id="@+id/more_fontSize"

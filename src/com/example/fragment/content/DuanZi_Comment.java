@@ -173,6 +173,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 
 		case R.id.mitem_bottom_hot:
 			Toast.makeText(getActivity(), "È¥ÆÀÂÛ", Toast.LENGTH_SHORT).show();
+			duanzi.setNeedComment(true);
 			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
 			switchFrag(DuanZi_Comment.this, comment_Test);
 			break;

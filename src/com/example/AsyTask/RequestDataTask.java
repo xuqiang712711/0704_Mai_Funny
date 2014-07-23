@@ -8,6 +8,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +21,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class RequestDataTask extends AsyncTask<String, Void, String>{
+	String Tag = "RequestDataTask";
 	private Handler mHandler;
 	public RequestDataTask(Handler handler){
 		this.mHandler = handler;
@@ -35,25 +37,31 @@ public class RequestDataTask extends AsyncTask<String, Void, String>{
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 		if (mHandler != null) {
+			Log.e(Tag, "result  " + result);
 			Message msg = Message.obtain();
 			msg.obj = result;
-			JSONObject object;
-			try {
-				object = new JSONObject(result);
-				String flag = object.optString("flag");
-				int mflag = Integer.parseInt(flag);
-				Log.e("FFF", "mflag  " + object.toString());
-				if (mflag == 1) {
-					msg.what = Uris.MSG_GETDATA;
-				}else {
-					msg.what = Uris.MSG_FAIL;
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+//			try {
+//				JSONArray array = new JSONArray(result);
+//				Log.e(Tag, "array  " + array);
+//			} catch (JSONException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			JSONObject object;
+//			try {
+//				object = new JSONObject(result);
+//				String flag = object.optString("flag");
+//				int mflag = Integer.parseInt(flag);
+//				Log.e("FFF", "mflag  " + object.toString());
+//				if (mflag == 1) {
+//					msg.what = Uris.MSG_GETDATA;
+//				}else {
+//					msg.what = Uris.MSG_FAIL;
+//				}
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			mHandler.sendMessage(msg);
 		}
 	}

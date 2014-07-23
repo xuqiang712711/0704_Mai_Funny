@@ -88,7 +88,6 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 			((TextView)tencent_wb.findViewById(R.id.more_text1)).setTextColor(getActivity().getResources().getColor(R.color.red));
 			tencent_wb.setOnClickListener(this);
 		}else {
-			Log.e("FFF", "¸ÉÄãÄïÇ×");
 			((TextView)tencent_wb.findViewById(R.id.more_text1)).setText(R.string.my_tencent_wb_binded);
 			((TextView)tencent_wb.findViewById(R.id.more_text1)).setTextColor(getActivity().getResources().getColor(R.color.black));
 		}
