@@ -16,6 +16,7 @@ import com.example.fragment.content.Duanzi_More_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
@@ -34,6 +35,7 @@ import com.umeng.socialize.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -81,6 +83,8 @@ public class XAdapter extends BaseAdapter{
 	
 	private ImageLoader imageLoader;
 	
+	private Mai_DBhelper dBhelper;
+	
 	public XAdapter(List<Duanzi> mdata, Handler handler,
 			UMSocialService mController, Fragment mFragment, Context context){
 		this.mdata = mdata;
@@ -98,6 +102,7 @@ public class XAdapter extends BaseAdapter{
 		.considerExifParams(true)
 		.build();
 		mInflater = LayoutInflater.from(context);
+		dBhelper = Mai_DBhelper.getInstance(context);
 	}
 	
 	@Override
@@ -130,6 +135,7 @@ public class XAdapter extends BaseAdapter{
 			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
 			holder.user_name = (TextView) convertView
 					.findViewById(R.id.mitem_username);
+			holder.user_icon = (ImageView)convertView.findViewById(R.id.mitem_icon);
 
 			holder.content = (TextView) convertView
 					.findViewById(R.id.mitem_test_content);
@@ -150,6 +156,7 @@ public class XAdapter extends BaseAdapter{
 		}
 		
 		Duanzi duanzi = mdata.get(position);
+		String user_head = duanzi.getUserIcon();
 		String imgUri = duanzi.getImageUrl();
 		String name = duanzi.getUserName();
 		String content = duanzi.getContent();
@@ -157,24 +164,41 @@ public class XAdapter extends BaseAdapter{
 		String zan = duanzi.getZan();
 		String hot = duanzi.getComment();
 		imageLoader = MaimobApplication.imageLoader;
+		holder.image.setVisibility(View.GONE);
+		holder.gif.setVisibility(View.GONE);
+		holder.hint_img.setVisibility(View.GONE);
 		
-		if (!imgUri.equals("") && imgUri != null) {
-			Log.e(TAG, "img  " + imgUri);
-			if ((imgUri.substring(imgUri.length() - 3, imgUri.length()))
+		Log.e(TAG, "head  " + user_head);
+		
+		if (user_head != null && !user_head.equals("")) {
+			imageLoader.displayImage(user_head, holder.user_icon, options);
+		}
+		if (imgUri != null &&!imgUri.equals("")) {
+			Log.e(TAG, "~~~~~" + imgUri);
+			
+			String currImgUrl = null;
+			if (!imgUri.startsWith("http")) {
+				currImgUrl = "file:///" +imgUri;
+			}else {
+				currImgUrl = imgUri;
+			}
+			Log.e(TAG, "curr  " +currImgUrl + "  img  " + imgUri);
+			if ((currImgUrl.substring(currImgUrl.length() - 3, currImgUrl.length()))
 					.equals("gif")) {
 				holder.hint_img.setVisibility(View.VISIBLE);
-				holder.image.setVisibility(View.GONE);
 				holder.gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri, holder.gif, options);
+				imageLoader.displayImage(currImgUrl, holder.gif, options);
 				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
 						imageLoader.getDiskCache());
-				Log.e(TAG, "imgUri  " + imgFile);
 				if (imgFile != null) {
 					int h = BitmapOptions.getWH(imgFile.toString(),
 							MaimobApplication.DeviceW);
-//					AbsListView.LayoutParams params = new AbsListView.LayoutParams(
-//							MaimobApplication.DeviceW, h + 220);
-//					convertView.setLayoutParams(params);
+					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) holder.gif.getLayoutParams();
+					params.height = h;
+					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+					holder.gif.setLayoutParams(params);
+				}else if (currImgUrl.startsWith("file")) {
+					int h = BitmapOptions.getWH(imgUri, MaimobApplication.DeviceW);
 					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) holder.gif.getLayoutParams();
 					params.height = h;
 					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
@@ -186,11 +210,8 @@ public class XAdapter extends BaseAdapter{
 						AbsListView.LayoutParams.MATCH_PARENT,
 						AbsListView.LayoutParams.MATCH_PARENT);
 				convertView.setLayoutParams(params);
-				holder.hint_img.setVisibility(View.GONE);
-				holder.gif.setVisibility(View.GONE);
 				holder.image.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(imgUri, holder.image, options);
-				Log.e(TAG, "image");
+				imageLoader.displayImage(currImgUrl, holder.image, options);
 			}
 			
 		}
@@ -252,8 +273,14 @@ public class XAdapter extends BaseAdapter{
 			
 			case R.id.mitem_test_gif:
 				holder.hint_img.setVisibility(View.GONE);
-				File cache = DiskCacheUtils.findInCache(mdata.get(position)
-						.getImageUrl(), imageLoader.getDiskCache());
+				File cache = null;
+				if (duanzi.getImageUrl().startsWith("http")) {
+					cache = DiskCacheUtils.findInCache(mdata.get(position)
+							.getImageUrl(), imageLoader.getDiskCache());
+					Log.e(TAG, "cache  " + cache.toString());
+				}else {
+					cache = new File(duanzi.getImageUrl());
+				}
 				try {
 					GifDrawable gifDrawable = new GifDrawable(cache);
 					((GifImageView)v).setImageDrawable(gifDrawable);
@@ -331,8 +358,10 @@ public class XAdapter extends BaseAdapter{
 				if (duanzi.isFav()) {
 					duanzi.setFav(false);
 					window.dismiss();
+					dBhelper.cancelFav(Integer.parseInt(duanzi.getPoid()));
 					ToastUtil.showToast(context, "取消收藏成功");
 				}else {
+					dBhelper.updateFav(Integer.parseInt(duanzi.getPoid()));
 					Log.e(TAG, "FAV");
 					RequestDataTask reqTask = new RequestDataTask(adapterHandler);
 					reqTask.execute(ConnToServer.getUrl(ConnToServer.FAV, duanzi.getPoid()));

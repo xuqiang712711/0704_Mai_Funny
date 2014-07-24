@@ -5,17 +5,20 @@ import java.util.Set;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
+import com.example.fragment.content.My_Comment;
 import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Message;
 import com.example.fragment.content.My_Publish;
-import com.example.fragment.content.My_Write;
 import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userinfo;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.ImageUtil;
+import com.example.util.SharedPreferencesUtils;
+import com.example.util.UserUtils;
 import com.umeng.socialize.common.SocializeConstants;
+import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -34,7 +37,7 @@ import android.widget.Toast;
 
 public class Tab_My_Frag_New extends Fragment implements OnClickListener{
 private View view;
-private RelativeLayout write, check, publish, favorite,message,app, activity;
+private RelativeLayout comment, check, publish, favorite,message,app, activity;
 private TextView edit;
 private RelativeLayout logined, unLogin;
 private String Tag = "Tab_My_Frag_New";
@@ -67,7 +70,7 @@ private ImageView iv_user_head;
 			listenWidget(R.id.my_favorite_new);
 			listenWidget(R.id.my_message_new);
 			listenWidget(R.id.my_publish_new);
-			listenWidget(R.id.my_writer_new);
+			listenWidget(R.id.my_comment_new);
 			listenWidget(R.id.my_app_new);
 			listenWidget(R.id.my_activity_new);
 		}
@@ -109,7 +112,7 @@ private ImageView iv_user_head;
 			}
 		});
 		
-		write = (RelativeLayout)view.findViewById(R.id.my_writer_new);
+		comment = (RelativeLayout)view.findViewById(R.id.my_comment_new);
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
 		favorite = (RelativeLayout)view.findViewById(R.id.my_favorite_new);
@@ -119,7 +122,7 @@ private ImageView iv_user_head;
 		activity = (RelativeLayout)view.findViewById(R.id.my_activity_new);
 		
 		setWidget(check, R.string.my_check, R.drawable.mai_check, R.drawable.item_click_normal,2);
-		setWidget(write, R.string.my_write, R.drawable.mai_write ,R.drawable.item_click_normal,2);
+		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_normal,2);
 		setWidget(app, R.string.my_app, R.drawable.mai_app, R.drawable.item_click_normal, 2);
 		setWidget(activity, R.string.my_activity, R.drawable.mai_activity, R.drawable.item_click_normal, 2);
 		
@@ -173,25 +176,24 @@ private ImageView iv_user_head;
 			break;
 		case R.id.my_check_new:
 //			My_Check check = new My_Check();
-			Tab_Search_Frag check = new Tab_Search_Frag();
-			switchFragment(this, check);
+			if (UserUtils.UserIsExists(getActivity())) {
+				Tab_Search_Frag check = new Tab_Search_Frag();
+				switchFragment(this, check);
+			}else {
+				ToastUtil.showToast(getActivity(), "尚未绑定平台账号");
+			}
 			Toast.makeText(getActivity(), "my_check", Toast.LENGTH_SHORT).show();
 			break;
 
-//		case R.id.my_comment_new:
-//			My_Comment comment = new My_Comment();
-//			switchFragment(this, comment);
-//			Toast.makeText(getActivity(), "my_comment", Toast.LENGTH_SHORT).show();
-//			break;
+		case R.id.my_comment_new:
+			My_Comment comment = new My_Comment();
+			switchFragment(this, comment);
+			Toast.makeText(getActivity(), "my_comment", Toast.LENGTH_SHORT).show();
+			break;
 		case R.id.my_message_new:
 			My_Message message = new My_Message();
 			switchFragment(this,message);
 			Toast.makeText(getActivity(), "my_message", Toast.LENGTH_SHORT).show();
-			break;
-		case R.id.my_writer_new:
-			My_Write write = new My_Write();
-			switchFragment(this, write);
-			Toast.makeText(getActivity(), "my_write", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_publish_new:
 			My_Publish publish = new My_Publish();
@@ -201,8 +203,8 @@ private ImageView iv_user_head;
 		case R.id.my_favorite_new:
 //			My_Favorite favorite = new My_Favorite();
 //			switchFragment(this, favorite);
-			More_Contact contact = new More_Contact();
-			switchFragment(this,contact);
+			My_Favorite favorite = new My_Favorite();
+			switchFragment(this, favorite);
 			Toast.makeText(getActivity(), "my_favorite", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_unlogin:

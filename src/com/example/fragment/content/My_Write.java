@@ -52,6 +52,7 @@ import android.widget.Toast;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
@@ -188,6 +189,7 @@ public class My_Write extends Fragment implements OnClickListener{
 						ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN,
 								editContent, null, currImgPath, getActivity(),null);
 					}
+					insertSQL(editContent, currImgPath);
 					backToHome();
 				}
 			}
@@ -398,5 +400,10 @@ public class My_Write extends Fragment implements OnClickListener{
 	private void backToHome(){
 		XYFTEST xyftest =(XYFTEST)getActivity();
 		xyftest.WriteBack();
+	}
+	
+	private void insertSQL(String content, String imgurl){
+		Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(getActivity());
+		dBhelper.insertUser_Publish(content, imgurl);
 	}
 }

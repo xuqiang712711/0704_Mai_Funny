@@ -25,6 +25,7 @@ public class Duanzi implements Serializable {
 	public static final String ISZANED = "你已经赞过";
 	public static final String ISCAIED = "你已经踩过XXXXXXXX";
 	private String userName;		//用户名
+	private String userIcon;		//用户头像
 	private String cai;			//踩的数量
 	private String zan;			//赞的数量
 	private String content;		//段子内容
@@ -37,7 +38,7 @@ public class Duanzi implements Serializable {
 	private boolean isFav;		//是否收藏
 	private boolean needComment;  //是否需要发表评论到服务器
 
-	public Duanzi(String imageUrl, String name, String cai, String zan,
+	public Duanzi(String imageUrl, String name, String head,String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
 			boolean isCaiPressed,SHARE_MEDIA media,boolean isFav, boolean needComment) {
 		this.imageUrl = imageUrl;
@@ -52,6 +53,7 @@ public class Duanzi implements Serializable {
 		this.media = media;
 		this.isFav = isFav;
 		this.needComment = needComment;
+		this.userIcon = head;
 	}
 	
 	public void CanPress(int type,TextView txtview,ImageView  imgView,Context context){
@@ -93,6 +95,14 @@ public class Duanzi implements Serializable {
 	
 	
 	
+
+	public String getUserIcon() {
+		return userIcon;
+	}
+
+	public void setUserIcon(String userIcon) {
+		this.userIcon = userIcon;
+	}
 
 	public boolean isNeedComment() {
 		return needComment;

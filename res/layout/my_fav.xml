@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/my_background"
-    android:orientation="vertical" >
-
-    <EditText
+    android:orientation="vertical"
+    android:clickable="true" >
+    <include 
+        android:id="@+id/my_fav_top"
         android:layout_width="match_parent"
-        android:layout_height="402dp"
-        android:layout_weight="0.57"
-        android:ems="10" >
+        android:layout_height="wrap_content"
+        layout="@layout/back_duanzi"/>
+	<ListView 
+	    android:layout_below="@+id/my_fav_top"
+	    android:id="@+id/my_fav_list"
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/duanzi_margin"
+        android:dividerHeight="20dp"
+        android:divider="@color/gainsboro"
+        android:listSelector="#00000000" >
+	    
+	</ListView>
 
-        <requestFocus />
-    </EditText>
 
-    <include
-        android:layout_alignParentBottom="true"
-        layout="@layout/back" />
-
-</LinearLayout>
+</RelativeLayout>

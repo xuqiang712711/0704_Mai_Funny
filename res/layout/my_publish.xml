@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/my_background" >
-
-    <include
-        android:id="@+id/include1"
-        layout="@layout/back" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+	<include 
+        android:id="@+id/my_pub_top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="186dp"
-        android:text="@string/my_publish"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        layout="@layout/back_duanzi"/>
+	<ListView 
+	    android:layout_below="@+id/my_pub_top"
+	    android:id="@+id/my_pub_list"
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/duanzi_margin"
+        android:dividerHeight="20dp"
+        android:divider="@color/gainsboro"
+        android:listSelector="#00000000" >
+	    
+	</ListView>
 
 </RelativeLayout>

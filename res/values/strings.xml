@@ -56,6 +56,10 @@
     <string name="my_renren_binged">人人网[已绑定]</string>
     <string name="my_douban_unbind">豆瓣网[未绑定]</string>
     <string name="my_douban_binged">豆瓣网[已绑定]</string>
+    <string name="my_fav_title">收藏</string>
+    <string name="my_comment_title">评论</string>
+    <string name="my_pub_title">投稿</string>
+    
 	    
     
     

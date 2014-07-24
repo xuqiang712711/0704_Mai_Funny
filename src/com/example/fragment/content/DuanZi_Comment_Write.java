@@ -39,6 +39,7 @@ import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.tab.XYFTEST;
 import com.example.util.DialogUtil;
@@ -64,7 +65,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private boolean isCheck_tencent = false;
 	private boolean isCheck_qzone = false;
 	private boolean isCheck_douban = false;
-	private String content,imgUri;
+	private String duanziContent,imgUri;
 	private String editContent;
 	private ImageView sina_img, tencent_img, qzone_img, douban;
 	private UMSocialService mcontroller;
@@ -95,7 +96,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		duanzi = (Duanzi) getArguments().getSerializable("commit");
 		pid = duanzi.getPoid();
 		imgUri = duanzi.getImageUrl();
-		content= duanzi.getContent();
+		duanziContent= duanzi.getContent();
 	}
 	private void initView(){
 		TextView title = (TextView)view.findViewById(R.id.top_text);
@@ -127,9 +128,9 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			// TODO Auto-generated method stub
 			try {
 				int code = PostWithPic(Uris.Post_Comment, Uris.uuid , pid);
-//				Message message = Message.obtain();
-//				message.obj = Uris.MSG_SUC;
-//				handler.sendMessageDelayed(message, 5000);
+				Message message = Message.obtain();
+				message.obj = Uris.MSG_SUC;
+				handler.sendMessageDelayed(message, 5000);
 				if (code != 200) {
 					ToastUtil.showToast(getActivity(), "评论失败，请稍后再试");
 				}
@@ -184,16 +185,17 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				}
 				Log.e(Tag, "sina  " + isCheck_sina +  "  TENCENT  " +isCheck_tencent);
 				if (isCheck_sina) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, content, null,getActivity(), handler);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent, duanziContent, null,getActivity(), handler);
 				}else if (isCheck_tencent) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, content,null, getActivity(), handler);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, editContent, duanziContent,null, getActivity(), handler);
 				}else if (isCheck_qzone) {
 					Log.e(Tag, "QZONE");
-					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, content, null,getActivity(), handler);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, editContent, duanziContent, null,getActivity(), handler);
 				}else if (isCheck_douban) {
-					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, content, null, getActivity(), handler);
+					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, duanziContent, null, getActivity(), handler);
 				}
-				
+				Log.e(Tag, "edit  " + editContent + "  duanzi  " + duanziContent);
+				insertComment(editContent, Integer.parseInt(pid), duanziContent);
 			}else {
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
@@ -271,6 +273,11 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			}
 			break;
 		}
+	}
+	
+	public void insertComment(String editContent, int pid,String duanziContent){
+		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
+		db.insertUser_Comment(editContent, pid,duanziContent);
 	}
 	
 }

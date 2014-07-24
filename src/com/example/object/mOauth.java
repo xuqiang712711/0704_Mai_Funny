@@ -37,6 +37,7 @@ public class mOauth {
 				editor.putInt("douban", 1);
 				break;
 			}
+			editor.putBoolean("Exists", true);
 			editor.commit();
 		}
 		

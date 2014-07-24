@@ -203,7 +203,7 @@
         <include layout="@layout/line_vertical" />
 
         <include
-            android:id="@+id/my_writer_new"
+            android:id="@+id/my_comment_new"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
