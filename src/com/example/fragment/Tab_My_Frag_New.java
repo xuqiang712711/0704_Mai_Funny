@@ -2,6 +2,8 @@ package com.example.fragment;
 
 import java.util.Set;
 
+import com.example.Activity.OauthActivity;
+import com.example.Activity.XYFTEST;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
@@ -12,8 +14,8 @@ import com.example.fragment.content.My_Publish;
 import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userinfo;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.ImageUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.UserUtils;
@@ -21,6 +23,7 @@ import com.umeng.socialize.common.SocializeConstants;
 import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -65,6 +68,10 @@ private ImageView iv_user_head;
 			super.onActivityCreated(savedInstanceState);
 			Log.e(Tag, "onActivityCreated");
 			initView();
+			
+			Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
+			int max = db.selectFavCount();
+			Log.e(Tag, "max  " + max);
 			
 			listenWidget(R.id.my_check_new);
 			listenWidget(R.id.my_favorite_new);
@@ -164,6 +171,8 @@ private ImageView iv_user_head;
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		Bundle bundle = new Bundle();
+		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
 		case R.id.user_info_edit:
 			Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
@@ -180,14 +189,18 @@ private ImageView iv_user_head;
 				Tab_Search_Frag check = new Tab_Search_Frag();
 				switchFragment(this, check);
 			}else {
-				ToastUtil.showToast(getActivity(), "尚未绑定平台账号");
+				mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
 			}
 			Toast.makeText(getActivity(), "my_check", Toast.LENGTH_SHORT).show();
 			break;
 
 		case R.id.my_comment_new:
-			My_Comment comment = new My_Comment();
-			switchFragment(this, comment);
+			if (UserUtils.UserIsExists(getActivity())) {
+				My_Comment comment = new My_Comment();
+				switchFragment(this, comment);
+			}else {
+				mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
+			}
 			Toast.makeText(getActivity(), "my_comment", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_message_new:
@@ -196,19 +209,20 @@ private ImageView iv_user_head;
 			Toast.makeText(getActivity(), "my_message", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_publish_new:
-			My_Publish publish = new My_Publish();
-			switchFragment(this, publish);
-			Toast.makeText(getActivity(), "my_publish", Toast.LENGTH_SHORT).show();
+			if (UserUtils.UserIsExists(getActivity())) {
+				My_Publish publish = new My_Publish();
+				switchFragment(this, publish);
+			}else {
+				mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
+			}
 			break;
 		case R.id.my_favorite_new:
-//			My_Favorite favorite = new My_Favorite();
-//			switchFragment(this, favorite);
 			My_Favorite favorite = new My_Favorite();
 			switchFragment(this, favorite);
 			Toast.makeText(getActivity(), "my_favorite", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_unlogin:
-			 mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), null);
+			 mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
 			break;
 		}
 	}

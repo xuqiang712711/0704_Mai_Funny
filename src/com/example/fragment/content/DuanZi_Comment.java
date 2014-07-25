@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,14 +27,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.OauthActivity;
+import com.example.Activity.XYFTEST;
 import com.example.application.MaimobApplication;
+import com.example.fragment.Tab_My_Frag_New;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
+import com.example.util.StringUtils;
+import com.example.util.UserUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -125,7 +130,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		
 		String imgUri = duanzi.getImageUrl();
 		Log.e(Tag, "Imguri  " + imgUri);
-		if (image != null && !imgUri.equals("")) {
+		if (imgUri != null && !imgUri.equals("")) {
 			options = new DisplayImageOptions.Builder()
 			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 			.showImageOnLoading(R.drawable.maimob)
@@ -134,6 +139,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			.cacheOnDisk(true).considerExifParams(true)
 			.displayer(new SimpleBitmapDisplayer()).build();
 			image.setVisibility(View.VISIBLE);
+			String currName = StringUtils.checkImgPath(imgUri);
 			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
 				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
 						imageLoader.getDiskCache());
@@ -147,18 +153,18 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 				hint_img.setVisibility(View.VISIBLE);
 				image.setVisibility(View.GONE);
 				gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(duanzi.getImageUrl(), gif, options);
+				imageLoader.displayImage(currName, gif, options);
 			}else {
 				hint_img.setVisibility(View.GONE);
 				gif.setVisibility(View.GONE);
-				imageLoader.displayImage(duanzi.getImageUrl(), image, options);
+				imageLoader.displayImage(currName, image, options);
 			}
 		}
 		
 	}
 	private void switchFrag(Fragment from, Fragment to){
 		Bundle bundle = new Bundle();
-		bundle.putSerializable("commit", duanzi);
+		bundle.putSerializable("duanzi", duanzi);
 		XYFTEST xyftest = (XYFTEST) getActivity();
 		xyftest.switchContentFullwithBundle(from, to, bundle);
 	}
@@ -173,9 +179,27 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 
 		case R.id.mitem_bottom_hot:
 			Toast.makeText(getActivity(), "È¥ÆÀÂÛ", Toast.LENGTH_SHORT).show();
+//			duanzi.setNeedComment(true);
+//			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
+//			switchFrag(DuanZi_Comment.this, comment_Test);
+			
+//			Intent intent = new Intent(getActivity(), OauthActivity.class);
+//			intent.putExtra("Activity", 3);
+//			Bundle bundle = new Bundle();
+//			bundle.putSerializable("duanzi", duanzi);
+//			intent.putExtras(bundle);
+//			getActivity().startActivityForResult(intent, XYFTEST.ReqCode);
+			
 			duanzi.setNeedComment(true);
-			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
-			switchFrag(DuanZi_Comment.this, comment_Test);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("duanzi", duanzi);
+			bundle.putInt("xwkkx", My_login_select.From_Duanzi);
+			if (UserUtils.UserIsExists(getActivity())) {
+				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new DuanZi_Comment_Write(), bundle);
+			}else {
+				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new My_login_select(), bundle);
+
+			}
 			break;
 		case R.id.bottom_more:
 
@@ -187,15 +211,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			Log.e(Tag, "imgUri  " + duanzi.getImageUrl());
 			if (duanzi.getImageUrl() != null && !duanzi.getImageUrl().equals("")) {
 				hint_img.setVisibility(View.GONE);
-				File cache = DiskCacheUtils.findInCache(duanzi.getImageUrl(), imageLoader.getDiskCache());
-				try {
-					Log.e(Tag, "xwkkx");
-					GifDrawable gifDrawable = new GifDrawable(cache);
-					((GifImageView)v).setImageDrawable(gifDrawable);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(duanzi.getImageUrl()));
+				
 			}
 			break;
 		case R.id.top_left:

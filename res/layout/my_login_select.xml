@@ -1,38 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/my_back" 
+    android:background="@color/my_back"
     android:clickable="true"
-    android:orientation="vertical">
-    <include 
-        layout="@layout/back_duanzi"/>
-    <ImageView 
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/my_select_sina"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/weibo_72x72"/>
+    android:orientation="vertical" >
 
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/my_select_tencent"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/tencen_72x72" />
+    <include layout="@layout/back_duanzi" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_select_top"/>
+	<ImageView 
+	    android:layout_margin="@dimen/margin_20"
+	    android:layout_centerHorizontal="true"
+	    android:id="@+id/my_select_img"
+	    android:layout_below="@+id/my_select_top"
+	    android:layout_width="128dp"
+	    android:layout_height="128dp"
+	    android:src="@drawable/testimage2"/>
+    <RelativeLayout
+        android:layout_below="@+id/my_select_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/my_select_douban"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/douban_72x72" />
+        <ImageView
+            android:id="@+id/my_select_sina"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="@dimen/margin_20"
+            android:src="@drawable/weibo_72x72" />
 
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/my_select_renren"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/renren_72x72" />
-	
-</LinearLayout>
+        <ImageView
+            android:id="@+id/my_select_tencent"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_20"
+            android:src="@drawable/tencen_72x72" />
+
+        <ImageView
+            android:id="@+id/my_select_douban"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/my_select_sina"
+            android:layout_margin="@dimen/margin_20"
+            android:src="@drawable/douban_72x72" />
+
+        <ImageView
+            android:id="@+id/my_select_renren"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/my_select_sina"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_20"
+            android:src="@drawable/renren_72x72" />
+    </RelativeLayout>
+
+</RelativeLayout>

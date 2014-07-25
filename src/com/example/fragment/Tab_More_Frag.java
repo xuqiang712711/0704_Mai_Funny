@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.XYFTEST;
 import com.example.adapter.XAdapter;
 import com.example.adapter.X_Text_Adapter;
 import com.example.application.MaimobApplication;
@@ -29,7 +30,6 @@ import com.example.fragment.content.More_feedback;
 import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Write;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
 

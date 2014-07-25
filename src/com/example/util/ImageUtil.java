@@ -35,7 +35,7 @@ public class ImageUtil {
 		return null; 
 	}
 	/**
-	 * 通过名字找到文字,顺便根据容器的大小对图片大小进行下改变。防止内存溢出。
+	 * 顺便根据容器的大小对图片大小进行下改变。防止内存溢出。
 	 * @param context 上下文
 	 * @param ImagePath 图片地址
 	 * @param HopeWidth 容器宽

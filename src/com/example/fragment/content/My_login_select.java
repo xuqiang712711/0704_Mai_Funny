@@ -18,15 +18,18 @@ import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.XYFTEST;
 import com.example.application.MaimobApplication;
 import com.example.fragment.Tab_My_Frag_New;
+import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.object.mOauth;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -41,6 +44,14 @@ public class My_login_select extends Fragment{
 	public static  int tencent =1;
 	public static  int renren = 2;
 	public static  int douban =3;
+	public static final int From_Duanzi = 10;
+	public static final int From_My	= 11;
+	public static final int From_Write = 12;
+	private Tab_My_Frag_New my_Frag;
+	private DuanZi_Comment_Write my_Write;
+	private Duanzi duanzi;
+	private boolean needRefresh = true;
+	int type;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -53,13 +64,22 @@ public class My_login_select extends Fragment{
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_My);
-		Log.e("FFF", "ondestory");
+		if (type == From_My) {
+			Log.e("FFF", "99999999");
+			mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_My);
+		}
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		Bundle bundle =getArguments();
+		type= bundle.getInt("xwkkx");
+		Log.e("FFF", "xwkkx  " + type);
+		if (type == From_Duanzi) {
+			duanzi = (Duanzi) bundle.getSerializable("duanzi");
+		}
+		
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText("平台绑定");
 		Button back = (Button)view.findViewById(R.id.top_left);
@@ -68,13 +88,20 @@ public class My_login_select extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mFragmentManage.BackStatck(getActivity());
+				if (type == From_Write) {
+					mFragmentManage.backHome(getActivity(), From_Write);
+				}else {
+					mFragmentManage.BackStatck(getActivity());
+				}
 			}
 		});
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
 		mController = MaimobApplication.mController;
 		ImageView imageView = (ImageView)view.findViewById(R.id.my_select_sina);
+		RelativeLayout.LayoutParams p1 = (LayoutParams) imageView.getLayoutParams();
+		p1.setMargins(MaimobApplication.DeviceW/4, 0, 0, 0);
+		imageView.setLayoutParams(p1);
 		imageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -83,7 +110,11 @@ public class My_login_select extends Fragment{
 				doOauth(SHARE_MEDIA.SINA, sina);
 			}
 		});
-		view.findViewById(R.id.my_select_tencent).setOnClickListener(new OnClickListener() {
+		ImageView iv_2 = (ImageView)view.findViewById(R.id.my_select_tencent);
+		RelativeLayout.LayoutParams p2 = (LayoutParams) iv_2.getLayoutParams();
+		p2.setMargins(0, 0, MaimobApplication.DeviceW/4, 0);
+		iv_2.setLayoutParams(p2);
+		iv_2.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -174,7 +205,11 @@ public class My_login_select extends Fragment{
 	                 }
 	                 Log.d("TestData",sb.toString());
 	                 editor.commit();
-	                 mFragmentManage.BackStatck(getActivity());
+	                 if (type == From_Write) {
+	                	 	mFragmentManage.backHome(getActivity(), From_Write);
+					}else {
+						mFragmentManage.BackStatck(getActivity());
+					}
 	          }else{
 	             Log.d("TestData","发生错误："+status);
 	          }

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.XYFTEST;
 import com.example.fragment.content.My_Check;
 import com.example.fragment.content.My_Comment;
 import com.example.fragment.content.My_Favorite;
@@ -20,7 +21,6 @@ import com.example.fragment.content.My_Publish;
 import com.example.fragment.content.My_Write;
 import com.example.fragment.content.My_userinfo;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 
 public class Tab_My_Frag extends Fragment implements OnClickListener{
 	private View view;

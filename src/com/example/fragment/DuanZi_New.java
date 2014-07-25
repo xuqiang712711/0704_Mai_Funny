@@ -15,6 +15,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.example.Activity.XYFTEST;
 import com.example.AsyTask.RequestDataTask;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
@@ -23,7 +24,6 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.Uris;
 
 import android.os.AsyncTask;

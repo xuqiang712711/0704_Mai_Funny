@@ -1,4 +1,4 @@
-package com.example.tab;
+package com.example.Activity;
 
 public class More_suggest {
 

@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.Activity.XYFTEST;
 import com.example.fragment.Tab_More_Frag;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 
 public class More_Contact extends Fragment{
 	private View view;

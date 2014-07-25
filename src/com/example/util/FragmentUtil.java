@@ -3,8 +3,8 @@ package com.example.util;
 import android.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 
+import com.example.Activity.XYFTEST;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 
 public class FragmentUtil {
 	public static void switchFragment(Fragment fragment){

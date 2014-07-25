@@ -1,5 +1,6 @@
 package com.example.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -11,6 +12,11 @@ import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.application.MaimobApplication;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+
+import pl.droidsonroids.gif.GifDrawable;
 
 
 /**
@@ -333,4 +339,37 @@ public class StringUtils
         }  
         return inputUrl;  
     } 
+	/**
+	 * 检查文件路径是否是http或file
+	 * @param imgName
+	 * @return
+	 */
+	public static String checkImgPath(String ImgPath){
+		String name = null;
+		if (ImgPath.startsWith("file")) {
+			name = ImgPath;
+		}else if (ImgPath.startsWith("http")) {
+			name = ImgPath;
+		}else {
+			name = "file:///" + ImgPath;
+		}
+		return name;
+	}
+	
+	public static GifDrawable checkImgPathForGif(String ImgPath){
+		File cache = null;
+		GifDrawable drawable = null;
+		if (ImgPath.startsWith("http")) {
+			cache = DiskCacheUtils.findInCache(ImgPath, MaimobApplication.imageLoader.getDiskCache());
+		}else {
+			cache = new File(ImgPath);
+		}
+		try {
+			drawable = new GifDrawable(cache);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return drawable;
+	}
 }

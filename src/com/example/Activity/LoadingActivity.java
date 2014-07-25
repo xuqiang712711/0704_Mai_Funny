@@ -1,5 +1,6 @@
-package com.example.tab;
+package com.example.Activity;
 
+import com.example.tab.R;
 import com.example.util.HttpUtil;
 
 import android.app.Activity;

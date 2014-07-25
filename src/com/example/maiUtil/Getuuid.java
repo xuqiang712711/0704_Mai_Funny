@@ -3,7 +3,7 @@ package com.example.maiUtil;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-import com.example.tab.XYFTEST;
+import com.example.Activity.XYFTEST;
 
 import android.content.Context;
 import android.content.SharedPreferences;

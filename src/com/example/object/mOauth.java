@@ -15,7 +15,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
-
+/**
+ * 平台账号绑定
+ * @author xieyifan
+ *
+ */
 public class mOauth {
 	private static UMSocialService mController = MaimobApplication.mController;
 	
@@ -37,7 +41,7 @@ public class mOauth {
 				editor.putInt("douban", 1);
 				break;
 			}
-			editor.putBoolean("Exists", true);
+			editor.putBoolean("Exists", true);//true		存在平台账号		false	不存在平台账号
 			editor.commit();
 		}
 		

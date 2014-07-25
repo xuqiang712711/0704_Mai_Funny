@@ -1,5 +1,7 @@
 package com.example.adapter;
 
+import im.yixin.sdk.util.StringUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.Activity.XYFTEST;
 import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
@@ -18,11 +21,11 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -176,12 +179,13 @@ public class XAdapter extends BaseAdapter{
 		if (imgUri != null &&!imgUri.equals("")) {
 			Log.e(TAG, "~~~~~" + imgUri);
 			
-			String currImgUrl = null;
-			if (!imgUri.startsWith("http")) {
-				currImgUrl = "file:///" +imgUri;
-			}else {
-				currImgUrl = imgUri;
-			}
+			String currImgUrl = StringUtils.checkImgPath(imgUri);
+//			if (!imgUri.startsWith("http")) {
+//				currImgUrl = "file:///" +imgUri;
+//			}else {
+//				currImgUrl = imgUri;
+//			}
+			
 			Log.e(TAG, "curr  " +currImgUrl + "  img  " + imgUri);
 			if ((currImgUrl.substring(currImgUrl.length() - 3, currImgUrl.length()))
 					.equals("gif")) {
@@ -273,21 +277,21 @@ public class XAdapter extends BaseAdapter{
 			
 			case R.id.mitem_test_gif:
 				holder.hint_img.setVisibility(View.GONE);
-				File cache = null;
-				if (duanzi.getImageUrl().startsWith("http")) {
-					cache = DiskCacheUtils.findInCache(mdata.get(position)
-							.getImageUrl(), imageLoader.getDiskCache());
-					Log.e(TAG, "cache  " + cache.toString());
-				}else {
-					cache = new File(duanzi.getImageUrl());
-				}
-				try {
-					GifDrawable gifDrawable = new GifDrawable(cache);
-					((GifImageView)v).setImageDrawable(gifDrawable);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				File cache = null;
+//				if (duanzi.getImageUrl().startsWith("http")) {
+//					cache = DiskCacheUtils.findInCache(mdata.get(position)
+//							.getImageUrl(), imageLoader.getDiskCache());
+//					Log.e(TAG, "cache  " + cache.toString());
+//				}else {
+//					cache = new File(duanzi.getImageUrl());
+//				}
+//				try {
+//					GifDrawable gifDrawable = new GifDrawable(cache);
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+				((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(duanzi.getImageUrl()));
 				break;
 			
 			case R.id.bottom_more:

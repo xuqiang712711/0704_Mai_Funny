@@ -2,9 +2,9 @@ package com.example.fragment;
 
 import org.w3c.dom.Text;
 
+import com.example.Activity.XYFTEST;
 import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.Uris;
 import com.umeng.socialize.view.abs.am;
 
@@ -46,6 +46,7 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 	private boolean check_1 = true;
 	private ImageView iv_refresh;
 	private Animation animation;
+	private long exitTime = 0;
 	
 	private PopupWindow pop;// 0710Ìí¼Ó
 //	private FragmentManager mFM = null;
@@ -191,4 +192,5 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 			
 		}
 	};
+	
 }

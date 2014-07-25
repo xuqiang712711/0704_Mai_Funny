@@ -35,13 +35,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.XYFTEST;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.DialogUtil;
 import com.example.util.ShareUtil;
 import com.example.util.Uris;
@@ -93,10 +93,13 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		mcontroller = MaimobApplication.mController;
 		mcontroller.getConfig().setSsoHandler(new QZoneSsoHandler(getActivity(), "APP ID", "APP KEY"));
 		initView();
-		duanzi = (Duanzi) getArguments().getSerializable("commit");
-		pid = duanzi.getPoid();
-		imgUri = duanzi.getImageUrl();
-		duanziContent= duanzi.getContent();
+		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
+		if (duanzi != null) {
+			Log.e(Tag, "~~~~~~~~~~~~~~bundle");
+			pid = duanzi.getPoid();
+			imgUri = duanzi.getImageUrl();
+			duanziContent= duanzi.getContent();
+		}
 	}
 	private void initView(){
 		TextView title = (TextView)view.findViewById(R.id.top_text);

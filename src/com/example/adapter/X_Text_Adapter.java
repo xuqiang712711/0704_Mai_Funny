@@ -9,13 +9,13 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.Activity.XYFTEST;
 import com.example.adapter.XAdapter.ViewHolder;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.Uris;

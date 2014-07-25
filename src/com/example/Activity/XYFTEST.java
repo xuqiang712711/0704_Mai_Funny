@@ -1,4 +1,4 @@
-package com.example.tab;
+package com.example.Activity;
 
 import com.example.application.MaimobApplication;
 import com.example.fragment.DuanZi_Hot;
@@ -7,11 +7,19 @@ import com.example.fragment.Tab_Image_Frag2;
 import com.example.fragment.Tab_More_Frag;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.fragment.Tab_Search_Frag;
+import com.example.fragment.content.DuanZi_Comment;
+import com.example.fragment.content.DuanZi_Comment_Write;
 import com.example.fragment.content.My_Write;
+import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userInfo_vp_home;
 import com.example.fragment.content.My_userinfo;
+import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
+import com.example.tab.R;
+import com.example.util.Uris;
+import com.example.util.UserUtils;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,11 +43,16 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 private Tab_My_Frag_New Frag_my;
 	 private Tab_Search_Frag Frag_search;
 	 private My_Write my_Write;
+	 private My_login_select login_select;
+	 private DuanZi_Comment_Write comment_Write;
+	 public static int ReqCode = 3333;
 
 	private RelativeLayout c1, c2, c3, c4, c5;
 	private LinearLayout mTab_item_container, content_container,
 			content_container2;
 
+	FragmentManager fm;
+	FragmentTransaction fragtrain;
 	private long exitTime = 0;
 //	private FragmentManager fm;
 //	private FragmentTransaction fragtrain;
@@ -81,9 +94,9 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 */
 	public void selectTab(int index) {
 		clearTab();
-		FragmentManager fm = getSupportFragmentManager();
+		fm = getSupportFragmentManager();
 		
-		FragmentTransaction fragtrain = fm.beginTransaction();
+		fragtrain = fm.beginTransaction();
 		hideFragment(fragtrain);
 
 		switch (index) {
@@ -105,11 +118,25 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			}
 			break;
 		case 3:
-			if (my_Write == null) {
+			if (UserUtils.UserIsExists(this)) {
+//				if (my_Write == null) {
+//					my_Write = new My_Write();
+//					fragtrain.add(R.id.content_container2,my_Write);
+//				}else {
+//					fragtrain.show(my_Write);
+//				}
 				my_Write = new My_Write();
-				fragtrain.add(R.id.content_container2,my_Write);
+				fragtrain.add(R.id.content_container2, my_Write);
 			}else {
-				fragtrain.show(my_Write);
+				Bundle bundle = new Bundle();
+				bundle.putInt("xwkkx", My_login_select.From_Write);
+				if (login_select == null) {
+					login_select = new My_login_select();
+					login_select.setArguments(bundle);
+					fragtrain.add(R.id.content_container2, login_select);
+				}else {
+					fragtrain.show(login_select);
+				}
 			}
 			break;
 		case 4:
@@ -151,6 +178,9 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		}
 		if (my_Write !=null) {
 			fragtrain.hide(my_Write);
+		}
+		if (login_select != null) {
+			fragtrain.hide(login_select);
 		}
 	}
 
@@ -236,8 +266,13 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		fm2.popBackStack();
 	}
 	
-	public void WriteBack(){
-		selectTab(1);
+	public void WriteBack(int tab){
+		Log.e(Tag, "selectTab  1");
+		if (tab == 1) {
+			selectTab(1);
+		}else if (tab == My_login_select.From_Write) {
+			selectTab(3);
+		}
 	}
 	
 	public void RefreshFragment(int FragTag){
@@ -245,5 +280,57 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			Frag_my.refresh();
 		}
 	}
+	
+	@Override
+	protected void onActivityResult(int reqCode, int resultCode, Intent intent) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(reqCode, resultCode, intent);
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction fragtrain = fm.beginTransaction();
+		Log.e(Tag, "onActivityResult    " +resultCode);
+		switch (resultCode) {
+		case 1:
+			if (my_Write == null) {
+				my_Write = new My_Write();
+				fragtrain.add(R.id.content_container2, my_Write);
+			}else {
+				fragtrain.show(my_Write);
+			}
+			break;
+
+		case 2:
+			if (login_select == null) {
+				Log.e(Tag, "==null");
+				login_select = new My_login_select();
+				fragtrain.add(R.id.content_container2, login_select);
+			} else {
+				Log.e(Tag, "!=null");
+				fragtrain.show(login_select);
+			}
+			break;
+		case 3:
+//			Duanzi duanzi = (Duanzi) intent.getSerializableExtra("duanzi");
+//			Log.e(Tag, "duanzi  " + duanzi.getContent());
+//			if (comment_Write == null) {
+//				comment_Write = new  DuanZi_Comment_Write();
+////				Bundle bundle = new Bundle();
+////				bundle.putSerializable("duanzi", duanzi);
+////				comment_Write.setArguments(bundle);
+////				fragtrain.hide(new DuanZi_Comment()).add(R.id.content_container2, comment_Write).addToBackStack(null);
+//			}else {
+//				fragtrain.show(comment_Write);
+//			}
+			
+			if (my_Write == null) {
+				my_Write = new My_Write();
+				fragtrain.add(R.id.content_container2, my_Write);
+			}else {
+				fragtrain.show(my_Write);
+			}
+			break;
+		}
+		fragtrain.commit();
+	}
+	
 	
 }

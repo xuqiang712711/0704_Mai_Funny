@@ -49,12 +49,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.XYFTEST;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.BitmapOptions;
 import com.example.util.CommonUtils;
 import com.example.util.EditUtil;
@@ -399,7 +399,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	
 	private void backToHome(){
 		XYFTEST xyftest =(XYFTEST)getActivity();
-		xyftest.WriteBack();
+		xyftest.WriteBack(1);
 	}
 	
 	private void insertSQL(String content, String imgurl){

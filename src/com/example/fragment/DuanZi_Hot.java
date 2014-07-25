@@ -10,6 +10,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import com.example.Activity.XYFTEST;
 import com.example.adapter.XAdapter;
 import com.example.adapter.X_Text_Adapter;
 import com.example.application.MaimobApplication;
@@ -18,7 +19,6 @@ import com.example.maiUtil.Getuuid;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
-import com.example.tab.XYFTEST;
 import com.example.util.CustomImage;
 import com.example.util.HttpUtil;
 import com.example.util.Uris;

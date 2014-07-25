@@ -345,4 +345,23 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			return null;
 		}
 	}
+	
+	public int selectFavCount(){
+		db = getReadableDatabase();
+		int max = 0;
+		try {
+			mCursor = db.rawQuery("select id from "+ DATABASE_NAME_PUBLISH + " order by id desc", new String[]{});
+			if (mCursor.moveToFirst()) {
+				do {
+					max = mCursor.getInt(mCursor.getColumnIndex("id"));
+				} while (mCursor.moveToNext());
+			}
+			db.close();
+			return max;
+		} catch (Exception e) {
+			// TODO: handle exception
+			db.close();
+			return 0;
+		}
+	}
 }

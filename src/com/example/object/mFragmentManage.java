@@ -1,6 +1,6 @@
 package com.example.object;
 
-import com.example.tab.XYFTEST;
+import com.example.Activity.XYFTEST;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -40,6 +40,11 @@ public class mFragmentManage {
 		}
 	}
 	
+	/**
+	 * ÇÐ»»Í¬Ê±Ë¢ÐÂ
+	 * @param context
+	 * @param FragTag
+	 */
 	public static void RefreshFrag(Context context,int FragTag){
 		if (context == null) {
 			return;
@@ -47,6 +52,16 @@ public class mFragmentManage {
 		if (context instanceof XYFTEST) {
 			XYFTEST xyftest = (XYFTEST)context;
 			xyftest.RefreshFragment(FragTag);
+		}
+	}
+	
+	public static void backHome(Context context, int type){
+		if (context == null) {
+			return;
+		}
+		if (context instanceof XYFTEST) {
+			XYFTEST xyftest =(XYFTEST)context;
+			xyftest.WriteBack(type);
 		}
 	}
 	

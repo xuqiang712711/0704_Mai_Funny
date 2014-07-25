@@ -1,4 +1,6 @@
-package com.example.tab;
+package com.example.Activity;
+
+import com.example.tab.R;
 
 import android.app.Activity;
 import android.os.Bundle;
