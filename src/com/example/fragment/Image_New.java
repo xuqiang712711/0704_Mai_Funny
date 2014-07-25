@@ -15,9 +15,11 @@ import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
+import com.example.util.DialogUtil;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -42,25 +44,34 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	private SwipeRefreshLayout refreshLayout;
 	private XAdapter adapter;
 	private Handler tabHandler;
+	private Dialog dialog;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			String json = (String) msg.obj;
-			SetListData(json);
+			if (msg.what == Uris.MSG_CHANGEFONT) {
+				ChangeFontSize();
+			}else {
+				dialog.dismiss();
+				String json = (String) msg.obj;
+				SetListData(json);
+			}
 		}
 	};
+	
+	private void ChangeFontSize(){
+		if (adapter == null) {
+			return;
+		}else {
+			adapter.notifyDataSetChanged();
+		}
+	}
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-//		return super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
-		initView();
-		
-		RequestDataTask data = new RequestDataTask(handler);
-		data.execute(Uris.Img_uri);
 		return view;
 	}
 	
@@ -68,6 +79,11 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		dialog = DialogUtil.createLoadingDialog(getActivity());
+		dialog.show();
+		initView();
+		RequestDataTask data = new RequestDataTask(handler);
+		data.execute(Uris.Img_uri);
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);

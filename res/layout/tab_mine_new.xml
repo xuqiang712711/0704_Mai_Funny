@@ -39,17 +39,16 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/my_top"
         android:id="@+id/mine_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_top" >
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/my_unlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
+            android:layout_marginBottom="@dimen/margin_20"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
@@ -57,19 +56,21 @@
 
             <ImageView
                 android:id="@+id/my_unlogin_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:contentDescription="@null"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_5"
                 android:src="@drawable/mai_user_head" />
-            <TextView 
-                android:layout_marginLeft="@dimen/margin_10"
-                android:textSize="@dimen/ts_20"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/my_unlogin_icon"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="登录/注册"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_toRightOf="@+id/my_unlogin_icon"
+                android:text="登录/注册"
+                android:textSize="@dimen/ts_20" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -79,8 +80,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/margin_20"
             android:background="@color/my_back"
-             >
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:id="@+id/my_userinfo_top"
@@ -133,59 +135,63 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/userinfo_icon"
+                    android:layout_centerVertical="true"
                     android:text="编辑资料"
                     android:textColor="#000000"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/ts_20" />
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_above="@+id/my_3"
-                android:layout_marginTop="10dp"
-                android:background="@color/slategray" />
-
-            <LinearLayout
-                android:id="@+id/my_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/my_userinfo_top"
-                android:layout_margin="10dp"
-                android:orientation="horizontal" >
-
-                <include
-                    android:id="@+id/my_favorite_new"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    layout="@layout/my_content_tv2" />
-
-                <include layout="@layout/line_vertical" />
-
-                <include
-                    android:id="@+id/my_publish_new"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    layout="@layout/my_content_tv2" />
-
-                <include layout="@layout/line_vertical" />
-
-                <include
-                    android:id="@+id/my_message_new"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    layout="@layout/my_content_tv2" />
-            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_above="@+id/my_3"
+        android:layout_marginTop="10dp"
+        android:background="@color/slategray" />
+
+    <LinearLayout
+        android:id="@+id/my_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mine_login"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:background="@color/my_back"
+        android:orientation="horizontal" >
+
+        <include
+            android:id="@+id/my_favorite_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            layout="@layout/my_content_tv2" />
+
+        <include layout="@layout/line_vertical" />
+
+        <include
+            android:id="@+id/my_publish_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            layout="@layout/my_content_tv2" />
+
+        <include layout="@layout/line_vertical" />
+
+        <include
+            android:id="@+id/my_message_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            layout="@layout/my_content_tv2" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mine_login"
+        android:layout_below="@+id/my_3"
         android:layout_margin="5dp"
         android:layout_marginTop="20dp"
         android:background="@color/my_back"
@@ -232,15 +238,14 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/my_top"
         style="@style/Top_title"
-        android:paddingBottom="@dimen/margin_5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:paddingBottom="@dimen/margin_5"
         android:text="@string/tab_bar_mine" />
 
 </RelativeLayout>

@@ -140,12 +140,14 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			}
 			break;
 		case 4:
-			if (Frag_my== null) {
-				Frag_my = new Tab_My_Frag_New();
-				fragtrain.add(R.id.content_container, Frag_my);
-			} else {
-				fragtrain.show(Frag_my);
-			}
+//			if (Frag_my== null) {
+//				Frag_my = new Tab_My_Frag_New();
+//				fragtrain.add(R.id.content_container, Frag_my);
+//			} else {
+//				fragtrain.show(Frag_my);
+//			}
+			Frag_my = new Tab_My_Frag_New();
+			fragtrain.add(R.id.content_container, Frag_my);
 			break;
 		case 5:
 			if (Frag_more == null) {

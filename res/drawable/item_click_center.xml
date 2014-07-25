@@ -4,7 +4,7 @@
         <shape >
             <corners android:radius="0dip"/>
             <solid android:color="@color/item_click"/>
-            <stroke android:width="1dip"
+            <stroke android:width="0.1dip"
                 android:color="#000000"/>
         </shape>
     </item>

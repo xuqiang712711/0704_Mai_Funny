@@ -95,7 +95,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		initView();
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		if (duanzi != null) {
-			Log.e(Tag, "~~~~~~~~~~~~~~bundle");
+			Log.e(Tag, "~~~~~~~~~~~~~~DuanZi_Comment_Write~~~~~~~~bundle");
 			pid = duanzi.getPoid();
 			imgUri = duanzi.getImageUrl();
 			duanziContent= duanzi.getContent();
@@ -179,9 +179,9 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.top_right:
-			dialog.show();
 			editContent = editText.getText().toString();
 			if (editContent != null && !editContent.equals("")) {
+				dialog.show();
 				if (duanzi.isNeedComment()) {
 					Log.e("Duanzi_comment_writer", "需要发送评论到服务器");
 					new Thread(new SubMitThread()).start();

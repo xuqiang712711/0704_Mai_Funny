@@ -100,7 +100,7 @@ public class My_login_select extends Fragment{
 		mController = MaimobApplication.mController;
 		ImageView imageView = (ImageView)view.findViewById(R.id.my_select_sina);
 		RelativeLayout.LayoutParams p1 = (LayoutParams) imageView.getLayoutParams();
-		p1.setMargins(MaimobApplication.DeviceW/4, 0, 0, 0);
+		p1.setMargins(MaimobApplication.DeviceW/4, 40, 40, 40);
 		imageView.setLayoutParams(p1);
 		imageView.setOnClickListener(new OnClickListener() {
 			
@@ -112,7 +112,7 @@ public class My_login_select extends Fragment{
 		});
 		ImageView iv_2 = (ImageView)view.findViewById(R.id.my_select_tencent);
 		RelativeLayout.LayoutParams p2 = (LayoutParams) iv_2.getLayoutParams();
-		p2.setMargins(0, 0, MaimobApplication.DeviceW/4, 0);
+		p2.setMargins(40, 40, MaimobApplication.DeviceW/4, 40);
 		iv_2.setLayoutParams(p2);
 		iv_2.setOnClickListener(new OnClickListener() {
 			
@@ -122,20 +122,29 @@ public class My_login_select extends Fragment{
 				doOauth(SHARE_MEDIA.TENCENT, tencent);
 			}
 		});
-		view.findViewById(R.id.my_select_renren).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				doOauth(SHARE_MEDIA.RENREN, renren);
-			}
-		});
-		view.findViewById(R.id.my_select_douban).setOnClickListener(new OnClickListener() {
+		ImageView iv_3 = (ImageView)view.findViewById(R.id.my_select_douban);
+		RelativeLayout.LayoutParams p3 = (LayoutParams) iv_3.getLayoutParams();
+		p3.setMargins(MaimobApplication.DeviceW/4, 40, 40, 40);
+		iv_3.setLayoutParams(p3);
+		iv_3.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				doOauth(SHARE_MEDIA.DOUBAN, douban);
+			}
+		});
+		
+		ImageView iv_4 = (ImageView)view.findViewById(R.id.my_select_renren);
+		RelativeLayout.LayoutParams p4 = (LayoutParams) iv_4.getLayoutParams();
+		p4.setMargins(40, 40, MaimobApplication.DeviceW/4, 40);
+		iv_4.setLayoutParams(p4);
+		iv_4.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				doOauth(SHARE_MEDIA.RENREN, renren);
 			}
 		});
 	}

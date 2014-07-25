@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,11 +70,11 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		setText(R.id.more_zhuanfa, R.string.more_text_zhuanfa);
 		setText(R.id.more_fontSize, R.string.more_text_font);
 		
-		view.findViewById(R.id.more_recommond).setBackgroundResource(R.drawable.item_click_top);
-		view.findViewById(R.id.more_update).setBackgroundResource(R.drawable.item_click_top);
+		view.findViewById(R.id.more_recommond).setBackgroundResource(R.drawable.item_click_center);
+		view.findViewById(R.id.more_update).setBackgroundResource(R.drawable.item_click_center);
 		
-		view.findViewById(R.id.more_feedback).setBackgroundResource(R.drawable.item_click_bottom);
-		view.findViewById(R.id.more_help).setBackgroundResource(R.drawable.item_click_bottom);
+		view.findViewById(R.id.more_feedback).setBackgroundResource(R.drawable.item_click_center);
+		view.findViewById(R.id.more_help).setBackgroundResource(R.drawable.item_click_center);
 		
 		view.findViewById(R.id.more_Cache).setBackgroundResource(R.drawable.item_click_center);
 		view.findViewById(R.id.more_contact).setBackgroundResource(R.drawable.item_click_center);
@@ -84,7 +85,30 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	}
 	
 	private void listenCheckbox(){
-		setCheckBox(R.id.more_zhuanfa, R.id.more_checkbox);
+		CheckBox cb = (CheckBox)view.findViewById(R.id.more_checkbox);
+		if ((Boolean) SharedPreferencesUtils.getParam(
+				SharedPreferencesUtils.setting, getActivity(),
+				SharedPreferencesUtils.setting_isZhuanfa, false)) {
+			cb.setChecked(true);
+		}else {
+			cb.setChecked(false);
+		}
+		cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if (isChecked) {
+					Toast.makeText(getActivity(), "选中", Toast.LENGTH_SHORT).show();
+					SharedPreferencesUtils.setParam("setting", getActivity(), "isZhuanfa", true);
+				}else {
+					Toast.makeText(getActivity(), "未选中", Toast.LENGTH_SHORT).show();
+					SharedPreferencesUtils.setParam("setting", getActivity(), "isZhuanfa", false);
+				}
+			}
+		});
+		
+//		setCheckBox(R.id.more_zhuanfa, R.id.more_checkbox);
 //		setCheckBox(R.id.more_bookmarker, R.id.more_checkbox);
 //		setCheckBox(R.id.more_dark, R.id.more_checkbox);
 //		setCheckBox(R.id.more_push, R.id.more_checkbox);
@@ -108,30 +132,69 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	}
 	
 	private void listenRadiobutton(){
-		((RadioGroup)view.findViewById(R.id.more_fontSize).findViewById(R.id.radioGroup1)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		RadioGroup rg = (RadioGroup)view.findViewById(R.id.radioGroup1);
+		RadioButton rb_small = (RadioButton)rg.findViewById(R.id.radio0);
+		RadioButton rb_normal = (RadioButton)rg.findViewById(R.id.radio1);
+		RadioButton rb_big = (RadioButton)rg.findViewById(R.id.radio2);
+		String fontSize = (String) SharedPreferencesUtils.getParam(SharedPreferencesUtils.setting, getActivity(),
+				SharedPreferencesUtils.setting_font, "small");
+		if (fontSize.equals("small")) {
+			rb_small.setChecked(true);
+		}else if (fontSize.equals("normal")) {
+			rb_normal.setChecked(true);
+		}else if (fontSize.equals("big")) {
+			rb_big.setChecked(true);
+		}
+		
+		rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
+				Log.e("FFF", "fan");
 				if (checkedId == R.id.radio0) {
-					Toast.makeText(getActivity(), "小", Toast.LENGTH_SHORT).show();
-//					X_Text_Adapter.fontSize = 14;
 					Uris.Font_Size = Uris.Font_Size_small;
 					XAdapter.SetNormal();
-//					X_Text_Adapter.SetNormal();
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+							SharedPreferencesUtils.setting_font, "small");
 				}else if (checkedId == R.id.radio1) {
-					Toast.makeText(getActivity(), "中", Toast.LENGTH_SHORT).show();
 					Uris.Font_Size = Uris.Font_Size_normal;
 					XAdapter.SetNormal();
-//					X_Text_Adapter.SetNormal();
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+							SharedPreferencesUtils.setting_font, "normal");
 				}else if (checkedId == R.id.radio2) {
-					Toast.makeText(getActivity(), "大", Toast.LENGTH_SHORT).show();
 					Uris.Font_Size = Uris.Font_Size_big;
 					XAdapter.SetNormal();
-//					X_Text_Adapter.SetNormal();
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+							SharedPreferencesUtils.setting_font, "big");
 				}
 			}
 		});
+		
+//		((RadioGroup)view.findViewById(R.id.more_fontSize).findViewById(R.id.radioGroup1)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//			
+//			@Override
+//			public void onCheckedChanged(RadioGroup group, int checkedId) {
+//				// TODO Auto-generated method stub
+//				Log.e("FFF", "Fuck ");
+//				if (checkedId == R.id.radio0) {
+//					Uris.Font_Size = Uris.Font_Size_small;
+//					XAdapter.SetNormal();
+//					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+//							SharedPreferencesUtils.setting_font, "small");
+//				}else if (checkedId == R.id.radio1) {
+//					Uris.Font_Size = Uris.Font_Size_normal;
+//					XAdapter.SetNormal();
+//					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+//							SharedPreferencesUtils.setting_font, "normal");
+//				}else if (checkedId == R.id.radio2) {
+//					Uris.Font_Size = Uris.Font_Size_big;
+//					XAdapter.SetNormal();
+//					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
+//							SharedPreferencesUtils.setting_font, "big");
+//				}
+//			}
+//		});
 	}
 	
 	private void listenLayout(){

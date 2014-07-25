@@ -277,35 +277,10 @@ public class XAdapter extends BaseAdapter{
 			
 			case R.id.mitem_test_gif:
 				holder.hint_img.setVisibility(View.GONE);
-//				File cache = null;
-//				if (duanzi.getImageUrl().startsWith("http")) {
-//					cache = DiskCacheUtils.findInCache(mdata.get(position)
-//							.getImageUrl(), imageLoader.getDiskCache());
-//					Log.e(TAG, "cache  " + cache.toString());
-//				}else {
-//					cache = new File(duanzi.getImageUrl());
-//				}
-//				try {
-//					GifDrawable gifDrawable = new GifDrawable(cache);
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 				((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(duanzi.getImageUrl()));
 				break;
 			
 			case R.id.bottom_more:
-//				String imgUri = mdata.get(position).getImageUrl();
-//				Log.e(TAG, "imgUri  "+ imgUri);
-//				if (imgUri.equals("") || imgUri == null) {
-//					UMShare(mdata.get(position).getContent(), null);
-//				}else {
-//					UMShare(mdata.get(position).getContent(),
-//							imgUri);
-//				}
-//				mController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
-//						SHARE_MEDIA.DOUBAN);
-//				mController.openShare((Activity) context, false);
 				initPop(position, holder);
 				window.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 				break;
@@ -389,8 +364,6 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_more_zhuanfa:
 				duanzi.setNeedComment(false);
-				bundle = new Bundle();
-				bundle.putSerializable("commit", duanzi);
 				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
 				window.dismiss();
 				break;

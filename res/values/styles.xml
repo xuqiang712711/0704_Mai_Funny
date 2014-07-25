@@ -106,7 +106,7 @@
 	</style>
 	
 	<style name="my_background" parent="@style/match">
-	    <item name="android:background">@color/actionBar</item>
+	    <item name="android:background">@color/gray</item>
 	    <item name="android:clickable">true</item>
 	</style>
 	

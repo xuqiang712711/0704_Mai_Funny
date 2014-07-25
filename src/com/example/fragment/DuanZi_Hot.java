@@ -20,6 +20,7 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.util.CustomImage;
+import com.example.util.DialogUtil;
 import com.example.util.HttpUtil;
 import com.example.util.Uris;
 import com.umeng.socialize.controller.RequestType;
@@ -75,9 +76,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 				android.R.color.holo_orange_light,
 				android.R.color.holo_green_light,
 				android.R.color.holo_red_light);
-		dialog = new AlertDialog.Builder(getActivity()).setTitle("我是标题")
-				.setMessage("XWKKX")
-				.create();
+//		dialog = new AlertDialog.Builder(getActivity()).setTitle("我是标题")
+		dialog = DialogUtil.createLoadingDialog(getActivity());
 		dialog.show();
 		initView();
 		inithttp();
@@ -93,14 +93,11 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			String json = (String) msg.obj;
-			switch (msg.what) {
-			case 313:
+			if (msg.what == Uris.MSG_CHANGEFONT) {
 				ChangeFont();
-				break;
-			case 5656:
+			}else {
 				dialog.dismiss();
 				updateListView(json);
-				break;
 			}
 			
 		}
@@ -131,23 +128,16 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 
 		@Override
 		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
 			return doHttpRequest(params);
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-//					array = new JSONArray(result);
 					Message message = Message.obtain();
 					message.obj = result;
 					message.what = 5656;
 					handler.sendMessage(message);
-//				DuanZiAdapter adapter = new DuanZiAdapter(DuanZi_Hot.this, getActivity(), array);
-//				listView.setAdapter(adapter);
-				
-//				Log.i("FFF", "array  " + array + "  length  "+ array.length());
 		}
 		
 		/**

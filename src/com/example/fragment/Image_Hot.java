@@ -23,9 +23,11 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
+import com.example.util.DialogUtil;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
+import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,14 +53,15 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private SwipeRefreshLayout refreshLayout;
 	private XAdapter adapter;
 	private Handler tabHandler;
+	private Dialog dialog;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == Uris.MSG_CHANGEFONT) {
 				ChangeFontSize();
 			}else {
+				dialog.dismiss();
 				String json = (String) msg.obj;
-				Log.i("YYY", "json  img  " + json);
 				SetListData(json);
 			}
 			
@@ -78,7 +81,6 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (tabHandler != null) {
-			Log.i("XXX", "HOT_REFRESH");
 			tabHandler.sendEmptyMessage(Uris.MSG_REFRESH);
 		}
 	}
@@ -88,11 +90,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-//		return super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
-		initView();
-		
-		initHttp();
 		return view;
 	}
 	
@@ -105,9 +103,13 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		dialog = DialogUtil.createLoadingDialog(getActivity());
+		dialog.show();
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);
+		initView();
+		initHttp();
 	}
 	
 	private void setData(){

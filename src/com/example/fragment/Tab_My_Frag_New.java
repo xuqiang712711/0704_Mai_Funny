@@ -1,5 +1,6 @@
 package com.example.fragment;
 
+import java.util.List;
 import java.util.Set;
 
 import com.example.Activity.OauthActivity;
@@ -13,6 +14,7 @@ import com.example.fragment.content.My_Message;
 import com.example.fragment.content.My_Publish;
 import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userinfo;
+import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
@@ -46,6 +48,7 @@ private RelativeLayout logined, unLogin;
 private String Tag = "Tab_My_Frag_New";
 private TextView tv_user_description,tv_user_name;
 private ImageView iv_user_head;
+private int count_Fav= 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,11 +70,15 @@ private ImageView iv_user_head;
 			// TODO Auto-generated method stub
 			super.onActivityCreated(savedInstanceState);
 			Log.e(Tag, "onActivityCreated");
+			Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity()); 
+			count_Fav = db.selectFav().size();
 			initView();
 			
-			Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
-			int max = db.selectFavCount();
-			Log.e(Tag, "max  " + max);
+//			count_Fav = db.selectFavCount();
+			
+//			List<Duanzi> list  = db.selectFav();
+//			Log.e(Tag, "Fav_size  " + list.size());
+			
 			
 			listenWidget(R.id.my_check_new);
 			listenWidget(R.id.my_favorite_new);
@@ -110,14 +117,7 @@ private ImageView iv_user_head;
 		
 		unLogin.setOnClickListener(this);
 		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
-		userinfo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-//				MaimobApplication.loginController.openUserCenter(getActivity(), SocializeConstants.FLAG_USER_CENTER_HIDE_LOGININFO);
-			}
-		});
+		userinfo.setOnClickListener(this);
 		
 		comment = (RelativeLayout)view.findViewById(R.id.my_comment_new);
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
@@ -137,8 +137,14 @@ private ImageView iv_user_head;
 		setWidget(message, R.string.my_message, R.drawable.my_message_icon, R.drawable.item_click_normal, 1);
 		setWidget(publish, R.string.my_publish, R.drawable.my_publish_icon ,R.drawable.item_click_normal, 1);
 		
-		edit = (TextView)view.findViewById(R.id.user_info_edit);
-		edit.setOnClickListener(this);
+		TextView tv_Fav = (TextView)favorite.findViewById(R.id.my_tv_tv1);
+		Log.e(Tag, "Fav  " + count_Fav);
+		tv_Fav.setText(String.valueOf(count_Fav));
+		
+		
+//		edit = (TextView)view.findViewById(R.id.user_info_edit);
+//		edit.setOnClickListener(this);
+		
 	}
 	
 	/**
@@ -174,11 +180,11 @@ private ImageView iv_user_head;
 		Bundle bundle = new Bundle();
 		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
-		case R.id.user_info_edit:
-			Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
+		case R.id.my_userinfo_top:
 			My_userinfo userinfo = new My_userinfo();
 			switchFragment(this, userinfo);
 			break;
+		
 		case R.id.my_app_new:
 			break;
 		case R.id.my_activity_new:

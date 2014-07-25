@@ -24,8 +24,10 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
+import com.example.util.DialogUtil;
 import com.example.util.Uris;
 
+import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,14 +48,29 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	private SwipeRefreshLayout refreshLayout;
 	private XAdapter adapter;
 	private Handler TabHandler;
+	private Dialog dialog;
 	
 	private Handler mHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
-			String json = (String) msg.obj;
-			updateListView(json);
+			if (msg.what == Uris.MSG_CHANGEFONT) {
+				ChangeFontSize();
+			}else {
+				dialog.dismiss();
+				String json = (String) msg.obj;
+				updateListView(json);
+			}
+
 		}
 	};
+	
+	private void ChangeFontSize(){
+		if (adapter == null) {
+			return;
+		}else {
+			adapter.notifyDataSetChanged();
+		}
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -66,6 +83,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		dialog = DialogUtil.createLoadingDialog(getActivity());
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
