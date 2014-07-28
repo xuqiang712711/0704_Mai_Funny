@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,7 @@ import pl.droidsonroids.gif.GifDrawable;
  */
 public class StringUtils 
 {
+	public static MyLogger myLogger = MyLogger.jLog();
 	public static final String[] EMPTY_STRING = new String[ 0 ];
 	
 	/**
@@ -357,6 +359,7 @@ public class StringUtils
 	}
 	
 	public static GifDrawable checkImgPathForGif(String ImgPath){
+		myLogger.i(ImgPath);
 		File cache = null;
 		GifDrawable drawable = null;
 		if (ImgPath.startsWith("http")) {

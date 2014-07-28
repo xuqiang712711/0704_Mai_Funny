@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -154,19 +155,31 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 				Log.e("FFF", "fan");
 				if (checkedId == R.id.radio0) {
 					Uris.Font_Size = Uris.Font_Size_small;
-					XAdapter.SetNormal();
+//					XAdapter.SetNormal();
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
 							SharedPreferencesUtils.setting_font, "small");
+//					DuanZi_Hot hot = new DuanZi_Hot();
+//					hot.ChangeFontSize();
+//					Image_Hot img_hot = new Image_Hot();
+//					img_hot.ChangeFontSize();
 				}else if (checkedId == R.id.radio1) {
 					Uris.Font_Size = Uris.Font_Size_normal;
-					XAdapter.SetNormal();
+//					XAdapter.SetNormal();
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
 							SharedPreferencesUtils.setting_font, "normal");
+//					DuanZi_Hot hot = new DuanZi_Hot();
+//					hot.ChangeFontSize();
+//					Image_Hot img_hot = new Image_Hot();
+//					img_hot.ChangeFontSize();
 				}else if (checkedId == R.id.radio2) {
 					Uris.Font_Size = Uris.Font_Size_big;
-					XAdapter.SetNormal();
+//					XAdapter.SetNormal();
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, getActivity(),
 							SharedPreferencesUtils.setting_font, "big");
+//					DuanZi_Hot hot = new DuanZi_Hot();
+//					hot.ChangeFontSize();
+//					Image_Hot img_hot = new Image_Hot();
+//					img_hot.ChangeFontSize();
 				}
 			}
 		});

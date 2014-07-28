@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Text;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -23,6 +25,7 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
+import com.example.util.MyLogger;
 import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
@@ -90,8 +93,8 @@ public class XAdapter extends BaseAdapter{
 	
 	public XAdapter(List<Duanzi> mdata, Handler handler,
 			UMSocialService mController, Fragment mFragment, Context context){
-		this.mdata = mdata;
 		this.mHandler = handler;
+		this.mdata = mdata;
 		this.mController = mController;
 		this.context = context;
 		this.mFragment = mFragment;
@@ -238,7 +241,6 @@ public class XAdapter extends BaseAdapter{
 		holder.content.setText(content);
 		holder.content.setTextSize(Uris.Font_Size);
 		AddListen(holder, position);
-//		initPop(position, content);
 		
 		return convertView;
 	}
@@ -421,7 +423,10 @@ public class XAdapter extends BaseAdapter{
 	}
 	
 	public static void SetNormal(){
+		MyLogger logger = MyLogger.jLog();
+		logger.i("Xadapter_changeFont");
 		if (mHandler == null) {
+			logger.i("mHandler is null");
 			return;
 		}
 		Message msg = Message.obtain();
@@ -431,12 +436,13 @@ public class XAdapter extends BaseAdapter{
 	
 	private Handler adapterHandler = new Handler(){
 		public void handleMessage(Message msg) {
-//			if (msg.what == Uris.MSG_GETDATA) {
-//				
-//			}
 			ToastUtil.showToast(context, "收藏成功");
 			window.dismiss();
 		}
 	};
+	
+	public void Refresh(){
+		notifyDataSetChanged();
+	}
 
 }

@@ -24,6 +24,7 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.util.DialogUtil;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -45,6 +46,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class Image_Hot extends Fragment implements OnRefreshListener{
+	public MyLogger logger = MyLogger.jLog();
 	View view;
 	private ListView listView;
 	private List<Map<String, Object>> data = null;
@@ -68,13 +70,13 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		}
 	};
 	
-	private void ChangeFontSize(){
-		if (adapter == null) {
-			return;
-		}else {
+	public void ChangeFontSize(){
+		if (adapter != null) {
+			MyLogger.jLog().e("Image_Hot changeFont");
 			adapter.notifyDataSetChanged();
 		}
 	}
+	
 	
 	private void SetListData(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json, getActivity());

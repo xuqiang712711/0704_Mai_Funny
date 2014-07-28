@@ -5,6 +5,7 @@ import org.w3c.dom.Text;
 import com.example.Activity.XYFTEST;
 import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.umeng.socialize.view.abs.am;
 
@@ -67,6 +68,27 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		initPop();
 		selectTab2(1);
 	}
+	
+	@Override
+		public void onHiddenChanged(boolean hidden) {
+			// TODO Auto-generated method stub
+			super.onHiddenChanged(hidden);
+			if (hidden) {
+				MyLogger.jLog().i("hide is true");
+			}else {
+				MyLogger.jLog().i("hide is false");
+//				if (duanZi_Hot != null) {
+//					duanZi_Hot.ChangeFontSize();
+//				}else if (duanZi_New != null) {
+//					duanZi_New.ChangeFontSize();
+//				}
+				if (!duanZi_Hot.isHidden()) {
+					duanZi_Hot.ChangeFontSize();
+				}else if (!duanZi_New.isHidden()) {
+					duanZi_New.ChangeFontSize();
+				}
+			}
+		}
 	
 	private void initPop(){
 		

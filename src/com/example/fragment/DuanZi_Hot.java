@@ -22,11 +22,13 @@ import com.example.tab.R;
 import com.example.util.CustomImage;
 import com.example.util.DialogUtil;
 import com.example.util.HttpUtil;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Dialog;
@@ -50,6 +52,7 @@ import android.widget.ListView;
 
 
 public class DuanZi_Hot extends Fragment implements OnRefreshListener{
+	public MyLogger myLogger = MyLogger.jLog();
 	View view;
 	private ListView listView;
 	private SwipeRefreshLayout refreshLayout;
@@ -61,6 +64,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		myLogger.i("onCreateView");
 		view = inflater.inflate(R.layout.duanzi_tab_hot, container, false);
 		return view;
 	}
@@ -69,7 +73,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
+		myLogger.i("onActivityCreated  adapter is null");
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
@@ -83,6 +87,26 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		inithttp();
 	}
 	
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		myLogger.i("onStart");
+		if (adapter == null) {
+			myLogger.i("onStart" +  "  adapter is null");
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		myLogger.i("onResume");
+		if (adapter == null) {
+			myLogger.i("onResume" +  "  adapter is null");
+		}
+	}
+	
 	private void initView(){
 		listView = (ListView)view.findViewById(R.id.listview);
 		listView.setItemsCanFocus(true);
@@ -92,10 +116,10 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	Handler handler = new Handler(){
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			String json = (String) msg.obj;
 			if (msg.what == Uris.MSG_CHANGEFONT) {
-				ChangeFont();
+				ChangeFontSize();
 			}else {
+				String json = (String) msg.obj;
 				dialog.dismiss();
 				updateListView(json);
 			}
@@ -103,18 +127,76 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		}
 	};
 	
-	private void ChangeFont(){
-		adapter.notifyDataSetChanged();
+	public void ChangeFontSize(){
+		if (adapter != null) {
+			MyLogger.jLog().e("Duanzi_Hot changeFont");
+			adapter.notifyDataSetChanged();
+		}
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		myLogger.i("onAttach");
+		if (adapter == null) {
+			myLogger.i("onAttach" +  "  adapter is null");
+		}
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		myLogger.i("onCreate");
+		if (adapter == null) {
+			myLogger.i("onCreate" +  "  adapter is null");
+		}
+	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		myLogger.i("onPause ");
+		if (adapter == null) {
+			myLogger.i("onPause" +  "  adapter is null");
+		}
+	}
+	
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		myLogger.i("onStop");
+		if (adapter == null) {
+			myLogger.i("onStop" +  "  adapter is null");
+		}
 	}
 	
 	private void updateListView(String json){
 		List<Duanzi> list = setDuanziData.getListDuanzi(json,getActivity());
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+		myLogger.e("initAdapter");
+		if (adapter == null) {
+			myLogger.e("initAdapter adapter is null");
+		}
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {
 			Message msg = Message.obtain();
 			msg.what = Uris.MSG_REFRESH;
 			TabHandler.sendMessage(msg);
+		}
+	}
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (hidden) {
+			myLogger.i("hidden is true");
+		}else {
+			myLogger.i("hidden is false");
 		}
 	}
 	

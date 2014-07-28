@@ -16,6 +16,7 @@ import com.example.fragment.content.My_userinfo;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.example.util.UserUtils;
 
@@ -46,7 +47,8 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 	 private My_login_select login_select;
 	 private DuanZi_Comment_Write comment_Write;
 	 public static int ReqCode = 3333;
-
+	 private MyLogger myLogger = MyLogger.jLog();
+	 
 	private RelativeLayout c1, c2, c3, c4, c5;
 	private LinearLayout mTab_item_container, content_container,
 			content_container2;
@@ -66,7 +68,7 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 		MaimobApplication.DeviceW = dm.widthPixels;
 		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
-		selectTab(1);
+		selectTab(2);
 	}
 
 	private void initView() {
@@ -104,8 +106,10 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			if (Frag_duanzi == null) {
 				Frag_duanzi = new Tab_DuanZi_Frag();
 				fragtrain.add(R.id.content_container, Frag_duanzi);
+				myLogger.i("duanzi_frag add");
 			} else {
 				fragtrain.show(Frag_duanzi);
+				myLogger.i("duanzi_frag show");
 			}
 			break;
 

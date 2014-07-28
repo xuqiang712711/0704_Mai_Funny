@@ -1,6 +1,7 @@
 package com.example.fragment;
 
 import com.example.tab.R;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 
 import android.annotation.SuppressLint;
@@ -50,6 +51,26 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 //		selectTab(1);
 		initPop();
 		selectTab2(1);
+	}
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (hidden) {
+			MyLogger.jLog().i("img hide is true");
+		}else {
+//			if (image_Hot != null) {
+//				image_Hot.ChangeFontSize();
+//			}else {
+//				image_New.ChangeFontSize();
+//			}
+			if (!image_Hot.isHidden()) {
+				image_Hot.ChangeFontSize();
+			}else if (!image_New.isHidden()) {
+				image_New.ChangeFontSize();
+			}
+		}
 	}
 	
 	private void initPop(){

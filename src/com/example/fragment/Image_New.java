@@ -16,6 +16,7 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.util.DialogUtil;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -49,7 +50,6 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == Uris.MSG_CHANGEFONT) {
-				ChangeFontSize();
 			}else {
 				dialog.dismiss();
 				String json = (String) msg.obj;
@@ -58,11 +58,20 @@ public class Image_New extends Fragment implements OnRefreshListener{
 		}
 	};
 	
-	private void ChangeFontSize(){
-		if (adapter == null) {
-			return;
-		}else {
+	public void ChangeFontSize(){
+		if (adapter != null) {
+			MyLogger.jLog().e("Image_New changeFont");
 			adapter.notifyDataSetChanged();
+		}
+	}
+	
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (!hidden) {
+			ChangeFontSize();
 		}
 	}
 	

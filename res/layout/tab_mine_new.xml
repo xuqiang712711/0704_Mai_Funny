@@ -45,6 +45,7 @@
         android:layout_below="@+id/my_top" >
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/my_unlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,15 +81,13 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:background="@color/my_back"
-            android:visibility="gone" >
+            android:background="@color/my_back" >
 
             <RelativeLayout
+                android:padding="10dp"
                 android:id="@+id/my_userinfo_top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" >
+                android:layout_height="wrap_content" >
 
                 <ImageView
                     android:id="@+id/userinfo_icon"

@@ -25,6 +25,7 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.util.DialogUtil;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 
 import android.app.Dialog;
@@ -64,10 +65,9 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 		}
 	};
 	
-	private void ChangeFontSize(){
-		if (adapter == null) {
-			return;
-		}else {
+	public void ChangeFontSize(){
+		if (adapter != null) {
+			MyLogger.jLog().e("Duanzi_new changeFont");
 			adapter.notifyDataSetChanged();
 		}
 	}
