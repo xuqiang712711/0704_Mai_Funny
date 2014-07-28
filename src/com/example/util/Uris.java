@@ -171,10 +171,10 @@ public final class Uris {
 	public static int MSG_CHANGEFONT = 33;//更改字体大小的msg.what
 	public static int MSG_SUC = 421;	//发送成功
 	public static int MSG_FAIL = 422;	//失败
-	public static int Font_Size = 14;
-	public static int Font_Size_small = 14;//字体大小
+	public static int Font_Size = 15;
+	public static int Font_Size_small = 15;//字体大小
 	public static int Font_Size_normal = 18;
-	public static int Font_Size_big = 22;
+	public static int Font_Size_big = 21;
 	
 	
 }
