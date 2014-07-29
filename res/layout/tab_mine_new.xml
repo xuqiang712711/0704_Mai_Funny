@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/my_back" >
 
             <RelativeLayout
@@ -119,7 +119,7 @@
                         android:id="@+id/userinfo_points"
                         style="@style/user_info"
                         android:layout_below="@+id/userinfo_name"
-                        android:text="积分:" />
+                        android:text="简介:" />
 
                     <TextView
                         android:id="@+id/user_points_num"
@@ -129,25 +129,17 @@
                         android:text="313" />
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/user_info_edit"
+                <ImageView 
+                    android:src="@drawable/icon_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="编辑资料"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/ts_20" />
+                    />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_above="@+id/my_3"
-        android:layout_marginTop="10dp"
-        android:background="@color/slategray" />
 
     <LinearLayout
         android:id="@+id/my_3"
@@ -156,8 +148,7 @@
         android:layout_below="@+id/mine_login"
         android:layout_marginLeft="@dimen/margin_5"
         android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_20"
-        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_10"
         android:background="@color/my_back"
         android:orientation="horizontal" >
 
@@ -191,8 +182,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_3"
-        android:layout_margin="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_10"
         android:background="@color/my_back"
         android:orientation="horizontal" >
 

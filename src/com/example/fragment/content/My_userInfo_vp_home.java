@@ -7,6 +7,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMediaObject.MediaType;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +26,8 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 	View view;
 	private RelativeLayout renren, tencent_wb,sina,douban,name, sex, address;
 	private int sinaStatus,tencentStatus,renrenStatus,doubanStatus;
+	private Button bt_UnRegister;
+	private int type;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -44,7 +49,6 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 		tencent_wb= (RelativeLayout)view.findViewById(R.id.my_userinfo_bind_tencent_wb);
 		sina = (RelativeLayout)view.findViewById(R.id.my_userinfo_bind_sina);
 		douban = (RelativeLayout)view.findViewById(R.id.my_userinfo_bind_douban);
-		//没有用户状态，全部用未绑定
 		
 		name = (RelativeLayout)view.findViewById(R.id.my_userinfo_sec_name);
 		sex = (RelativeLayout)view.findViewById(R.id.my_userinfo_sec_sex);
@@ -62,6 +66,8 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 		((TextView)address.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);;
 		((TextView)address.findViewById(R.id.more_text2)).setText("TTTTTTTTT");
 		
+		bt_UnRegister = (Button)view.findViewById(R.id.my_unRegister);
+		bt_UnRegister.setOnClickListener(this);
 	}
 	
 	
@@ -143,6 +149,27 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 				return;
 			}
 			break;
+		case R.id.my_unRegister:
+			new AlertDialog.Builder(getActivity()).setTitle("确定退出").setMessage("确定要退出吗")
+			.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					type = My_login_select.From_My;
+					mOauth.delOauth(getActivity());
+					mFragmentManage.BackStatck(getActivity());
+				}
+			})
+			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			}).show();
+			break;
 		}
 //		mFragmentManage.BackStatck(getActivity());
 //		refreshThis();
@@ -153,6 +180,9 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onDestroy();
 //		mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_Userinfo);
+		if (type == My_login_select.From_My) {
+			mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_My);
+		}
 	}
 	
 	private Handler mHandler = new Handler(){

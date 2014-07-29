@@ -10,7 +10,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.adapter.XAdapter;
 import com.example.adapter.X_Text_Adapter;
 import com.example.application.MaimobApplication;
@@ -248,8 +248,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		if (getActivity() == null) {
 			return;
 		}
-		if (getActivity() instanceof XYFTEST) {
-			XYFTEST xyf = (XYFTEST) getActivity();
+		if (getActivity() instanceof MaiActivity) {
+			MaiActivity xyf = (MaiActivity) getActivity();
 			xyf.switchContentFull(from, to, null);
 		}
 	}

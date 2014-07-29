@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Activity.OauthActivity;
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.object.Duanzi;
@@ -165,7 +165,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private void switchFrag(Fragment from, Fragment to){
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("duanzi", duanzi);
-		XYFTEST xyftest = (XYFTEST) getActivity();
+		MaiActivity xyftest = (MaiActivity) getActivity();
 		xyftest.switchContentFullwithBundle(from, to, bundle);
 	}
 

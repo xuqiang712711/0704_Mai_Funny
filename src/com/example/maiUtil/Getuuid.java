@@ -3,7 +3,7 @@ package com.example.maiUtil;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +28,7 @@ public class Getuuid {
 				Secure.ANDROID_ID);
 		UUID uuid = null;
 		if (uuid == null) {
-			synchronized (XYFTEST.class) {
+			synchronized (MaiActivity.class) {
 				if (uuid == null) {
 					final SharedPreferences prefs = context
 							.getSharedPreferences(PREFS_FILE, 0);

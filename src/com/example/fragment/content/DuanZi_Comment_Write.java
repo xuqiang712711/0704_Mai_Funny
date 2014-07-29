@@ -35,7 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;

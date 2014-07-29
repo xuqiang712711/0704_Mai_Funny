@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.fragment.Tab_More_Frag;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;

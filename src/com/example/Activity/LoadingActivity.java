@@ -15,7 +15,7 @@ public class LoadingActivity extends Activity{
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			if (msg.obj.equals("ok")) {
-				Intent intent = new Intent(LoadingActivity.this, XYFTEST.class);
+				Intent intent = new Intent(LoadingActivity.this, MaiActivity.class);
 				intent.putExtra("json", stringjson);
 				startActivity(intent);
 				finish();

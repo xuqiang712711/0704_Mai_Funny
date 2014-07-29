@@ -26,7 +26,8 @@
     </LinearLayout>
     
     <LinearLayout 
-        android:layout_marginTop="10dp"
+        android:id="@+id/my_userinfo_sec_main_2"
+        android:layout_marginTop="@dimen/margin_5"
         android:layout_below="@+id/my_userinfo_sec_main"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -51,5 +52,16 @@
             layout="@layout/more_style1"
             android:id="@+id/my_userinfo_bind_douban"/>
     </LinearLayout>
+    
+    <Button 
+        android:layout_marginTop="@dimen/margin_5"
+        android:id="@+id/my_unRegister"
+        android:textSize="@dimen/ts_20"
+        android:background="@color/my_back"
+        android:padding="@dimen/margin_10"
+        android:layout_below="@+id/my_userinfo_sec_main_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_unregister"/>
 
 </RelativeLayout>

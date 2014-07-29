@@ -23,7 +23,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.object.Duanzi;

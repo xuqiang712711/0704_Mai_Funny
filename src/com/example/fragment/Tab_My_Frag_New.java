@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.Activity.OauthActivity;
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.My_Check;
@@ -19,6 +19,7 @@ import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.UserUtils;
 import com.umeng.socialize.common.SocializeConstants;
@@ -49,6 +50,7 @@ private String Tag = "Tab_My_Frag_New";
 private TextView tv_user_description,tv_user_name;
 private ImageView iv_user_head;
 private int count_Fav= 0;
+private My_userinfo Frag_userinfo;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -181,8 +183,8 @@ private int count_Fav= 0;
 		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
 		case R.id.my_userinfo_top:
-			My_userinfo userinfo = new My_userinfo();
-			switchFragment(this, userinfo);
+			Frag_userinfo = new My_userinfo();
+			switchFragment(this, Frag_userinfo);
 			break;
 		
 		case R.id.my_app_new:
@@ -237,28 +239,43 @@ private int count_Fav= 0;
 		if (getActivity() == null) {
 			return;
 		}
-		if (getActivity() instanceof XYFTEST) {
-			XYFTEST xyf = (XYFTEST) getActivity();
+		if (getActivity() instanceof MaiActivity) {
+			MaiActivity xyf = (MaiActivity) getActivity();
 			xyf.switchContentFull(from, to , null);
 		}
 	}
 	
 	public void refresh(){
-		Log.e(Tag, "~~~~~~~~~~refresh");
 		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-		String user_name = sp.getString("name", null);
-		if (user_name == null) {
+		String user_name = sp.getString("name", "");
+		if (user_name.equals("")) {
 			unLogin.setVisibility(View.VISIBLE);
 			logined.setVisibility(View.GONE);
-			Log.e("FFF", "unLogin");
+			MyLogger.jLog().i("未登录");
 		}else {
 			unLogin.setVisibility(View.GONE);
 			logined.setVisibility(View.VISIBLE);
 			tv_user_name.setText(user_name);
 			tv_user_description.setText(sp.getString("description", null));
 			MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
-			Log.e("FFF", "logined");
+			MyLogger.jLog().i("已登录");
 		}
+		
 	}
+	@Override
+		public void onHiddenChanged(boolean hidden) {
+			// TODO Auto-generated method stub
+			super.onHiddenChanged(hidden);
+			MyLogger.jLog().i("我叫你玉蝴蝶");
+			if (mFragmentManage.Refresh_userInfo) {
+				if (!hidden) {
+						MyLogger.jLog().i("恋生花");
+						tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
+						tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+				}
+			}
+	
+		}
+	
 	
 }

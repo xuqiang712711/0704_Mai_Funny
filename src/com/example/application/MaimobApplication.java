@@ -3,6 +3,7 @@ package com.example.application;
 import java.io.File;
 
 import com.example.maiUtil.Getuuid;
+import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
@@ -46,6 +47,7 @@ public class MaimobApplication extends Application{
 		initImageLoader(getApplicationContext());
 		Jelly_Bean = Version();
 		selectFontSize(getApplicationContext());
+		mFragmentManage.Refresh_userInfo = false;
 	}
 	public static int page = 1;
 	public static int count = 5;

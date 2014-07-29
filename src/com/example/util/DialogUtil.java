@@ -2,6 +2,7 @@ package com.example.util;
 
 import com.example.tab.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class DialogUtil {
+	/**
+	 * loding dialog
+	 * @param context
+	 * @return
+	 */
 	public static Dialog createLoadingDialog(Context context){
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View view = inflater.inflate(R.layout.mloading, null);
@@ -26,4 +32,5 @@ public class DialogUtil {
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		return loadingDialog;
 	}
+	
 }

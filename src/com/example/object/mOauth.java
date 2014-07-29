@@ -1,6 +1,7 @@
 package com.example.object;
 
 import com.example.application.MaimobApplication;
+import com.example.util.SharedPreferencesUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
@@ -16,14 +17,29 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
 /**
- * 平台账号绑定
+ * 平台账号绑定、注销
  * @author xieyifan
  *
  */
 public class mOauth {
 	private static UMSocialService mController = MaimobApplication.mController;
+		
+		/**
+		 * 注销账号
+		 * @param context
+		 */
+		public static void delOauth(Context context){
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_Exists, false);
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_sina, 0);
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_tencent, 0);
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_renren, 0);
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_douban, 0);
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_name, "");
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_description, "");
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_name, "");
+		}
 	
-	//将账号是否绑定信息保存到sp
+		//将账号是否绑定信息保存到sp
 		public static void editOauth(Context context, int platform) {
 			SharedPreferences sp = context.getSharedPreferences("platform", Activity.MODE_PRIVATE);
 			Editor editor = sp.edit();

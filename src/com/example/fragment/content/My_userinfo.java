@@ -36,6 +36,7 @@ import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
+import com.example.util.SharedPreferencesUtils;
 
 public class My_userinfo extends Fragment implements OnClickListener{
 	private String Tag = "My_userinfo";
@@ -44,6 +45,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	private List<String> TitleList;
 	private View view,Vp_1,Vp_2;
 	private RelativeLayout tencent_qq, tencent_wb,sina,name, sex, address;
+	private RelativeLayout userinfo;
 	
 	private ImageView iv;
 	private int offset = 0;//Æ«ÒÆÁ¿
@@ -51,6 +53,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	private SharedPreferences sp;
 	private TextView home,publish;
 	private TextView tv_user_name;
+	private TextView tv_user_description;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +70,18 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		initBMP();
 		initView();
 		initViewPager();
+	}
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (mFragmentManage.Refresh_userInfo) {
+			if (!hidden) {
+				tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
+				tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+			}
+		}
 	}
 	
 	
@@ -93,11 +108,14 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	}
 	
 	private void initView(){
+		userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_main);
+		userinfo.setOnClickListener(this);
+		
 		//User_Info
 		sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
 		ImageView iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
 		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
-		TextView tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
+		tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
 		MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
 		tv_user_name.setText(sp.getString("name", null));
 		tv_user_description.setText(sp.getString("description", null));
@@ -208,8 +226,15 @@ public class My_userinfo extends Fragment implements OnClickListener{
 			mFragmentManage.BackStatck(getActivity());
 			break;
 
-		default:
+		case R.id.my_userinfo_main:
+			mFragmentManage.SwitchFrag(getActivity(), My_userinfo.this, new My_Userinfo_Edit(), null);
 			break;
 		}
 	}
+	
+	public void refresh(){
+		tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
+		tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+	}
+	
 }

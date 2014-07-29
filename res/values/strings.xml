@@ -59,6 +59,13 @@
     <string name="my_fav_title">收藏</string>
     <string name="my_comment_title">评论</string>
     <string name="my_pub_title">投稿</string>
+    <string name="my_unregister">注销账号</string>
+    <string name="my_edit">账号管理</string>
+    <string name="my_icon">头像</string>
+    <string name="my_name">昵称</string>
+    <string name="my_signature">签名</string>
+    <string name="my_remove_name">修改用户名</string>
+    <string name="my_remove_signature">修改签名</string>
     
 	    
     

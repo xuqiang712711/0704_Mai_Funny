@@ -56,7 +56,19 @@
                 android:layout_alignBottom="@+id/userinfo_points"
                 android:layout_toRightOf="@+id/userinfo_points"
                 android:text="313" />
-        </RelativeLayout>
+            
+           <TextView
+                android:id="@+id/user_info_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gery"
+                android:padding="@dimen/margin_5"
+                android:text="编辑资料"
+                android:textColor="#000000"
+                android:textSize="@dimen/ts_15" />
+</RelativeLayout>
     </RelativeLayout>
     <include 
         android:id="@+id/my_userinfo_line"
@@ -96,7 +108,7 @@
         android:background="@color/red"
         android:scaleType="matrix"
         android:contentDescription="@null"
-        android:layout_below="@+id/sec_title"
+        android:layout_alignBottom="@+id/sec_title"
         android:id="@+id/my_userinfo_tab"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/margin_5"/>

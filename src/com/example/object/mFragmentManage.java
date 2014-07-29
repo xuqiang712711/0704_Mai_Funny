@@ -1,6 +1,6 @@
 package com.example.object;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 public class mFragmentManage {
 	public static int Tag_My = 0;
 	public static int Tag_Userinfo = 1;
+	public static boolean Refresh_userInfo = false;
 	/**
 	 * ·µ»ØÊÂ¼þ
 	 * @param context
@@ -17,8 +18,8 @@ public class mFragmentManage {
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest = (XYFTEST) context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest = (MaiActivity) context;
 			xyftest.hintFragment();
 		}
 	}
@@ -34,8 +35,8 @@ public class mFragmentManage {
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest = (XYFTEST)context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest = (MaiActivity)context;
 			xyftest.switchContentFull(from, to, bundle);
 		}
 	}
@@ -49,8 +50,8 @@ public class mFragmentManage {
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest = (XYFTEST)context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest = (MaiActivity)context;
 			xyftest.RefreshFragment(FragTag);
 		}
 	}
@@ -59,8 +60,8 @@ public class mFragmentManage {
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest =(XYFTEST)context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest =(MaiActivity)context;
 			xyftest.WriteBack(type);
 		}
 	}

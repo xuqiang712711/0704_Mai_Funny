@@ -12,7 +12,7 @@ import org.w3c.dom.Text;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
@@ -416,8 +416,8 @@ public class XAdapter extends BaseAdapter{
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest = (XYFTEST) context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest = (MaiActivity) context;
 			xyftest.switchContentFullwithBundle(from, to, bundle);
 		}
 	}

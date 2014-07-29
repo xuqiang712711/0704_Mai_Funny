@@ -49,7 +49,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.mFragmentManage;
@@ -398,7 +398,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	}
 	
 	private void backToHome(){
-		XYFTEST xyftest =(XYFTEST)getActivity();
+		MaiActivity xyftest =(MaiActivity)getActivity();
 		xyftest.WriteBack(1);
 	}
 	

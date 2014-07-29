@@ -2,7 +2,7 @@ package com.example.fragment;
 
 import org.w3c.dom.Text;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
 import com.example.util.MyLogger;
@@ -68,6 +68,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 		initPop();
 		selectTab2(1);
 	}
+	
+	
 	
 	@Override
 		public void onHiddenChanged(boolean hidden) {
@@ -214,5 +216,7 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener{
 			
 		}
 	};
+	
+	
 	
 }

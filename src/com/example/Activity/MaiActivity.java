@@ -19,6 +19,7 @@ import com.example.tab.R;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.example.util.UserUtils;
+import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class XYFTEST extends FragmentActivity implements OnClickListener {
+public class MaiActivity extends FragmentActivity implements OnClickListener {
 	 private String Tag = "MainActivity";
 	 private Tab_DuanZi_Frag Frag_duanzi;
 	 private Tab_Image_Frag2 Frag_image;
@@ -280,63 +281,42 @@ public class XYFTEST extends FragmentActivity implements OnClickListener {
 			selectTab(3);
 		}
 	}
-	
+	//刷新
 	public void RefreshFragment(int FragTag){
-		if (FragTag == mFragmentManage.Tag_My) {
-			Frag_my.refresh();
+//		if (FragTag == mFragmentManage.Tag_My) {
+//			Frag_my.refresh();
+//		}
+		if (FragTag == mFragmentManage.Tag_Userinfo) {
+			
 		}
+		Frag_my.refresh();
+	}
+	//按两次back退出
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			//当前属于栈顶
+			if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+				if ((System.currentTimeMillis() - exitTime) > 2000) {
+					ToastUtil.showToast(this, "再按一次退出程序");
+					exitTime = System.currentTimeMillis() ;
+				} else {
+					myLogger.e("真的退出");
+					finish();
+					System.exit(0);
+				}
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	@Override
-	protected void onActivityResult(int reqCode, int resultCode, Intent intent) {
+	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		super.onActivityResult(reqCode, resultCode, intent);
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction fragtrain = fm.beginTransaction();
-		Log.e(Tag, "onActivityResult    " +resultCode);
-		switch (resultCode) {
-		case 1:
-			if (my_Write == null) {
-				my_Write = new My_Write();
-				fragtrain.add(R.id.content_container2, my_Write);
-			}else {
-				fragtrain.show(my_Write);
-			}
-			break;
-
-		case 2:
-			if (login_select == null) {
-				Log.e(Tag, "==null");
-				login_select = new My_login_select();
-				fragtrain.add(R.id.content_container2, login_select);
-			} else {
-				Log.e(Tag, "!=null");
-				fragtrain.show(login_select);
-			}
-			break;
-		case 3:
-//			Duanzi duanzi = (Duanzi) intent.getSerializableExtra("duanzi");
-//			Log.e(Tag, "duanzi  " + duanzi.getContent());
-//			if (comment_Write == null) {
-//				comment_Write = new  DuanZi_Comment_Write();
-////				Bundle bundle = new Bundle();
-////				bundle.putSerializable("duanzi", duanzi);
-////				comment_Write.setArguments(bundle);
-////				fragtrain.hide(new DuanZi_Comment()).add(R.id.content_container2, comment_Write).addToBackStack(null);
-//			}else {
-//				fragtrain.show(comment_Write);
-//			}
-			
-			if (my_Write == null) {
-				my_Write = new My_Write();
-				fragtrain.add(R.id.content_container2, my_Write);
-			}else {
-				fragtrain.show(my_Write);
-			}
-			break;
-		}
-		fragtrain.commit();
+		super.onDestroy();
+		myLogger.i("退出应用");
 	}
-	
-	
 }

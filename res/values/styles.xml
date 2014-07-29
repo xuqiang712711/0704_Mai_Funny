@@ -183,4 +183,18 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textSize">@dimen/ts_15</item>
     </style>
+    
+    <!-- 账号管理background -->
+    <style name="my_edit" parent="@style/match_horizontal">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginBottom">@dimen/margin_5</item>
+        <item name="android:layout_marginTop">@dimen/margin_5</item>
+    </style>
+    
+    <!-- 账号管理——Text -->
+    <style name="my_edit_text" parent="@style/wrap">
+        <item name="android:textSize">@dimen/ts_18</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_margin">@dimen/margin_10</item>
+    </style>
 </resources>

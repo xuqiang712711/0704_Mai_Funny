@@ -9,7 +9,7 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.adapter.XAdapter.ViewHolder;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
@@ -284,8 +284,8 @@ public class X_Text_Adapter extends BaseAdapter{
 		if (context == null) {
 			return;
 		}
-		if (context instanceof XYFTEST) {
-			XYFTEST xyftest = (XYFTEST) context;
+		if (context instanceof MaiActivity) {
+			MaiActivity xyftest = (MaiActivity) context;
 			xyftest.switchContentFullwithBundle(from, to, bundle);
 		}
 	}

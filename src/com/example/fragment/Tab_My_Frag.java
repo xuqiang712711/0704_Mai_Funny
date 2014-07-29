@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.fragment.content.My_Check;
 import com.example.fragment.content.My_Comment;
 import com.example.fragment.content.My_Favorite;
@@ -127,8 +127,8 @@ public class Tab_My_Frag extends Fragment implements OnClickListener{
 		if (getActivity() == null) {
 			return;
 		}
-		if (getActivity() instanceof XYFTEST) {
-			XYFTEST xyf = (XYFTEST) getActivity();
+		if (getActivity() instanceof MaiActivity) {
+			MaiActivity xyf = (MaiActivity) getActivity();
 			xyf.switchContentFull(from, to, null);
 		}
 	}

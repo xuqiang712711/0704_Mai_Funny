@@ -3,7 +3,7 @@ package com.example.util;
 import android.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.tab.R;
 
 public class FragmentUtil {
@@ -15,7 +15,7 @@ public class FragmentUtil {
 //			XYFTEST xyf = (XYFTEST) getActivity();
 //			xyf.switchContentFull(fragment);
 //		}
-		XYFTEST xyftest = new XYFTEST();
+		MaiActivity xyftest = new MaiActivity();
 //		xyftest.switchContentFull(fragment);
 	}
 	

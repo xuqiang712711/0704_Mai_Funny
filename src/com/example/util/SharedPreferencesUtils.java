@@ -15,8 +15,16 @@ public class SharedPreferencesUtils {
 	public static String setting_isZhuanfa = "isZhuanfa";
 	public static String setting_font = "font";
 	public static String user = "user";
+	public static String user_name = "name";
+	public static String user_icon = "icon";
+	public static String user_description = "description";
+	
 	public static String platform = "platform";
 	public static String platform_Exists = "Exists";
+	public static String platform_sina	= "sina";
+	public static String platform_tencent	= "tencent";
+	public static String platform_renren	= "renren";
+	public static String platform_douban	= "douban";
 	
 	/**
 	 * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

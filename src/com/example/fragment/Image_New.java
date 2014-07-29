@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.Activity.XYFTEST;
+import com.example.Activity.MaiActivity;
 import com.example.AsyTask.RequestDataTask;
 import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
@@ -128,8 +128,8 @@ public class Image_New extends Fragment implements OnRefreshListener{
 		if (getActivity() == null) {
 			return;
 		}
-		if (getActivity() instanceof XYFTEST) {
-			XYFTEST xyf = (XYFTEST) getActivity();
+		if (getActivity() instanceof MaiActivity) {
+			MaiActivity xyf = (MaiActivity) getActivity();
 			xyf.switchContentFull(from, to, null);
 		}
 	}
