@@ -24,7 +24,7 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
-import com.example.util.DialogUtil;
+import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 
@@ -83,7 +83,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		dialog = DialogUtil.createLoadingDialog(getActivity());
+		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_bright,

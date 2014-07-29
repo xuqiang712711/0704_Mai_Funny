@@ -64,7 +64,7 @@ import com.example.util.ShareUtil;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.utils.ToastUtil;
+import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 
 public class My_Write extends Fragment implements OnClickListener{
 	private String Tag = "My_Write";

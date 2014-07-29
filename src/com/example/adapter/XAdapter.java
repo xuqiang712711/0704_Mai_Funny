@@ -25,6 +25,7 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
+import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
 import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
@@ -37,7 +38,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.utils.ToastUtil;
+import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 
 import android.content.Context;
@@ -340,7 +341,7 @@ public class XAdapter extends BaseAdapter{
 					duanzi.setFav(false);
 					window.dismiss();
 					dBhelper.cancelFav(Integer.parseInt(duanzi.getPoid()));
-					ToastUtil.showToast(context, "取消收藏成功");
+					DialogToastUtil.toastShow(context, "取消收藏成功");
 				}else {
 					dBhelper.updateFav(Integer.parseInt(duanzi.getPoid()));
 					Log.e(TAG, "FAV");

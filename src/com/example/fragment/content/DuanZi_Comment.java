@@ -44,7 +44,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
-import com.umeng.socialize.controller.utils.ToastUtil;
 
 public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment";

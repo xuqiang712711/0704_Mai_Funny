@@ -21,9 +21,9 @@ import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
 import com.example.util.UserUtils;
 import com.umeng.socialize.common.SocializeConstants;
-import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -107,12 +107,16 @@ private My_userinfo Frag_userinfo;
 			unLogin.setVisibility(View.VISIBLE);
 			logined.setVisibility(View.GONE);
 			Log.e("FFF", "unLogin");
-		}else {
+		} else {
 			unLogin.setVisibility(View.GONE);
 			logined.setVisibility(View.VISIBLE);
 			tv_user_name.setText(user_name);
 			tv_user_description.setText(sp.getString("description", null));
-			MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
+			MaimobApplication.imageLoader.displayImage(StringUtils
+					.checkImgPath((String) SharedPreferencesUtils.getParam(
+							SharedPreferencesUtils.user, getActivity(),
+							SharedPreferencesUtils.user_icon, "")),
+					iv_user_head, ImageUtil.getOption());
 			Log.e("FFF", "logined");
 		}
 
@@ -272,6 +276,9 @@ private My_userinfo Frag_userinfo;
 						MyLogger.jLog().i("恋生花");
 						tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
 						tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+						MaimobApplication.imageLoader.displayImage(
+								StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
+								(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
 				}
 			}
 	

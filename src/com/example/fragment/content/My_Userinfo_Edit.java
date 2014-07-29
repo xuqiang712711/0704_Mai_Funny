@@ -2,21 +2,10 @@ package com.example.fragment.content;
 
 import java.io.File;
 
-import com.example.application.MaimobApplication;
-import com.example.object.mFragmentManage;
-import com.example.tab.R;
-import com.example.util.BitmapOptions;
-import com.example.util.CommonUtils;
-import com.example.util.ImageUtil;
-import com.example.util.MyLogger;
-import com.example.util.SharedPreferencesUtils;
-import com.example.util.StringUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +21,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.application.MaimobApplication;
+import com.example.object.mFragmentManage;
+import com.example.tab.R;
+import com.example.util.CommonUtils;
+import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
+import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private View view;
@@ -59,12 +62,6 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-	}
-	
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_edit));
 		Button back = (Button)view.findViewById(R.id.top_left);
@@ -111,6 +108,41 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 				dialog.show();
 			}
 		});
+		
+		Button button = (Button)view.findViewById(R.id.weixin_bt);
+		String appId ="wxd88b7b000ddc25df";
+		UMWXHandler umwxHandler = new UMWXHandler(getActivity(), appId);
+		umwxHandler.addToSocialSDK();
+		WeiXinShareContent shareContent = new WeiXinShareContent("Áº·Ç·²");
+		MaimobApplication.mController.setShareMedia(shareContent);
+		button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MaimobApplication.mController.directShare(getActivity(), SHARE_MEDIA.WEIXIN, new SnsPostListener() {
+					
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						MyLogger.jLog().i("start share");
+					}
+					
+					@Override
+					public void onComplete(SHARE_MEDIA arg0, int code, SocializeEntity arg2) {
+						// TODO Auto-generated method stub
+						MyLogger.jLog().i("code " + String.valueOf(code));
+					}
+				});
+			}
+		});
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
 	}
 	
 	private void DialogChose(int which){
@@ -137,6 +169,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode != Activity.RESULT_OK) {
+			MyLogger.jLog().i("result  " + resultCode + "  request  " + requestCode);
 			return;
 		}
 		if (requestCode == PICK_FROM_FILE) {
@@ -148,8 +181,11 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		}else if (requestCode == PICK_FROM_CAMERA) {
 			currImg = mImageCaptureUri.getPath();
 		}
-		Bitmap bitmap = BitmapOptions.decodeSampledBitmapFromFile(currImg, 72, 72);
-		iv_Icon.setImageBitmap(bitmap);
+		MyLogger.jLog().i(currImg);
+		String filePath = StringUtils.checkImgPath(currImg);
+		MyLogger.jLog().i("imgPath  " + filePath);
+		MaimobApplication.imageLoader.displayImage(filePath, iv_Icon, ImageUtil.getOption());
+		SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, filePath);
 	}
 
 	@Override
@@ -208,7 +244,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 					// TODO Auto-generated method stub
 					String content = et_input.getText().toString();
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, content);
-					tv_Name.setText(content);
+					tv_Signature.setText(content);
 					dialog.dismiss();
 					mFragmentManage.Refresh_userInfo = true;
 					MyLogger.jLog().i(content);

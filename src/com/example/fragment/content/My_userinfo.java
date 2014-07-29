@@ -37,6 +37,7 @@ import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
 
 public class My_userinfo extends Fragment implements OnClickListener{
 	private String Tag = "My_userinfo";
@@ -54,6 +55,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	private TextView home,publish;
 	private TextView tv_user_name;
 	private TextView tv_user_description;
+	private ImageView iv_user_head;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +82,9 @@ public class My_userinfo extends Fragment implements OnClickListener{
 			if (!hidden) {
 				tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
 				tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+				MaimobApplication.imageLoader.displayImage(
+						StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
+						(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
 			}
 		}
 	}
@@ -113,10 +118,12 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		
 		//User_Info
 		sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-		ImageView iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
+		iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
 		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
 		tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
-		MaimobApplication.imageLoader.displayImage(sp.getString("icon", null), iv_user_head, ImageUtil.getOption());
+		MaimobApplication.imageLoader.displayImage(
+		StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
+		(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
 		tv_user_name.setText(sp.getString("name", null));
 		tv_user_description.setText(sp.getString("description", null));
 		
@@ -235,6 +242,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	public void refresh(){
 		tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
 		tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+		
 	}
 	
 }

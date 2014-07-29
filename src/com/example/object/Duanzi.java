@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.example.tab.R;
 import com.example.tab.R.drawable;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.utils.ToastUtil;
+import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

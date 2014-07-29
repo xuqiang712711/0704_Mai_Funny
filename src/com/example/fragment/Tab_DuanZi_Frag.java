@@ -7,7 +7,6 @@ import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
-import com.umeng.socialize.view.abs.am;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;

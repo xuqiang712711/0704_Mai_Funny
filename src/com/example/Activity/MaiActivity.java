@@ -16,10 +16,10 @@ import com.example.fragment.content.My_userinfo;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
+import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.example.util.UserUtils;
-import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -300,7 +300,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			//当前属于栈顶
 			if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
 				if ((System.currentTimeMillis() - exitTime) > 2000) {
-					ToastUtil.showToast(this, "再按一次退出程序");
+					DialogToastUtil.toastShow(this, "再按一次退出程序");
 					exitTime = System.currentTimeMillis() ;
 				} else {
 					myLogger.e("真的退出");

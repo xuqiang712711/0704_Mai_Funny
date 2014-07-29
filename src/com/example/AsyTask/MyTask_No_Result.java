@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.maiUtil.CustomHttpClient;
-import com.umeng.socialize.controller.utils.ToastUtil;
 
 import android.os.AsyncTask;
 import android.util.Log;

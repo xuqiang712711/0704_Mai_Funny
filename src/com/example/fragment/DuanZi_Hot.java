@@ -20,11 +20,10 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.tab.R;
 import com.example.util.CustomImage;
-import com.example.util.DialogUtil;
+import com.example.util.DialogToastUtil;
 import com.example.util.HttpUtil;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
-import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 
@@ -81,7 +80,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 				android.R.color.holo_green_light,
 				android.R.color.holo_red_light);
 //		dialog = new AlertDialog.Builder(getActivity()).setTitle("我是标题")
-		dialog = DialogUtil.createLoadingDialog(getActivity());
+		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 		dialog.show();
 		initView();
 		inithttp();

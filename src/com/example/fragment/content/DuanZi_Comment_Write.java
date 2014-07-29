@@ -42,7 +42,7 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.util.DialogUtil;
+import com.example.util.DialogToastUtil;
 import com.example.util.ShareUtil;
 import com.example.util.Uris;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -50,7 +50,7 @@ import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
-import com.umeng.socialize.controller.utils.ToastUtil;
+import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 
@@ -121,7 +121,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		douban.setOnClickListener(this);
 		
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
-		dialog = DialogUtil.createLoadingDialog(getActivity());
+		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 	}
 	
 	class SubMitThread implements Runnable{
