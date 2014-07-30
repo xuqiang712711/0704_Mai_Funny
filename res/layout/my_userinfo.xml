@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_user_top"
-        android:background="@color/my_back"
+        android:background="@color/white"
         android:padding="10dp" >
 
         <ImageView
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_userinfo_line"
-        android:background="@color/my_back">
+        android:background="@color/white">
         <TextView 
             android:id="@+id/my_userinfo_home"
             android:gravity="center"

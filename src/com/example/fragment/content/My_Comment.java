@@ -6,9 +6,11 @@ import java.util.Map;
 import pl.droidsonroids.gif.GifImageView;
 
 import com.example.adapter.X_Text_Adapter.ViewHolder;
+import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
+import com.example.util.ImageUtil;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -113,6 +115,7 @@ public class My_Comment extends Fragment implements OnClickListener{
 			holder.name.setText((String)data.get(position).get("name"));
 			holder.content.setText((String)data.get(position).get("content"));
 			holder.comment.setText((String)data.get(position).get("comment"));
+			MaimobApplication.imageLoader.displayImage((String)data.get(position).get("icon"), holder.icon, ImageUtil.getOption());
 			return convertView;
 		}
 		

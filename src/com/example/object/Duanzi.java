@@ -24,6 +24,14 @@ public class Duanzi implements Serializable {
 	public static final int ZAN_NORMAL = 201;
 	public static final String ISZANED = "你已经赞过";
 	public static final String ISCAIED = "你已经踩过XXXXXXXX";
+	public static final int SHARE_MEDIA_SINA = 501;
+	public static final int SHARE_MEDIA_TENCENT = 502;
+	public static final int SHARE_MEDIA_RENREN = 503;
+	public static final int SHARE_MEDIA_DOUBAN = 504;
+	public static final int SHARE_MEDIA_WEIXIN = 505;
+	public static final int SHARE_MEDIA_WEIXIN_CIRCLE = 506;
+	public static final int SHARE_MEDIA_QQ = 507;
+	public static final int SHARE_MEDIA_QQ_ZONE = 508;
 	private String userName;		//用户名
 	private String userIcon;		//用户头像
 	private String cai;			//踩的数量
@@ -34,13 +42,14 @@ public class Duanzi implements Serializable {
 	private String poid;			//段子id
 	private boolean isZanPressed;// 是否赞过
 	private boolean isCaiPressed;// 是否踩过
-	private SHARE_MEDIA media;	//转发的平台
+	private int media;	//转发的平台
+	
 	private boolean isFav;		//是否收藏
 	private boolean needComment;  //是否需要发表评论到服务器
 
 	public Duanzi(String imageUrl, String name, String head,String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
-			boolean isCaiPressed,SHARE_MEDIA media,boolean isFav, boolean needComment) {
+			boolean isCaiPressed,int media,boolean isFav, boolean needComment) {
 		this.imageUrl = imageUrl;
 		this.userName = name;
 		this.cai = cai;
@@ -124,11 +133,11 @@ public class Duanzi implements Serializable {
 	 * 分享的平台
 	 * @return
 	 */
-	public SHARE_MEDIA getMedia() {
+	public int getMedia() {
 		return media;
 	}
 
-	public void setMedia(SHARE_MEDIA media) {
+	public void setMedia(int media) {
 		this.media = media;
 	}
 

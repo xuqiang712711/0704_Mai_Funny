@@ -32,7 +32,7 @@ public class setDuanziData {
 				String comment = item.getString("comment");//评论数
 				String poid = item.getString("poid");//段子ID
 				String user_id = item.getString("pid");
-				Duanzi duanzi = new Duanzi(imageUrl ,name,null, cai, zan, content, comment,poid,false, false , null,false, false);
+				Duanzi duanzi = new Duanzi(imageUrl ,name,null, cai, zan, content, comment,poid,false, false , 0,false, false);
 				list.add(duanzi);
 				Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(context);
 				dBhelper.insertDuanziInfo(Integer.parseInt(poid), content, imageUrl, Integer.parseInt(cai), Integer.parseInt(zan)

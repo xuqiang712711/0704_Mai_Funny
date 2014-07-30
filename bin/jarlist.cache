@@ -1,11 +1,11 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1405629106000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 E:\Library\umeng_android_social_sdk_4.0_custom\social_sdk_library_project\libs\httpmime-4.1.3.jar
-1406206228197 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 E:\compary\APP_funny\0704_Mai_Funny\libs\httpmime-4.1.3.jar
-1405629106000 3586 260c799c4dd13ebfafeb98caf1eeebc8cdb689c0 E:\Library\umeng_android_social_sdk_4.0_custom\social_sdk_library_project\libs\SocialSDK_renren_2.jar
-1405629106000 3586 260c799c4dd13ebfafeb98caf1eeebc8cdb689c0 E:\compary\APP_funny\0704_Mai_Funny\libs\SocialSDK_renren_2.jar
-1405629106000 151966 0ca209d760b28d73bbe444888cdd0c20eeaacbc3 E:\Library\umeng_android_social_sdk_4.0_custom\social_sdk_library_project\libs\SocialSDK_renren_1.jar
-1405629106000 151966 0ca209d760b28d73bbe444888cdd0c20eeaacbc3 E:\compary\APP_funny\0704_Mai_Funny\libs\SocialSDK_renren_1.jar
-1406206227972 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd E:\compary\APP_funny\0704_Mai_Funny\libs\android-support-v4.jar
-1405629106000 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd E:\Library\umeng_android_social_sdk_4.0_custom\social_sdk_library_project\libs\android-support-v4.jar
+1405629106000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 /Users/xieyifan/myLib/umeng_android_social_sdk_4.0_custom/social_sdk_library_project/libs/httpmime-4.1.3.jar
+1404265245000 26938 e70d34d98f7f7f3b2b92105b9f2fe2a7a7184461 /Users/xieyifan/MyWork/funny-new-tab-master/libs/httpmime-4.1.3.jar
+1405629106000 3586 260c799c4dd13ebfafeb98caf1eeebc8cdb689c0 /Users/xieyifan/myLib/umeng_android_social_sdk_4.0_custom/social_sdk_library_project/libs/SocialSDK_renren_2.jar
+1406684327000 3586 260c799c4dd13ebfafeb98caf1eeebc8cdb689c0 /Users/xieyifan/MyWork/funny-new-tab-master/libs/SocialSDK_renren_2.jar
+1406684327000 151966 0ca209d760b28d73bbe444888cdd0c20eeaacbc3 /Users/xieyifan/MyWork/funny-new-tab-master/libs/SocialSDK_renren_1.jar
+1405629106000 151966 0ca209d760b28d73bbe444888cdd0c20eeaacbc3 /Users/xieyifan/myLib/umeng_android_social_sdk_4.0_custom/social_sdk_library_project/libs/SocialSDK_renren_1.jar
+1404265245000 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd /Users/xieyifan/MyWork/funny-new-tab-master/libs/android-support-v4.jar
+1405629106000 648327 ded9acc6a9792b8f1afc470f0c9cd36d178914cd /Users/xieyifan/myLib/umeng_android_social_sdk_4.0_custom/social_sdk_library_project/libs/android-support-v4.jar

@@ -28,6 +28,7 @@
     <string name="duanzi_more_copy">复制</string>
     <string name="duanzi_more_fav">收藏</string>
     <string name="duanzi_more_back">取消</string>
+    <string name="duanzi_share">分享到</string>
     
     
     <!-- 我的 -->
@@ -38,11 +39,12 @@
     <string name="my_favorite">我的收藏</string>
     <string name="my_app">应用</string>
     <string name="my_activity">热门活动</string>
+    <string name="my_nemo">待定1</string>
     <string name="my_message">消息</string>
     <string name="my_zhuanfa">转发到:</string>
     <string name="my_write_hint">请输入内容，字数不超过XX字</string>
     <string name="my_trash">垃圾</string>
-    <string name="my_sex">色情</string>
+    <string name="my_sexy">色情</string>
     <string name="my_neihan">内涵</string>
     <string name="my_boring">无聊</string>
     <string name="my_skip">跳过</string>
@@ -64,8 +66,22 @@
     <string name="my_icon">头像</string>
     <string name="my_name">昵称</string>
     <string name="my_signature">签名</string>
+    <string name="my_edit_sex">性别</string>
+    <string name="my_address">地址</string>
     <string name="my_remove_name">修改用户名</string>
     <string name="my_remove_signature">修改签名</string>
+    <string name="my_remove_icon">(点击更换头像)</string>
+    
+    
+    <string name="sina">新浪</string>
+    <string name="tencent">腾讯</string>
+    <string name="weixin">微信</string>
+    <string name="weixin_circle">朋友圈</string>
+    <string name="QQ">QQ</string>
+    <string name="QQ_Zone">QQ空间</string>
+    <string name="renren">人人网</string>
+    <string name="douban">豆瓣网</string>
+    
     
 	    
     

@@ -93,7 +93,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		skip = (CustomImage) view.findViewById(R.id.my_check_skip);
 
 		setContent(trash, R.drawable.ic_trash, R.string.my_trash);
-		setContent(sex, R.drawable.ic_sex, R.string.my_sex);
+		setContent(sex, R.drawable.ic_sex, R.string.my_sexy);
 		setContent(neihan, R.drawable.ic_connotation, R.string.my_neihan);
 		setContent(funny, R.drawable.ic_funny, R.string.my_boring);
 		setContent(skip, R.drawable.ic_skip, R.string.my_skip);

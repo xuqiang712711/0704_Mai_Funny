@@ -240,7 +240,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					String name = (String) SharedPreferencesUtils.getParam("user", mContext, "name", "");
 					String icon_imgurl = (String) SharedPreferencesUtils.getParam("user", mContext, "icon", "");
 					Log.e(tag, "con  " + content + "  con_img  "+ content_imgurl + "  name " + name +"  name_img  "+ icon_imgurl);
-					Duanzi duanzi = new Duanzi(content_imgurl, name, icon_imgurl,"0", "0",content, "0", "0", false, false, null, false, false);
+					Duanzi duanzi = new Duanzi(content_imgurl, name, icon_imgurl,"0", "0",content, "0", "0", false, false, 0, false, false);
 					duanzi_list.add(duanzi);
 				} while (mCursor.moveToNext());
 			}else {
@@ -331,7 +331,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					int comment		= mCursor.getInt(mCursor.getColumnIndex("comment_count"));
 					int userid		= mCursor.getInt(mCursor.getColumnIndex("user_id"));
 					Duanzi duanzi = new Duanzi(imgUrl, userName, userIcon,String.valueOf(cai), String.valueOf(zan), 
-							content, String.valueOf(comment), String.valueOf(pid), false, false, null, true, false);
+							content, String.valueOf(comment), String.valueOf(pid), false, false, 0, true, false);
 					list_duanzi.add(duanzi);
 				} while (mCursor.moveToNext());
 			}else {

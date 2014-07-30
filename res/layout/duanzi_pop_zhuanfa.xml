@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/gery" >
+    
+    <include 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/duanzi_pop_zhuanfa_top"
+        layout="@layout/back_duanzi"/>
+	<EditText 
+	    android:gravity="top"
+        android:hint="@string/my_write_hint"
+        android:imeOptions="actionDone"
+        android:lineSpacingExtra="6.0dp"
+	    android:layout_margin="@dimen/margin_5"
+	    android:layout_below="@+id/duanzi_pop_zhuanfa_top"
+	    android:id="@+id/duanzi_pop_zhuanfa_edit"
+	    android:layout_width="match_parent"
+	    android:layout_height="200dp"/>
+</RelativeLayout>

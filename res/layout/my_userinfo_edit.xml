@@ -16,28 +16,34 @@
         android:layout_below="@+id/my_edit_top" >
 
         <TextView
-            android:textSize="@dimen/ts_20"
             android:id="@+id/my_edit_icon_text"
             style="@style/my_edit_text"
             android:layout_centerVertical="true"
-            android:text="@string/my_icon" />
+            android:text="@string/my_icon"
+            android:textSize="@dimen/ts_20" />
+        <TextView 
+            android:layout_toRightOf="@+id/my_edit_icon_text"
+            style="@style/my_edit_text"
+            android:textColor="@color/green"
+            android:text="@string/my_remove_icon"/>
 
         <ImageView
-            android:src="@drawable/testimage2"
-            	android:padding="@dimen/margin_5"
-            android:layout_centerVertical="true"
             android:id="@+id/my_edit_icon_image"
             android:layout_width="77dp"
             android:layout_height="77dp"
-            android:layout_toRightOf="@+id/my_edit_icon_text" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:padding="@dimen/margin_5"
+            android:src="@drawable/testimage2" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
         android:id="@+id/my_edit_name"
         style="@style/my_edit"
-        android:layout_below="@+id/my_edit_icon" >
+        android:layout_below="@+id/my_edit_icon"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/my_edit_name_left"
@@ -45,25 +51,26 @@
             android:text="@string/my_name" />
 
         <TextView
-            style="@style/my_edit_text"
-            android:id="@+id/my_edit_name_right"
             android:layout_toRightOf="@+id/my_edit_name_left"
+            android:id="@+id/my_edit_name_right"
+            style="@style/my_edit_text"
+            android:paddingRight="@dimen/margin_20"
             android:text="我是姓名"
             android:textColor="@color/green" />
     </RelativeLayout>
-    
-    <View 
+
+    <View
         android:id="@+id/my_edit_line"
-        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@+id/my_edit_name"/>
+        android:layout_below="@+id/my_edit_name"
+        android:background="@color/gery" />
 
     <RelativeLayout
-        android:layout_marginTop="0dp"
         android:id="@+id/my_edit_Signature"
         style="@style/my_edit"
-        android:layout_below="@+id/my_edit_line" >
+        android:layout_below="@+id/my_edit_line"
+        android:layout_marginTop="0dp" >
 
         <TextView
             android:id="@+id/my_edit_Signature_left"
@@ -71,18 +78,70 @@
             android:text="@string/my_signature" />
 
         <TextView
-            style="@style/my_edit_text"
-            android:id="@+id/my_edit_Signature_right"
             android:layout_toRightOf="@+id/my_edit_Signature_left"
+            android:paddingRight="@dimen/margin_20"
+            android:id="@+id/my_edit_Signature_right"
+            style="@style/my_edit_text"
             android:text="我是签名"
             android:textColor="@color/green" />
     </RelativeLayout>
-    
-    <Button 
-        android:layout_alignParentBottom="true"
-        android:id="@+id/weixin_bt"
-        android:layout_width="wrap_content"
+
+    <View
+        android:id="@+id/my_edit_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/my_edit_Signature"
+        android:background="@color/gery" />
+
+    <RelativeLayout
+        android:id="@+id/my_edit_sex"
+        style="@style/my_edit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="weixin_share"/>
+        android:layout_below="@+id/my_edit_line2"
+        android:layout_marginTop="0dp" >
+
+        <TextView
+            android:id="@+id/my_edit_sex_left"
+            style="@style/my_edit_text"
+            android:text="@string/my_edit_sex" />
+
+        <TextView
+            android:layout_toRightOf="@+id/my_edit_sex_left"
+            android:paddingRight="@dimen/margin_20"
+            android:id="@+id/my_edit_sex_right"
+            style="@style/my_edit_text"
+            android:text="无性别"
+            android:textColor="@color/green" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/my_edit_line3"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/my_edit_sex"
+        android:background="@color/gery" />
+
+   <RelativeLayout
+        android:id="@+id/my_edit_address"
+        style="@style/my_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_edit_line3"
+        android:layout_marginTop="0dp" >
+
+        <TextView
+            android:id="@+id/my_edit_address_left"
+            style="@style/my_edit_text"
+            android:text="@string/my_address" />
+
+        <TextView
+            android:layout_toRightOf="@+id/my_edit_address_left"
+            android:paddingRight="@dimen/margin_20"
+            android:id="@+id/my_edit_address_right"
+            style="@style/my_edit_text"
+            android:text="宇宙"
+            android:textColor="@color/green" />
+    </RelativeLayout>
 
 </RelativeLayout>

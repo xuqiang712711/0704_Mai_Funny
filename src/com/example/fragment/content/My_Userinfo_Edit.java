@@ -33,7 +33,9 @@ import com.example.util.StringUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class My_Userinfo_Edit extends Fragment implements OnClickListener{
@@ -44,7 +46,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private boolean needRefresh = false;
 	private AlertDialog.Builder builder_Pic;
 	private ArrayAdapter<String> adapter_Pic;
-	private final String[] items = new String[]{"拍照" , "从相册选择"};
+	private final String[] items = new String[]{"鎷嶇収" , "浠庣浉鍐岄�夋嫨"};
 	private Uri mImageCaptureUri;
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_FILE = 2;
@@ -105,37 +107,9 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				dialog.show();
 			}
 		});
 		
-		Button button = (Button)view.findViewById(R.id.weixin_bt);
-		String appId ="wxd88b7b000ddc25df";
-		UMWXHandler umwxHandler = new UMWXHandler(getActivity(), appId);
-		umwxHandler.addToSocialSDK();
-		WeiXinShareContent shareContent = new WeiXinShareContent("梁非凡");
-		MaimobApplication.mController.setShareMedia(shareContent);
-		button.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				MaimobApplication.mController.directShare(getActivity(), SHARE_MEDIA.WEIXIN, new SnsPostListener() {
-					
-					@Override
-					public void onStart() {
-						// TODO Auto-generated method stub
-						MyLogger.jLog().i("start share");
-					}
-					
-					@Override
-					public void onComplete(SHARE_MEDIA arg0, int code, SocializeEntity arg2) {
-						// TODO Auto-generated method stub
-						MyLogger.jLog().i("code " + String.valueOf(code));
-					}
-				});
-			}
-		});
 	}
 	
 	@Override
@@ -199,11 +173,12 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			break;
 
 		case R.id.my_edit_icon:
+			dialog.show();
 			break;
 		case R.id.my_edit_name:
 			et_input.setHint((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
 					SharedPreferencesUtils.user_name, ""));
-			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑昵称").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("缂栬緫鏄电О").setNegativeButton("鍙栨秷", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -211,7 +186,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 					dialog.dismiss();
 				}
 			})
-			.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+			.setPositiveButton("纭", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -229,7 +204,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		case R.id.my_edit_Signature:
 			et_input.setHint((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
 					SharedPreferencesUtils.user_description, ""));
-			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑签名").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("缂栬緫绛惧悕").setNegativeButton("鍙栨秷", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -237,7 +212,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 					dialog.dismiss();
 				}
 			})
-			.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+			.setPositiveButton("纭", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

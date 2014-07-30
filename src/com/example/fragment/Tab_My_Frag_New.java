@@ -43,7 +43,8 @@ import android.widget.Toast;
 
 public class Tab_My_Frag_New extends Fragment implements OnClickListener{
 private View view;
-private RelativeLayout comment, check, publish, favorite,message,app, activity;
+private RelativeLayout comment, check, publish, favorite,message,app, activity,nemo;
+private RelativeLayout nemo1, nemo2, nemo3, nemo4;
 private TextView edit;
 private RelativeLayout logined, unLogin;
 private String Tag = "Tab_My_Frag_New";
@@ -125,20 +126,21 @@ private My_userinfo Frag_userinfo;
 		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
 		userinfo.setOnClickListener(this);
 		
-		comment = (RelativeLayout)view.findViewById(R.id.my_comment_new);
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
 		favorite = (RelativeLayout)view.findViewById(R.id.my_favorite_new);
 		message = (RelativeLayout)view.findViewById(R.id.my_message_new);
-		
+		nemo = (RelativeLayout)view.findViewById(R.id.my_nemo_new);
+		comment = (RelativeLayout)view.findViewById(R.id.my_comment_new);
 		app = (RelativeLayout)view.findViewById(R.id.my_app_new);
 		activity = (RelativeLayout)view.findViewById(R.id.my_activity_new);
 		
 		setWidget(check, R.string.my_check, R.drawable.mai_check, R.drawable.item_click_normal,2);
-		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_normal,2);
 		setWidget(app, R.string.my_app, R.drawable.mai_app, R.drawable.item_click_normal, 2);
 		setWidget(activity, R.string.my_activity, R.drawable.mai_activity, R.drawable.item_click_normal, 2);
+		setWidget(nemo, R.string.my_nemo, R.drawable.icon_test, R.drawable.item_click_normal, 2);
 		
+		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_normal,1);
 		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_normal, 1);
 		setWidget(message, R.string.my_message, R.drawable.my_message_icon, R.drawable.item_click_normal, 1);
 		setWidget(publish, R.string.my_publish, R.drawable.my_publish_icon ,R.drawable.item_click_normal, 1);
@@ -148,6 +150,15 @@ private My_userinfo Frag_userinfo;
 		tv_Fav.setText(String.valueOf(count_Fav));
 		
 		
+		nemo1 = (RelativeLayout)view.findViewById(R.id.my_nemo1_new);
+		nemo2 = (RelativeLayout)view.findViewById(R.id.my_nemo2_new);
+		nemo3 = (RelativeLayout)view.findViewById(R.id.my_nemo3_new);
+		nemo4 = (RelativeLayout)view.findViewById(R.id.my_nemo4_new);
+		
+		setWidget(nemo1, R.string.my_nemo, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
+		setWidget(nemo2, R.string.my_nemo, R.drawable.mai_2_setting, R.drawable.item_click_normal, 2);
+		setWidget(nemo3, R.string.my_nemo, R.drawable.mai_2_x, R.drawable.item_click_normal, 2);
+		setWidget(nemo4, R.string.my_nemo, R.drawable.mai_2_sign, R.drawable.item_click_normal, 2);
 //		edit = (TextView)view.findViewById(R.id.user_info_edit);
 //		edit.setOnClickListener(this);
 		

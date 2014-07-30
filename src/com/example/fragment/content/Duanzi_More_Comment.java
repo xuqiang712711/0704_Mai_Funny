@@ -52,7 +52,7 @@ public class Duanzi_More_Comment extends Fragment implements OnClickListener{
 			mFragmentManage.BackStatck(getActivity());
 		}else {
 			Log.i("FFF", "media " + duanzi.getMedia()  +" content " + duanzi.getContent());
-			ShareUtil.ShareToSocial(duanzi.getMedia(), et_write.getText().toString(), duanzi.getContent(), duanzi.getImageUrl(), getActivity(), handler);
+//			ShareUtil.ShareToSocial(duanzi.getMedia(), et_write.getText().toString(), duanzi.getContent(), duanzi.getImageUrl(), getActivity(), handler);
 		}
 	}
 	

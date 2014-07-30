@@ -18,6 +18,8 @@ import com.example.application.MaimobApplication;
 import com.example.fragment.content.DuanZi_Comment;
 import com.example.fragment.content.DuanZi_Comment_Write;
 import com.example.fragment.content.Duanzi_More_Comment;
+import com.example.fragment.content.Duanzi_Pop_Zhuanfa;
+import com.example.fragment.content.My_login_select;
 import com.example.listener.AnimateFirstDisplayListener;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
@@ -31,6 +33,7 @@ import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
+import com.example.util.UserUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -40,6 +43,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -321,21 +325,22 @@ public class XAdapter extends BaseAdapter{
 						.show();
 				break;
 			case R.id.duanzi_comment_write_sina:
-				duanzi.setMedia(SHARE_MEDIA.SINA);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+//				duanzi.setMedia(Duanzi);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
 			case R.id.duanzi_comment_write_qzone:
-				duanzi.setMedia(SHARE_MEDIA.RENREN);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+//				duanzi.setMedia(SHARE_MEDIA.RENREN);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
 			case R.id.duanzi_comment_write_tencent:
-				duanzi.setMedia(SHARE_MEDIA.TENCENT);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+//				duanzi.setMedia(SHARE_MEDIA.TENCENT);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
 			case R.id.duanzi_comment_write_douban:
-				duanzi.setMedia(SHARE_MEDIA.DOUBAN);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
+//				duanzi.setMedia(SHARE_MEDIA.DOUBAN);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
+				
 			case R.id.duanzi_more_fav:
 				if (duanzi.isFav()) {
 					duanzi.setFav(false);
@@ -365,13 +370,61 @@ public class XAdapter extends BaseAdapter{
 					}
 				}
 				break;
-			case R.id.duanzi_more_zhuanfa:
-				duanzi.setNeedComment(false);
-				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
-				window.dismiss();
-				break;
+//			case R.id.duanzi_more_zhuanfa:
+//				duanzi.setNeedComment(false);
+//				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
+//				window.dismiss();
+//				break;
 			case R.id.duanzi_more_back:
 				window.dismiss();
+				break;
+			case R.id.duanzi_pop_Weixin:
+				ShareUtil.shareToWeiXin(duanzi, context, adapterHandler);
+				break;
+			case R.id.duanzi_pop_Weixin_Circle:
+				ShareUtil.shareToWeiXinCircle(duanzi, context);
+				break;
+			case R.id.duanzi_pop_sina:
+				window.dismiss();
+				if (UserUtils.UserIsExists(context)) {
+					duanzi.setMedia(Duanzi.SHARE_MEDIA_SINA);
+					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				}else {
+					mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				}
+				
+				break;
+			case R.id.duanzi_pop_tencent:
+				window.dismiss();
+				if (UserUtils.UserIsExists(context)) {
+					duanzi.setMedia(Duanzi.SHARE_MEDIA_TENCENT);
+					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				}else {
+					mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				}
+				break;
+			case R.id.duanzi_pop_renren:
+				window.dismiss();
+				if (UserUtils.UserIsExists(context)) {
+					duanzi.setMedia(Duanzi.SHARE_MEDIA_RENREN);
+					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				}else {
+					mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				}
+				break;
+			case R.id.duanzi_pop_douban:
+				window.dismiss();
+				if (UserUtils.UserIsExists(context)) {
+					duanzi.setMedia(Duanzi.SHARE_MEDIA_DOUBAN);
+					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				}else {
+					mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				}
+				
+				break;
+			case R.id.duanzi_pop_qq:
+				break;
+			case R.id.duanzi_pop_qq_zone:
 				break;
 			}
 		}
@@ -389,14 +442,31 @@ public class XAdapter extends BaseAdapter{
 			tv_pop_text.setText("收藏");
 		}
 		
-		ImageView iv_zhuanfa = (ImageView)popView.findViewById(R.id.duanzi_more_zhuanfa);
-		iv_zhuanfa.setOnClickListener(new mOnclick(position, holder));
+//		ImageView iv_zhuanfa = (ImageView)popView.findViewById(R.id.duanzi_more_zhuanfa);
+//		iv_zhuanfa.setOnClickListener(new mOnclick(position, holder));
 		ImageView iv_Rep = (ImageView)popView.findViewById(R.id.duanzi_more_rep);
 		iv_Rep.setOnClickListener(new mOnclick(position, holder));
 		ImageView iv_fav = (ImageView)popView.findViewById(R.id.duanzi_more_fav);
 		iv_fav.setOnClickListener(new mOnclick(position, holder));
 		Button bt_back = (Button)popView.findViewById(R.id.duanzi_more_back);
 		bt_back.setOnClickListener(new mOnclick(position, holder));
+		
+		ImageView iv_weixin = (ImageView)popView.findViewById(R.id.duanzi_pop_Weixin);
+		iv_weixin.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_weixin_circle = (ImageView)popView.findViewById(R.id.duanzi_pop_Weixin_Circle);
+		iv_weixin_circle.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_sina = (ImageView)popView.findViewById(R.id.duanzi_pop_sina);
+		iv_sina.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_tencent = (ImageView)popView.findViewById(R.id.duanzi_pop_tencent);
+		iv_tencent.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_renren = (ImageView)popView.findViewById(R.id.duanzi_pop_renren);
+		iv_renren.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_douban = (ImageView)popView.findViewById(R.id.duanzi_pop_douban);
+		iv_douban.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_qq = (ImageView)popView.findViewById(R.id.duanzi_pop_qq);
+		iv_qq.setOnClickListener(new mOnclick(position, holder));
+		ImageView iv_qq_zone = (ImageView)popView.findViewById(R.id.duanzi_pop_qq_zone);
+		iv_qq_zone.setOnClickListener(new mOnclick(position, holder));
 		
 		window = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		window.setBackgroundDrawable(new BitmapDrawable());
