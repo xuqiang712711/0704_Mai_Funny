@@ -33,8 +33,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MaiActivity extends FragmentActivity implements OnClickListener {
@@ -53,6 +55,8 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 	private RelativeLayout c1, c2, c3, c4, c5;
 	private LinearLayout mTab_item_container, content_container,
 			content_container2;
+	private ImageView iv_duanzi, iv_img, iv_write, iv_my, iv_setting;
+	private TextView tv_duanzi, tv_img, tv_my, tv_setting;
 
 	FragmentManager fm;
 	FragmentTransaction fragtrain;
@@ -70,11 +74,12 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
 		selectTab(2);
+		
 	}
 
 	private void initView() {
 		
-		c1 = (RelativeLayout) findViewById(R.id.channel1);
+		c1 = (RelativeLayout)findViewById(R.id.channel1);
 		c2 = (RelativeLayout) findViewById(R.id.channel2);
 		c3 = (RelativeLayout) findViewById(R.id.channel3);
 		c4 = (RelativeLayout) findViewById(R.id.channel4);
@@ -85,7 +90,18 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		c3.setOnClickListener(this);
 		c4.setOnClickListener(this);
 		c5.setOnClickListener(this);
-
+		
+		iv_duanzi = (ImageView)findViewById(R.id.iv_duanzi);
+		iv_img = (ImageView)findViewById(R.id.iv_img);
+		iv_write = (ImageView)findViewById(R.id.iv_write);
+		iv_my = (ImageView)findViewById(R.id.iv_my);
+		iv_setting = (ImageView)findViewById(R.id.iv_setting);
+		
+		tv_duanzi = (TextView)findViewById(R.id.tv_duanzi);
+		tv_img = (TextView)findViewById(R.id.tv_img);
+		tv_my = (TextView)findViewById(R.id.tv_my);
+		tv_setting = (TextView)findViewById(R.id.tv_setting);
+		
 		content_container = (LinearLayout) findViewById(R.id.content_container);
 		content_container2 = (LinearLayout) findViewById(R.id.content_container2);
 	}
@@ -112,6 +128,8 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 				fragtrain.show(Frag_duanzi);
 				myLogger.i("duanzi_frag show");
 			}
+			iv_duanzi.setImageResource(R.drawable.mai_2_duanzi_cl);
+			tv_duanzi.setTextColor(getResources().getColor(R.color.red));
 			break;
 
 		case 2:
@@ -121,18 +139,16 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			} else {
 				fragtrain.show(Frag_image);
 			}
+			iv_img.setImageResource(R.drawable.mai_2_img_cl);
+			tv_img.setTextColor(getResources().getColor(R.color.red));
 			break;
 		case 3:
 			if (UserUtils.UserIsExists(this)) {
-//				if (my_Write == null) {
-//					my_Write = new My_Write();
-//					fragtrain.add(R.id.content_container2,my_Write);
-//				}else {
-//					fragtrain.show(my_Write);
-//				}
+				myLogger.e("已注册");
 				my_Write = new My_Write();
 				fragtrain.add(R.id.content_container2, my_Write);
 			}else {
+				myLogger.e("未注册");
 				Bundle bundle = new Bundle();
 				bundle.putInt("xwkkx", My_login_select.From_Write);
 				if (login_select == null) {
@@ -143,6 +159,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 					fragtrain.show(login_select);
 				}
 			}
+			iv_write.setImageResource(R.drawable.mai_2_write_cl);
 			break;
 		case 4:
 //			if (Frag_my== null) {
@@ -153,6 +170,8 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 //			}
 			Frag_my = new Tab_My_Frag_New();
 			fragtrain.add(R.id.content_container, Frag_my);
+			iv_my.setImageResource(R.drawable.mai_2_my_cl);
+			tv_my.setTextColor(getResources().getColor(R.color.red));
 			break;
 		case 5:
 			if (Frag_more == null) {
@@ -161,6 +180,8 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			} else {
 				fragtrain.show(Frag_more);
 			}
+			iv_setting.setImageResource(R.drawable.mai_2_setting_cl);
+			tv_setting.setTextColor(getResources().getColor(R.color.red));
 			break;
 		}
 		fragtrain.commit();
@@ -193,11 +214,21 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 
 	// 清楚所有按钮的状态
 	private void clearTab() {
-		c1.setBackgroundResource(0);
-		c2.setBackgroundResource(0);
-		c3.setBackgroundResource(0);
-		c4.setBackgroundResource(0);
-		c5.setBackgroundResource(0);
+//		c1.setBackgroundResource(0);
+//		c2.setBackgroundResource(0);
+//		c3.setBackgroundResource(0);
+//		c4.setBackgroundResource(0);
+//		c5.setBackgroundResource(0);
+		iv_duanzi.setImageResource(R.drawable.mai_2_duanzi);
+		iv_img.setImageResource(R.drawable.mai_2_img);
+		iv_write.setImageResource(R.drawable.mai_2_write);
+		iv_my.setImageResource(R.drawable.mai_2_my);
+		iv_setting.setImageResource(R.drawable.mai_2_currset);
+		
+		tv_duanzi.setTextColor(getResources().getColor(R.color.black));
+		tv_img.setTextColor(getResources().getColor(R.color.black));
+		tv_my.setTextColor(getResources().getColor(R.color.black));
+		tv_setting.setTextColor(getResources().getColor(R.color.black));
 	}
 
 	@Override
@@ -274,11 +305,10 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 	}
 	
 	public void WriteBack(int tab){
-		Log.e(Tag, "selectTab  1");
-		if (tab == 1) {
-			selectTab(1);
-		}else if (tab == My_login_select.From_Write) {
+		if (tab == mFragmentManage.BACK_WRITE) {
 			selectTab(3);
+		}else {
+			selectTab(1);
 		}
 	}
 	//刷新

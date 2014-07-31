@@ -89,7 +89,7 @@ public class My_login_select extends Fragment{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (type == From_Write) {
-					mFragmentManage.backHome(getActivity(), From_Write);
+					mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_HOME);
 				}else {
 					mFragmentManage.BackStatck(getActivity());
 				}
@@ -215,7 +215,7 @@ public class My_login_select extends Fragment{
 	                 Log.d("TestData",sb.toString());
 	                 editor.commit();
 	                 if (type == From_Write) {
-	                	 	mFragmentManage.backHome(getActivity(), From_Write);
+	                	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
 					}else {
 						mFragmentManage.BackStatck(getActivity());
 					}

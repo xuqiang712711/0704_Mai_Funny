@@ -122,14 +122,23 @@
                         android:text="简介:" />
 
                     <TextView
+                        android:paddingTop="@dimen/margin_5"
+                        android:layout_marginRight="@dimen/margin_20"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
                         android:id="@+id/user_points_num"
                         style="@style/user_info"
                         android:layout_alignBottom="@+id/userinfo_points"
                         android:layout_toRightOf="@+id/userinfo_points"
-                        android:text="313" />
+                        android:text="@string/my_Test" />
                 </RelativeLayout>
 
                 <ImageView 
+                    android:padding="@dimen/margin_10"
+                    android:id="@+id/my_arrow"
                     android:src="@drawable/mai_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

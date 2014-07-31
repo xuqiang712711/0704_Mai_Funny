@@ -1,11 +1,18 @@
 package com.example.fragment.content;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,18 +32,10 @@ import android.widget.TextView;
 import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
-import com.example.util.CommonUtils;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private View view;
@@ -50,6 +49,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private Uri mImageCaptureUri;
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_FILE = 2;
+	private static final int PHOTO_REQUEST_CUT = 3;// 剪切结果
 	private String currImg = null;
 	private AlertDialog dialog;
 	@Override
@@ -134,7 +134,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			Intent intent = new Intent();
 			intent.setType("image/*");
 			intent.setAction(Intent.ACTION_GET_CONTENT);
-			startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+			startActivityForResult(Intent.createChooser(intent, "XWKKX"), PICK_FROM_FILE);
 		}
 	}
 	
@@ -148,19 +148,80 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		}
 		if (requestCode == PICK_FROM_FILE) {
 			Uri uri = data.getData();
-			String imgPath = CommonUtils.getAbsolutePathFromNoStandardUri(uri);
-			if (StringUtils.isBlank(imgPath)) {
-				currImg = CommonUtils.getAbsoluteImagePath(getActivity(), uri);
-			}
+			startPhotoZoom(uri, 150);
+//			String imgPath = CommonUtils.getAbsolutePathFromNoStandardUri(uri);
+//			if (StringUtils.isBlank(imgPath)) {
+//				currImg = CommonUtils.getAbsoluteImagePath(getActivity(), uri);
+//			}
+//			
+//			Uri outUri = Uri.fromFile(new File(getActivity().getCacheDir(), "Mai"));
+//			new Crop(uri).output(outUri).asSquare().start(getActivity());
 		}else if (requestCode == PICK_FROM_CAMERA) {
-			currImg = mImageCaptureUri.getPath();
+//			currImg = mImageCaptureUri.getPath();
+			startPhotoZoom(mImageCaptureUri, 150);
+		}else if (requestCode == PHOTO_REQUEST_CUT) {
+			setPicToView(data);
+			mFragmentManage.Refresh_userInfo = true;
 		}
-		MyLogger.jLog().i(currImg);
-		String filePath = StringUtils.checkImgPath(currImg);
-		MyLogger.jLog().i("imgPath  " + filePath);
-		MaimobApplication.imageLoader.displayImage(filePath, iv_Icon, ImageUtil.getOption());
-		SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, filePath);
 	}
+	
+	 //将进行剪裁后的图片显示到UI界面上
+	private void setPicToView(Intent picdata) {
+		Bundle bundle = picdata.getExtras();
+		if (bundle != null) {
+			Bitmap photo = bundle.getParcelable("data");
+			File filePath = bitmapToFile(photo);
+			// Drawable drawable = new BitmapDrawable(photo);
+			// img_btn.setBackgroundDrawable(drawable);
+			// iv_Icon.setImageDrawable(drawable);
+			MaimobApplication.imageLoader.displayImage(
+					StringUtils.checkImgPath(filePath.toString()), iv_Icon,
+					ImageUtil.getOption());
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user,
+					getActivity(), SharedPreferencesUtils.user_icon,
+					StringUtils.checkImgPath(filePath.toString()));
+		}
+
+	}
+    
+	private File bitmapToFile(Bitmap bitmap) {
+		File file = new File(
+				Environment.getExternalStorageDirectory() + "/Mai", "Mai_crop_"
+						+ String.valueOf(System.currentTimeMillis()) + ".jpg");
+		try {
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+			bos.flush();
+			bos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return file;
+	}
+	
+	
+    private void startPhotoZoom(Uri uri, int size) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        // crop为true是设置在开启的intent中设置显示的view可以剪裁
+        intent.putExtra("crop", "true");
+
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        // outputX,outputY 是剪裁图片的宽高
+        intent.putExtra("outputX", size);
+        intent.putExtra("outputY", size);
+        intent.putExtra("return-data", true);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+
+        startActivityForResult(intent, PHOTO_REQUEST_CUT);
+    }
 
 	@Override
 	public void onClick(View v) {

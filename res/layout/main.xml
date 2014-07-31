@@ -25,15 +25,16 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@id/tt_tab_recommend_bar"
+            android:id="@+id/iv_duanzi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dip"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_duanzi" />
+            android:src="@drawable/mai_2_duanzi" />
 
         <TextView
+            android:id="@+id/tv_duanzi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -57,14 +58,15 @@
 
         <ImageView
             android:layout_marginTop="5dip"
-            android:id="@id/tt_tab_best_bar"
+            android:id="@+id/iv_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_normal_pic" />
+            android:src="@drawable/mai_2_img" />
 
         <TextView
+            android:id="@+id/tv_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -87,12 +89,13 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@id/tt_tab_guide_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:id="@+id/iv_write"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_edit3" />
+            android:src="@drawable/mai_2_write" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -118,14 +121,15 @@
 
         <ImageView
             android:layout_marginTop="5dip"
-            android:id="@id/tt_tab_community_bar"
+            android:id="@+id/iv_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_user_head" />
+            android:src="@drawable/mai_2_my" />
 
         <TextView
+            android:id="@+id/tv_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -149,14 +153,15 @@
 
         <ImageView
             android:layout_marginTop="5dip"
-            android:id="@id/tt_tab_more_bar"
+            android:id="@+id/iv_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_setting" />
+            android:src="@drawable/mai_2_currset" />
 
         <TextView
+            android:id="@+id/tv_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

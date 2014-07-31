@@ -49,7 +49,7 @@ private TextView edit;
 private RelativeLayout logined, unLogin;
 private String Tag = "Tab_My_Frag_New";
 private TextView tv_user_description,tv_user_name;
-private ImageView iv_user_head;
+private ImageView iv_user_head,my_arrow;
 private int count_Fav= 0;
 private My_userinfo Frag_userinfo;
 	@Override
@@ -93,6 +93,8 @@ private My_userinfo Frag_userinfo;
 		}
 	
 	private void initView(){
+		my_arrow = (ImageView)view.findViewById(R.id.my_arrow);
+		my_arrow.setOnClickListener(this);
 		
 		//未登录
 		unLogin = (RelativeLayout)view.findViewById(R.id.my_unlogin);
@@ -123,8 +125,8 @@ private My_userinfo Frag_userinfo;
 
 		
 		unLogin.setOnClickListener(this);
-		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
-		userinfo.setOnClickListener(this);
+//		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
+//		userinfo.setOnClickListener(this);
 		
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
@@ -156,7 +158,7 @@ private My_userinfo Frag_userinfo;
 		nemo4 = (RelativeLayout)view.findViewById(R.id.my_nemo4_new);
 		
 		setWidget(nemo1, R.string.my_nemo, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
-		setWidget(nemo2, R.string.my_nemo, R.drawable.mai_2_setting, R.drawable.item_click_normal, 2);
+		setWidget(nemo2, R.string.my_nemo, R.drawable.mai_2_currset, R.drawable.item_click_normal, 2);
 		setWidget(nemo3, R.string.my_nemo, R.drawable.mai_2_x, R.drawable.item_click_normal, 2);
 		setWidget(nemo4, R.string.my_nemo, R.drawable.mai_2_sign, R.drawable.item_click_normal, 2);
 //		edit = (TextView)view.findViewById(R.id.user_info_edit);
@@ -197,7 +199,7 @@ private My_userinfo Frag_userinfo;
 		Bundle bundle = new Bundle();
 		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
-		case R.id.my_userinfo_top:
+		case R.id.my_arrow:
 			Frag_userinfo = new My_userinfo();
 			switchFragment(this, Frag_userinfo);
 			break;

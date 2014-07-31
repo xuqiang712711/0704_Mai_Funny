@@ -36,6 +36,7 @@ import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
 
@@ -80,6 +81,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		super.onHiddenChanged(hidden);
 		if (mFragmentManage.Refresh_userInfo) {
 			if (!hidden) {
+				MyLogger.jLog().i("userInfo_hide");
 				tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
 				tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
 				MaimobApplication.imageLoader.displayImage(
