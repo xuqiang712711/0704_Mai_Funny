@@ -9,6 +9,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import com.example.Activity.MaiActivity;
 import com.example.adapter.XAdapter;
@@ -59,6 +61,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	private XAdapter adapter;
 	private Dialog dialog;
 	private Handler TabHandler;
+	private int maxId = 0;
+	private List<Duanzi> list;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -83,6 +87,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 		dialog.show();
 		initView();
+		maxId = Uris.max_dz_hot;
 		inithttp();
 	}
 	
@@ -174,7 +179,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	}
 	
 	private void updateListView(String json){
-		List<Duanzi> list = setDuanziData.getListDuanzi(json,getActivity());
+		list = setDuanziData.getListDuanzi(json,getActivity(), list);
+		myLogger.i("list.size  " + list.size());
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		myLogger.e("initAdapter");
 		if (adapter == null) {
@@ -201,7 +207,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	
 	
 	public void inithttp(){
-		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
+		String postUri = "http://md.maimob.net/index.php/player/FetchPost/"
+				+ "uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/" + maxId;
 		new MyAsyTask().execute(postUri);
 	}
 	
@@ -209,6 +216,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 
 		@Override
 		protected String doInBackground(String... params) {
+			myLogger.i("uri  " + params[0]);
 			return doHttpRequest(params);
 		}
 		
@@ -216,6 +224,17 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 					Message message = Message.obtain();
+					JSONArray array;
+					try {
+						array = new JSONArray(result);
+						maxId = array.length() + maxId;
+						Uris.max_dz_hot = maxId;
+						myLogger.i("  maxid  " + maxId + "~~~~" + array.toString());
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					message.obj = result;
 					message.what = 5656;
 					handler.sendMessage(message);

@@ -36,7 +36,7 @@ public class mOauth {
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_douban, 0);
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_name, "");
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_description, "");
-			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_name, "");
+			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_icon, "");
 		}
 	
 		//将账号是否绑定信息保存到sp

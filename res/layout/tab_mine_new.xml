@@ -53,7 +53,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
-            android:background="@color/my_back" >
+            android:background="@color/white" >
 
             <ImageView
                 android:id="@+id/my_unlogin_icon"
@@ -62,7 +62,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:contentDescription="@null"
                 android:padding="@dimen/margin_5"
-                android:src="@drawable/mai_user_head" />
+                android:src="@drawable/mai_2_my" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -255,14 +255,22 @@
             layout="@layout/my_content_vertical" />
     </LinearLayout>
     
+    <View 
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:id="@+id/my_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/XYF_color"
+        android:layout_below="@+id/my_bottom"/>
+
     <LinearLayout
         android:id="@+id/my_bottom2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_bottom"
+        android:layout_below="@+id/my_line2"
         android:layout_marginLeft="@dimen/margin_5"
         android:layout_marginRight="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_10"
         android:background="@color/white"
         android:orientation="horizontal" >
 

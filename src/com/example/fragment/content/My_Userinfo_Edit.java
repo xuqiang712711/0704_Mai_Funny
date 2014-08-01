@@ -34,8 +34,10 @@ import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
+import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
+import com.example.util.User;
 
 public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private View view;
@@ -52,6 +54,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private static final int PHOTO_REQUEST_CUT = 3;// 剪切结果
 	private String currImg = null;
 	private AlertDialog dialog;
+	private MyLogger logger = MyLogger.jLog();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -64,6 +67,16 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		try {
+			User user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam("SerUser", getActivity(), "user", ""));
+			logger.i("name  " + user.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_edit));
 		Button back = (Button)view.findViewById(R.id.top_left);

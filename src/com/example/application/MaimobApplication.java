@@ -22,6 +22,7 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 
 import android.R.anim;
+import android.R.integer;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -40,6 +41,7 @@ public class MaimobApplication extends Application{
 	public static int DeviceW ;
 	public static int DeviceH;
 	public static DisplayImageOptions options;
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -102,7 +104,10 @@ public class MaimobApplication extends Application{
 	public void setmHandler(Handler mHandler) {
 		this.mHandler = mHandler;
 	}
-	
+	/**
+	 * 去除SP中的资源：字体大小、上次的浏览记录
+	 * @param context
+	 */
 	public static void  selectFontSize(Context context){
 		String font = (String) SharedPreferencesUtils.getParam(SharedPreferencesUtils.setting, context, 
 				SharedPreferencesUtils.setting_font, "naomal");
@@ -113,5 +118,14 @@ public class MaimobApplication extends Application{
 		}else {
 			Uris.Font_Size = Uris.Font_Size_normal;
 		}
+		
+		Uris.max_dz_hot = (Integer) SharedPreferencesUtils.getParam(SharedPreferencesUtils.maxID, 
+				context, SharedPreferencesUtils.maxID_DZ_HOT, 0);
+		Uris.max_dz_new = (Integer) SharedPreferencesUtils.getParam(SharedPreferencesUtils.maxID, 
+				context, SharedPreferencesUtils.maxID_DZ_NEW, 0);
+		Uris.max_img_hot = (Integer) SharedPreferencesUtils.getParam(SharedPreferencesUtils.maxID, 
+				context, SharedPreferencesUtils.maxID_IMG_HOT, 0);
+		Uris.max_img_hot = (Integer) SharedPreferencesUtils.getParam(SharedPreferencesUtils.maxID, 
+				context, SharedPreferencesUtils.maxID_IMG_NEW, 0);
 	}
 }

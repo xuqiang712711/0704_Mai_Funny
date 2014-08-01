@@ -11,6 +11,12 @@ import android.content.SharedPreferences;
  */
 public class SharedPreferencesUtils {
 	
+	public static String maxID = "maxID";
+	public static String maxID_DZ_HOT = "DZ_HOT";
+	public static String maxID_DZ_NEW = "DZ_NEW";
+	public static String maxID_IMG_HOT = "IMG_HOT";
+	public static String maxID_IMG_NEW = "IMG_NEW";
+	
 	public static String setting = "setting";
 	public static String setting_isZhuanfa = "isZhuanfa";
 	public static String setting_font = "font";
@@ -18,6 +24,8 @@ public class SharedPreferencesUtils {
 	public static String user_name = "name";
 	public static String user_icon = "icon";
 	public static String user_description = "description";
+	public static String user_location = "location";
+	public static String user_gender = "gender";
 	
 	public static String platform = "platform";
 	public static String platform_Exists = "Exists";

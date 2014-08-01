@@ -1,5 +1,6 @@
 package com.example.fragment.content;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +31,8 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.object.mOauth;
 import com.example.tab.R;
+import com.example.util.SerUser;
+import com.example.util.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -65,7 +68,6 @@ public class My_login_select extends Fragment{
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		if (type == From_My) {
-			Log.e("FFF", "99999999");
 			mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_My);
 		}
 	}
@@ -75,7 +77,6 @@ public class My_login_select extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		Bundle bundle =getArguments();
 		type= bundle.getInt("xwkkx");
-		Log.e("FFF", "xwkkx  " + type);
 		if (type == From_Duanzi) {
 			duanzi = (Duanzi) bundle.getSerializable("duanzi");
 		}
@@ -202,23 +203,50 @@ public class My_login_select extends Fragment{
 	                 Editor editor = sp.edit();
 	                 StringBuilder sb = new StringBuilder();
 	                 Set<String> keys = info.keySet();
+	                 int gender = 0;
+	                 String name = null;
+	                 String icon = null;
+	                 String location = null;
+	                 String description = null;
 	                 for(String key : keys){
 	                     sb.append(key+"="+info.get(key).toString()+"\r\n");
 	                     if (key.equals("description")) {
-							editor.putString("description", info.get(key).toString());
+	                    	 description = info.get(key).toString();
+							editor.putString("description", description);
 						}else if (key.equals("screen_name")) {
-							editor.putString("name", info.get(key).toString());
+							name = info.get(key).toString();
+							editor.putString("name", name);
 						}else if (key.equals("profile_image_url")) {
-							editor.putString("icon", info.get(key).toString());
+							icon = info.get(key).toString();
+							editor.putString("icon", icon);
+						}else if (key.equals("location")) {
+							location = info.get(key).toString();
+							editor.putString("location", location);
+						}else if (key.equals("gender")) {
+							gender = (Integer) info.get(key);
+							editor.putInt("gender", gender);
 						}
 	                 }
-	                 Log.d("TestData",sb.toString());
 	                 editor.commit();
 	                 if (type == From_Write) {
 	                	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
 					}else {
 						mFragmentManage.BackStatck(getActivity());
 					}
+//	                 User user= new User(name, icon, location, description, gender);
+	                 User user= new User();
+	                 user.setName(name);
+	                 user.setDescription(description);
+	                 user.setGender(gender);
+	                 user.setLocation(location);
+	                 user.setIcon(icon);
+	                 try {
+	                	 user.saveUser(getActivity(), SerUser.serializeUser(user));
+	                	 
+	                 } catch (IOException e) {
+	                	 // TODO Auto-generated catch block
+	                	 e.printStackTrace();
+	                 }
 	          }else{
 	             Log.d("TestData","·¢Éú´íÎó£º"+status);
 	          }

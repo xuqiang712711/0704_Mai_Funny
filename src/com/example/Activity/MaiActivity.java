@@ -18,8 +18,9 @@ import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
+import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
-import com.example.util.UserUtils;
+import com.example.util.User;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,7 +74,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		MaimobApplication.DeviceW = dm.widthPixels;
 		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
-		selectTab(2);
+		selectTab(1);
 		
 	}
 
@@ -128,7 +129,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 				fragtrain.show(Frag_duanzi);
 				myLogger.i("duanzi_frag show");
 			}
-			iv_duanzi.setImageResource(R.drawable.mai_2_duanzi_cl);
+			iv_duanzi.setImageResource(R.drawable.mai_5_dz_cl);
 			tv_duanzi.setTextColor(getResources().getColor(R.color.red));
 			break;
 
@@ -139,11 +140,11 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			} else {
 				fragtrain.show(Frag_image);
 			}
-			iv_img.setImageResource(R.drawable.mai_2_img_cl);
+			iv_img.setImageResource(R.drawable.mai_4_img_cl);
 			tv_img.setTextColor(getResources().getColor(R.color.red));
 			break;
 		case 3:
-			if (UserUtils.UserIsExists(this)) {
+			if (User.UserIsExists(this)) {
 				myLogger.e("已注册");
 				my_Write = new My_Write();
 				fragtrain.add(R.id.content_container2, my_Write);
@@ -180,7 +181,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			} else {
 				fragtrain.show(Frag_more);
 			}
-			iv_setting.setImageResource(R.drawable.mai_2_setting_cl);
+			iv_setting.setImageResource(R.drawable.mai_2_setting_2_cl);
 			tv_setting.setTextColor(getResources().getColor(R.color.red));
 			break;
 		}
@@ -219,16 +220,16 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 //		c3.setBackgroundResource(0);
 //		c4.setBackgroundResource(0);
 //		c5.setBackgroundResource(0);
-		iv_duanzi.setImageResource(R.drawable.mai_2_duanzi);
-		iv_img.setImageResource(R.drawable.mai_2_img);
-		iv_write.setImageResource(R.drawable.mai_2_write);
+		iv_duanzi.setImageResource(R.drawable.mai_5_dz);
+		iv_img.setImageResource(R.drawable.mai_4_img);
+		iv_write.setImageResource(R.drawable.mai_3_write);
 		iv_my.setImageResource(R.drawable.mai_2_my);
-		iv_setting.setImageResource(R.drawable.mai_2_currset);
+		iv_setting.setImageResource(R.drawable.mai_2_setting_2);
 		
-		tv_duanzi.setTextColor(getResources().getColor(R.color.black));
-		tv_img.setTextColor(getResources().getColor(R.color.black));
-		tv_my.setTextColor(getResources().getColor(R.color.black));
-		tv_setting.setTextColor(getResources().getColor(R.color.black));
+		tv_duanzi.setTextColor(getResources().getColor(R.color.XYF_color));
+		tv_img.setTextColor(getResources().getColor(R.color.XYF_color));
+		tv_my.setTextColor(getResources().getColor(R.color.XYF_color));
+		tv_setting.setTextColor(getResources().getColor(R.color.XYF_color));
 	}
 
 	@Override
@@ -333,6 +334,10 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 					DialogToastUtil.toastShow(this, "再按一次退出程序");
 					exitTime = System.currentTimeMillis() ;
 				} else {
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_DZ_HOT, Uris.max_dz_hot);
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_DZ_NEW, Uris.max_dz_new);
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_IMG_HOT, Uris.max_img_hot);
+					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_IMG_NEW, Uris.max_img_new);
 					myLogger.e("真的退出");
 					finish();
 					System.exit(0);

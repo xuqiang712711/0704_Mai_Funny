@@ -56,6 +56,8 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private XAdapter adapter;
 	private Handler tabHandler;
 	private Dialog dialog;
+	private List<Duanzi> list;
+	private int maxID;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -65,6 +67,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 				dialog.dismiss();
 				String json = (String) msg.obj;
 				SetListData(json);
+				maxID += msg.what;
 			}
 			
 		}
@@ -79,7 +82,8 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	
 	private void SetListData(String json){
-		List<Duanzi> list = setDuanziData.getListDuanzi(json, getActivity());
+		
+		list = setDuanziData.getListDuanzi(json, getActivity(), list);
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (tabHandler != null) {
@@ -98,7 +102,9 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private void initHttp(){
 		RequestDataTask mTask = new RequestDataTask(handler);
-		mTask.execute(Uris.Img_uri);
+		mTask.execute(Uris.Img_uri + maxID);
+		Uris.max_img_hot = maxID;
+		MyLogger.jLog().i("maxid_new  " + maxID);
 	}
 	
 	@Override
@@ -110,6 +116,9 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
 		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);
+		if (list == null) {
+			list = new ArrayList<Duanzi>();
+		}
 		initView();
 		initHttp();
 	}

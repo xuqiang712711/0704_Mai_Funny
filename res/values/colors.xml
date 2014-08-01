@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="XYF_color">#000000</color>
+    
     <color name="TextColor_bottom">#000000</color>
     <color name="TextColor">#c1c0c0</color>
     <color name="item_click">#CCFFFF</color>

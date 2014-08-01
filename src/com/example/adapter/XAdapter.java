@@ -33,7 +33,7 @@ import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
-import com.example.util.UserUtils;
+import com.example.util.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -179,13 +179,11 @@ public class XAdapter extends BaseAdapter{
 		holder.gif.setVisibility(View.GONE);
 		holder.hint_img.setVisibility(View.GONE);
 		
-		Log.e(TAG, "head  " + user_head);
 		
 		if (user_head != null && !user_head.equals("")) {
 			imageLoader.displayImage(user_head, holder.user_icon, options);
 		}
 		if (imgUri != null &&!imgUri.equals("")) {
-			Log.e(TAG, "~~~~~" + imgUri);
 			
 			String currImgUrl = StringUtils.checkImgPath(imgUri);
 //			if (!imgUri.startsWith("http")) {
@@ -386,7 +384,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_pop_sina:
 				window.dismiss();
-				if (UserUtils.UserIsExists(context)) {
+				if (User.UserIsExists(context)) {
 					duanzi.setMedia(Duanzi.SHARE_MEDIA_SINA);
 					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
 				}else {
@@ -396,7 +394,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_pop_tencent:
 				window.dismiss();
-				if (UserUtils.UserIsExists(context)) {
+				if (User.UserIsExists(context)) {
 					duanzi.setMedia(Duanzi.SHARE_MEDIA_TENCENT);
 					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
 				}else {
@@ -405,7 +403,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_pop_renren:
 				window.dismiss();
-				if (UserUtils.UserIsExists(context)) {
+				if (User.UserIsExists(context)) {
 					duanzi.setMedia(Duanzi.SHARE_MEDIA_RENREN);
 					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
 				}else {
@@ -414,7 +412,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_pop_douban:
 				window.dismiss();
-				if (UserUtils.UserIsExists(context)) {
+				if (User.UserIsExists(context)) {
 					duanzi.setMedia(Duanzi.SHARE_MEDIA_DOUBAN);
 					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
 				}else {

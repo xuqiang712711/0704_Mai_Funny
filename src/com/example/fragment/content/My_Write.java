@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,6 +58,7 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.CommonUtils;
+import com.example.util.DialogToastUtil;
 import com.example.util.EditUtil;
 import com.example.util.IMG_Compress;
 import com.example.util.NetworkUtil;
@@ -80,7 +82,6 @@ public class My_Write extends Fragment implements OnClickListener{
 	private ArrayAdapter<String> adapter, adapter2;
 	private EditText editText;
 	private Button submit;
-	private ProgressDialog Loadingdialog;
 	public static final int POST_SUC = 1;
 	private boolean switch_dialog =false;
 	private AlertDialog.Builder builder, del_builder;
@@ -90,6 +91,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	private boolean isCheck_douban = false;
 	private ImageView sina_img, tencent_img, qzone_img, douban;
 	private String editContent;
+	private Dialog loadDialog;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,6 +107,8 @@ public class My_Write extends Fragment implements OnClickListener{
 	}
 	
 	private void initView(){
+		loadDialog = DialogToastUtil.createLoadingDialog(getActivity());
+		
 		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
 		tencent_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_tencent);
 		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
@@ -170,9 +174,7 @@ public class My_Write extends Fragment implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				if (NetworkUtil.getNetworkState(getActivity()) != NetworkUtil.NONE) {
-					Loadingdialog = ProgressDialog.show(getActivity(), "标题", "发送中");
-					Loadingdialog.setCancelable(true);
-					Loadingdialog.setIndeterminate(true);
+					loadDialog.show();
 					new Thread(new PostThread()).start();
 					editContent = editText.getText().toString();
 					if (isCheck_sina) {
@@ -258,7 +260,7 @@ public class My_Write extends Fragment implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case POST_SUC:
-				Loadingdialog.dismiss();
+				loadDialog.dismiss();
 //				Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();;
 				break;
 			}

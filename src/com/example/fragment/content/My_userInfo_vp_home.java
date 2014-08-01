@@ -3,6 +3,8 @@ package com.example.fragment.content;
 import com.example.object.mFragmentManage;
 import com.example.object.mOauth;
 import com.example.tab.R;
+import com.example.util.SharedPreferencesUtils;
+import com.example.util.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMediaObject.MediaType;
 
@@ -56,15 +58,18 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 		
 		((TextView)name.findViewById(R.id.more_text1)).setText("êÇ³Æ");
 		((TextView)name.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);;
-		((TextView)name.findViewById(R.id.more_text2)).setText("XXX");
+		((TextView)name.findViewById(R.id.more_text2)).setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user,
+				getActivity(), SharedPreferencesUtils.user_name, ""));
 		
+		User.decideGender(getActivity());
 		((TextView)sex.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);
 		((TextView)sex.findViewById(R.id.more_text2)).setText("X");
 		((TextView)sex.findViewById(R.id.more_text1)).setText("ÐÔ±ð");
 		
 		((TextView)address.findViewById(R.id.more_text1)).setText("µØÖ·");
 		((TextView)address.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);;
-		((TextView)address.findViewById(R.id.more_text2)).setText("TTTTTTTTT");
+		((TextView)address.findViewById(R.id.more_text2)).setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user,
+				getActivity(), SharedPreferencesUtils.user_location, ""));
 		
 		bt_UnRegister = (Button)view.findViewById(R.id.my_unRegister);
 		bt_UnRegister.setOnClickListener(this);

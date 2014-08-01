@@ -46,6 +46,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	private XAdapter adapter;
 	private Handler tabHandler;
 	private Dialog dialog;
+	private List<Duanzi> list;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -99,7 +100,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	}
 	
 	private void SetListData(String json){
-		List<Duanzi> list = setDuanziData.getListDuanzi(json, getActivity());
+		list = setDuanziData.getListDuanzi(json, getActivity(), list);
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (tabHandler != null) {

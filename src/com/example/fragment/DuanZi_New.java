@@ -50,6 +50,8 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	private XAdapter adapter;
 	private Handler TabHandler;
 	private Dialog dialog;
+	private List<Duanzi> list;
+	private int maxID;
 	
 	private Handler mHandler = new Handler(){
 		@Override
@@ -57,6 +59,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 			if (msg.what == Uris.MSG_CHANGEFONT) {
 				ChangeFontSize();
 			}else {
+				maxID += msg.what;
 				dialog.dismiss();
 				String json = (String) msg.obj;
 				updateListView(json);
@@ -83,6 +86,9 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		if (list == null) {
+			list = new ArrayList<Duanzi>();
+		}
 		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
 		refreshLayout.setOnRefreshListener(this);
@@ -91,11 +97,12 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 				android.R.color.holo_green_light,
 				android.R.color.holo_red_light);
 		initView();
+		maxID = Uris.max_dz_new;
 		inithttp();
 	}
 	
 	private void updateListView(String json){
-		List<Duanzi> list = setDuanziData.getListDuanzi(json, getActivity());
+		list = setDuanziData.getListDuanzi(json, getActivity(), list);
 		adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {
@@ -114,9 +121,11 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	
 	
 	private void inithttp(){
-		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
+		MyLogger.jLog().i("maxId_new  " + maxID);
+		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/" +maxID;
 		RequestDataTask requestData = new RequestDataTask(mHandler);
 		requestData.execute(postUri);
+		Uris.max_dz_new = maxID;
 	}
 	
 	

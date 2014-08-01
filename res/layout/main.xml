@@ -31,7 +31,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dip"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_2_duanzi" />
+            android:src="@drawable/mai_5_dz" />
 
         <TextView
             android:id="@+id/tv_duanzi"
@@ -41,7 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_duanzi"
-            android:textColor="@color/TextColor_bottom" />
+            android:textColor="@color/XYF_color" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_2_img" />
+            android:src="@drawable/mai_4_img" />
 
         <TextView
             android:id="@+id/tv_img"
@@ -73,29 +73,27 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_image"
-           android:textColor="@color/TextColor_bottom" />
+           android:textColor="@color/XYF_color" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginBottom="4.0dip"
         android:layout_marginLeft="2.0dip"
         android:layout_marginRight="2.0dip"
-        android:layout_marginTop="8.0dip"
         android:id="@id/channel3"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1.0"
         android:orientation="vertical" >
 
         <ImageView
+            android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/margin_5"
             android:id="@+id/iv_write"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_2_write" />
+            android:src="@drawable/mai_3_write" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -136,7 +134,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_mine"
-            android:textColor="@color/TextColor_bottom" />
+            android:textColor="@color/XYF_color" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -158,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mai_2_currset" />
+            android:src="@drawable/mai_2_setting_2" />
 
         <TextView
             android:id="@+id/tv_setting"
@@ -168,7 +166,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5.0dip"
             android:text="@string/tab_bar_more"
-            android:textColor="@color/TextColor_bottom" />
+            android:textColor="@color/XYF_color" />
     </RelativeLayout>
 
 </LinearLayout>

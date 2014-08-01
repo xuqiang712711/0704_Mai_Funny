@@ -38,7 +38,7 @@ import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
 import com.example.util.StringUtils;
-import com.example.util.UserUtils;
+import com.example.util.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -193,7 +193,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("duanzi", duanzi);
 			bundle.putInt("xwkkx", My_login_select.From_Duanzi);
-			if (UserUtils.UserIsExists(getActivity())) {
+			if (User.UserIsExists(getActivity())) {
 				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new DuanZi_Comment_Write(), bundle);
 			}else {
 				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new My_login_select(), bundle);

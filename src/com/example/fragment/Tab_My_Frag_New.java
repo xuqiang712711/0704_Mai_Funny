@@ -22,7 +22,7 @@ import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
-import com.example.util.UserUtils;
+import com.example.util.User;
 import com.umeng.socialize.common.SocializeConstants;
 
 import android.app.Activity;
@@ -106,7 +106,7 @@ private My_userinfo Frag_userinfo;
 		
 		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
 		String user_name = sp.getString("name", null);
-		if (user_name == null) {
+		if (user_name == null|| user_name.equals("")) {
 			unLogin.setVisibility(View.VISIBLE);
 			logined.setVisibility(View.GONE);
 			Log.e("FFF", "unLogin");
@@ -137,10 +137,10 @@ private My_userinfo Frag_userinfo;
 		app = (RelativeLayout)view.findViewById(R.id.my_app_new);
 		activity = (RelativeLayout)view.findViewById(R.id.my_activity_new);
 		
-		setWidget(check, R.string.my_check, R.drawable.mai_check, R.drawable.item_click_normal,2);
-		setWidget(app, R.string.my_app, R.drawable.mai_app, R.drawable.item_click_normal, 2);
-		setWidget(activity, R.string.my_activity, R.drawable.mai_activity, R.drawable.item_click_normal, 2);
-		setWidget(nemo, R.string.my_nemo, R.drawable.icon_test, R.drawable.item_click_normal, 2);
+		setWidget(check, R.string.my_check, R.drawable.mai_2_check, R.drawable.item_click_normal,2);
+		setWidget(app, R.string.my_app, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
+		setWidget(activity, R.string.my_activity, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
+		setWidget(nemo, R.string.my_nemo, R.drawable.mai_2_check, R.drawable.item_click_normal, 2);
 		
 		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_normal,1);
 		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_normal, 1);
@@ -158,7 +158,7 @@ private My_userinfo Frag_userinfo;
 		nemo4 = (RelativeLayout)view.findViewById(R.id.my_nemo4_new);
 		
 		setWidget(nemo1, R.string.my_nemo, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
-		setWidget(nemo2, R.string.my_nemo, R.drawable.mai_2_currset, R.drawable.item_click_normal, 2);
+		setWidget(nemo2, R.string.my_nemo, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
 		setWidget(nemo3, R.string.my_nemo, R.drawable.mai_2_x, R.drawable.item_click_normal, 2);
 		setWidget(nemo4, R.string.my_nemo, R.drawable.mai_2_sign, R.drawable.item_click_normal, 2);
 //		edit = (TextView)view.findViewById(R.id.user_info_edit);
@@ -210,7 +210,7 @@ private My_userinfo Frag_userinfo;
 			break;
 		case R.id.my_check_new:
 //			My_Check check = new My_Check();
-			if (UserUtils.UserIsExists(getActivity())) {
+			if (User.UserIsExists(getActivity())) {
 				Tab_Search_Frag check = new Tab_Search_Frag();
 				switchFragment(this, check);
 			}else {
@@ -220,7 +220,7 @@ private My_userinfo Frag_userinfo;
 			break;
 
 		case R.id.my_comment_new:
-			if (UserUtils.UserIsExists(getActivity())) {
+			if (User.UserIsExists(getActivity())) {
 				My_Comment comment = new My_Comment();
 				switchFragment(this, comment);
 			}else {
@@ -234,7 +234,7 @@ private My_userinfo Frag_userinfo;
 			Toast.makeText(getActivity(), "my_message", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.my_publish_new:
-			if (UserUtils.UserIsExists(getActivity())) {
+			if (User.UserIsExists(getActivity())) {
 				My_Publish publish = new My_Publish();
 				switchFragment(this, publish);
 			}else {

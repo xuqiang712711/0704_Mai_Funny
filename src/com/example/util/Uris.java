@@ -146,7 +146,7 @@ public final class Uris {
 };
 	//图片、文字段子
 	public static String Text_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
-	public static String Img_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/2/subType/3/maxID/0";
+	public static String Img_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/2/subType/3/maxID/";
 	
 	public static String Zan = "http://md.maimob.net/index.php/player/Zan";
 	public static String Cai = "http://md.maimob.net/index.php/player/Cai";
@@ -177,4 +177,8 @@ public final class Uris {
 	public static int Font_Size_big = 21;
 	
 	
+	public static int max_dz_hot;
+	public static int max_dz_new;
+	public static int max_img_hot;
+	public static int max_img_new;
 }

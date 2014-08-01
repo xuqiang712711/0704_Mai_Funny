@@ -37,32 +37,20 @@ public class RequestDataTask extends AsyncTask<String, Void, String>{
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 		if (mHandler != null) {
+			int maxID = 0;
+			try {
+				JSONArray array = new JSONArray(result);
+				maxID = array.length();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Log.e(Tag, "result  " + result);
 			Message msg = Message.obtain();
 			msg.obj = result;
-//			try {
-//				JSONArray array = new JSONArray(result);
-//				Log.e(Tag, "array  " + array);
-//			} catch (JSONException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//			JSONObject object;
-//			try {
-//				object = new JSONObject(result);
-//				String flag = object.optString("flag");
-//				int mflag = Integer.parseInt(flag);
-//				Log.e("FFF", "mflag  " + object.toString());
-//				if (mflag == 1) {
-//					msg.what = Uris.MSG_GETDATA;
-//				}else {
-//					msg.what = Uris.MSG_FAIL;
-//				}
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			msg.what = maxID;
 			mHandler.sendMessage(msg);
+			
 		}
 	}
 	

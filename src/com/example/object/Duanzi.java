@@ -7,6 +7,7 @@ import com.example.tab.R.drawable;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -76,6 +77,7 @@ public class Duanzi implements Serializable {
 //				txtview.setCompoundDrawables(ChangePic(context, ZAN_PRESSED), null, null, null);
 				imgView.setImageResource(R.drawable.ic_digg_pressed);
 				txtview.setText(String.valueOf(Integer.parseInt(zan) +1));
+				zan = String.valueOf(Integer.parseInt(zan) +1);
 				setZanPressed(true);
 			}else {
 				ToastUtil.showToast(context, ISZANED);
@@ -92,6 +94,7 @@ public class Duanzi implements Serializable {
 //				txtview.setCompoundDrawables(ChangePic(context, CAI_PRESSED), null, null, null);
 				imgView.setImageResource(R.drawable.ic_bury_pressed);
 				txtview.setText(String.valueOf(Integer.parseInt(getCai())+ 1));
+				cai = String.valueOf(Integer.parseInt(getCai())+ 1);
 				this.setCaiPressed(true);
 			}else {
 				ToastUtil.showToast(context, ISCAIED);

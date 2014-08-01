@@ -18,8 +18,11 @@ import com.example.sql.Mai_DBhelper;
 
 public class setDuanziData {
 	private static String Tag = "setDuanziData";
-	public static List<Duanzi> getListDuanzi(String json,Context context){
-		List<Duanzi> list = new ArrayList<Duanzi>();
+//	private static List<Duanzi> list = new ArrayList<Duanzi>();
+	public static List<Duanzi> getListDuanzi(String json,Context context, List<Duanzi> list){
+		if (list == null) {
+			list = new  ArrayList<Duanzi>();
+		}
 		try {
 			JSONArray array = new JSONArray(json);
 			for (int i = 0; i < array.length(); i++) {
@@ -33,7 +36,8 @@ public class setDuanziData {
 				String poid = item.getString("poid");//段子ID
 				String user_id = item.getString("pid");
 				Duanzi duanzi = new Duanzi(imageUrl ,name,null, cai, zan, content, comment,poid,false, false , 0,false, false);
-				list.add(duanzi);
+//				list.add(duanzi);
+				list.add(0, duanzi);
 				Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(context);
 				dBhelper.insertDuanziInfo(Integer.parseInt(poid), content, imageUrl, Integer.parseInt(cai), Integer.parseInt(zan)
 						, Integer.parseInt(comment), name, null, Integer.parseInt(user_id));
