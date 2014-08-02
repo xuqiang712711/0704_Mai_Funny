@@ -72,13 +72,9 @@ import android.widget.Toast;
 public class XAdapter extends BaseAdapter{
 	public static int fontSize = 14;
 	private Context context;
-	private static Map<Integer, Boolean> isChecked_Cai;
-	private static Map<Integer, Boolean> isChecked_Zan;
 	private DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private Fragment mFragment;
-	private static final int VIEW_TYPE_IMG = 0;
-	private static final int VIEW_TYPE_GIF = 1;
 	private int Image_Type = 0;
 	private UMSocialService mController;
 	private static Handler mHandler;

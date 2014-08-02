@@ -233,13 +233,13 @@ public class My_login_select extends Fragment{
 					}else {
 						mFragmentManage.BackStatck(getActivity());
 					}
-//	                 User user= new User(name, icon, location, description, gender);
-	                 User user= new User();
-	                 user.setName(name);
-	                 user.setDescription(description);
-	                 user.setGender(gender);
-	                 user.setLocation(location);
-	                 user.setIcon(icon);
+	                 User user= new User(name, icon, location, description, gender);
+//	                 User user= new User();
+//	                 user.setName(name);
+//	                 user.setDescription(description);
+//	                 user.setGender(gender);
+//	                 user.setLocation(location);
+//	                 user.setIcon(icon);
 	                 try {
 	                	 user.saveUser(getActivity(), SerUser.serializeUser(user));
 	                	 

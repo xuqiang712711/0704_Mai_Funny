@@ -38,6 +38,7 @@ import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
 import com.example.util.StringUtils;
+import com.example.util.Uris;
 import com.example.util.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -99,6 +100,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		Log.e("yyy", "name  " + duanzi.getUserName());
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
+		content.setTextSize(Uris.Font_Size);
 		Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
 		
 		Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));

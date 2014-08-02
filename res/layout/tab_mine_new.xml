@@ -133,18 +133,20 @@
                         style="@style/user_info"
                         android:layout_alignBottom="@+id/userinfo_points"
                         android:layout_toRightOf="@+id/userinfo_points"
+                        android:layout_toLeftOf="@+id/my_arrow"
                         android:text="@string/my_Test" />
+                    <ImageView
+                        android:id="@+id/my_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/margin_10"
+                        android:src="@drawable/mai_arrow" />
+
                 </RelativeLayout>
 
-                <ImageView 
-                    android:padding="@dimen/margin_10"
-                    android:id="@+id/my_arrow"
-                    android:src="@drawable/mai_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    />
+
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>

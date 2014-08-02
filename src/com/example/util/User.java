@@ -12,6 +12,10 @@ import java.io.UnsupportedEncodingException;
 import android.content.Context;
 
 public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6902540313752376551L;
 	private static MyLogger myLogger = MyLogger.jLog();
 	private String name;
 	private String icon;

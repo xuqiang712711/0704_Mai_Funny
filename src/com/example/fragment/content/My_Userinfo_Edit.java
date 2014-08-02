@@ -8,8 +8,11 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.AvoidXfermode.Mode;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -67,9 +70,12 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
+		SharedPreferences sp = getActivity().getSharedPreferences("SerUser", Context.MODE_PRIVATE);
+		String MYuser = sp.getString("user", null);
 		try {
-			User user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam("SerUser", getActivity(), "user", ""));
-			logger.i("name  " + user.toString());
+			User user = SerUser.deSerializationUser(MYuser);
+			logger.e("user  " + user.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,6 +83,17 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		try {
+//			User user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam("SerUser", getActivity(),
+//					"user", ""));
+//			logger.i("name  " + user.toString());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_edit));
 		Button back = (Button)view.findViewById(R.id.top_left);

@@ -33,7 +33,7 @@ public class SerUser {
 	 * @throws ClassNotFoundException
 	 */
 	public static User deSerializationUser(String str) throws IOException, ClassNotFoundException{
-		String redStr = java.net.URLEncoder.encode(str, "UTF-8");
+		String redStr = java.net.URLDecoder.decode(str, "UTF-8");
 		ByteArrayInputStream bis = new ByteArrayInputStream(redStr.getBytes("ISO-8859-1"));
 		ObjectInputStream objectIs = new ObjectInputStream(bis);
 		User user = (User) objectIs.readObject();
