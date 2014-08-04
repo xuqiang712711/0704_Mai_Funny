@@ -21,6 +21,7 @@
             android:clickable="true"
             android:src="@drawable/ugc_publish_upload_icon"
             android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_5"
             android:id="@+id/my_write_image"
             android:layout_width="50dp"
             android:layout_height="50dp"

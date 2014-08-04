@@ -8,6 +8,7 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
+import com.example.util.MyLogger;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +18,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class My_Publish extends Fragment implements OnClickListener{
+public class My_Publish extends Fragment implements OnClickListener, OnItemClickListener{
 	private View view;
-	
+	private List<Duanzi> list_duanzi;
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			
@@ -50,14 +53,17 @@ public class My_Publish extends Fragment implements OnClickListener{
 		bt_right.setVisibility(View.GONE);
 		
 		Mai_DBhelper dbhelper = Mai_DBhelper.getInstance(getActivity());
-		List<Duanzi> list_duanzi = dbhelper.selectPub();
+		list_duanzi = dbhelper.selectPub();
 		XAdapter xAdapter = new XAdapter(list_duanzi, mHandler, MaimobApplication.mController, this, getActivity());
 		ListView lv = (ListView)view.findViewById(R.id.my_pub_list);
+		lv.setOnItemClickListener(this);
+		MyLogger.jLog().i("size  " + list_duanzi.size());
 		if (list_duanzi.size() != 0) {
-			Log.e("FFF", "size  +~~" +list_duanzi.size());
 			lv.setAdapter(xAdapter);
 		}
 	}
+	
+	
 
 	@Override
 	public void onClick(View v) {
@@ -70,5 +76,16 @@ public class My_Publish extends Fragment implements OnClickListener{
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		Duanzi duanzi = list_duanzi.get(position);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("duanzi", duanzi);
+		mFragmentManage.SwitchFrag(getActivity(), My_Publish.this, new DuanZi_Comment(), bundle);
+		MyLogger.jLog().i("onitemclick  " + duanzi.getContent());
+		
 	}
 }

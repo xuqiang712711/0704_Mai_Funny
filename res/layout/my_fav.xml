@@ -9,8 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/back_duanzi"/>
+    <TextView 
+        android:visibility="gone"
+        android:layout_below="@+id/my_fav_top"
+        android:id="@+id/my_fav_note"
+        style="@style/duanzi_content_textview"
+        android:text="@string/note_Fav"/>
 	<ListView 
-	    android:layout_below="@+id/my_fav_top"
+	    android:layout_below="@+id/my_fav_note"
 	    android:id="@+id/my_fav_list"
 	    android:layout_width="match_parent"
         android:layout_height="match_parent"

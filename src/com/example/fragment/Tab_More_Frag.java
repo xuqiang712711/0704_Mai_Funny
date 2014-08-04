@@ -32,15 +32,18 @@ import com.example.fragment.content.More_feedback;
 import com.example.fragment.content.My_Favorite;
 import com.example.fragment.content.My_Write;
 import com.example.tab.R;
+import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
 
 public class Tab_More_Frag extends Fragment implements OnClickListener{
 	private View view;
+	private MyLogger myLogger = MyLogger.jLog();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		myLogger.i("onCreateView");
 		view = inflater.inflate(R.layout.tab_more, container, false);
 		initTextView();
 		return view;
@@ -50,6 +53,7 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		myLogger.i("onActivityCreated");
 		listenCheckbox();
 		listenRadiobutton();
 		listenLayout();

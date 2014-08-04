@@ -82,6 +82,10 @@
     <string name="renren">人人网</string>
     <string name="douban">豆瓣网</string>
     
+    <string name="note_Comment">评论数为0</string>
+    <string name="note_Fav">收藏数为0</string>
+    <string name="note_Pub">帖子数位0</string>
+    
     
 	    
     

@@ -17,13 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class My_Favorite extends Fragment implements OnClickListener{
+public class My_Favorite extends Fragment implements OnClickListener, OnItemClickListener{
 	private View view;
 	private XAdapter xAdapter;
+	private List<Duanzi> list_duanzi;
 	
 	Handler mhandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -42,6 +45,7 @@ public class My_Favorite extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		TextView tv_note = (TextView)view.findViewById(R.id.my_fav_note);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_fav_title));
 		Button bt_back = (Button)view.findViewById(R.id.top_left);
@@ -49,13 +53,16 @@ public class My_Favorite extends Fragment implements OnClickListener{
 		bt_right.setVisibility(View.GONE);
 		bt_back.setOnClickListener(this);
 		Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(getActivity());
-		List<Duanzi> list_duanzi = dBhelper.selectFav();
+		list_duanzi = dBhelper.selectFav();
 		if (list_duanzi.size() != 0) {
 			Log.i("FFF", "size "+ list_duanzi.size());
+			xAdapter = new XAdapter(list_duanzi, mhandler, MaimobApplication.mController, this, getActivity());
+			ListView listView = (ListView)view.findViewById(R.id.my_fav_list);
+			listView.setAdapter(xAdapter);
+		}else {
+			tv_note.setVisibility(View.VISIBLE);
 		}
-		xAdapter = new XAdapter(list_duanzi, mhandler, MaimobApplication.mController, this, getActivity());
-		ListView listView = (ListView)view.findViewById(R.id.my_fav_list);
-		listView.setAdapter(xAdapter);
+
 	}
 
 	@Override
@@ -69,5 +76,14 @@ public class My_Favorite extends Fragment implements OnClickListener{
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		Duanzi duanzi = list_duanzi.get(position);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("duanzi", duanzi);
+		mFragmentManage.SwitchFrag(getActivity(), My_Favorite.this, new DuanZi_Comment(), bundle);
 	}
 }

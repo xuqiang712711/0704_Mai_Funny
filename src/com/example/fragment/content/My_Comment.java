@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,11 +32,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class My_Comment extends Fragment implements OnClickListener{
+public class My_Comment extends Fragment implements OnClickListener,OnItemClickListener{
 	private View view;
 	private List<Map<String, Object>> data;
 	private LayoutInflater mInflater;
 	private TextView tv_note;
+	private ListView lv_comment;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -62,7 +65,8 @@ public class My_Comment extends Fragment implements OnClickListener{
 			MyLogger.jLog().i("name " +duanzi.getUserName() + "  content " + duanzi.getContent());
 		}
 		if (data.size() > 0) {
-			ListView lv_comment = (ListView)view.findViewById(R.id.my_comment_lv);
+			lv_comment = (ListView)view.findViewById(R.id.my_comment_lv);
+			lv_comment.setOnItemClickListener(this);
 			CommentAdapter adapter = new CommentAdapter();
 			lv_comment.setAdapter(adapter);
 		}else {
@@ -135,5 +139,10 @@ public class My_Comment extends Fragment implements OnClickListener{
 	public static class ViewHolder{
 		ImageView icon;
 		TextView name,comment,content;
+	}
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		Bundle bundle = new Bundle();
 	}
 }

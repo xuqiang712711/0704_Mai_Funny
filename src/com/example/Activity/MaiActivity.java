@@ -288,13 +288,13 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		FragmentManager fm2 = getSupportFragmentManager();
 		FragmentTransaction ft2 = fm2.beginTransaction();
 		if (from != to) {
-			Log.e(Tag, "First");
+			myLogger.i("FRI");
 			if (to.isAdded()) {
-				Log.e(Tag, "Sec");
+				myLogger.i("SEC");
 				ft2.hide(from).show(to).commit();
 			}else {
 				ft2.hide(from).add(R.id.content_container2, to).addToBackStack(null).commit();
-				Log.i(Tag, "add");
+				myLogger.i("THI");
 			}
 		}
 	}
