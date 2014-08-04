@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@color/gery">
+    android:background="@color/gainsboro">
     <LinearLayout 
         android:id="@+id/my_userinfo_sec_main"
         android:orientation="vertical"
@@ -10,19 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-        <include 
-            layout="@layout/more_style1"
-            android:id="@+id/my_userinfo_sec_name"/>
-        <include 
-            layout="@layout/line_horizontal"/>
-        <include 
-            layout="@layout/more_style1"
-            android:id="@+id/my_userinfo_sec_sex"/>
-        <include 
-            layout="@layout/line_horizontal"/>
-        <include 
-            layout="@layout/more_style1"
-            android:id="@+id/my_userinfo_sec_address"/>
+        <include
+            android:id="@+id/my_userinfo_sec_name"
+            layout="@layout/more_style1" />
+
+        <include layout="@layout/line_horizontal" />
+
+        <include
+            android:id="@+id/my_userinfo_sec_sex"
+            layout="@layout/more_style1" />
+
+        <include layout="@layout/line_horizontal" />
+
+        <include
+            android:id="@+id/my_userinfo_sec_address"
+            layout="@layout/more_style1" />
+
     </LinearLayout>
     
     <LinearLayout 

@@ -160,7 +160,6 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 					fragtrain.show(login_select);
 				}
 			}
-			iv_write.setImageResource(R.drawable.mai_2_write_cl);
 			break;
 		case 4:
 //			if (Frag_my== null) {
@@ -222,7 +221,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 //		c5.setBackgroundResource(0);
 		iv_duanzi.setImageResource(R.drawable.mai_5_dz);
 		iv_img.setImageResource(R.drawable.mai_4_img);
-		iv_write.setImageResource(R.drawable.mai_3_write);
+//		iv_write.setImageResource(R.drawable.mai_3_write);
 		iv_my.setImageResource(R.drawable.mai_2_my);
 		iv_setting.setImageResource(R.drawable.mai_2_setting_2);
 		

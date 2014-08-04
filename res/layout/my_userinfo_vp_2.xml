@@ -3,13 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@color/gery">
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的帖子"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    android:background="@color/gainsboro">
+	<TextView 
+	    android:visibility="gone"
+	    android:id="@+id/my_user_vp_empty"
+	    style="@style/duanzi_content_textview"
+	    android:text="评论数为0"/>
+	<ListView 
+	    android:id="@+id/my_userinfo_vp2_list"
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/duanzi_margin"
+        android:dividerHeight="20dp"
+        android:divider="@color/gainsboro"
+        android:listSelector="#00000000" >
+	</ListView>
 
 </LinearLayout>

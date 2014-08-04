@@ -1,9 +1,16 @@
 package com.example.fragment.content;
 
+import java.io.IOException;
+
+import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.object.mOauth;
 import com.example.tab.R;
+import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
+import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
 import com.example.util.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMediaObject.MediaType;
@@ -21,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,8 +36,10 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 	View view;
 	private RelativeLayout renren, tencent_wb,sina,douban,name, sex, address;
 	private int sinaStatus,tencentStatus,renrenStatus,doubanStatus;
+	private TextView tv_name, tv_gender, tv_location;
 	private Button bt_UnRegister;
 	private int type;
+	private User user;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -41,8 +51,35 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		user = SerUser.deSerializationUser((String) SharedPreferencesUtils
+				.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+						SharedPreferencesUtils.SerUser_user, ""));
 		initView();
 		checkPlatformStatus();
+	}
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		MyLogger.jLog().i("刷新数据Vp");
+		user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+				SharedPreferencesUtils.user, ""));
+		if (mFragmentManage.Refresh_userInfo) {
+			if (!hidden) {
+				MyLogger.jLog().i("刷新数据Vp~~~~ " + user.judgeGender());
+				tv_name.setText(user.getName());
+				tv_location.setText(user.getLocation());
+				tv_gender.setText(user.judgeGender());
+			}
+		}
 	}
 	
 	private void initView(){
@@ -58,18 +95,20 @@ public class My_userInfo_vp_home extends Fragment implements OnClickListener{
 		
 		((TextView)name.findViewById(R.id.more_text1)).setText("昵称");
 		((TextView)name.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);;
-		((TextView)name.findViewById(R.id.more_text2)).setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user,
-				getActivity(), SharedPreferencesUtils.user_name, ""));
+		((TextView)name.findViewById(R.id.more_text2)).setText(user.getName());
+		((ImageView)name.findViewById(R.id.more_img)).setVisibility(View.GONE);
 		
-		User.decideGender(getActivity());
+//		User.decideGender(getActivity());
 		((TextView)sex.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);
-		((TextView)sex.findViewById(R.id.more_text2)).setText("X");
+		((TextView)sex.findViewById(R.id.more_text2)).setText(user.judgeGender());
 		((TextView)sex.findViewById(R.id.more_text1)).setText("性别");
+		((ImageView)sex.findViewById(R.id.more_img)).setVisibility(View.GONE);
 		
 		((TextView)address.findViewById(R.id.more_text1)).setText("地址");
 		((TextView)address.findViewById(R.id.more_text2)).setVisibility(View.VISIBLE);;
-		((TextView)address.findViewById(R.id.more_text2)).setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user,
-				getActivity(), SharedPreferencesUtils.user_location, ""));
+		((TextView)address.findViewById(R.id.more_text2)).setText(user.getLocation());
+		((ImageView)address.findViewById(R.id.more_img)).setVisibility(View.GONE);
+		
 		
 		bt_UnRegister = (Button)view.findViewById(R.id.my_unRegister);
 		bt_UnRegister.setOnClickListener(this);

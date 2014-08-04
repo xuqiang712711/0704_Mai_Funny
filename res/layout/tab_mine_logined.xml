@@ -77,7 +77,6 @@
 		    android:layout_above="@+id/my_3"/>
         <LinearLayout 
             android:id="@+id/my_3"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_userinfo_top"

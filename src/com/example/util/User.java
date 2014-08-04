@@ -114,10 +114,10 @@ public class User implements Serializable{
 		return (Boolean) SharedPreferencesUtils.getParam("platform", context, "Exists", false);
 	}
 	//获取性别
-	public static String decideGender(Context context){
-		int gender = (Integer)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_gender, 1);
-		MyLogger.jLog().i("gender  " +gender);
-//		return gender == 1?"男":"女";
-		return "xxx";
+	public String judgeGender(){
+//		int gender = (Integer)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_gender, 1);
+//		MyLogger.jLog().i("gender  " +gender);
+		return gender == 1?"男":"女";
+//		return "xxx";
 	}
 }

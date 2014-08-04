@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.object.Duanzi;
+import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 
 import android.content.ContentValues;
@@ -145,6 +146,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		db = getWritableDatabase();
 		try {
 			ContentValues cv = new ContentValues();
+			MyLogger.jLog().i("content  " + content + "  comment " + comment);
 			cv.put("content", content);
 			cv.put("pid", pid);
 			cv.put("comment", comment);
@@ -346,22 +348,36 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		}
 	}
 	
-	public int selectFavCount(){
+	public Duanzi selectDuanzi(int pid){
 		db = getReadableDatabase();
-		int max = 0;
+		Duanzi duanzi = null;
+		mCursor = db.rawQuery("select * from " + DATABASE_NAME_DUANZI + " where pid = ?", new String[]{String.valueOf(pid)});
 		try {
-			mCursor = db.rawQuery("select id from "+ DATABASE_NAME_PUBLISH + " order by id desc", new String[]{});
 			if (mCursor.moveToFirst()) {
 				do {
-					max = mCursor.getInt(mCursor.getColumnIndex("id"));
+					String imgUrl = mCursor.getString(mCursor.getColumnIndex("imgurl"));
+					String name 	  = mCursor.getString(mCursor.getColumnIndex("user_name"));
+					String id 	  = mCursor.getString(mCursor.getColumnIndex("user_id"));
+					String icon 	  = mCursor.getString(mCursor.getColumnIndex("user_icon"));
+					String content 	  = mCursor.getString(mCursor.getColumnIndex("content"));
+					int comment_count = mCursor.getInt(mCursor.getColumnIndex("comment_count"));
+					int cai_count = mCursor.getInt(mCursor.getColumnIndex("cai_count"));
+					int zan_count = mCursor.getInt(mCursor.getColumnIndex("zan_count"));
+					duanzi = new Duanzi(imgUrl, name, icon, String.valueOf(cai_count), String.valueOf(zan_count), content, String.valueOf(comment_count),
+							String.valueOf(pid), false, false, 0, false, false);
 				} while (mCursor.moveToNext());
 			}
-			db.close();
-			return max;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
-			return 0;
+		}finally{
+			if (mCursor !=null) {
+				mCursor.close();
+			}else if (db != null) {
+				db.close();
+			}
 		}
+		return duanzi;
+		
 	}
+	
 }

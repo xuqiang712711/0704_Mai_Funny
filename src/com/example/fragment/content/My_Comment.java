@@ -7,10 +7,14 @@ import pl.droidsonroids.gif.GifImageView;
 
 import com.example.adapter.X_Text_Adapter.ViewHolder;
 import com.example.application.MaimobApplication;
+import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
+import com.example.util.Uris;
+import com.example.util.User;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +34,7 @@ public class My_Comment extends Fragment implements OnClickListener{
 	private View view;
 	private List<Map<String, Object>> data;
 	private LayoutInflater mInflater;
+	private TextView tv_note;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class My_Comment extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		tv_note = (TextView) view.findViewById(R.id.my_comment_note);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_comment_title));
 		Button bt_back = (Button)view.findViewById(R.id.top_left);
@@ -51,14 +57,17 @@ public class My_Comment extends Fragment implements OnClickListener{
 		
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
 		data = db.selectComment();
+		Duanzi duanzi = db.selectDuanzi(13);
+		if (duanzi != null) {
+			MyLogger.jLog().i("name " +duanzi.getUserName() + "  content " + duanzi.getContent());
+		}
 		if (data.size() > 0) {
 			ListView lv_comment = (ListView)view.findViewById(R.id.my_comment_lv);
 			CommentAdapter adapter = new CommentAdapter();
 			lv_comment.setAdapter(adapter);
+		}else {
+			tv_note.setVisibility(View.VISIBLE);
 		}
-		
-		
-		
 	}
 
 	@Override
@@ -106,15 +115,18 @@ public class My_Comment extends Fragment implements OnClickListener{
 				convertView = inflater.inflate(R.layout.my_comment_item, null);
 				holder.icon = (ImageView) convertView.findViewById(R.id.my_comment_head);
 				holder.name = (TextView)convertView.findViewById(R.id.my_comment_name);
-				holder.content = (TextView)convertView.findViewById(R.id.my_comment_content);
-				holder.comment = (TextView)convertView.findViewById(R.id.my_comment_comment);
+				holder.content = (TextView)convertView.findViewById(R.id.my_comment_dz_content);
+				holder.comment = (TextView)convertView.findViewById(R.id.my_comment_content);
 				convertView.setTag(holder);
 			}else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.name.setText((String)data.get(position).get("name"));
+			holder.content.setTextSize(Uris.Font_Size);
 			holder.content.setText((String)data.get(position).get("content"));
+			holder.comment.setTextSize(Uris.Font_Size);
 			holder.comment.setText((String)data.get(position).get("comment"));
+			MyLogger.jLog().i("content  " + (String)data.get(position).get("content") + "  comment  " + (String)data.get(position).get("comment") );
 			MaimobApplication.imageLoader.displayImage((String)data.get(position).get("icon"), holder.icon, ImageUtil.getOption());
 			return convertView;
 		}

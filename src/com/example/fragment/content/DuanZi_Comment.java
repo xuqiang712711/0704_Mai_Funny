@@ -37,6 +37,7 @@ import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
+import com.example.util.MyLogger;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.example.util.User;
@@ -74,6 +75,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		initView();
 	}
 	
+	@SuppressWarnings("unused")
 	private void initView(){
 //		mitem_top = (LinearLayout)view.findViewById(R.id.mitem_top);
 		TextView textView = (TextView)view.findViewById(R.id.top_text);
@@ -132,6 +134,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		String imgUri = duanzi.getImageUrl();
 		Log.e(Tag, "Imguri  " + imgUri);
 		if (imgUri != null && !imgUri.equals("")) {
+			String currImgUrl = StringUtils.checkImgPath(imgUri);
 			options = new DisplayImageOptions.Builder()
 			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 			.showImageOnLoading(R.drawable.maimob)
@@ -142,19 +145,40 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			image.setVisibility(View.VISIBLE);
 			String currName = StringUtils.checkImgPath(imgUri);
 			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
+//				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
+//						imageLoader.getDiskCache());
+//				if (imgFile != null && !imgFile.equals("")) {
+//					int ReqHeight = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
+//					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
+//					params.height = ReqHeight;
+//					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+//					gif.setLayoutParams(params);
+//				}
+//				hint_img.setVisibility(View.VISIBLE);
+//				image.setVisibility(View.GONE);
+//				gif.setVisibility(View.VISIBLE);
+//				imageLoader.displayImage(currName, gif, options);
+				
+
+				hint_img.setVisibility(View.VISIBLE);
+				gif.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(currImgUrl, gif, options);
 				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
 						imageLoader.getDiskCache());
-				if (imgFile != null && !imgFile.equals("")) {
-					int ReqHeight = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
+				if (imgFile != null) {
+					int h = BitmapOptions.getWH(imgFile.toString(),
+							MaimobApplication.DeviceW);
 					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
-					params.height = ReqHeight;
+					params.height = h;
+					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+					gif.setLayoutParams(params);
+				}else if (currImgUrl.startsWith("file")) {
+					int h = BitmapOptions.getWH(imgUri, MaimobApplication.DeviceW);
+					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
+					params.height = h;
 					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
 					gif.setLayoutParams(params);
 				}
-				hint_img.setVisibility(View.VISIBLE);
-				image.setVisibility(View.GONE);
-				gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(currName, gif, options);
 			}else {
 				hint_img.setVisibility(View.GONE);
 				gif.setVisibility(View.GONE);

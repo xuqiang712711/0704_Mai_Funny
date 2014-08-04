@@ -1,5 +1,6 @@
 package com.example.fragment.content;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,10 @@ import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
+import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
+import com.example.util.User;
 
 public class My_userinfo extends Fragment implements OnClickListener{
 	private String Tag = "My_userinfo";
@@ -57,6 +60,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	private TextView tv_user_name;
 	private TextView tv_user_description;
 	private ImageView iv_user_head;
+	private User user;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,23 +74,22 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		initBMP();
-		initView();
-		initViewPager();
 	}
 	
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		// TODO Auto-generated method stub
 		super.onHiddenChanged(hidden);
+		user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+				SharedPreferencesUtils.user, ""));
 		if (mFragmentManage.Refresh_userInfo) {
 			if (!hidden) {
-				MyLogger.jLog().i("userInfo_hide");
-				tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
-				tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+				MyLogger.jLog().i("刷新数据~~~~ " + user.getName());
+				tv_user_name.setText(user.getName());
+				tv_user_description.setText(user.getDescription());
 				MaimobApplication.imageLoader.displayImage(
-						StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
-						(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
+						StringUtils.checkImgPath(user.getIcon()), iv_user_head, ImageUtil.getOption());
+				initViewPager();
 			}
 		}
 	}
@@ -114,24 +117,35 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		vp.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
 	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MyLogger.jLog().i("初始化user");
+		user = SerUser.deSerializationUser((String) SharedPreferencesUtils
+				.getParam("SerUser", getActivity(), "user", ""));
+		initBMP();
+		initView();
+		initViewPager();
+	}
+	
 	private void initView(){
 		userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_main);
 		userinfo.setOnClickListener(this);
 		
 		//User_Info
 		sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-		iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
-		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
+ 		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
 		tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
+		iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
 		MaimobApplication.imageLoader.displayImage(
-		StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
-		(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
-		tv_user_name.setText(sp.getString("name", null));
-		tv_user_description.setText(sp.getString("description", null));
+		StringUtils.checkImgPath(StringUtils.checkImgPath(user.getIcon())), iv_user_head, ImageUtil.getOption());
+		tv_user_name.setText(user.getName());
+		tv_user_description.setText(user.getDescription());
 		
 		//Title
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);   
-		tv_title.setText(sp.getString("name", null));
+		tv_title.setText(user.getName());
 		Button back = (Button)view.findViewById(R.id.top_left);
 		back.setOnClickListener(this);
 		Button right = (Button)view.findViewById(R.id.top_right);
@@ -242,9 +256,8 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	}
 	
 	public void refresh(){
-		tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
-		tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
-		
+//		tv_user_name.setText(user.getName());
+//		tv_user_description.setText(user.getDescription());
 	}
 	
 }

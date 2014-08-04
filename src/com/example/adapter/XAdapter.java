@@ -180,14 +180,7 @@ public class XAdapter extends BaseAdapter{
 			imageLoader.displayImage(user_head, holder.user_icon, options);
 		}
 		if (imgUri != null &&!imgUri.equals("")) {
-			
 			String currImgUrl = StringUtils.checkImgPath(imgUri);
-//			if (!imgUri.startsWith("http")) {
-//				currImgUrl = "file:///" +imgUri;
-//			}else {
-//				currImgUrl = imgUri;
-//			}
-			
 			Log.e(TAG, "curr  " +currImgUrl + "  img  " + imgUri);
 			if ((currImgUrl.substring(currImgUrl.length() - 3, currImgUrl.length()))
 					.equals("gif")) {

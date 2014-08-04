@@ -240,13 +240,7 @@ public class My_login_select extends Fragment{
 //	                 user.setGender(gender);
 //	                 user.setLocation(location);
 //	                 user.setIcon(icon);
-	                 try {
 	                	 user.saveUser(getActivity(), SerUser.serializeUser(user));
-	                	 
-	                 } catch (IOException e) {
-	                	 // TODO Auto-generated catch block
-	                	 e.printStackTrace();
-	                 }
 	          }else{
 	             Log.d("TestData","·¢Éú´íÎó£º"+status);
 	          }

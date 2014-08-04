@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-    <RelativeLayout 
+    android:layout_height="wrap_content"
+    android:background="@color/gainsboro" >
+
+    <RelativeLayout
         android:id="@+id/my_comment_top"
-        android:layout_margin="@dimen/margin_10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView 
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <ImageView
             android:id="@+id/my_comment_head"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/mai_user_head"/>
-        <TextView 
-            android:layout_marginLeft="@dimen/margin_10"
-            android:textSize="@dimen/ts_20"
-            android:text="xwkkx"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin_5"
+            android:src="@drawable/mai_user_head" />
+
+        <TextView
             android:id="@+id/my_comment_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/my_comment_head"/>
-        <TextView 
-            android:id="@+id/my_comment_comment"
-            android:textSize="@dimen/ts_20"
+            android:layout_alignTop="@+id/my_comment_head"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_toRightOf="@+id/my_comment_head"
+            android:text="xwkkx"
+            android:textSize="@dimen/ts_18" />
+
+        <TextView
+            android:id="@+id/my_comment_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="i am comment"
+            android:layout_alignLeft="@+id/my_comment_name"
             android:layout_below="@+id/my_comment_name"
-            android:layout_alignLeft="@+id/my_comment_name"/>
+            android:text="发送时间"
+            android:textSize="@dimen/ts_15" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/margin_5"
+            android:id="@+id/my_comment_content"
+            style="@style/duanzi_content_textview"
+            android:layout_below="@+id/my_comment_head"
+            android:text="content test" />
     </RelativeLayout>
-	<TextView 
-	    android:id="@+id/my_comment_content"
-	    android:layout_below="@+id/my_comment_top"
-	    android:padding="@dimen/margin_5"
-	    android:background="@color/gery"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:textSize="@dimen/ts_20"
-	    android:text="content     ~~~content     ~~~content     ~~~content     ~~~"/>
+
+    <View
+        android:id="@+id/my_comment_line"
+        style="@style/item_line_horizontal"
+        android:layout_below="@+id/my_comment_top"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5" />
+
+    <TextView
+        android:id="@+id/my_comment_dz_content"
+        style="@style/duanzi_content_textview"
+        android:layout_below="@+id/my_comment_line"
+        android:background="@color/white"
+        android:padding="@dimen/margin_5"
+        android:text="content     ~~~content     ~~~content     ~~~content     ~~~" />
+
 </RelativeLayout>

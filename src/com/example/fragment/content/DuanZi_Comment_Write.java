@@ -197,8 +197,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				}else if (isCheck_douban) {
 					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, duanziContent, null, getActivity(), handler);
 				}
-				Log.e(Tag, "edit  " + editContent + "  duanzi  " + duanziContent);
-				insertComment(editContent, Integer.parseInt(pid), duanziContent);
+				insertComment(duanziContent , Integer.parseInt(pid), editContent);
 			}else {
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
@@ -278,9 +277,9 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		}
 	}
 	
-	public void insertComment(String editContent, int pid,String duanziContent){
+	public void insertComment(String duanziContent, int pid,String editContent){
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
-		db.insertUser_Comment(editContent, pid,duanziContent);
+		db.insertUser_Comment(duanziContent, pid,editContent);
 	}
 	
 }

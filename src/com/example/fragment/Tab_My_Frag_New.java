@@ -20,6 +20,7 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
+import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
 import com.example.util.User;
@@ -51,7 +52,12 @@ private String Tag = "Tab_My_Frag_New";
 private TextView tv_user_description,tv_user_name;
 private ImageView iv_user_head,my_arrow;
 private int count_Fav= 0;
+private int count_publish = 0;
+private int count_comment = 0;
 private My_userinfo Frag_userinfo;
+private User user;
+private MyLogger logger;
+private boolean userIsExists = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -73,16 +79,22 @@ private My_userinfo Frag_userinfo;
 			// TODO Auto-generated method stub
 			super.onActivityCreated(savedInstanceState);
 			Log.e(Tag, "onActivityCreated");
+		}
+	
+	@Override
+		public void onResume() {
+			// TODO Auto-generated method stub
+			super.onResume();
+			userIsExists = (Boolean) SharedPreferencesUtils.getParam(SharedPreferencesUtils.platform, getActivity(),
+					SharedPreferencesUtils.platform_Exists, false);
+            user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+                    SharedPreferencesUtils.user, ""));
 			Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity()); 
 			count_Fav = db.selectFav().size();
+			count_comment = db.selectComment().size();
+			count_publish = db.selectPub().size();
+//			logger.i("count_Fav  " + count_Fav);
 			initView();
-			
-//			count_Fav = db.selectFavCount();
-			
-//			List<Duanzi> list  = db.selectFav();
-//			Log.e(Tag, "Fav_size  " + list.size());
-			
-			
 			listenWidget(R.id.my_check_new);
 			listenWidget(R.id.my_favorite_new);
 			listenWidget(R.id.my_message_new);
@@ -103,30 +115,22 @@ private My_userinfo Frag_userinfo;
 		iv_user_head = (ImageView)view.findViewById(R.id.userinfo_icon);
 		tv_user_name = (TextView)view.findViewById(R.id.userinfo_name);
 		tv_user_description = (TextView)view.findViewById(R.id.user_points_num);
-		
-		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-		String user_name = sp.getString("name", null);
-		if (user_name == null|| user_name.equals("")) {
+		MyLogger.jLog().i("boo  " + userIsExists);
+		if (!userIsExists) {
 			unLogin.setVisibility(View.VISIBLE);
 			logined.setVisibility(View.GONE);
 			Log.e("FFF", "unLogin");
 		} else {
 			unLogin.setVisibility(View.GONE);
 			logined.setVisibility(View.VISIBLE);
-			tv_user_name.setText(user_name);
-			tv_user_description.setText(sp.getString("description", null));
+			tv_user_name.setText(user.getName());
+			tv_user_description.setText(user.getDescription());
 			MaimobApplication.imageLoader.displayImage(StringUtils
-					.checkImgPath((String) SharedPreferencesUtils.getParam(
-							SharedPreferencesUtils.user, getActivity(),
-							SharedPreferencesUtils.user_icon, "")),
+					.checkImgPath(user.getIcon()),
 					iv_user_head, ImageUtil.getOption());
 			Log.e("FFF", "logined");
 		}
-
-		
 		unLogin.setOnClickListener(this);
-//		RelativeLayout userinfo = (RelativeLayout)view.findViewById(R.id.my_userinfo_top);
-//		userinfo.setOnClickListener(this);
 		
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
@@ -137,19 +141,23 @@ private My_userinfo Frag_userinfo;
 		app = (RelativeLayout)view.findViewById(R.id.my_app_new);
 		activity = (RelativeLayout)view.findViewById(R.id.my_activity_new);
 		
-		setWidget(check, R.string.my_check, R.drawable.mai_2_check, R.drawable.item_click_normal,2);
-		setWidget(app, R.string.my_app, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
-		setWidget(activity, R.string.my_activity, R.drawable.mai_2_app, R.drawable.item_click_normal, 2);
-		setWidget(nemo, R.string.my_nemo, R.drawable.mai_2_check, R.drawable.item_click_normal, 2);
+		setWidget(check, R.string.my_check, R.drawable.mai_2_check, R.drawable.item_click_center,2);
+		setWidget(app, R.string.my_app, R.drawable.mai_2_app, R.drawable.item_click_center, 2);
+		setWidget(activity, R.string.my_activity, R.drawable.mai_2_app, R.drawable.item_click_center, 2);
+		setWidget(nemo, R.string.my_nemo, R.drawable.mai_2_check, R.drawable.item_click_center, 2);
 		
-		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_normal,1);
-		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_normal, 1);
-		setWidget(message, R.string.my_message, R.drawable.my_message_icon, R.drawable.item_click_normal, 1);
-		setWidget(publish, R.string.my_publish, R.drawable.my_publish_icon ,R.drawable.item_click_normal, 1);
+		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_center,1);
+		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_center, 1);
+		setWidget(message, R.string.my_message, R.drawable.my_message_icon, R.drawable.item_click_center, 1);
+		setWidget(publish, R.string.my_publish, R.drawable.my_publish_icon ,R.drawable.item_click_center, 1);
 		
 		TextView tv_Fav = (TextView)favorite.findViewById(R.id.my_tv_tv1);
+		TextView tv_Comment = (TextView)comment.findViewById(R.id.my_tv_tv1);
+		TextView tv_Pub = (TextView)publish.findViewById(R.id.my_tv_tv1);
 		Log.e(Tag, "Fav  " + count_Fav);
 		tv_Fav.setText(String.valueOf(count_Fav));
+		tv_Comment.setText(String.valueOf(count_comment));
+		tv_Pub.setText(String.valueOf(count_publish));
 		
 		
 		nemo1 = (RelativeLayout)view.findViewById(R.id.my_nemo1_new);
@@ -284,14 +292,25 @@ private My_userinfo Frag_userinfo;
 			// TODO Auto-generated method stub
 			super.onHiddenChanged(hidden);
 			MyLogger.jLog().i("我叫你玉蝴蝶");
+//			if (mFragmentManage.Refresh_userInfo) {
+//				if (!hidden) {
+//						MyLogger.jLog().i("恋生花");
+//						tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
+//						tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
+//						MaimobApplication.imageLoader.displayImage(
+//								StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
+//								(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
+//				}
+//			}
+			user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+					SharedPreferencesUtils.user, ""));
 			if (mFragmentManage.Refresh_userInfo) {
 				if (!hidden) {
-						MyLogger.jLog().i("恋生花");
-						tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
-						tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
-						MaimobApplication.imageLoader.displayImage(
-								StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
-								(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
+					MyLogger.jLog().i("刷新数据~~~~ " + user.getName());
+					tv_user_name.setText(user.getName());
+					tv_user_description.setText(user.getDescription());
+					MaimobApplication.imageLoader.displayImage(
+							StringUtils.checkImgPath(user.getIcon()), iv_user_head, ImageUtil.getOption());
 				}
 			}
 	

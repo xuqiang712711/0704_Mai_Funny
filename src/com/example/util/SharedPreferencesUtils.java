@@ -1,5 +1,7 @@
 package com.example.util;
 
+import java.io.IOException;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -33,6 +35,10 @@ public class SharedPreferencesUtils {
 	public static String platform_tencent	= "tencent";
 	public static String platform_renren	= "renren";
 	public static String platform_douban	= "douban";
+	
+	public static String SerUser	= "SerUser";
+	public static String SerUser_user	= "user";
+	
 	
 	/**
 	 * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

@@ -27,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -44,9 +45,9 @@ import com.example.util.User;
 
 public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private View view;
-	private RelativeLayout layout_icon, layout_name, layout_Signature;
+	private RelativeLayout layout_icon, layout_name, layout_Signature, layout_sex, layout_address;
 	private ImageView iv_Icon;
-	private TextView tv_Name, tv_Signature;
+	private TextView tv_Name, tv_Signature, tv_sex, tv_address;
 	private boolean needRefresh = false;
 	private AlertDialog.Builder builder_Pic;
 	private ArrayAdapter<String> adapter_Pic;
@@ -58,6 +59,8 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private String currImg = null;
 	private AlertDialog dialog;
 	private MyLogger logger = MyLogger.jLog();
+	private User user;
+	private int selectIndex = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -70,30 +73,8 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
-		SharedPreferences sp = getActivity().getSharedPreferences("SerUser", Context.MODE_PRIVATE);
-		String MYuser = sp.getString("user", null);
-		try {
-			User user = SerUser.deSerializationUser(MYuser);
-			logger.e("user  " + user.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		try {
-//			User user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam("SerUser", getActivity(),
-//					"user", ""));
-//			logger.i("name  " + user.toString());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		user = SerUser.deSerializationUser((String) SharedPreferencesUtils
+				.getParam("SerUser", getActivity(), "user", ""));
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_edit));
 		Button back = (Button)view.findViewById(R.id.top_left);
@@ -104,21 +85,26 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		layout_icon  = (RelativeLayout)view.findViewById(R.id.my_edit_icon);
 		layout_name = (RelativeLayout)view.findViewById(R.id.my_edit_name);
 		layout_Signature = (RelativeLayout)view.findViewById(R.id.my_edit_Signature);
+		layout_address = (RelativeLayout)view.findViewById(R.id.my_edit_address);
+		layout_sex = (RelativeLayout)view.findViewById(R.id.my_edit_sex);
 		layout_icon.setOnClickListener(this);
 		layout_name.setOnClickListener(this);
 		layout_Signature.setOnClickListener(this);
+		layout_address.setOnClickListener(this);
+		layout_sex.setOnClickListener(this);
 		
 		iv_Icon = (ImageView)view.findViewById(R.id.my_edit_icon_image);
 		
 		tv_Name = (TextView)view.findViewById(R.id.my_edit_name_right);
 		tv_Signature = (TextView)view.findViewById(R.id.my_edit_Signature_right);
+		tv_sex = (TextView)view.findViewById(R.id.my_edit_sex_right);
+		tv_address = (TextView)view.findViewById(R.id.my_edit_address_right);
 		
-		tv_Name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
-				SharedPreferencesUtils.user_name, ""));
-		tv_Signature.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
-				SharedPreferencesUtils.user_description, ""));
-		MaimobApplication.imageLoader.displayImage((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
-				SharedPreferencesUtils.user_icon, ""), iv_Icon, ImageUtil.getOption());
+		tv_Name.setText(user.getName());
+		tv_Signature.setText(user.getDescription());
+		tv_sex.setText(user.judgeGender());
+		tv_address.setText(user.getLocation());
+		MaimobApplication.imageLoader.displayImage(StringUtils.checkImgPath(user.getIcon()), iv_Icon, ImageUtil.getOption());
 		
 		adapter_Pic = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, items);
 		builder_Pic = new AlertDialog.Builder(getActivity());
@@ -179,15 +165,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		if (requestCode == PICK_FROM_FILE) {
 			Uri uri = data.getData();
 			startPhotoZoom(uri, 150);
-//			String imgPath = CommonUtils.getAbsolutePathFromNoStandardUri(uri);
-//			if (StringUtils.isBlank(imgPath)) {
-//				currImg = CommonUtils.getAbsoluteImagePath(getActivity(), uri);
-//			}
-//			
-//			Uri outUri = Uri.fromFile(new File(getActivity().getCacheDir(), "Mai"));
-//			new Crop(uri).output(outUri).asSquare().start(getActivity());
 		}else if (requestCode == PICK_FROM_CAMERA) {
-//			currImg = mImageCaptureUri.getPath();
 			startPhotoZoom(mImageCaptureUri, 150);
 		}else if (requestCode == PHOTO_REQUEST_CUT) {
 			setPicToView(data);
@@ -201,15 +179,14 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		if (bundle != null) {
 			Bitmap photo = bundle.getParcelable("data");
 			File filePath = bitmapToFile(photo);
-			// Drawable drawable = new BitmapDrawable(photo);
-			// img_btn.setBackgroundDrawable(drawable);
-			// iv_Icon.setImageDrawable(drawable);
 			MaimobApplication.imageLoader.displayImage(
 					StringUtils.checkImgPath(filePath.toString()), iv_Icon,
 					ImageUtil.getOption());
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user,
 					getActivity(), SharedPreferencesUtils.user_icon,
 					StringUtils.checkImgPath(filePath.toString()));
+			user.setIcon(StringUtils.checkImgPath(filePath.toString()));
+			user.saveUser(getActivity(), SerUser.serializeUser(user));
 		}
 
 	}
@@ -248,7 +225,6 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
         intent.putExtra("outputX", size);
         intent.putExtra("outputY", size);
         intent.putExtra("return-data", true);
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
 
         startActivityForResult(intent, PHOTO_REQUEST_CUT);
     }
@@ -267,8 +243,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			dialog.show();
 			break;
 		case R.id.my_edit_name:
-			et_input.setHint((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
-					SharedPreferencesUtils.user_name, ""));
+			et_input.setHint(user.getName());
 			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑昵称").setNegativeButton("取消", new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -283,18 +258,19 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
 					String content = et_input.getText().toString();
-					SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, content);
+//					SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, content);
+					user.setName(content);
 					tv_Name.setText(content);
 					dialog.dismiss();
 					mFragmentManage.Refresh_userInfo = true;
+					user.saveUser(getActivity(), SerUser.serializeUser(user));
 					MyLogger.jLog().i(content);
 				}
 			})
 			.show();
 			break;
 		case R.id.my_edit_Signature:
-			et_input.setHint((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(),
-					SharedPreferencesUtils.user_description, ""));
+			et_input.setHint(user.getDescription());
 			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑签名").setNegativeButton("取消", new DialogInterface.OnClickListener() {
 				
 				@Override
@@ -309,11 +285,69 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
 					String content = et_input.getText().toString();
-					SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, content);
+					user.setDescription(content);
 					tv_Signature.setText(content);
 					dialog.dismiss();
 					mFragmentManage.Refresh_userInfo = true;
+					user.saveUser(getActivity(), SerUser.serializeUser(user));
 					MyLogger.jLog().i(content);
+				}
+			})
+			.show();
+			break;
+		case R.id.my_edit_address:
+			et_input.setHint(user.getLocation());
+			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑地址").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			})
+			.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					String content = et_input.getText().toString();
+					user.setLocation(content);
+					tv_address.setText(content);
+					dialog.dismiss();
+					mFragmentManage.Refresh_userInfo = true;
+					user.saveUser(getActivity(), SerUser.serializeUser(user));
+					MyLogger.jLog().i(content);
+				}
+			})
+			.show();
+			break;
+		case R.id.my_edit_sex:
+			final String[] gender = new String[]{"女","男"};
+			new AlertDialog.Builder(getActivity()).setTitle("编辑性别").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			})
+			.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					logger.i("index  " +gender[selectIndex]);
+					user.saveUser(getActivity(), SerUser.serializeUser(user));
+					tv_sex.setText(user.judgeGender());
+					mFragmentManage.Refresh_userInfo = true;
+				}
+			})
+			.setSingleChoiceItems(gender, user.getGender(), new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					user.setGender(which);;
 				}
 			})
 			.show();

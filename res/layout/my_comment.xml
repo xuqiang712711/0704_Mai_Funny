@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/my_background" 
+    style="@style/my_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ghostwhite">
+    android:background="@color/gainsboro" >
 
-<include 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/my_comment_top"
-    layout="@layout/back_duanzi"/>
-	<ListView 
-	    android:layout_below="@+id/my_comment_top"
-	    android:id="@+id/my_comment_lv"
-	    android:layout_width="match_parent"
+    <include
+        android:id="@+id/my_comment_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/back_duanzi" />
+
+    	<TextView 
+    	    android:layout_below="@+id/my_comment_top"
+	    android:visibility="gone"
+	    android:id="@+id/my_comment_note"
+	    style="@style/duanzi_content_textview"
+	    android:text="评论数为0"/>
+    <ListView
+        android:id="@+id/my_comment_lv"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/duanzi_margin"
-        android:dividerHeight="20dp"
+        android:layout_below="@+id/my_comment_note"
+        android:layout_margin="@dimen/margin_10"
         android:divider="@color/gainsboro"
-        android:listSelector="#00000000"></ListView>
+        android:dividerHeight="20dp"
+        android:listSelector="#00000000" >
+    </ListView>
+
 </RelativeLayout>
