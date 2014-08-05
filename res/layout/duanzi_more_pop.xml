@@ -34,12 +34,12 @@
                     android:id="@+id/duanzi_pop_Weixin"
                     style="@style/pop_share"
                     android:layout_weight="1"
-                    android:src="@drawable/umeng_socialize_wechat"/>
+                    android:src="@drawable/mai_share_weixin"/>
                 <ImageView 
                     android:id="@+id/duanzi_pop_Weixin_Circle"
                     style="@style/pop_share"
                     android:layout_weight="1"
-                    android:src="@drawable/umeng_socialize_wxcircle"/>
+                    android:src="@drawable/mai_share_circle"/>
                 <ImageView 
                     android:id="@+id/duanzi_pop_sina"
                     style="@style/pop_share"
@@ -66,7 +66,7 @@
                     android:id="@+id/duanzi_pop_douban"
                     style="@style/pop_share"
                     android:layout_weight="1"
-                    android:src="@drawable/douban_72x72"/>
+                    android:src="@drawable/mai_share_douban"/>
                 <ImageView 
                     android:id="@+id/duanzi_pop_qq"
                     style="@style/pop_share"
@@ -107,7 +107,7 @@
                 <ImageView
                     android:id="@+id/duanzi_more_fav"
                     style="@style/duanzi_more_pop_iv"
-                    android:src="@drawable/mai_favorite" />
+                    android:src="@drawable/mai_pop_fav" />
 
                 <TextView
                     android:id="@+id/duanzi_more_zhuanfa_text"
@@ -125,7 +125,7 @@
                 <ImageView
                     android:id="@+id/duanzi_more_rep"
                     style="@style/duanzi_more_pop_iv"
-                    android:src="@drawable/mai_publish" />
+                    android:src="@drawable/mai_pop_rep" />
 
                 <TextView
                     style="@style/duanzi_more_pop_tv"

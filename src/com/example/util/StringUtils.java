@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -357,7 +360,11 @@ public class StringUtils
 		}
 		return name;
 	}
-	
+	/**
+	 * 获取gif的drawable
+	 * @param ImgPath
+	 * @return
+	 */
 	public static GifDrawable checkImgPathForGif(String ImgPath){
 		myLogger.i(ImgPath);
 		File cache = null;
@@ -374,5 +381,13 @@ public class StringUtils
 			e.printStackTrace();
 		}
 		return drawable;
+	}
+	
+	public static String getTime(Long currTime){
+		String time = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-HH:mm",Locale.getDefault());
+		Date date = new Date(currTime);
+		time = sdf.format(date);
+		return time;
 	}
 }

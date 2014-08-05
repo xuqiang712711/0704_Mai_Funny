@@ -8,6 +8,8 @@ import java.util.Map;
 import com.example.object.Duanzi;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.StringUtils;
+import com.example.util.User;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -43,13 +45,15 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			+ "user_name varchar,"			//发表该条段子的用户昵称
 			+ "user_id int,"						//发表该条段子的用户ID
 			+ "content varchar,"				//段子内容
-			+ "imgurl varchar"				//图片url
+			+ "imgurl varchar,"				//图片url
+			+ "favTime long"				//被收藏的时间
 			+ ")";
 	
 	public static final String DB_CREATE_USER_PUBLISH = "CREATE TABLE IF NOT EXISTS " +DATABASE_NAME_PUBLISH 
 			+ "(id integer primary key,"
-			+ "content varchar,"
-			+ "imgurl varchar"
+			+ "content varchar,"				//文字内容
+			+ "imgurl varchar,"				//图片链接
+			+ "pubTime long"					//投稿时间
 			+ ")";
 	
 	public static final String DB_CREATE_USER_COMMENT ="CREATE TABLE IF NOT EXISTS "+ DATABASE_NAME_COMMENT
@@ -58,9 +62,15 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			+ "pid int,"
 			+ "name varchar,"
 			+ "icon varchar,"
-			+ "comment varchar"
+			+ "comment varchar,"
+			+ "time long"
 			+ ")";
 	
+	/**
+	 * 获得db的单例
+	 * @param context
+	 * @return
+	 */
 	public static synchronized Mai_DBhelper getInstance(Context context){
 		if (instance == null) {
 			instance = new Mai_DBhelper(context, DATABASE_NAME_DUANZI, null, 1);
@@ -127,12 +137,11 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			cv.put("boo_fav", 0);
 			cv.put("tag", 1);
 			db.insert(DATABASE_NAME_DUANZI, "ID", cv);
-			db.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
-			return true;
+			return false;
+		}finally{
 		}
 	}
 	
@@ -142,23 +151,21 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	 * @param pid
 	 * @return
 	 */
-	public boolean insertUser_Comment(String content, int pid, String comment){
+	public boolean insertUser_Comment(String content, int pid, String comment, User user){
 		db = getWritableDatabase();
 		try {
 			ContentValues cv = new ContentValues();
-			MyLogger.jLog().i("content  " + content + "  comment " + comment);
 			cv.put("content", content);
 			cv.put("pid", pid);
 			cv.put("comment", comment);
-			cv.put("name", (String) SharedPreferencesUtils.getParam("user", mContext, "name", ""));
-			cv.put("icon", (String) SharedPreferencesUtils.getParam("user", mContext, "icon", ""));
+			cv.put("time", System.currentTimeMillis());
+			cv.put("name", user.getName());
+			cv.put("icon", user.getIcon());
 			db.insert(DATABASE_NAME_COMMENT, "id", cv);
-			db.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
-			Log.e(tag, "insertUser_Comment    error");
+			MyLogger.jLog().i("insertUser_Comment    error");
 			return false;
 		}
 	}
@@ -170,7 +177,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
 		db = getReadableDatabase();
 		try {
-			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT, new String[]{});
+			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT + " order by time desc", new String[]{});
 			if (mCursor.moveToFirst()) {
 				do {
 					String icon_url = mCursor.getString(mCursor.getColumnIndex("icon"));
@@ -178,22 +185,27 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					String comment = mCursor.getString(mCursor.getColumnIndex("comment"));
 					String content = mCursor.getString(mCursor.getColumnIndex("content"));
 					int pid		  = mCursor.getInt(mCursor.getColumnIndex("pid"));
+					long time = mCursor.getLong(mCursor.getColumnIndex("time"));
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("pid", pid);
 					map.put("content", content);
 					map.put("name", name);
 					map.put("comment", comment);
 					map.put("icon", icon_url);
-					Log.e(tag, "comm  " + comment + "  con  " + content);
+					map.put("time", StringUtils.getTime(time));
+					Log.e(tag, "comm  " + comment + "  time  " + StringUtils.getTime(time));
 					data.add(map);
 				} while (mCursor.moveToNext());
 			}
-			db.close();return data;
+			return data;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			Log.e(tag, "selectComment     error");
-			return null;
+			return data;
+		}finally{
+			if (mCursor != null) {
+				mCursor.close();
+			}
 		}
 	}
 	
@@ -215,12 +227,11 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 				cv.put("imgurl", "");
 			}
 			cv.put("imgurl", imgurl);
+			cv.put("pubTime", System.currentTimeMillis());
 			db.insert(DATABASE_NAME_PUBLISH, "id", cv);
-			db.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			Log.e(tag, "insertUser_Publish error");
 			return false;
 		}
@@ -234,7 +245,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		db = getReadableDatabase();
 		List<Duanzi> duanzi_list = new ArrayList<Duanzi>();
 		try {
-			mCursor = db.rawQuery("select * from "+ DATABASE_NAME_PUBLISH, new String[]{});
+			mCursor = db.rawQuery("select * from "+ DATABASE_NAME_PUBLISH +" order by pubTime desc", new String[]{});
 			if (mCursor.moveToFirst()) {
 				do {
 					String content = mCursor.getString(mCursor.getColumnIndex("content"));
@@ -242,19 +253,21 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					String name = (String) SharedPreferencesUtils.getParam("user", mContext, "name", "");
 					String icon_imgurl = (String) SharedPreferencesUtils.getParam("user", mContext, "icon", "");
 					Log.e(tag, "con  " + content + "  con_img  "+ content_imgurl + "  name " + name +"  name_img  "+ icon_imgurl);
-					Duanzi duanzi = new Duanzi(content_imgurl, name, icon_imgurl,"0", "0",content, "0", "0", false, false, 0, false, false);
+					Duanzi duanzi = new Duanzi(content_imgurl, name, icon_imgurl,"0", "0",content, "0", "0", false, false, 0, false, false,0l);
 					duanzi_list.add(duanzi);
 				} while (mCursor.moveToNext());
 			}else {
 				Log.e(tag, "selectPub no data");
 			}
-			db.close();
 			return duanzi_list;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			Log.e(tag, "selectPub erroe");
 			return null;
+		}finally{
+			if (mCursor != null) {
+				mCursor.close();
+			}
 		}
 	}
 	/**
@@ -274,6 +287,10 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		} catch (Exception e) {
 			// TODO: handle exception
 			return true;
+		}finally{
+			if (mCursor != null) {
+				mCursor.close();
+			}
 		}
 		
 	}
@@ -287,11 +304,11 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		db = getWritableDatabase();
 		try {
 			db.execSQL("update " + DATABASE_NAME_DUANZI + " set boo_fav = 1 where pid = ?", new String[]{String.valueOf(pid)});
-			db.close();
+			db.execSQL("update " + DATABASE_NAME_DUANZI + " set favTime = " + System.currentTimeMillis() + " where pid = ?",
+					new String[]{String.valueOf(pid)});
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			return false;
 		}
 	}
@@ -304,11 +321,9 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		db = getWritableDatabase();
 		try {
 			db.execSQL("update " + DATABASE_NAME_DUANZI + " set boo_fav = 0 where pid = ?", new String[]{String.valueOf(pid)});
-			db.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			return false;
 		}
 	}
@@ -319,7 +334,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	public List<Duanzi> selectFav(){
 		db = getReadableDatabase();
 		List<Duanzi> list_duanzi = new ArrayList<Duanzi>();
-		mCursor = db.rawQuery("select * from "+ DATABASE_NAME_DUANZI + " where boo_fav = 1", new String[]{});
+		mCursor = db.rawQuery("select * from "+ DATABASE_NAME_DUANZI + " where boo_fav = 1 order by favTime desc", new String[]{});
 		try {
 			if (mCursor.moveToFirst()) {
 				do {
@@ -332,22 +347,25 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					int cai 			= mCursor.getInt(mCursor.getColumnIndex("cai_count"));
 					int comment		= mCursor.getInt(mCursor.getColumnIndex("comment_count"));
 					int userid		= mCursor.getInt(mCursor.getColumnIndex("user_id"));
+					long favTime		= mCursor.getLong(mCursor.getColumnIndex("favTime"));
 					Duanzi duanzi = new Duanzi(imgUrl, userName, userIcon,String.valueOf(cai), String.valueOf(zan), 
-							content, String.valueOf(comment), String.valueOf(pid), false, false, 0, true, false);
+							content, String.valueOf(comment), String.valueOf(pid), false, false, 0, true, false,favTime);
 					list_duanzi.add(duanzi);
 				} while (mCursor.moveToNext());
 			}else {
 				Log.e(tag, "no found data");
 			}
-			db.close();
 			return list_duanzi;
 		} catch (Exception e) {
 			// TODO: handle exception
-			db.close();
 			return null;
 		}
 	}
-	
+	/**
+	 * 通过pid的到段子
+	 * @param pid
+	 * @return
+	 */
 	public Duanzi selectDuanzi(int pid){
 		db = getReadableDatabase();
 		Duanzi duanzi = null;
@@ -364,20 +382,68 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					int cai_count = mCursor.getInt(mCursor.getColumnIndex("cai_count"));
 					int zan_count = mCursor.getInt(mCursor.getColumnIndex("zan_count"));
 					duanzi = new Duanzi(imgUrl, name, icon, String.valueOf(cai_count), String.valueOf(zan_count), content, String.valueOf(comment_count),
-							String.valueOf(pid), false, false, 0, false, false);
+							String.valueOf(pid), false, false, 0, false, false,0l);
 				} while (mCursor.moveToNext());
 			}
+			MyLogger.jLog().i("try");
 		} catch (Exception e) {
 			// TODO: handle exception
+			MyLogger.jLog().i("catch");
 		}finally{
 			if (mCursor !=null) {
 				mCursor.close();
-			}else if (db != null) {
-				db.close();
+				MyLogger.jLog().i("mCursor");
 			}
 		}
 		return duanzi;
 		
+	}
+	/**
+	 * 得到全部的段子
+	 * @param tag	段子类型		文字：热门、最新		图片：热门、最新
+	 * @return
+	 */
+	public List<Duanzi> selectALLDuanzi(int tag){
+		db = getReadableDatabase();
+		List<Duanzi> list = new ArrayList<Duanzi>();
+		try {
+			mCursor =  db.rawQuery("select * from " + DATABASE_NAME_DUANZI + " where tag = ?", new String[]{String.valueOf(tag)});
+			if (mCursor.moveToFirst()) {
+				do {
+					int pid = mCursor.getInt(mCursor.getColumnIndex("pid"));
+					int comment_count = mCursor.getInt(mCursor.getColumnIndex("comment_count"));
+					int cai_count = mCursor.getInt(mCursor.getColumnIndex("cai_count"));
+					int zan_count = mCursor.getInt(mCursor.getColumnIndex("zan_count"));
+					String icon 	  = mCursor.getString(mCursor.getColumnIndex("user_icon"));
+					String name 	  = mCursor.getString(mCursor.getColumnIndex("user_name"));
+					String content 	  = mCursor.getString(mCursor.getColumnIndex("content"));
+					String imgUrl = mCursor.getString(mCursor.getColumnIndex("imgurl"));
+					int boo_Cai	= mCursor.getInt(mCursor.getColumnIndex("boo_cai"));
+					int boo_Zan	= mCursor.getInt(mCursor.getColumnIndex("boo_zan"));
+					int boo_Fav	= mCursor.getInt(mCursor.getColumnIndex("boo_fav"));
+					MyLogger.jLog().i("name  " + name + "  content  " +content);
+					Duanzi duanzi = new Duanzi(imgUrl, name, icon, String.valueOf(cai_count), String.valueOf(zan_count), content, 
+							String.valueOf(comment_count), String.valueOf(pid), boo(boo_Zan), boo(boo_Cai), 0, boo(boo_Fav), false,0l);
+					list.add(duanzi);
+				} while (mCursor.moveToNext());
+			}
+			return list;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return list;
+		}finally{
+			if (mCursor != null) {
+				mCursor.close();
+			}
+		}
+	}
+	/**
+	 * 得到true、false
+	 * @param tag	boo_zan、boo_cao、boo_fav
+	 * @return
+	 */
+	public boolean boo(int tag){
+		return tag == 0?false:true;
 	}
 	
 }

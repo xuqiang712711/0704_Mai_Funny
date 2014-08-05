@@ -6,6 +6,7 @@ import com.example.util.Uris;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
+public class Tab_Image_Frag2 extends Fragment implements OnClickListener, OnDismissListener{
 	private Image_Hot image_Hot;
 	private Image_New image_New;
 	private RelativeLayout R1,R2,R3,R4;
@@ -90,6 +92,7 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 		int width = metrics.widthPixels/3;
 		pop = new PopupWindow(PopView, width, LayoutParams.WRAP_CONTENT, true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
+		pop.setOnDismissListener(this);
 	}
 	
 	private void selectTab2(int index){
@@ -104,7 +107,10 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 			}else {
 				ft.show(image_Hot);
 			}
-			text_hot.setTextColor(getResources().getColor(R.color.teal));
+			text_hot.setTextColor(getResources().getColor(R.color.orange));
+			Drawable drawable_hot = getActivity().getResources().getDrawable(R.drawable.mai_hot_cl);
+			drawable_hot.setBounds(0, 0, drawable_hot.getMinimumWidth(), drawable_hot.getMinimumHeight());
+			text_hot.setCompoundDrawables(drawable_hot, null, null, null);
 			break;
 
 		case 2:
@@ -114,7 +120,10 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 			}else {
 				ft.show(image_New);
 			}
-			text_new.setTextColor(getResources().getColor(R.color.teal));
+			text_new.setTextColor(getResources().getColor(R.color.orange));
+			Drawable drawable_new = getActivity().getResources().getDrawable(R.drawable.mai_new_cl);
+			drawable_new.setBounds(0, 0, drawable_new.getMinimumWidth(), drawable_new.getMinimumHeight());
+			text_new.setCompoundDrawables(drawable_new, null, null, null);
 			break;
 		}
 		if (pop.isShowing()) {
@@ -127,6 +136,12 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 	private void clearTextColor(){
 		text_hot.setTextColor(getResources().getColor(R.color.white));
 		text_new.setTextColor(getResources().getColor(R.color.white));
+		Drawable drawable_new = getActivity().getResources().getDrawable(R.drawable.mai_new);
+		drawable_new.setBounds(0, 0, drawable_new.getMinimumWidth(), drawable_new.getMinimumHeight());
+		text_new.setCompoundDrawables(drawable_new, null, null, null);
+		Drawable drawable_hot = getActivity().getResources().getDrawable(R.drawable.mai_hot);
+		drawable_hot.setBounds(0, 0, drawable_hot.getMinimumWidth(), drawable_hot.getMinimumHeight());
+		text_hot.setCompoundDrawables(drawable_hot, null, null, null);
 	}
 	
 	private void SetTitle(int index){
@@ -162,6 +177,7 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 			int pop_w = pop.getWidth() / 2;
 			int w = pop_w - text_w ;
 			pop.showAsDropDown(v, -w, 10);
+			setArrow(2);
 			break;
 		case R.id.top_hot:
 			selectTab2(1);
@@ -193,4 +209,30 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener{
 			
 		}
 	};
+	
+	/**
+	 * 设置箭头方向
+	 * @param tag	1、向下		2、向上
+	 * @return
+	 */
+	private void setArrow(int tag){
+		Drawable drawable = null;
+		switch (tag) {
+		case 1:
+			drawable = getActivity().getResources().getDrawable(R.drawable.down_arrow_titlebar);
+			break;
+
+		case 2:
+			drawable = getActivity().getResources().getDrawable(R.drawable.up_arrow_titlebar);
+			break;
+		}
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+		textView.setCompoundDrawables(null, null, null, drawable);
+	}
+
+	@Override
+	public void onDismiss() {
+		// TODO Auto-generated method stub
+		setArrow(1);
+	}
 }

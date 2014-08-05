@@ -20,6 +20,7 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.maiUtil.Getuuid;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.CustomImage;
 import com.example.util.DialogToastUtil;
@@ -63,6 +64,8 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	private Handler TabHandler;
 	private int maxId = 0;
 	private List<Duanzi> list;
+	private JSONArray array;
+	private Mai_DBhelper db ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -88,6 +91,14 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		dialog.show();
 		initView();
 		maxId = Uris.max_dz_hot;
+		db = Mai_DBhelper.getInstance(getActivity());
+		list = db.selectALLDuanzi(1);
+//		if (list.size() != 0) {
+//			myLogger.i("list.size() " + list.size());
+//			adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+//			listView.setAdapter(adapter);
+//		}else {
+//		}
 		inithttp();
 	}
 	
@@ -210,6 +221,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/"
 				+ "uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/" + maxId;
 		new MyAsyTask().execute(postUri);
+		myLogger.i("http ");
 	}
 	
 	class MyAsyTask extends AsyncTask<String, Void, String>{
@@ -217,19 +229,15 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 		@Override
 		protected String doInBackground(String... params) {
 			myLogger.i("uri  " + params[0]);
-			return doHttpRequest(params);
+			return doHttpRequest(params[0]);
 		}
 		
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 					Message message = Message.obtain();
-					JSONArray array;
 					try {
 						array = new JSONArray(result);
-						maxId = array.length() + maxId;
-						Uris.max_dz_hot = maxId;
-						myLogger.i("  maxid  " + maxId + "~~~~" + array.toString());
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -281,6 +289,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
+				addDuanzi();
 				inithttp();
 				adapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
@@ -290,8 +299,15 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener{
 	
 	public void Refresh(Handler Tabhandler){
 		this.TabHandler = Tabhandler;
+		addDuanzi();
 		inithttp();
 		adapter.notifyDataSetChanged();
+	}
+	
+	private void addDuanzi(){
+		maxId = array.length() + maxId;
+		Uris.max_dz_hot = maxId;
+		myLogger.i("  maxid  " + maxId + "~~~~" + array.toString());
 	}
 	
 }

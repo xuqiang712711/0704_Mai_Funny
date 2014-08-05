@@ -43,8 +43,11 @@ import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
+import com.example.util.SerUser;
 import com.example.util.ShareUtil;
+import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
+import com.example.util.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -277,9 +280,12 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		}
 	}
 	
-	public void insertComment(String duanziContent, int pid,String editContent){
+	public void insertComment(String duanziContent, int pid, String editContent) {
+		User user = SerUser.deSerializationUser((String)SharedPreferencesUtils
+				.getParam(SharedPreferencesUtils.SerUser, getActivity(),
+						SharedPreferencesUtils.SerUser_user, ""));
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
-		db.insertUser_Comment(duanziContent, pid,editContent);
+		db.insertUser_Comment(duanziContent, pid, editContent, user);
 	}
 	
 }

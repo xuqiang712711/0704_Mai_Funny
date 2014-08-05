@@ -8,7 +8,7 @@
 	    android:visibility="gone"
 	    android:id="@+id/my_user_vp_empty"
 	    style="@style/duanzi_content_textview"
-	    android:text="评论数为0"/>
+	    android:text="@string/note_Comment"/>
 	<ListView 
 	    android:id="@+id/my_userinfo_vp2_list"
 	    android:layout_width="match_parent"

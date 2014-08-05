@@ -78,8 +78,8 @@
 	<style 
 	    name="my_action_line">
 	    <item name="android:layout_width">match_parent</item>
-	    <item name="android:layout_height">0.1dp</item>
-	    <item name="android:background">@color/slategray</item>
+	    <item name="android:layout_height">0.3dp</item>
+	    <item name="android:background">@color/gery</item>
 	</style>
 	<!-- 更多——版本号、缓存 -->
 	<style  name="more_text">
@@ -178,7 +178,7 @@
 	<!-- 标题 -->
 		<style name="Top_title" parent="@style/match_horizontal">
 		    <item name="android:textSize">@dimen/top_title</item>
-		    <item name="android:background">@color/skyblue</item>
+		    <item name="android:background">@color/gainsboro</item>
 		    <item name="android:gravity">center_horizontal</item>
 		    <item name="android:paddingBottom">@dimen/margin_10</item>
 		    <item name="android:paddingLeft">@dimen/margin_10</item>

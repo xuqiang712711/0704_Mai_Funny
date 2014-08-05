@@ -15,6 +15,7 @@ import com.example.fragment.content.My_userInfo_vp_home;
 import com.example.fragment.content.My_userinfo;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
@@ -75,7 +76,6 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
 		selectTab(1);
-		
 	}
 
 	private void initView() {
@@ -333,6 +333,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 					DialogToastUtil.toastShow(this, "再按一次退出程序");
 					exitTime = System.currentTimeMillis() ;
 				} else {
+					//保存浏览记录
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_DZ_HOT, Uris.max_dz_hot);
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_DZ_NEW, Uris.max_dz_new);
 					SharedPreferencesUtils.setParam(SharedPreferencesUtils.maxID, this, SharedPreferencesUtils.maxID_IMG_HOT, Uris.max_img_hot);
@@ -352,5 +353,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		myLogger.i("退出应用");
+		Mai_DBhelper db = Mai_DBhelper.getInstance(this);
+		db.close();
 	}
 }

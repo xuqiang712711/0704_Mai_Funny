@@ -13,10 +13,13 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
+import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.example.util.User;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 	private LayoutInflater mInflater;
 	private TextView tv_note;
 	private ListView lv_comment;
+	private Mai_DBhelper db;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 		bt_right.setVisibility(View.GONE);
 		bt_back.setOnClickListener(this);
 		
-		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
+		db = Mai_DBhelper.getInstance(getActivity());
 		data = db.selectComment();
 		Duanzi duanzi = db.selectDuanzi(13);
 		if (duanzi != null) {
@@ -72,6 +76,12 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 		}else {
 			tv_note.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override
@@ -121,6 +131,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 				holder.name = (TextView)convertView.findViewById(R.id.my_comment_name);
 				holder.content = (TextView)convertView.findViewById(R.id.my_comment_dz_content);
 				holder.comment = (TextView)convertView.findViewById(R.id.my_comment_content);
+				holder.time = (TextView)convertView.findViewById(R.id.my_comment_time);
 				convertView.setTag(holder);
 			}else {
 				holder = (ViewHolder) convertView.getTag();
@@ -130,6 +141,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 			holder.content.setText((String)data.get(position).get("content"));
 			holder.comment.setTextSize(Uris.Font_Size);
 			holder.comment.setText((String)data.get(position).get("comment"));
+			holder.time.setText((String)data.get(position).get("time"));
 			MyLogger.jLog().i("content  " + (String)data.get(position).get("content") + "  comment  " + (String)data.get(position).get("comment") );
 			MaimobApplication.imageLoader.displayImage((String)data.get(position).get("icon"), holder.icon, ImageUtil.getOption());
 			return convertView;
@@ -138,11 +150,17 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 	}
 	public static class ViewHolder{
 		ImageView icon;
-		TextView name,comment,content;
+		TextView name,comment,content,time;
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
 		Bundle bundle = new Bundle();
+		int pid = (Integer) data.get(position).get("pid");
+		Duanzi duanzi = db.selectDuanzi(pid);
+		MyLogger.jLog().i("duanzi  " + duanzi.getContent());
+		bundle.putSerializable("duanzi", duanzi);
+		mFragmentManage.SwitchFrag(getActivity(), My_Comment.this, new DuanZi_Comment(), bundle);
 	}
+	
 }

@@ -7,7 +7,7 @@
     <com.example.util.DrawableCenterTextView
         style="@style/top_pop_item"
         android:id="@+id/top_hot"
-        android:drawableLeft="@drawable/mai_activity"
+        android:drawableLeft="@drawable/mai_hot"
         android:text="@string/duanzi_hot"
         android:textColor="@color/white" />
 

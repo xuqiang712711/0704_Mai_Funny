@@ -44,13 +44,13 @@ public class Duanzi implements Serializable {
 	private boolean isZanPressed;// 是否赞过
 	private boolean isCaiPressed;// 是否踩过
 	private int media;	//转发的平台
-	
 	private boolean isFav;		//是否收藏
 	private boolean needComment;  //是否需要发表评论到服务器
+	private long favTime;		//段子被收藏的时间
 
 	public Duanzi(String imageUrl, String name, String head,String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
-			boolean isCaiPressed,int media,boolean isFav, boolean needComment) {
+			boolean isCaiPressed,int media,boolean isFav, boolean needComment,long favTime) {
 		this.imageUrl = imageUrl;
 		this.userName = name;
 		this.cai = cai;
@@ -64,6 +64,7 @@ public class Duanzi implements Serializable {
 		this.isFav = isFav;
 		this.needComment = needComment;
 		this.userIcon = head;
+		this.favTime = favTime;
 	}
 	
 	public void CanPress(int type,TextView txtview,ImageView  imgView,Context context){
@@ -105,8 +106,14 @@ public class Duanzi implements Serializable {
 	
 	
 	
-	
-	
+
+	public long getFavTime() {
+		return favTime;
+	}
+
+	public void setFavTime(long favTime) {
+		this.favTime = favTime;
+	}
 
 	public String getUserIcon() {
 		return userIcon;
@@ -253,5 +260,4 @@ public class Duanzi implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 }

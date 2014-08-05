@@ -58,6 +58,7 @@ public class My_Favorite extends Fragment implements OnClickListener, OnItemClic
 			Log.i("FFF", "size "+ list_duanzi.size());
 			xAdapter = new XAdapter(list_duanzi, mhandler, MaimobApplication.mController, this, getActivity());
 			ListView listView = (ListView)view.findViewById(R.id.my_fav_list);
+			listView.setOnItemClickListener(this);
 			listView.setAdapter(xAdapter);
 		}else {
 			tv_note.setVisibility(View.VISIBLE);
