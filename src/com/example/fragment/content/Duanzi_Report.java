@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.object.mFragmentManage;
@@ -28,7 +29,7 @@ public class Duanzi_Report extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		TextView report = (TextView)view.findViewById(R.id.top_text);
 		report.setText(getResources().getString(R.string.duanzi_report));
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
 			@Override

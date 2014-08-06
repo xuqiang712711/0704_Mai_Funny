@@ -22,6 +22,7 @@ import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
@@ -58,6 +59,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private Dialog dialog;
 	private List<Duanzi> list;
 	private int maxID;
+	private int add_count = 0;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -67,7 +69,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 				dialog.dismiss();
 				String json = (String) msg.obj;
 				SetListData(json);
-				maxID += msg.what;
+				add_count = msg.what;
 			}
 			
 		}
@@ -82,10 +84,15 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	
 	private void SetListData(String json){
-		
-		list = setDuanziData.getListDuanzi(json, getActivity(), list);
-		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
-		listView.setAdapter(adapter);
+		MyLogger.jLog().i("list size old" + list.size());
+		list = setDuanziData.getListDuanzi(json, getActivity(), list, 3);
+		MyLogger.jLog().i("list size  " + list.size());
+		if (adapter == null) {
+			adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+			listView.setAdapter(adapter);
+		}else {
+			adapter.notifyDataSetChanged();
+		}
 		if (tabHandler != null) {
 			tabHandler.sendEmptyMessage(Uris.MSG_REFRESH);
 		}
@@ -102,9 +109,9 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private void initHttp(){
 		RequestDataTask mTask = new RequestDataTask(handler);
-		mTask.execute(Uris.Img_uri + maxID);
-		Uris.max_img_hot = maxID;
+		maxID = Uris.max_img_hot;
 		MyLogger.jLog().i("maxid_new  " + maxID);
+		mTask.execute(Uris.Img_uri + maxID);
 	}
 	
 	@Override
@@ -112,56 +119,27 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		dialog = DialogToastUtil.createLoadingDialog(getActivity());
-		dialog.show();
-		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
-		refreshLayout.setOnRefreshListener(this);
-		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);
+		
 		if (list == null) {
 			list = new ArrayList<Duanzi>();
 		}
+		refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
+		refreshLayout.setOnRefreshListener(this);
+		refreshLayout.setColorScheme(android.R.color.holo_blue_light, android.R.color.holo_red_light	, android.R.color.holo_purple, android.R.color.holo_green_light);
 		initView();
-		initHttp();
-	}
-	
-	private void setData(){
-		ImageUris = Uris.IMAGES;
-		data = new ArrayList<Map<String,Object>>();
-		for (int i = 0; i < ImageUris.length; i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("content" + i, String.valueOf(i));
-			map.put("image" + i, ImageUris[i]);
-			data.add(map);
+		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
+		list = db.selectALLDuanzi(3);
+		if (list.size() == 0) {
+			dialog.show();
+			initHttp();
+		}else {
+			adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
+			listView.setAdapter(adapter);
 		}
 	}
+	
 	private void initView(){
-		setData();
-		
-//		options = new DisplayImageOptions.Builder()
-//		.showImageOnLoading(R.drawable.maimob)
-//		.showImageForEmptyUri(R.drawable.maimob)
-//		.showImageOnFail(R.drawable.maimob)
-//		.cacheInMemory(true)
-//		.cacheOnDisk(true)
-//		.considerExifParams(true)
-//		.displayer(new SimpleBitmapDisplayer())
-//		.bitmapConfig(Config.RGB_565)
-//		.build();
-		
 		listView = (ListView)view.findViewById(R.id.listview);
-//		MyAdapter adapter = new MyAdapter(data, getActivity(), options);
-//		listView.setAdapter(adapter);
-//		ImageAdapter adapter = new ImageAdapter(Tab_Image_Frag.this, getActivity(), data, options);
-//		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				int num = position + 1;
-				Toast.makeText(getActivity(), "点击查看大图  ~~ position   " + num , Toast.LENGTH_SHORT).show();
-			}
-		});
 	}
 	
 	public void switchFragment(Fragment from, Fragment to){
@@ -183,15 +161,20 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
-				initHttp();
-				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
-				adapter.notifyDataSetChanged();
+				addDuanzi();
 			}
 		}, 5000);
 	}
 	
 	public void Refresh(Handler tabHandler){
 		this.tabHandler = tabHandler;
+		addDuanzi();
+	}
+	
+	private void addDuanzi(){
+		maxID = add_count+ maxID;
+		Uris.max_dz_hot = maxID;
+		MyLogger.jLog().i("  maxid  " + maxID + "~~~~" );
 		initHttp();
 		adapter.notifyDataSetChanged();
 	}

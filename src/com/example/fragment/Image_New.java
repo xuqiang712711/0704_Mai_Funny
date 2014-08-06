@@ -100,7 +100,7 @@ public class Image_New extends Fragment implements OnRefreshListener{
 	}
 	
 	private void SetListData(String json){
-		list = setDuanziData.getListDuanzi(json, getActivity(), list);
+		list = setDuanziData.getListDuanzi(json, getActivity(), list, 4);
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (tabHandler != null) {

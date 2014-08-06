@@ -70,7 +70,7 @@
             <ImageView
                 style="@style/duanzi_item_bottom_img"
                 android:id="@+id/mitem_bottom_hot_img"
-                android:src="@drawable/hot_commenticon_textpage" />
+                android:src="@drawable/mai_comment" />
 
             <TextView
                 style="@style/duanzi_item_bottom_text"

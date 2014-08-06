@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
@@ -51,10 +52,10 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 		myLogger.i("share  " +String.valueOf(share_Media));
 		et_Input = (EditText)view.findViewById(R.id.duanzi_pop_zhuanfa_edit);
 		TextView tv_Title = (TextView)view.findViewById(R.id.top_text);
-		Button bt_back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		Button bt_submit = (Button)view.findViewById(R.id.top_right);
 		bt_submit.setText(R.string.ActionBar_Submit);
-		bt_back.setOnClickListener(this);
+		back.setOnClickListener(this);
 		bt_submit.setOnClickListener(this);
 		map  = new HashMap<Integer, SHARE_MEDIA>();
 		if (share_Media== Duanzi.SHARE_MEDIA_SINA) {
@@ -78,7 +79,7 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 

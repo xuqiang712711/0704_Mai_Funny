@@ -73,7 +73,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	private void initView() {
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.my_check);
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
@@ -187,7 +187,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		case R.id.my_check_trash:
 			check_handle(flag_trash);
 			break;
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 		}

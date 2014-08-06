@@ -65,7 +65,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 	private int selectIndex = 0;
 	private PopupWindow pop;
 	private TextView tv_address_result;
-	private Button bt_confirm;
+	private Button bt_confirm, bt_cancel;
 	private Spinner province_spinner;
 	private Spinner city_spinner;
 	private Spinner county_spinner;
@@ -306,7 +306,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 				.getParam("SerUser", getActivity(), "user", ""));
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_edit));
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
@@ -463,6 +463,9 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		final EditText et_input  = new EditText(getActivity());
 		switch (v.getId()) {
+		case R.id.pop_address_cancel:
+			pop.dismiss();
+			break;
 		case R.id.pop_address_confirm:
 			pop.dismiss();
 			String location = mProvince + "-" + mCity +"-" + mCounty;
@@ -471,7 +474,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			user.setLocation(location);
 			user.saveUser(getActivity(), SerUser.serializeUser(user));
 			break;
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			//TODO REFRESH
 			break;
@@ -599,8 +602,10 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		tv_address_result = (TextView)popView.findViewById(R.id.textView1);
 		bt_confirm = (Button)popView.findViewById(R.id.pop_address_confirm);
 		bt_confirm.setOnClickListener(this);
+		bt_cancel = (Button)popView.findViewById(R.id.pop_address_cancel);
+		bt_cancel.setOnClickListener(this);
 		loadSpinner(popView);
-		pop = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		pop = new PopupWindow(popView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 	}

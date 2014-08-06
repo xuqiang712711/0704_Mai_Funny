@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class More_Help extends Fragment{
@@ -30,7 +31,7 @@ public class More_Help extends Fragment{
 		title.setText(R.string.more_text_help);
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
 			@Override

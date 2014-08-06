@@ -57,10 +57,10 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 		tv_note = (TextView) view.findViewById(R.id.my_comment_note);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_comment_title));
-		Button bt_back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		Button bt_right = (Button)view.findViewById(R.id.top_right);
 		bt_right.setVisibility(View.GONE);
-		bt_back.setOnClickListener(this);
+		back.setOnClickListener(this);
 		
 		db = Mai_DBhelper.getInstance(getActivity());
 		data = db.selectComment();
@@ -88,7 +88,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 

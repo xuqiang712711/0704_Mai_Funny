@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.Activity.MaiActivity;
@@ -32,7 +33,7 @@ public class More_Contact extends Fragment{
 		title.setText(R.string.more_text_contact);
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
 			@Override

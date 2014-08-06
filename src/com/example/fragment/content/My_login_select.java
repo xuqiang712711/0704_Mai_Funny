@@ -83,7 +83,7 @@ public class My_login_select extends Fragment{
 		
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText("Æ½Ì¨°ó¶¨");
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -146,7 +146,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		//Title
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);   
 		tv_title.setText(user.getName());
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		Button right = (Button)view.findViewById(R.id.top_right);
 		right.setVisibility(View.GONE);
@@ -245,7 +245,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 

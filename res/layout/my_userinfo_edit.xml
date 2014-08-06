@@ -11,6 +11,7 @@
         layout="@layout/back_duanzi" />
 
     <RelativeLayout
+        android:background="@drawable/text_bg_noshape"
         android:id="@+id/my_edit_icon"
         style="@style/my_edit"
         android:layout_below="@+id/my_edit_top" >
@@ -39,6 +40,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:background="@drawable/text_bg_noshape"
         android:id="@+id/my_edit_name"
         style="@style/my_edit"
         android:layout_below="@+id/my_edit_icon"
@@ -67,6 +69,7 @@
         android:background="@color/gery" />
 
     <RelativeLayout
+        android:background="@drawable/text_bg_noshape"
         android:id="@+id/my_edit_Signature"
         style="@style/my_edit"
         android:layout_below="@+id/my_edit_line"
@@ -94,6 +97,7 @@
         android:background="@color/gery" />
 
     <RelativeLayout
+        android:background="@drawable/text_bg_noshape"
         android:id="@+id/my_edit_sex"
         style="@style/my_edit"
         android:layout_width="match_parent"
@@ -123,6 +127,7 @@
         android:background="@color/gery" />
 
    <RelativeLayout
+       android:background="@drawable/text_bg_noshape"
         android:id="@+id/my_edit_address"
         style="@style/my_edit"
         android:layout_width="match_parent"

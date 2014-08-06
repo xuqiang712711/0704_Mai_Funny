@@ -1,5 +1,7 @@
 package com.example.util;
 
+import java.util.UUID;
+
 import com.example.adapter.XAdapter;
 
 
@@ -144,16 +146,16 @@ public final class Uris {
 		"", // Empty link
 		"http://wrong.site.com/corruptedLink", // Wrong link
 };
+	//uuid
+	public static String uuid = "YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi";
 	//图片、文字段子
 	public static String Text_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/0";
-	public static String Img_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/2/subType/3/maxID/";
+	public static String Img_uri = "http://md.maimob.net/index.php/player/FetchPost/uuid/"+ Uris.uuid+"/type/2/subType/3/maxID/";
 	
 	public static String Zan = "http://md.maimob.net/index.php/player/Zan";
 	public static String Cai = "http://md.maimob.net/index.php/player/Cai";
 	public static String FAV = "http://md.maimob.net/index.php/player/Fav";
 	
-	//uuid
-	public static String uuid = "YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi";
 	//写段子
 	public static String Post_Draft = "http://md.maimob.net/index.php/player/Post";
 	//评论段子

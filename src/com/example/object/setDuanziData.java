@@ -2,6 +2,7 @@ package com.example.object;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,13 +19,15 @@ import com.example.sql.Mai_DBhelper;
 
 public class setDuanziData {
 	private static String Tag = "setDuanziData";
+	
 //	private static List<Duanzi> list = new ArrayList<Duanzi>();
-	public static List<Duanzi> getListDuanzi(String json,Context context, List<Duanzi> list){
+	public static List<Duanzi> getListDuanzi(String json,Context context, List<Duanzi> list,int tag){
 		if (list == null) {
 			list = new  ArrayList<Duanzi>();
 		}
 		try {
 			JSONArray array = new JSONArray(json);
+			boolean isNew = false;
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject item = array.getJSONObject(i);
 				String name = item.getString("nick");//昵称
@@ -37,16 +40,18 @@ public class setDuanziData {
 				String user_id = item.getString("pid");
 				Duanzi duanzi = new Duanzi(imageUrl ,name,null, cai, zan, content, comment,poid,false, false , 0,false, false,0l);
 //				list.add(duanzi);
-				list.add(0, duanzi);
 				Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(context);
-				dBhelper.insertDuanziInfo(Integer.parseInt(poid), content, imageUrl, Integer.parseInt(cai), Integer.parseInt(zan)
-						, Integer.parseInt(comment), name, null, Integer.parseInt(user_id));
+				isNew = dBhelper.insertDuanziInfo(Integer.parseInt(poid), content, imageUrl, Integer.parseInt(cai), Integer.parseInt(zan)
+						, Integer.parseInt(comment), name, null, Integer.parseInt(user_id), tag);
+				if (isNew) {
+					list.add(0, duanzi);
+				}
 			}
-			return list;
+			return new ArrayList<Duanzi>(new LinkedHashSet<Duanzi>(list));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return list;
+		return new ArrayList<Duanzi>(new LinkedHashSet<Duanzi>(list));
 	}
 }
