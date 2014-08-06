@@ -354,14 +354,14 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 				// TODO Auto-generated method stub
 			}
 		});
-		initAddressPop();
+	
 	}
 	
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-
+		initAddressPop();
 	}
 	
 	private void DialogChose(int which){
