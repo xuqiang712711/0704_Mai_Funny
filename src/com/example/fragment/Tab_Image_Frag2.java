@@ -219,7 +219,7 @@ public class Tab_Image_Frag2 extends Fragment implements OnClickListener, OnDism
 		Drawable drawable = null;
 		switch (tag) {
 		case 1:
-			drawable = getActivity().getResources().getDrawable(R.drawable.down_arrow_titlebar);
+			drawable = getActivity().getResources().getDrawable(R.drawable.up_arrow_titlebar);
 			break;
 
 		case 2:
