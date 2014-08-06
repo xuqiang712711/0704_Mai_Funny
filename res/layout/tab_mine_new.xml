@@ -13,12 +13,11 @@
         android:layout_below="@+id/my_top" >
 
         <RelativeLayout
+            android:background="@drawable/text_bg_noshape"
             android:id="@+id/my_unlogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_20"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"
             android:visibility="gone" >
 
             <ImageView
@@ -44,10 +43,10 @@
             android:id="@+id/my_logined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@color/white" >
 
             <RelativeLayout
+                android:background="@drawable/text_bg_noshape"
                 android:id="@+id/my_userinfo_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,7 +190,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -204,7 +202,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -217,7 +214,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -230,7 +226,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
     </LinearLayout>
@@ -259,7 +254,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -272,7 +266,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -285,7 +278,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
 
@@ -298,16 +290,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             layout="@layout/my_content_vertical" />
     </LinearLayout>
-
-    <TextView
+    <include
         android:id="@+id/my_top"
-        style="@style/Top_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/tab_bar_mine" />
+        layout="@layout/back_duanzi" />
 
 </RelativeLayout>

@@ -34,7 +34,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			+ "CREATE TABLE IF NOT EXISTS duanzi_list_info("
 			+ "id integer primary key,"
 			+ "pid int,"						//段子ID
-			+ "tag int,"						//段子类型	1：段子——热门、2：段子——最新、3图片——热门、图片——最新
+			+ "tag int,"						//段子类型	1：段子——热门、2：段子——最新、3图片——热门、4:图片——最新
 			+ "zan_count int,"				//赞的次数
 			+ "cai_count int,"				//踩的次数
 			+ "comment_count int,"			//评论条数
@@ -116,7 +116,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	 * @return
 	 */
 	public boolean insertDuanziInfo(int pid, String content, String imgurl, int cai, int zan, int comment
-			,String userName, String iconUrl, int user_id ){
+			,String userName, String iconUrl, int user_id ,int tag){
 		db = getWritableDatabase();
 		try {
 			if (DuanziExists(pid)) {
@@ -135,7 +135,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			cv.put("boo_cai", 0);
 			cv.put("boo_zan", 0);
 			cv.put("boo_fav", 0);
-			cv.put("tag", 1);
+			cv.put("tag", tag);
 			db.insert(DATABASE_NAME_DUANZI, "ID", cv);
 			return true;
 		} catch (Exception e) {
@@ -407,7 +407,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		db = getReadableDatabase();
 		List<Duanzi> list = new ArrayList<Duanzi>();
 		try {
-			mCursor =  db.rawQuery("select * from " + DATABASE_NAME_DUANZI + " where tag = ?", new String[]{String.valueOf(tag)});
+			mCursor =  db.rawQuery("select * from " + DATABASE_NAME_DUANZI + " where tag = ? order by pid desc", new String[]{String.valueOf(tag)});
 			if (mCursor.moveToFirst()) {
 				do {
 					int pid = mCursor.getInt(mCursor.getColumnIndex("pid"));

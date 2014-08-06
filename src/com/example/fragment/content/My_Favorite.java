@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,10 +49,10 @@ public class My_Favorite extends Fragment implements OnClickListener, OnItemClic
 		TextView tv_note = (TextView)view.findViewById(R.id.my_fav_note);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_fav_title));
-		Button bt_back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		Button bt_right = (Button)view.findViewById(R.id.top_right);
 		bt_right.setVisibility(View.GONE);
-		bt_back.setOnClickListener(this);
+		back.setOnClickListener(this);
 		Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(getActivity());
 		list_duanzi = dBhelper.selectFav();
 		if (list_duanzi.size() != 0) {
@@ -70,7 +71,7 @@ public class My_Favorite extends Fragment implements OnClickListener, OnItemClic
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 

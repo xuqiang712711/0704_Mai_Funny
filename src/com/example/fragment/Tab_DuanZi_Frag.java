@@ -232,7 +232,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 			
 			if (msg.what == Uris.MSG_REFRESH) {
 //				iv_refresh.setImageResource(R.drawable.refresh_pre);
-				Log.i("XXX", "Stop");
 				iv_refresh.clearAnimation();
 			}
 			

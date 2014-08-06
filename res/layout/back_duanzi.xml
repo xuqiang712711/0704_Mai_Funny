@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/skyblue"
-    android:padding="@dimen/margin_5" >
-    <Button 
-        android:layout_centerVertical="true"
-        android:id="@+id/top_left"
-        android:padding="5dp"
-        android:background="@drawable/text_bg"
-        android:text="返回"
-        android:textSize="@dimen/ts_15"
-       	android:textColor="@color/darkslategray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-	<Button 
-	    android:textColor="@color/darkslategray"
-	    android:layout_centerVertical="true"
-	    android:id="@+id/top_right"
-	    android:layout_alignParentRight="true"
-	    android:padding="5dp"
-	    android:background="@drawable/text_bg"
-	    android:text="举报"
-	    android:textSize="@dimen/ts_15"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
-	<TextView 
-	    android:id="@+id/top_text"
-	    android:textSize="@dimen/ts_20"
-	    android:padding="10dp"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="梁非凡"
-	    android:layout_centerHorizontal="true"/>
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/margin_5" >
+
+        <ImageView 
+            android:contentDescription="@null"
+            android:id="@+id/top_left_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/mai_back_3"/>
+
+        <Button
+            android:id="@+id/top_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/text_bg"
+            android:padding="5dp"
+            android:text="举报"
+            android:textColor="@color/darkslategray"
+            android:textSize="@dimen/ts_15" />
+
+        <TextView
+            android:id="@+id/top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:text="梁非凡"
+            android:textSize="@dimen/ts_25" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_alignBottom="@+id/top"
+        android:background="@color/gray" />
+    <View 
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_10"
+        android:background="@color/gainsboro"/>
+
 </RelativeLayout>

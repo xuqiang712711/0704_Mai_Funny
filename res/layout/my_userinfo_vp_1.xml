@@ -6,7 +6,7 @@
     <LinearLayout 
         android:id="@+id/my_userinfo_sec_main"
         android:orientation="vertical"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/margin_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -30,7 +30,7 @@
     
     <LinearLayout 
         android:id="@+id/my_userinfo_sec_main_2"
-        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_10"
         android:layout_below="@+id/my_userinfo_sec_main"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
     </LinearLayout>
     
     <Button 
-        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_10"
         android:id="@+id/my_unRegister"
         android:textSize="@dimen/ts_20"
         android:background="@color/white"

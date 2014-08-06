@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.maiUtil.CustomHttpClient;
+import com.example.util.MyLogger;
 import com.example.util.Uris;
 
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ public class RequestDataTask extends AsyncTask<String, Void, String>{
 	@Override
 	protected String doInBackground(String... params) {
 		// TODO Auto-generated method stub
+		MyLogger.jLog().i("uri  " + params[0]);
 		return doHttpRequest(params[0]);
 	}
 	

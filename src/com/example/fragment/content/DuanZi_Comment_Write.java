@@ -43,6 +43,7 @@ import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
+import com.example.util.NetworkUtil;
 import com.example.util.SerUser;
 import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
@@ -107,7 +108,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private void initView(){
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(getResources().getString(R.string.my_comment));
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		Button submit = (Button)view.findViewById(R.id.top_right);
 		submit.setText(getResources().getString(R.string.ActionBar_Submit));
@@ -182,6 +183,10 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.top_right:
+			if (NetworkUtil.getNetworkState(getActivity()) == NetworkUtil.NONE) {
+				DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
+				break;
+			}
 			editContent = editText.getText().toString();
 			if (editContent != null && !editContent.equals("")) {
 				dialog.show();
@@ -205,7 +210,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
 			break;
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 		case R.id.duanzi_comment_write_sina:

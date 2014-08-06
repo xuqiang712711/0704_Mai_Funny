@@ -1,22 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/transparent" >
 
     <LinearLayout
-		android:padding="@dimen/margin_5"
-        android:layout_centerVertical="true"
-        android:id="@+id/pop_address_spinner"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gainsboro"
+        android:layout_margin="@dimen/margin_5"
         android:orientation="vertical" >
 
         <TableRow
-            android:layout_width="match_parent"
+            android:padding="@dimen/margin_5"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/text_bg"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/text_bg_selector_white"
             android:gravity="center" >
 
             <TextView
@@ -35,10 +34,11 @@
         </TableRow>
 
         <TableRow
+            android:padding="@dimen/margin_5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@drawable/text_bg"
+            android:background="@drawable/text_bg_selector_white"
             android:gravity="center" >
 
             <TextView
@@ -57,10 +57,11 @@
         </TableRow>
 
         <TableRow
+            android:padding="@dimen/margin_5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@drawable/text_bg"
+            android:background="@drawable/text_bg_selector_white"
             android:gravity="center" >
 
             <TextView
@@ -77,56 +78,40 @@
                 android:layout_height="42dp"
                 android:layout_weight="1.0" />
         </TableRow>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/text_bg_selector_white"
+            android:gravity="center"
+            android:padding="@dimen/margin_10"
+            android:text="TextView"
+            android:textSize="@dimen/ts_20" />
+
+        <Button
+            android:background="@drawable/text_selector_green"
+            android:id="@+id/pop_address_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_5"
+            android:padding="@dimen/margin_10"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ts_18" />
+
+        <Button
+            android:id="@+id/pop_address_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/text_bg_selector_white"
+            android:padding="@dimen/margin_10"
+            android:text="取消"
+            android:textSize="@dimen/ts_18" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/pop_address_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pop_address_spinner"
-        android:layout_marginTop="@dimen/margin_10"
-        android:background="@drawable/text_bg"
-        android:gravity="center"
-        android:padding="@dimen/margin_10"
-        android:text="TextView"
-        android:textSize="@dimen/ts_20" />
-
-    <Button
-        android:id="@+id/pop_address_queding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/center_line"
-        android:layout_below="@+id/pop_address_text"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/margin_20"
-        android:background="@drawable/text_bg"
-        android:padding="@dimen/margin_5"
-        android:text="确定"
-        android:textColor="@color/darkslategray"
-        android:textSize="@dimen/ts_20" />
-
-    <Button
-        android:id="@+id/pop_address_cancle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pop_address_text"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/margin_20"
-        android:layout_toRightOf="@+id/pop_address_queding"
-        android:background="@drawable/text_bg"
-        android:padding="@dimen/margin_5"
-        android:text="取消"
-        android:textColor="@color/darkslategray"
-        android:textSize="@dimen/ts_20" />
-    
-        <View
-        android:visibility="invisible"
-        android:id="@+id/center_line"
-        android:layout_width="1dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/green" />
-    
 
 </RelativeLayout>

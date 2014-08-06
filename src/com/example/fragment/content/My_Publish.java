@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,8 +48,8 @@ public class My_Publish extends Fragment implements OnClickListener, OnItemClick
 		super.onActivityCreated(savedInstanceState);
 		TextView tv = (TextView)view.findViewById(R.id.top_text);
 		tv.setText(getResources().getString(R.string.my_pub_title));
-		Button bt_back = (Button)view.findViewById(R.id.top_left);
-		bt_back.setOnClickListener(this);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
+		back.setOnClickListener(this);
 		Button bt_right = (Button)view.findViewById(R.id.top_right);
 		bt_right.setVisibility(View.GONE);
 		
@@ -69,7 +70,7 @@ public class My_Publish extends Fragment implements OnClickListener, OnItemClick
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 

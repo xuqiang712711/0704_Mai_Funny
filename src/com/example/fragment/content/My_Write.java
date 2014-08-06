@@ -123,7 +123,7 @@ public class My_Write extends Fragment implements OnClickListener{
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.my_write);
 		
-		Button back = (Button)view.findViewById(R.id.top_left);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		
 		submit = (Button)view.findViewById(R.id.top_right);
@@ -193,6 +193,8 @@ public class My_Write extends Fragment implements OnClickListener{
 					}
 					insertSQL(editContent, currImgPath);
 					backToHome();
+				}else {
+					DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
 				}
 			}
 		});
@@ -251,7 +253,7 @@ public class My_Write extends Fragment implements OnClickListener{
 			}
 			Message message = Message.obtain();
 			message.what = POST_SUC;
-			handler.sendMessage(message);
+			handler.sendMessageDelayed(message, 5000);
 		}
 		
 	}
@@ -323,7 +325,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_left:
+		case R.id.top_left_change:
 			backToHome();
 			break;
 

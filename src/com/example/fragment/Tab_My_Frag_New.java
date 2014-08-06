@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -44,7 +45,7 @@ import android.widget.Toast;
 
 public class Tab_My_Frag_New extends Fragment implements OnClickListener{
 private View view;
-private RelativeLayout comment, check, publish, favorite,message,app, activity,nemo;
+private RelativeLayout comment, check, publish, favorite,message,app, activity,nemo,userinfo_login;
 private RelativeLayout nemo1, nemo2, nemo3, nemo4;
 private TextView edit;
 private RelativeLayout logined, unLogin;
@@ -105,6 +106,13 @@ private boolean userIsExists = false;
 		}
 	
 	private void initView(){
+		
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
+		back.setVisibility(View.GONE);
+		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		bt_submit.setVisibility(View.GONE);
+		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
+		tv_title.setText(R.string.tab_bar_mine);
 		my_arrow = (ImageView)view.findViewById(R.id.my_arrow);
 		my_arrow.setOnClickListener(this);
 		
@@ -131,6 +139,7 @@ private boolean userIsExists = false;
 			Log.e("FFF", "logined");
 		}
 		unLogin.setOnClickListener(this);
+		logined.setOnClickListener(this);
 		
 		check = (RelativeLayout)view.findViewById(R.id.my_check_new);
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
@@ -207,6 +216,9 @@ private boolean userIsExists = false;
 		Bundle bundle = new Bundle();
 		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
+		case R.id.my_logined:
+			MyLogger.kLog().i("my_logined");
+			break;
 		case R.id.my_arrow:
 			Frag_userinfo = new My_userinfo();
 			switchFragment(this, Frag_userinfo);

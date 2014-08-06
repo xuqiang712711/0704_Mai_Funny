@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class OauthActivity extends Activity{
 	String Tag  = "OauthActivity";
@@ -32,7 +33,7 @@ public class OauthActivity extends Activity{
 			break;
 		}
 		setContentView(R.layout.my_login_select);
-		Button back = (Button)findViewById(R.id.top_left);
+		ImageView back = (ImageView)findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
 			@Override

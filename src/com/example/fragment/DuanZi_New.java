@@ -102,7 +102,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	}
 	
 	private void updateListView(String json){
-		list = setDuanziData.getListDuanzi(json, getActivity(), list);
+		list = setDuanziData.getListDuanzi(json, getActivity(), list, 2);
 		adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {

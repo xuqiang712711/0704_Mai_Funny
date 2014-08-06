@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Duanzi_More_Comment extends Fragment implements OnClickListener{
@@ -37,8 +38,8 @@ public class Duanzi_More_Comment extends Fragment implements OnClickListener{
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(" ‰»Î∆¿¬€");
-		Button bt_back = (Button)view.findViewById(R.id.top_left);
-		bt_back.setOnClickListener(this);
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
+		back.setOnClickListener(this);
 		Button bt_submit = (Button)view.findViewById(R.id.top_right);
 		bt_submit.setText(getActivity().getString(R.string.ActionBar_Submit));
 		bt_submit.setOnClickListener(this);
@@ -48,7 +49,7 @@ public class Duanzi_More_Comment extends Fragment implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if (v.getId() == R.id.top_left) {
+		if (v.getId() == R.id.top_left_change) {
 			mFragmentManage.BackStatck(getActivity());
 		}else {
 			Log.i("FFF", "media " + duanzi.getMedia()  +" content " + duanzi.getContent());

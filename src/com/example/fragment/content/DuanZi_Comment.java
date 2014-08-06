@@ -80,7 +80,9 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 //		mitem_top = (LinearLayout)view.findViewById(R.id.mitem_top);
 		TextView textView = (TextView)view.findViewById(R.id.top_text);
 		textView.setText(getResources().getString(R.string.app_name));
-		Button back = (Button)view.findViewById(R.id.top_left);
+//		Button back = (Button)view.findViewById(R.id.top_left);
+//		back.setText("");
+		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		Button report = (Button)view.findViewById(R.id.top_right);
 		
 		hint_img = (ImageView)view.findViewById(R.id.mitem_hint_img);
@@ -240,7 +242,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 				
 			}
 			break;
-		case R.id.top_left:
+		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
 		case R.id.top_right:
