@@ -84,6 +84,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 //		back.setText("");
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		Button report = (Button)view.findViewById(R.id.top_right);
+		report.setVisibility(View.GONE);
 		
 		hint_img = (ImageView)view.findViewById(R.id.mitem_hint_img);
 		gif = (GifImageView)view.findViewById(R.id.mitem_test_gif);

@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -61,7 +63,12 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 	
 	
 	private void initTextView(){
-		
+		ImageView iv_back = (ImageView)view.findViewById(R.id.top_left_change);
+		iv_back.setVisibility(View.GONE);
+		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
+		tv_title.setText(R.string.tab_bar_more);
+		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		bt_submit.setVisibility(View.GONE);
 		
 		setText(R.id.more_feedback, R.string.more_text_feedback);
 //		setText(R.id.more_bookmarker, R.string.more_text_bookmarker);

@@ -174,25 +174,29 @@ public class My_Write extends Fragment implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				if (NetworkUtil.getNetworkState(getActivity()) != NetworkUtil.NONE) {
-					loadDialog.show();
-					new Thread(new PostThread()).start();
 					editContent = editText.getText().toString();
-					if (isCheck_sina) {
-						ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent,
-								null, currImgPath, getActivity(),null);
-					} else if (isCheck_tencent) {
-						ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT,
-								editContent, null, currImgPath, getActivity(),null);
-					} else if (isCheck_qzone) {
-						Log.e(Tag, "QZONE");
-						ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN,
-								editContent, null, currImgPath, getActivity(),null);
-					} else if (isCheck_douban) {
-						ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN,
-								editContent, null, currImgPath, getActivity(),null);
+					if (editContent != null && !editContent.equals("")) {
+						loadDialog.show();
+						new Thread(new PostThread()).start();
+						if (isCheck_sina) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, editContent,
+									null, currImgPath, getActivity(),null);
+						} else if (isCheck_tencent) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT,
+									editContent, null, currImgPath, getActivity(),null);
+						} else if (isCheck_qzone) {
+							Log.e(Tag, "QZONE");
+							ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN,
+									editContent, null, currImgPath, getActivity(),null);
+						} else if (isCheck_douban) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN,
+									editContent, null, currImgPath, getActivity(),null);
+						}
+						insertSQL(editContent, currImgPath);
+						backToHome();
+					}else {
+						DialogToastUtil.toastShow(getActivity(), "内容不能为空");
 					}
-					insertSQL(editContent, currImgPath);
-					backToHome();
 				}else {
 					DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
 				}

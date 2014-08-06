@@ -25,11 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/text_bg"
-            android:padding="5dp"
-            android:text="举报"
-            android:textColor="@color/darkslategray"
-            android:textSize="@dimen/ts_15" />
+            android:background="@drawable/text_bg_noshape"
+            android:drawableRight="@drawable/mai_submit_2"
+            android:layout_margin="@dimen/margin_5"
+            android:text="举报" />
 
         <TextView
             android:id="@+id/top_text"
