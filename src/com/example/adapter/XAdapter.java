@@ -364,9 +364,6 @@ public class XAdapter extends BaseAdapter{
 //				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
 				break;
 				
-			case R.id.duanzi_more_fav:
-
-				break;
 //			case R.id.duanzi_more_zhuanfa:
 //				duanzi.setNeedComment(false);
 //				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
@@ -432,19 +429,9 @@ public class XAdapter extends BaseAdapter{
 		Duanzi duanzi = (Duanzi) getItem(position);
 		Log.e(TAG, "position  " + position);
 		View popView = mInflater.inflate(R.layout.duanzi_more_pop, null);
-		TextView tv_pop_text = (TextView)popView.findViewById(R.id.duanzi_more_zhuanfa_text);
-		if (duanzi.isFav()) {
-			tv_pop_text.setText("取消收藏");
-		}else {
-			tv_pop_text.setText("收藏");
-		}
 		
 //		ImageView iv_zhuanfa = (ImageView)popView.findViewById(R.id.duanzi_more_zhuanfa);
 //		iv_zhuanfa.setOnClickListener(new mOnclick(position, holder));
-		ImageView iv_Rep = (ImageView)popView.findViewById(R.id.duanzi_more_rep);
-		iv_Rep.setOnClickListener(new mOnclick(position, holder));
-		ImageView iv_fav = (ImageView)popView.findViewById(R.id.duanzi_more_fav);
-		iv_fav.setOnClickListener(new mOnclick(position, holder));
 		Button bt_back = (Button)popView.findViewById(R.id.duanzi_more_back);
 		bt_back.setOnClickListener(new mOnclick(position, holder));
 		

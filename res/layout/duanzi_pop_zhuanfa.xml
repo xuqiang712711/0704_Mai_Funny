@@ -11,6 +11,7 @@
         android:id="@+id/duanzi_pop_zhuanfa_top"
         layout="@layout/back_duanzi"/>
 	<EditText 
+	    android:background="@color/white"
 	    android:gravity="top"
         android:hint="@string/my_write_hint"
         android:imeOptions="actionDone"

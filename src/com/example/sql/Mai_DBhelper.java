@@ -212,7 +212,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
 		db = getReadableDatabase();
 		try {
-			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT + " order by time desc where id = ?", new String[]{String.valueOf(id)});
+			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT + " where pid = ? order by time desc ", new String[]{String.valueOf(id)});
 			if (mCursor.moveToFirst()) {
 				do {
 					String icon_url = mCursor.getString(mCursor.getColumnIndex("icon"));

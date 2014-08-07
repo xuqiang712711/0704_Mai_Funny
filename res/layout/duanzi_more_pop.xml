@@ -80,65 +80,15 @@
             </LinearLayout>
         </RelativeLayout>
         
-        <View 
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_10"
-            android:layout_below="@+id/duanzi_pop_share"
-            android:id="@+id/duanzi_pop_line_top"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gery"/>
-        <LinearLayout
-            android:layout_below="@+id/duanzi_pop_line_top"
-            android:layout_margin="@dimen/margin_10"
-            android:id="@+id/duanzi_more_xwkkx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gainsboro" >
-
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_10"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/duanzi_more_fav"
-                    style="@style/duanzi_more_pop_iv"
-                    android:src="@drawable/mai_pop_fav" />
-
-                <TextView
-                    android:id="@+id/duanzi_more_zhuanfa_text"
-                    style="@style/duanzi_more_pop_tv"
-                    android:layout_below="@+id/duanzi_more_fav"
-                    android:text="@string/duanzi_more_fav" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_10"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/duanzi_more_rep"
-                    style="@style/duanzi_more_pop_iv"
-                    android:src="@drawable/mai_pop_rep" />
-
-                <TextView
-                    style="@style/duanzi_more_pop_tv"
-                    android:layout_below="@+id/duanzi_more_rep"
-                    android:text="@string/duanzi_more_report" />
-            </RelativeLayout>
-        </LinearLayout>
+        
+        
         
         <View 
+            android:layout_marginTop="@dimen/margin_10"
             android:layout_marginLeft="@dimen/margin_10"
             android:layout_marginRight="@dimen/margin_10"
             android:id="@+id/duanzi_more_line"
-            android:layout_below="@+id/duanzi_more_xwkkx"
+            android:layout_below="@+id/duanzi_pop_share"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gery"/>
