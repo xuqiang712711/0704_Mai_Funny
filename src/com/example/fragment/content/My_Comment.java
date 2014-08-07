@@ -58,7 +58,7 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(getResources().getString(R.string.my_comment_title));
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
-		Button bt_right = (Button)view.findViewById(R.id.top_right);
+		TextView bt_right = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_right.setVisibility(View.GONE);
 		back.setOnClickListener(this);
 		

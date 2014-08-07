@@ -2,6 +2,8 @@ package com.example.fragment.content;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,10 +20,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,14 +33,17 @@ import android.widget.Toast;
 
 import com.example.Activity.OauthActivity;
 import com.example.Activity.MaiActivity;
+import com.example.adapter.CommentAdapter;
 import com.example.application.MaimobApplication;
 import com.example.fragment.Tab_My_Frag_New;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.ConnToServer;
 import com.example.util.CustomImage;
+import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
@@ -50,7 +57,7 @@ import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment";
 	private View view;
-	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img;
+	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img,iv_fav;
 	private TextView user_name,Zan_txt,Cai_txt,Hot_txt;
 	private TextView content;
 	private RelativeLayout Zan_layout, Cai_layout, Hot_layout;
@@ -58,6 +65,10 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private Duanzi duanzi;
 	private GifImageView gif;
 	private ImageLoader imageLoader;
+	private ListView listView;
+	private List<Map<String, Object>> list;
+	private ComAdapter adapter;
+	private Mai_DBhelper db;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -73,6 +84,19 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		imageLoader = MaimobApplication.imageLoader;
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
 		initView();
+		initListView();
+	}
+	
+	private void initListView(){
+		db = Mai_DBhelper.getInstance(getActivity());
+		list = db.selectComment();
+		if (list.size() != 0) {
+			listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
+			adapter = new ComAdapter();
+			listView.setAdapter(adapter); 
+		}else {
+			listView.setVisibility(View.GONE);
+		}
 	}
 	
 	@SuppressWarnings("unused")
@@ -83,9 +107,10 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 //		Button back = (Button)view.findViewById(R.id.top_left);
 //		back.setText("");
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
-		Button report = (Button)view.findViewById(R.id.top_right);
+		TextView report = (TextView)view.findViewById(R.id.top_right_change2);
 		report.setVisibility(View.GONE);
 		
+		iv_fav = (ImageView)view.findViewById(R.id.mitem_top_fav);
 		hint_img = (ImageView)view.findViewById(R.id.mitem_hint_img);
 		gif = (GifImageView)view.findViewById(R.id.mitem_test_gif);
 		user_icon = (ImageView)view.findViewById(R.id.mitem_icon);
@@ -102,7 +127,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		Cai_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_cai);
 		Hot_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_hot);
 		
-		Log.e("yyy", "name  " + duanzi.getUserName());
+		iv_fav.setVisibility(View.GONE);
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
 		content.setTextSize(Uris.Font_Size);
@@ -207,16 +232,6 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 
 		case R.id.mitem_bottom_hot:
 			Toast.makeText(getActivity(), "去评论", Toast.LENGTH_SHORT).show();
-//			duanzi.setNeedComment(true);
-//			DuanZi_Comment_Write comment_Test = new DuanZi_Comment_Write();
-//			switchFrag(DuanZi_Comment.this, comment_Test);
-			
-//			Intent intent = new Intent(getActivity(), OauthActivity.class);
-//			intent.putExtra("Activity", 3);
-//			Bundle bundle = new Bundle();
-//			bundle.putSerializable("duanzi", duanzi);
-//			intent.putExtras(bundle);
-//			getActivity().startActivityForResult(intent, XYFTEST.ReqCode);
 			
 			duanzi.setNeedComment(true);
 			Bundle bundle = new Bundle();
@@ -246,11 +261,104 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
-		case R.id.top_right:
+		case R.id.top_right_change2:
 			mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new Duanzi_Report(), null);
 			break;
 		}
 	}
 	
+	class ComAdapter extends BaseAdapter{
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return list.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return list.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			ComViewHolder holder = null;
+			if (convertView == null) {
+				holder = new ComViewHolder();
+				LayoutInflater inflater = LayoutInflater.from(getActivity());
+				convertView = inflater.inflate(R.layout.duanzi_comments_items, null);
+				holder.tv_content = (TextView)convertView.findViewById(R.id.dz_com_lv_content);
+				holder.tv_name = (TextView)convertView.findViewById(R.id.dz_com_lv_name);
+				holder.tv_time = (TextView)convertView.findViewById(R.id.dz_com_lv_time);
+				holder.iv_icon = (ImageView)convertView.findViewById(R.id.dz_com_lv_icon);
+				holder.tv_zan = (TextView)convertView.findViewById(R.id.dz_com_lv_tv_Zan);
+				holder.iv_zan = (ImageView)convertView.findViewById(R.id.dz_com_lv_iv_Zan);
+				convertView.setTag(holder);
+			}else {
+				holder  = (ComViewHolder) convertView.getTag();
+			}
+			holder.tv_name.setText((String) list.get(position).get("name"));
+			holder.tv_content.setTextSize(Uris.Font_Size);
+			holder.tv_content.setText((String) list.get(position).get("comment"));
+			holder.tv_time.setText((String) list.get(position).get("time"));
+			MaimobApplication.imageLoader.displayImage((String) list.get(position)
+					.get("icon"), holder.iv_icon, ImageUtil.getOption());
+			holder.iv_zan.setOnClickListener(new mOnclick(holder));
+			return convertView;
+		}
+
+		class mOnclick implements OnClickListener{
+			ComViewHolder holder;
+			public mOnclick( ComViewHolder holder){
+				this.holder = holder;
+			}
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				switch (v.getId()) {
+				case R.id.dz_com_lv_iv_Zan:
+					holder.iv_zan.setImageResource(R.drawable.ic_digg_pressed);
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+		}
+	}
 	
+	public static class  ComViewHolder{
+		TextView tv_name, tv_time,tv_zan,tv_content;
+		ImageView iv_icon,iv_zan;
+	}
+	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (!hidden) {
+			MyLogger.jLog().i("不是隐藏");
+			RefreshData();
+		}else {
+			MyLogger.jLog().i("隐藏");
+		}
+	}
+	
+	private void RefreshData(){
+		Hot_txt.setText(String.valueOf(Integer.parseInt(duanzi.getComment())+1));
+		list = db.selectComment();
+		adapter.notifyDataSetChanged();
+	}
+	
+	
+
 }

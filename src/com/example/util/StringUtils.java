@@ -390,4 +390,14 @@ public class StringUtils
 		time = sdf.format(date);
 		return time;
 	}
+	
+	public static boolean StringisPic(String imgpath){
+		String imgArray [] = {"bmp","dib","gif","jfif","jpe","jpeg","jpg","png","tif","tiff","icon"};
+		for (int i = 0; i < imgArray.length; i++) {
+			if (imgpath.endsWith(imgArray[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

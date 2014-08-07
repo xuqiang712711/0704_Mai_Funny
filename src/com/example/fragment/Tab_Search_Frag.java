@@ -1,5 +1,7 @@
 package com.example.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.json.JSONArray;
@@ -12,6 +14,10 @@ import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.CustomImage;
+import com.example.util.DialogToastUtil;
+import com.example.util.ImageUtil;
+import com.example.util.MyLogger;
+import com.example.util.StringUtils;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,9 +53,10 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	private int flag_sex = 3;
 	private int flag_old = 4;
 	private int num = 0;
-	private int pid = 0;
+	private int id = 0;
 	private MyTask_No_Result task = null;
 	private ImageLoader imageLoader;
+	private int maxID;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +71,8 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		maxID = Uris.max_check;
+		MyLogger.jLog().i("StartmaxID  " + maxID);
 		initView();
 		initHttp();
 		listenerWidget();
@@ -75,7 +84,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		title.setText(R.string.my_check);
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button right = (Button)view.findViewById(R.id.top_right);
+		TextView right = (TextView)view.findViewById(R.id.top_right_change2);
 		right.setVisibility(View.GONE);
 		
 		options = new DisplayImageOptions.Builder()
@@ -109,10 +118,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	}
 
 	private void initHttp() {
-		String check = Uris.Check + "/uuid/" + Uris.uuid + "/maxID/" + 0;
-		Log.i(Tag, check);
-//		MyAsyTask asyTask = new MyAsyTask(handler);
-//		asyTask.execute(check);
+		String check = Uris.Check + "/uuid/" + Uris.uuid + "/maxID/" + maxID;
 		RequestDataTask mTask = new RequestDataTask(handler);
 		mTask.execute(check);
 	}
@@ -127,45 +133,49 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case 1:
-				num = (int) ((Math.random()) * array.length());
-				break;
-
-			default:
+			MyLogger.jLog().i("msg  " + msg.what);
+			if (msg.what == Uris.MSG_NOTIHING) {
+				DialogToastUtil.toastShow(getActivity(), "没有更多了");
+			}else if (msg.what == Uris.MSG_UPDATE) {
+				
+			}else {
 				String data = (String) msg.obj;
 				try {
 					array = new JSONArray(data);
 					Log.i(Tag, "Check_array  " + array);
-					num = (int) ((Math.random()) * array.length());
-					// JSONObject jsonObject = new
-					// JSONObject(data.getString("json"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
 			}
-			
-			Log.i(Tag, "Num  " + num);
-			String text = null;
-			String img = null;
-			try {
-				text = ((JSONObject) array.get(num)).getString("content");
-				img = ((JSONObject) array.get(num)).getString("img");
-				pid = ((JSONObject) array.get(num)).getInt("id");
-				textView.setText(text);
-				if (img != null && !img.equals("")) {
-					imageLoader.displayImage(img, imageView, options);
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Log.i(Tag, "Warring");
-				e.printStackTrace();
-			}
-
+			ShowContent();
 		}
 	};
+	
+	private void ShowContent(){
+		String text = null;
+		String img = null;
+		try {
+			text = ((JSONObject) array.get(num)).getString("content");
+			img = ((JSONObject) array.get(num)).getString("img");
+			id = ((JSONObject) array.get(num)).getInt("id");
+			maxID  = id + 1;
+			Uris.max_check = maxID;
+			textView.setText(text);
+			if (StringUtils.StringisPic(img)) {
+				MyLogger.jLog().i("img  " + img);
+				imageView.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(img, imageView, ImageUtil.getOption());
+			}else {
+				MyLogger.jLog().i("img  no" + img);
+				imageView.setVisibility(View.GONE);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Log.i(Tag, "Warring");
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -194,14 +204,21 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	}
 	
 	private void SwitchContent(){
-		Message message = Message.obtain();
-		message.what = Uris.MSG_UPDATE;
-		handler.sendMessage(message);
+		num++;
+		if (num >= array.length()) {
+			num =0;
+			initHttp();
+		}else {
+			Message message = Message.obtain();
+			message.what = Uris.MSG_UPDATE;
+			handler.sendMessage(message);
+		}
+
 	}
 	
 	private void check_handle(int flag){
 		task = new MyTask_No_Result();
-		String uris = Uris.Check_handle +"/uuid/" + Uris.uuid + "/pid/" + pid + "/vflag/" + flag;
+		String uris = Uris.Check_handle +"/uuid/" + Uris.uuid + "/pid/" + id + "/vflag/" + flag;
 		task.execute(uris);
 		SwitchContent();
 	}

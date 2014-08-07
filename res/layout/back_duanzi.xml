@@ -7,44 +7,38 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/margin_5" >
+        android:background="@color/white">
 
         <ImageView 
+            android:padding="@dimen/margin_10"
+            android:background="@drawable/text_bg_noshape"
             android:contentDescription="@null"
             android:id="@+id/top_left_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:padding="5dp"
             android:src="@drawable/mai_back_3"/>
 
-        <Button
-            android:id="@+id/top_right"
-            android:layout_width="wrap_content"
+		<TextView 
+		    android:paddingRight="@dimen/margin_5"
+		    android:text="举报"
+		    android:gravity="center_vertical"
+		    android:id="@+id/top_right_change2"
+		    android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/text_bg_noshape"
-            android:drawableRight="@drawable/mai_submit_2"
-            android:layout_margin="@dimen/margin_5"
-            android:text="举报" />
-
+            android:drawableRight="@drawable/mai_submit_2"/>
         <TextView
+            android:layout_centerInParent="true"
             android:id="@+id/top_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
+            android:padding="@dimen/margin_10"
             android:text="梁非凡"
-            android:textSize="@dimen/ts_25" />
+            android:textSize="@dimen/ts_20" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_alignBottom="@+id/top"
-        android:background="@color/gray" />
     <View 
         android:layout_below="@+id/top"
         android:layout_width="match_parent"

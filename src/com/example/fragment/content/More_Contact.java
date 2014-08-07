@@ -31,8 +31,8 @@ public class More_Contact extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		TextView title = (TextView)view.findViewById(R.id.top_text);
 		title.setText(R.string.more_text_contact);
-		Button right = (Button)view.findViewById(R.id.top_right);
-		right.setVisibility(View.GONE);
+		TextView bt_submit = (TextView)view.findViewById(R.id.top_right_change2);
+		bt_submit.setVisibility(View.GONE);
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			

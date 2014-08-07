@@ -40,7 +40,7 @@ public class Duanzi_More_Comment extends Fragment implements OnClickListener{
 		tv_title.setText(" ‰»Î∆¿¬€");
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		TextView bt_submit = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_submit.setText(getActivity().getString(R.string.ActionBar_Submit));
 		bt_submit.setOnClickListener(this);
 		et_write = (EditText)view.findViewById(R.id.duanzi_more_edit);

@@ -308,7 +308,7 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 		tv_title.setText(getResources().getString(R.string.my_edit));
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button right = (Button)view.findViewById(R.id.top_right);
+		TextView right = (TextView)view.findViewById(R.id.top_right_change2);
 		right.setVisibility(View.GONE);
 		
 		layout_icon  = (RelativeLayout)view.findViewById(R.id.my_edit_icon);

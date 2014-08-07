@@ -1,9 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/white" >
 
     <LinearLayout
+        android:id="@+id/mitem_top_userinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -27,18 +28,21 @@
     </LinearLayout>
 
     <TextView
+        android:layout_below="@+id/mitem_top_userinfo"
         style="@style/duanzi_content_textview"
         android:id="@+id/mitem_test_content"
         android:layout_margin="10dp"
         android:text="English、中文中文中文中文中文中文中文中文中文中文中文中文中文中文中文中文中文" />
 
     <ImageView
+        android:layout_below="@+id/mitem_test_content"
         android:id="@+id/mitem_test_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10" />
 
     <FrameLayout
+        android:layout_below="@+id/mitem_test_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -59,5 +63,11 @@
             android:src="@drawable/gifbutton_textpage_normal"
             android:visibility="gone" />
     </FrameLayout>
+    <ImageView 
+        android:id="@+id/mitem_top_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tt_tab_bar_best_n"
+        android:layout_alignParentRight="true"/>
 
-</LinearLayout>
+</RelativeLayout>

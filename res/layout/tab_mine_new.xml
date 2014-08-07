@@ -198,7 +198,7 @@
             android:layout_marginBottom="@dimen/margin_5" />
 
         <include
-            android:id="@+id/my_nemo_new"
+            android:id="@+id/my_backfeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

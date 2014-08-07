@@ -180,10 +180,7 @@
 		    <item name="android:textSize">@dimen/top_title</item>
 		    <item name="android:background">@color/gainsboro</item>
 		    <item name="android:gravity">center_horizontal</item>
-		    <item name="android:paddingBottom">@dimen/margin_10</item>
-		    <item name="android:paddingLeft">@dimen/margin_10</item>
-		    <item name="android:paddingRight">@dimen/margin_10</item>
-		    <item name="android:paddingTop">@dimen/margin_10</item>
+		    <item name="android:padding">8dp</item>
 		</style>
 	<!-- 自定义loading dialog -->
     <style name="loading_dialog" parent="android:style/Theme.Dialog">

@@ -2,40 +2,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-	<RelativeLayout 
-    		android:background="#666999"
-	    style="@style/match_horizontal"
-	    android:id="@+id/duanzi_comments_top">
-	    <ImageView 
-	        android:background="#cccccc"
-	        android:src="@drawable/game"
-	        android:contentDescription="@null"
-	        style="@style/wrap"
-	        android:id="@+id/duanzi_comments_icon"/>
-	    <TextView 
-	        style="@style/wrap"
-	        android:layout_toRightOf="@+id/duanzi_comments_icon"
-	        android:text="用户名"
-	        android:id="@+id/duanzi_comments_name"/>
-	    <TextView 
-	        style="@style/wrap"
-	        android:layout_toRightOf="@+id/duanzi_comments_icon"
-	        android:layout_below="@+id/duanzi_comments_name"
-	        android:text="XX小时之前"
-	        android:id="@+id/duanzi_comments_time"/>
-	    <TextView 
-	        style="@style/match_horizontal"
-	        android:id="@+id/duanzi_comments_content"
-	        android:layout_toRightOf="@+id/duanzi_comments_icon"
-	        android:layout_below="@+id/duanzi_comments_time"
-	        android:text="评论内容"/>
-	        
-	</RelativeLayout>  
-	
-	<com.example.util.DuanZi_Comments_Praise 
-	    android:id="@+id/duanzi_comments_praise"
-	    style="@style/wrap"
-	    android:layout_alignParentRight="true" />
-	    
+
+    <RelativeLayout
+        android:id="@+id/dz_com_lv_top"
+        style="@style/match_horizontal"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10" >
+
+        <ImageView
+            android:id="@+id/dz_com_lv_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="@dimen/margin_10"
+            android:contentDescription="@null"
+            android:src="@drawable/mai_2_my" />
+
+        <TextView
+            android:id="@+id/dz_com_lv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/dz_com_lv_icon"
+            android:layout_toRightOf="@+id/dz_com_lv_icon"
+            android:text="用户名" />
+
+        <TextView
+            android:id="@+id/dz_com_lv_time"
+            style="@style/wrap"
+            android:layout_below="@+id/dz_com_lv_name"
+            android:layout_toRightOf="@+id/dz_com_lv_icon"
+            android:text="XX小时之前" />
+
+        <TextView
+            style="@style/duanzi_content_textview"
+            android:id="@+id/dz_com_lv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dz_com_lv_time"
+            android:layout_toRightOf="@+id/dz_com_lv_icon"
+            android:text="评论内容" />
+
+        <TextView
+            android:id="@+id/dz_com_lv_tv_Zan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/dz_com_lv_iv_Zan"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/dz_com_lv_iv_Zan"
+            android:text="点赞数" />
+
+        <ImageView
+            android:id="@+id/dz_com_lv_iv_Zan"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/dz_com_lv_icon"
+            android:layout_marginRight="@dimen/margin_10"
+            android:src="@drawable/ic_digg_normal" />
+    </RelativeLayout>
 
 </RelativeLayout>

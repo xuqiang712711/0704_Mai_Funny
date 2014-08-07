@@ -50,7 +50,7 @@ public class My_Publish extends Fragment implements OnClickListener, OnItemClick
 		tv.setText(getResources().getString(R.string.my_pub_title));
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button bt_right = (Button)view.findViewById(R.id.top_right);
+		TextView bt_right = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_right.setVisibility(View.GONE);
 		
 		Mai_DBhelper dbhelper = Mai_DBhelper.getInstance(getActivity());

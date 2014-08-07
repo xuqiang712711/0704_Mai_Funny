@@ -13,6 +13,7 @@
     <dimen name="duanzi_margin">5dp</dimen>
 	
     <dimen name="title">25dp</dimen>
+    <dimen name="ts_12">12sp</dimen>
     <!-- 字体：小 -->
     <dimen name="ts_15">15sp</dimen>
     <!-- 字体：中 -->

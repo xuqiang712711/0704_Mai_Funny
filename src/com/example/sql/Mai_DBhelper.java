@@ -193,7 +193,6 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					map.put("comment", comment);
 					map.put("icon", icon_url);
 					map.put("time", StringUtils.getTime(time));
-					Log.e(tag, "comm  " + comment + "  time  " + StringUtils.getTime(time));
 					data.add(map);
 				} while (mCursor.moveToNext());
 			}
@@ -218,7 +217,6 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	 * @return
 	 */
 	public boolean insertUser_Publish(String content, String imgurl){
-		Log.e(tag, "con  " +content + "  img  " + imgurl);
 		db = getWritableDatabase();
 		try {
 			ContentValues cv = new ContentValues();
@@ -252,7 +250,6 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					String content_imgurl = mCursor.getString(mCursor.getColumnIndex("imgurl"));
 					String name = (String) SharedPreferencesUtils.getParam("user", mContext, "name", "");
 					String icon_imgurl = (String) SharedPreferencesUtils.getParam("user", mContext, "icon", "");
-					Log.e(tag, "con  " + content + "  con_img  "+ content_imgurl + "  name " + name +"  name_img  "+ icon_imgurl);
 					Duanzi duanzi = new Duanzi(content_imgurl, name, icon_imgurl,"0", "0",content, "0", "0", false, false, 0, false, false,0l);
 					duanzi_list.add(duanzi);
 				} while (mCursor.moveToNext());
@@ -421,7 +418,6 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					int boo_Cai	= mCursor.getInt(mCursor.getColumnIndex("boo_cai"));
 					int boo_Zan	= mCursor.getInt(mCursor.getColumnIndex("boo_zan"));
 					int boo_Fav	= mCursor.getInt(mCursor.getColumnIndex("boo_fav"));
-					MyLogger.jLog().i("name  " + name + "  content  " +content);
 					Duanzi duanzi = new Duanzi(imgUrl, name, icon, String.valueOf(cai_count), String.valueOf(zan_count), content, 
 							String.valueOf(comment_count), String.valueOf(pid), boo(boo_Zan), boo(boo_Cai), 0, boo(boo_Fav), false,0l);
 					list.add(duanzi);

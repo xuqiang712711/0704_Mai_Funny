@@ -16,6 +16,7 @@ import com.example.maiUtil.CustomHttpClient;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 
+import android.R.array;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -38,21 +39,42 @@ public class RequestDataTask extends AsyncTask<String, Void, String>{
 	protected void onPostExecute(String result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
+		Log.e(Tag, "result  " + result);
+		JSONArray array2 = null;
+		try {
+			array2 = new JSONArray(result);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (array2.length() == 0) {
+			Log.e("Tag", "result ЮЊПе");
+		}
 		if (mHandler != null) {
-			int maxID = 0;
-			try {
-				JSONArray array = new JSONArray(result);
-				maxID = array.length();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (result != null) {
+				int maxID = 0;
+				try {
+					JSONArray array = new JSONArray(result);
+					maxID = array.length();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (maxID == 0) {
+					Message msg = Message.obtain();
+					msg.what = Uris.MSG_NOTIHING;
+					mHandler.sendMessage(msg);
+				}else {
+					Message msg = Message.obtain();
+					msg.obj = result;
+					msg.what = maxID;
+					mHandler.sendMessage(msg);
+				}
+			}else {
+				Message msg = Message.obtain();
+				msg.what = Uris.MSG_NOTIHING;
+				mHandler.sendMessage(msg);
 			}
-			Log.e(Tag, "result  " + result);
-			Message msg = Message.obtain();
-			msg.obj = result;
-			msg.what = maxID;
-			mHandler.sendMessage(msg);
-			
 		}
 	}
 	

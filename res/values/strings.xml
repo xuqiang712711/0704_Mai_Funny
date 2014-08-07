@@ -39,7 +39,8 @@
     <string name="my_favorite">我的收藏</string>
     <string name="my_app">应用</string>
     <string name="my_activity">热门活动</string>
-    <string name="my_nemo">待定1</string>
+    <string name="my_nemo">待定</string>
+    <string name="my_feedback">我要反馈</string>
     <string name="my_message">消息</string>
     <string name="my_zhuanfa">转发到:</string>
     <string name="my_write_hint">请输入内容，字数不超过XX字</string>

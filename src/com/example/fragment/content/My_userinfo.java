@@ -148,7 +148,7 @@ public class My_userinfo extends Fragment implements OnClickListener{
 		tv_title.setText(user.getName());
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button right = (Button)view.findViewById(R.id.top_right);
+		TextView right = (TextView)view.findViewById(R.id.top_right_change2);
 		right.setVisibility(View.GONE);
 		
 		//Content

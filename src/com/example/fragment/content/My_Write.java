@@ -3,6 +3,7 @@ package com.example.fragment.content;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -81,7 +82,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	private Uri mImageCaptureUri;
 	private ArrayAdapter<String> adapter, adapter2;
 	private EditText editText;
-	private Button submit;
+	private TextView submit;
 	public static final int POST_SUC = 1;
 	private boolean switch_dialog =false;
 	private AlertDialog.Builder builder, del_builder;
@@ -126,7 +127,7 @@ public class My_Write extends Fragment implements OnClickListener{
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
 		
-		submit = (Button)view.findViewById(R.id.top_right);
+		submit = (TextView)view.findViewById(R.id.top_right_change2);
 		submit.setText(R.string.ActionBar_Submit);
 		editText = (EditText)view.findViewById(R.id.my_write_edit);
 		TextView textView = (TextView)view.findViewById(R.id.my_write_count);
@@ -303,7 +304,7 @@ public class My_Write extends Fragment implements OnClickListener{
     		HttpPost httpPost = new HttpPost(uri);
     		MultipartEntity entity = new MultipartEntity();
     		entity.addPart("uuid", new StringBody(uuid));
-    		entity.addPart("content", new StringBody(content));
+    		entity.addPart("content", new StringBody(content, Charset.forName("UTF-8")));
     		if (imgFile != null) {
     			FileBody body = new FileBody(imgFile);
     			entity.addPart("img", body);

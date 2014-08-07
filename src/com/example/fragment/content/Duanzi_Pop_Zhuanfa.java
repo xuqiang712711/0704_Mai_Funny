@@ -53,7 +53,7 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 		et_Input = (EditText)view.findViewById(R.id.duanzi_pop_zhuanfa_edit);
 		TextView tv_Title = (TextView)view.findViewById(R.id.top_text);
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
-		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		TextView bt_submit = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_submit.setText(R.string.ActionBar_Submit);
 		back.setOnClickListener(this);
 		bt_submit.setOnClickListener(this);
@@ -83,7 +83,7 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 			mFragmentManage.BackStatck(getActivity());
 			break;
 
-		case R.id.top_right:
+		case R.id.top_right_change2:
 			mDialog.show();
 			input_Content = et_Input.getText().toString();
 			ShareUtil.ShareToSocial(map.get(share_Media), input_Content, duanzi.getContent(), duanzi.getImageUrl(), getActivity(), mHandler);

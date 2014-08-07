@@ -165,9 +165,10 @@ public final class Uris {
 	//审核段子
 	public static String Check_handle = "http://md.maimob.net/index.php/player/Verify";
 	
+	public static int MSG_NOTIHING = 3838;
 	
 	public static int MSG_REFRESH = 53433;
-	public static int MSG_UPDATE = 1;
+	public static int MSG_UPDATE = 1234;
 	public static int MSG_GETDATA = 2222;//获取服务器上的数据
 	public static int MSG_CHECKDATA = 2;
 	public static int MSG_CHANGEFONT = 33;//更改字体大小的msg.what
@@ -183,4 +184,5 @@ public final class Uris {
 	public static int max_dz_new;
 	public static int max_img_hot;
 	public static int max_img_new;
+	public static int max_check;
 }

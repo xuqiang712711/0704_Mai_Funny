@@ -67,7 +67,7 @@ public class Tab_More_Frag extends Fragment implements OnClickListener{
 		iv_back.setVisibility(View.GONE);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(R.string.tab_bar_more);
-		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		TextView bt_submit = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_submit.setVisibility(View.GONE);
 		
 		setText(R.id.more_feedback, R.string.more_text_feedback);

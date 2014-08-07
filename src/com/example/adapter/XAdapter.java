@@ -137,6 +137,7 @@ public class XAdapter extends BaseAdapter{
 		if (convertView ==null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.mitem_test, null);
+			holder.iv_fav = (ImageView)convertView.findViewById(R.id.mitem_top_fav);
 			holder.image = (ImageView)convertView.findViewById(R.id.mitem_test_img);
 			holder.gif = (GifImageView)convertView.findViewById(R.id.mitem_test_gif);
 			holder.hint_img = (ImageView)convertView.findViewById(R.id.mitem_hint_img);
@@ -226,6 +227,12 @@ public class XAdapter extends BaseAdapter{
 			holder.cai_img.setImageResource(R.drawable.ic_bury_normal);
 		}
 		
+		if (duanzi.isFav()) {
+			holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_s);
+		}else {
+			holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_n);
+		}
+		
 		holder.cai.setText(cai);
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
@@ -249,6 +256,7 @@ public class XAdapter extends BaseAdapter{
 		holder.more.setOnClickListener(new mOnclick(position, holder));
 		holder.image.setOnClickListener(new mOnclick(position, holder));
 		holder.gif.setOnClickListener(new mOnclick(position, holder));
+		holder.iv_fav.setOnClickListener(new mOnclick(position, holder));
 		//未对头像、用户名进行监听
 	}
 	
@@ -268,7 +276,35 @@ public class XAdapter extends BaseAdapter{
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			
+			case R.id.mitem_top_fav:
+				if (duanzi.isFav()) {
+					duanzi.setFav(false);
+					dBhelper.cancelFav(Integer.parseInt(duanzi.getPoid()));
+					DialogToastUtil.toastShow(context, "取消收藏成功");
+				}else {
+					dBhelper.updateFav(Integer.parseInt(duanzi.getPoid()));
+					Log.e(TAG, "FAV");
+					RequestDataTask reqTask = new RequestDataTask(adapterHandler);
+					reqTask.execute(ConnToServer.getUrl(ConnToServer.FAV, duanzi.getPoid()));
+					holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_s);
+					duanzi.setFav(true);
+					boolean isZhuanfa = (Boolean) SharedPreferencesUtils.getParam("setting", context, "isZhuanfa", false);
+					//是否勾选设置中的收藏同时转发
+					if (isZhuanfa) {
+						if ((Integer) SharedPreferencesUtils.getParam("platform", context, "sina", 0)== 1) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "tencent", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "renren", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else if (SharedPreferencesUtils.getParam("platform", context, "douban", 0).equals("1")) {
+							ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
+						}else {
+							ToastUtil.showToast(context, "你尚未绑定账号,无法转发");
+						}
+					}
+				}
+				break;
 			case R.id.mitem_test_gif:
 				holder.hint_img.setVisibility(View.GONE);
 				((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(duanzi.getImageUrl()));
@@ -329,33 +365,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 				
 			case R.id.duanzi_more_fav:
-				if (duanzi.isFav()) {
-					duanzi.setFav(false);
-					window.dismiss();
-					dBhelper.cancelFav(Integer.parseInt(duanzi.getPoid()));
-					DialogToastUtil.toastShow(context, "取消收藏成功");
-				}else {
-					dBhelper.updateFav(Integer.parseInt(duanzi.getPoid()));
-					Log.e(TAG, "FAV");
-					RequestDataTask reqTask = new RequestDataTask(adapterHandler);
-					reqTask.execute(ConnToServer.getUrl(ConnToServer.FAV, duanzi.getPoid()));
-					duanzi.setFav(true);
-					boolean isZhuanfa = (Boolean) SharedPreferencesUtils.getParam("setting", context, "isZhuanfa", false);
-					//是否勾选设置中的收藏同时转发
-					if (isZhuanfa) {
-						if ((Integer) SharedPreferencesUtils.getParam("platform", context, "sina", 0)== 1) {
-							ShareUtil.ShareToSocial(SHARE_MEDIA.SINA, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
-						}else if (SharedPreferencesUtils.getParam("platform", context, "tencent", 0).equals("1")) {
-							ShareUtil.ShareToSocial(SHARE_MEDIA.TENCENT, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
-						}else if (SharedPreferencesUtils.getParam("platform", context, "renren", 0).equals("1")) {
-							ShareUtil.ShareToSocial(SHARE_MEDIA.RENREN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
-						}else if (SharedPreferencesUtils.getParam("platform", context, "douban", 0).equals("1")) {
-							ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, null, duanzi.getContent(), duanzi.getImageUrl(), context, null);
-						}else {
-							ToastUtil.showToast(context, "你尚未绑定账号,无法转发");
-						}
-					}
-				}
+
 				break;
 //			case R.id.duanzi_more_zhuanfa:
 //				duanzi.setNeedComment(false);
@@ -462,7 +472,7 @@ public class XAdapter extends BaseAdapter{
 	
 	public static class ViewHolder{
 		GifImageView gif;
-		ImageView user_icon, more,image;
+		ImageView user_icon, more,image,iv_fav;
 		TextView user_name, content, comment;
 		TextView cai, zan, hot;
 		ImageView cai_img, zan_img, hot_img, hint_img;
@@ -495,7 +505,6 @@ public class XAdapter extends BaseAdapter{
 	private Handler adapterHandler = new Handler(){
 		public void handleMessage(Message msg) {
 			ToastUtil.showToast(context, "收藏成功");
-			window.dismiss();
 		}
 	};
 	

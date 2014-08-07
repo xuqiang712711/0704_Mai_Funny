@@ -7,6 +7,7 @@ import com.example.Activity.OauthActivity;
 import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
+import com.example.fragment.content.More_feedback;
 import com.example.fragment.content.My_Check;
 import com.example.fragment.content.My_Comment;
 import com.example.fragment.content.My_Favorite;
@@ -45,7 +46,7 @@ import android.widget.Toast;
 
 public class Tab_My_Frag_New extends Fragment implements OnClickListener{
 private View view;
-private RelativeLayout comment, check, publish, favorite,message,app, activity,nemo,userinfo_login;
+private RelativeLayout comment, check, publish, favorite,message,app, activity,backfeed,userinfo_login;
 private RelativeLayout nemo1, nemo2, nemo3, nemo4;
 private TextView edit;
 private RelativeLayout logined, unLogin;
@@ -103,13 +104,14 @@ private boolean userIsExists = false;
 			listenWidget(R.id.my_comment_new);
 			listenWidget(R.id.my_app_new);
 			listenWidget(R.id.my_activity_new);
+			listenWidget(R.id.my_backfeed);
 		}
 	
 	private void initView(){
 		
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setVisibility(View.GONE);
-		Button bt_submit = (Button)view.findViewById(R.id.top_right);
+		TextView bt_submit = (TextView)view.findViewById(R.id.top_right_change2);
 		bt_submit.setVisibility(View.GONE);
 		TextView tv_title = (TextView)view.findViewById(R.id.top_text);
 		tv_title.setText(R.string.tab_bar_mine);
@@ -145,7 +147,7 @@ private boolean userIsExists = false;
 		publish = (RelativeLayout)view.findViewById(R.id.my_publish_new);
 		favorite = (RelativeLayout)view.findViewById(R.id.my_favorite_new);
 		message = (RelativeLayout)view.findViewById(R.id.my_message_new);
-		nemo = (RelativeLayout)view.findViewById(R.id.my_nemo_new);
+		backfeed = (RelativeLayout)view.findViewById(R.id.my_backfeed);
 		comment = (RelativeLayout)view.findViewById(R.id.my_comment_new);
 		app = (RelativeLayout)view.findViewById(R.id.my_app_new);
 		activity = (RelativeLayout)view.findViewById(R.id.my_activity_new);
@@ -153,7 +155,7 @@ private boolean userIsExists = false;
 		setWidget(check, R.string.my_check, R.drawable.mai_2_check, R.drawable.item_click_center,2);
 		setWidget(app, R.string.my_app, R.drawable.mai_2_app, R.drawable.item_click_center, 2);
 		setWidget(activity, R.string.my_activity, R.drawable.mai_2_app, R.drawable.item_click_center, 2);
-		setWidget(nemo, R.string.my_nemo, R.drawable.mai_2_check, R.drawable.item_click_center, 2);
+		setWidget(backfeed, R.string.my_feedback, R.drawable.mai_2_check, R.drawable.item_click_center, 2);
 		
 		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_center,1);
 		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_center, 1);
@@ -216,6 +218,9 @@ private boolean userIsExists = false;
 		Bundle bundle = new Bundle();
 		bundle.putInt("xwkkx", My_login_select.From_My);
 		switch (v.getId()) {
+		case R.id.my_backfeed:
+			mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new More_feedback(), null);
+			break;
 		case R.id.my_logined:
 			MyLogger.kLog().i("my_logined");
 			break;

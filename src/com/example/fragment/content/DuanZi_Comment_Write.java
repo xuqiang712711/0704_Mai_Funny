@@ -110,7 +110,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		title.setText(getResources().getString(R.string.my_comment));
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(this);
-		Button submit = (Button)view.findViewById(R.id.top_right);
+		TextView submit = (TextView)view.findViewById(R.id.top_right_change2);
 		submit.setText(getResources().getString(R.string.ActionBar_Submit));
 		submit.setOnClickListener(this);
 		
@@ -182,7 +182,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.top_right:
+		case R.id.top_right_change2:
 			if (NetworkUtil.getNetworkState(getActivity()) == NetworkUtil.NONE) {
 				DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
 				break;

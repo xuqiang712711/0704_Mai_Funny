@@ -96,8 +96,8 @@ public class My_login_select extends Fragment{
 				}
 			}
 		});
-		Button right = (Button)view.findViewById(R.id.top_right);
-		right.setVisibility(View.GONE);
+		TextView bt_right = (TextView)view.findViewById(R.id.top_right_change2);
+		bt_right.setVisibility(View.GONE);
 		mController = MaimobApplication.mController;
 		ImageView imageView = (ImageView)view.findViewById(R.id.my_select_sina);
 		RelativeLayout.LayoutParams p1 = (LayoutParams) imageView.getLayoutParams();
