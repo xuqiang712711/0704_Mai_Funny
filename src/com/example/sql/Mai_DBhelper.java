@@ -208,6 +208,41 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		}
 	}
 	
+	public List<Map<String, Object>> selectComFromID(int id){
+		List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
+		db = getReadableDatabase();
+		try {
+			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT + " order by time desc where id = ?", new String[]{String.valueOf(id)});
+			if (mCursor.moveToFirst()) {
+				do {
+					String icon_url = mCursor.getString(mCursor.getColumnIndex("icon"));
+					String name = mCursor.getString(mCursor.getColumnIndex("name"));
+					String comment = mCursor.getString(mCursor.getColumnIndex("comment"));
+					String content = mCursor.getString(mCursor.getColumnIndex("content"));
+					int pid		  = mCursor.getInt(mCursor.getColumnIndex("pid"));
+					long time = mCursor.getLong(mCursor.getColumnIndex("time"));
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("pid", pid);
+					map.put("content", content);
+					map.put("name", name);
+					map.put("comment", comment);
+					map.put("icon", icon_url);
+					map.put("time", StringUtils.getTime(time));
+					data.add(map);
+				} while (mCursor.moveToNext());
+			}
+			return data;
+		} catch (Exception e) {
+			// TODO: handle exception
+			Log.e(tag, "selectComment     error");
+			return data;
+		}finally{
+			if (mCursor != null) {
+				mCursor.close();
+			}
+		}
+	}
+	
 	/**
 	 * 插入用户投稿、仅限本地、无同步
 	 * @param user_id

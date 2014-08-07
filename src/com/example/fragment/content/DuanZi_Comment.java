@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import android.R.integer;
 import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
@@ -89,9 +90,9 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	
 	private void initListView(){
 		db = Mai_DBhelper.getInstance(getActivity());
-		list = db.selectComment();
+		list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
+		listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
 		if (list.size() != 0) {
-			listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
 			adapter = new ComAdapter();
 			listView.setAdapter(adapter); 
 		}else {
@@ -355,7 +356,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	
 	private void RefreshData(){
 		Hot_txt.setText(String.valueOf(Integer.parseInt(duanzi.getComment())+1));
-		list = db.selectComment();
+		list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
 		adapter.notifyDataSetChanged();
 	}
 	
