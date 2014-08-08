@@ -62,6 +62,7 @@ import com.example.util.CommonUtils;
 import com.example.util.DialogToastUtil;
 import com.example.util.EditUtil;
 import com.example.util.IMG_Compress;
+import com.example.util.MyLogger;
 import com.example.util.NetworkUtil;
 import com.example.util.ShareUtil;
 import com.example.util.StringUtils;
@@ -308,8 +309,8 @@ public class My_Write extends Fragment implements OnClickListener{
     		if (imgFile != null) {
     			FileBody body = new FileBody(imgFile);
     			entity.addPart("img", body);
-    			httpPost.setEntity(entity);
 			}
+    		httpPost.setEntity(entity);
     		try {
     				Log.i("FFF", "投稿___uri" + httpPost.getURI());
 				HttpResponse response = client.execute(httpPost);
@@ -407,12 +408,38 @@ public class My_Write extends Fragment implements OnClickListener{
 	}
 	
 	private void backToHome(){
-		MaiActivity xyftest =(MaiActivity)getActivity();
-		xyftest.WriteBack(1);
+		MyLogger.jLog().i("xwkkx  " + editContent);
+		editContent = editText.getText().toString();
+		if (editContent != null && !editContent.equals("")) {
+			new AlertDialog.Builder(getActivity()).
+			setMessage(getResources().getString(R.string.write_editNotNull)).
+			setNegativeButton(getResources().getString(R.string.write_cancel), new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			}).
+			setPositiveButton(getResources().getString(R.string.write_confrim), new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					MaiActivity xyftest =(MaiActivity)getActivity();
+					xyftest.WriteBack(1);
+				}
+			}).show();
+		}else {
+			MaiActivity xyftest =(MaiActivity)getActivity();
+			xyftest.WriteBack(1);
+		}
+
 	}
 	
 	private void insertSQL(String content, String imgurl){
 		Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(getActivity());
 		dBhelper.insertUser_Publish(content, imgurl);
 	}
+	
 }

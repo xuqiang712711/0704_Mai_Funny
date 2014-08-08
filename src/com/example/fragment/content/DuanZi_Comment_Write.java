@@ -16,7 +16,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,6 +45,7 @@ import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
+import com.example.util.EditUtil;
 import com.example.util.NetworkUtil;
 import com.example.util.SerUser;
 import com.example.util.ShareUtil;
@@ -75,10 +78,12 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	private UMSocialService mcontroller;
 	private Dialog dialog;
 	private Duanzi duanzi;
+	private TextView tv_edit_count;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			dialog.dismiss();
+			mFragmentManage.Refresh_Comment = true;
 			mFragmentManage.BackStatck(getActivity());
 		}
 	};
@@ -125,7 +130,9 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		douban.setOnClickListener(this);
 		
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
+		tv_edit_count = (TextView)view.findViewById(R.id.duanzi_comments_edit_count);
 		dialog = DialogToastUtil.createLoadingDialog(getActivity());
+		new EditUtil(getActivity(), editText, tv_edit_count);
 	}
 	
 	class SubMitThread implements Runnable{
@@ -161,10 +168,8 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		entity.addPart("pid", new StringBody(pid));
 		httpPost.setEntity(entity);
 		try {
-				Log.i("FFF", "投稿___uri" + httpPost.getURI());
 			HttpResponse response = client.execute(httpPost);
 			code = response.getStatusLine().getStatusCode();
-				Log.i("FFF", "投稿___code"+ code);
 			HttpEntity httpEntity = response.getEntity();
 			if (httpEntity != null) {
 				String jsonObject = EntityUtils.toString(httpEntity);
@@ -205,13 +210,36 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				}else if (isCheck_douban) {
 					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, duanziContent, null, getActivity(), handler);
 				}
-				insertComment(duanziContent , Integer.parseInt(pid), editContent);
+				insertComment(duanzi.getUserName(),duanziContent , Integer.parseInt(pid), editContent);
 			}else {
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
 			break;
 		case R.id.top_left_change:
-			mFragmentManage.BackStatck(getActivity());
+			
+			editContent = editText.getText().toString();
+			if (editContent != null && !editContent.equals("")) {
+				new AlertDialog.Builder(getActivity()).setMessage(getResources().getString(R.string.write_editNotNull))
+				.setNegativeButton(getResources().getString(R.string.write_cancel), new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.dismiss();
+					}
+				})
+				.setPositiveButton(getResources().getString(R.string.write_confrim), new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						mFragmentManage.BackStatck(getActivity());
+					}
+				})
+				.show();
+			}else {
+				mFragmentManage.BackStatck(getActivity());
+			}
 			break;
 		case R.id.duanzi_comment_write_sina:
 			if (!isCheck_sina) {
@@ -285,12 +313,12 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		}
 	}
 	
-	public void insertComment(String duanziContent, int pid, String editContent) {
+	public void insertComment(String dz_userName, String duanziContent, int pid, String editContent) {
 		User user = SerUser.deSerializationUser((String)SharedPreferencesUtils
 				.getParam(SharedPreferencesUtils.SerUser, getActivity(),
 						SharedPreferencesUtils.SerUser_user, ""));
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
-		db.insertUser_Comment(duanziContent, pid, editContent, user);
+		db.insertUser_Comment(dz_userName, duanziContent, pid, editContent, user);
 	}
 	
 }

@@ -18,11 +18,13 @@
             android:src="@drawable/mai_2_my" />
 
         <TextView
+            android:textSize="@dimen/ts_13"
             android:id="@+id/dz_com_lv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/dz_com_lv_icon"
             android:layout_toRightOf="@+id/dz_com_lv_icon"
+            android:textColor="@color/black"
             android:text="用户名" />
 
         <TextView
@@ -30,9 +32,12 @@
             style="@style/wrap"
             android:layout_below="@+id/dz_com_lv_name"
             android:layout_toRightOf="@+id/dz_com_lv_icon"
+            android:textSize="@dimen/ts_10"
+            android:textColor="@color/gray"
             android:text="XX小时之前" />
 
         <TextView
+            android:textSize="@dimen/ts_15"
             style="@style/duanzi_content_textview"
             android:id="@+id/dz_com_lv_content"
             android:layout_width="match_parent"
@@ -40,24 +45,6 @@
             android:layout_below="@+id/dz_com_lv_time"
             android:layout_toRightOf="@+id/dz_com_lv_icon"
             android:text="评论内容" />
-
-        <TextView
-            android:id="@+id/dz_com_lv_tv_Zan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dz_com_lv_iv_Zan"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/dz_com_lv_iv_Zan"
-            android:text="点赞数" />
-
-        <ImageView
-            android:id="@+id/dz_com_lv_iv_Zan"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/dz_com_lv_icon"
-            android:layout_marginRight="@dimen/margin_10"
-            android:src="@drawable/ic_digg_normal" />
     </RelativeLayout>
 
 </RelativeLayout>

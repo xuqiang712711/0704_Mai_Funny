@@ -309,16 +309,6 @@ private boolean userIsExists = false;
 			// TODO Auto-generated method stub
 			super.onHiddenChanged(hidden);
 			MyLogger.jLog().i("我叫你玉蝴蝶");
-//			if (mFragmentManage.Refresh_userInfo) {
-//				if (!hidden) {
-//						MyLogger.jLog().i("恋生花");
-//						tv_user_name.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_name, ""));
-//						tv_user_description.setText((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_description, ""));
-//						MaimobApplication.imageLoader.displayImage(
-//								StringUtils.checkImgPath((String)SharedPreferencesUtils.getParam
-//								(SharedPreferencesUtils.user, getActivity(), SharedPreferencesUtils.user_icon, "")), iv_user_head, ImageUtil.getOption());
-//				}
-//			}
 			user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
 					SharedPreferencesUtils.user, ""));
 			if (mFragmentManage.Refresh_userInfo) {
@@ -329,6 +319,7 @@ private boolean userIsExists = false;
 					MaimobApplication.imageLoader.displayImage(
 							StringUtils.checkImgPath(user.getIcon()), iv_user_head, ImageUtil.getOption());
 				}
+				mFragmentManage.Refresh_userInfo = false;
 			}
 	
 		}

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#699669">
 
     <ImageView
         	android:paddingLeft="@dimen/margin_10"
@@ -14,15 +15,16 @@
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        	android:paddingLeft="@dimen/margin_10"
-        	android:paddingRight="@dimen/margin_10"
+        	android:paddingLeft="@dimen/margin_5"
+        	android:paddingRight="@dimen/margin_5"
         	android:paddingBottom="@dimen/margin_10"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
+        android:textSize="@dimen/ts_13"
         android:text="TextView" />
 
 </RelativeLayout>

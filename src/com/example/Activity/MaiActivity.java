@@ -25,6 +25,7 @@ import com.example.util.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -70,6 +71,10 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.main);
+		//是否是第一次打开应用
+		if ((Boolean) SharedPreferencesUtils.getParam(SharedPreferencesUtils.setting, this, SharedPreferencesUtils.setting_frist, true)) {
+			CreateShortCut();
+		}
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		MaimobApplication.DeviceW = dm.widthPixels;
@@ -355,5 +360,21 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		myLogger.i("退出应用");
 		Mai_DBhelper db = Mai_DBhelper.getInstance(this);
 		db.close();
+	}
+	
+	private void CreateShortCut(){
+		Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+		shortcutIntent.setClassName(this, this.getClass().getName());
+		shortcutIntent.setAction("android.intent.action.MAIN");  
+		shortcutIntent.addCategory("android.intent.category.LAUNCHER");
+		
+		Intent shortIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+		shortIntent.putExtra("duplicate", false);
+		shortIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "天气的错");
+		Parcelable icon = Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.drawable.mai_submit_2);
+		shortIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+		shortIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+		this.sendBroadcast(shortcutIntent);
+		SharedPreferencesUtils.setParam(SharedPreferencesUtils.setting, this, SharedPreferencesUtils.setting_frist, false);
 	}
 }

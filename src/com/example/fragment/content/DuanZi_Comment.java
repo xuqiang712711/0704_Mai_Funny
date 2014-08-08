@@ -270,6 +270,9 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	
 	class ComAdapter extends BaseAdapter{
 
+		public ComAdapter(){
+			MyLogger.jLog().i("ComAdapter ");
+		}
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
@@ -291,6 +294,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
+			MyLogger.jLog().i("xwkkx  " +list.size());
 			ComViewHolder holder = null;
 			if (convertView == null) {
 				holder = new ComViewHolder();
@@ -300,19 +304,15 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 				holder.tv_name = (TextView)convertView.findViewById(R.id.dz_com_lv_name);
 				holder.tv_time = (TextView)convertView.findViewById(R.id.dz_com_lv_time);
 				holder.iv_icon = (ImageView)convertView.findViewById(R.id.dz_com_lv_icon);
-				holder.tv_zan = (TextView)convertView.findViewById(R.id.dz_com_lv_tv_Zan);
-				holder.iv_zan = (ImageView)convertView.findViewById(R.id.dz_com_lv_iv_Zan);
 				convertView.setTag(holder);
 			}else {
 				holder  = (ComViewHolder) convertView.getTag();
 			}
 			holder.tv_name.setText((String) list.get(position).get("name"));
-			holder.tv_content.setTextSize(Uris.Font_Size);
 			holder.tv_content.setText((String) list.get(position).get("comment"));
 			holder.tv_time.setText((String) list.get(position).get("time"));
 			MaimobApplication.imageLoader.displayImage((String) list.get(position)
 					.get("icon"), holder.iv_icon, ImageUtil.getOption());
-			holder.iv_zan.setOnClickListener(new mOnclick(holder));
 			return convertView;
 		}
 
@@ -325,9 +325,6 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				switch (v.getId()) {
-				case R.id.dz_com_lv_iv_Zan:
-					holder.iv_zan.setImageResource(R.drawable.ic_digg_pressed);
-					break;
 
 				default:
 					break;
@@ -355,9 +352,20 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	}
 	
 	private void RefreshData(){
-		Hot_txt.setText(String.valueOf(Integer.parseInt(duanzi.getComment())+1));
-		list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
-		adapter.notifyDataSetChanged();
+		if (mFragmentManage.Refresh_Comment) {
+			Hot_txt.setText(String.valueOf(Integer.parseInt(duanzi.getComment())+1));
+			list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
+			MyLogger.jLog().i("size  " + list.size() +"  null?  " + listView == null);
+			if (list.size() == 1) {
+				listView.setVisibility(View.VISIBLE);
+				adapter = new ComAdapter();
+				listView.setAdapter(adapter);
+//				adapter.notifyDataSetChanged();
+			}else {
+				adapter.notifyDataSetChanged();
+			}
+			mFragmentManage.Refresh_Comment = false;
+		}
 	}
 	
 	

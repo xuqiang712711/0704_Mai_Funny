@@ -20,6 +20,7 @@ public class SharedPreferencesUtils {
 	public static String maxID_IMG_NEW = "IMG_NEW";
 	
 	public static String setting = "setting";
+	public static String setting_frist = "frist";
 	public static String setting_isZhuanfa = "isZhuanfa";
 	public static String setting_font = "font";
 	public static String user = "user";

@@ -3,6 +3,9 @@ package com.example.util;
 import java.io.File;
 import java.net.URL;
 
+import com.example.tab.R;
+
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,7 +14,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 /**
- * @author NightwisH
  *
  */
 public class CommonUtils {
@@ -77,4 +79,5 @@ public class CommonUtils {
 
 		return imagePath;
 	}
+	
 }

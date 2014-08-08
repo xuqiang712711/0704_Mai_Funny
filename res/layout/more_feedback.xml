@@ -2,17 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#346563" >
+    android:background="@color/gainsboro">
 	<include 
+	    android:id="@+id/feedback_top"
 	    layout="@layout/back_duanzi"/>
-
-    <TextView
-        android:layout_centerInParent="true"
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="103dp"
-        android:text="反馈" />
-
+	<EditText
+	    android:layout_below="@+id/feedback_top"
+        android:id="@+id/feedback_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:autoLink="web"
+        android:background="@color/my_back"
+        android:gravity="top"
+        android:hint="@string/my_write_hint"
+        android:imeOptions="actionDone"
+        android:lineSpacingExtra="6.0dp" >
+    </EditText>
 </RelativeLayout>

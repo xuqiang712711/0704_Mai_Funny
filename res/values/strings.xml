@@ -37,13 +37,13 @@
     <string name="my_publish">我的投稿</string>
     <string name="my_comment">我的评论</string>
     <string name="my_favorite">我的收藏</string>
-    <string name="my_app">应用</string>
+    <string name="my_app">热门应用</string>
     <string name="my_activity">热门活动</string>
     <string name="my_nemo">待定</string>
     <string name="my_feedback">我要反馈</string>
-    <string name="my_message">消息</string>
+    <string name="my_message">我的消息</string>
     <string name="my_zhuanfa">转发到:</string>
-    <string name="my_write_hint">请输入内容，字数不超过XX字</string>
+    <string name="my_write_hint">请输入内容，字数不超过140字</string>
     <string name="my_trash">垃圾</string>
     <string name="my_sexy">色情</string>
     <string name="my_neihan">内涵</string>
@@ -87,9 +87,10 @@
     <string name="note_Fav">收藏数为0</string>
     <string name="note_Pub">帖子数位0</string>
     
-    
-	    
-    
+    <!-- 写段子 -->
+	<string name="write_editNotNull">你编写的内容尚未提交,是否离开？</string>    
+	<string name="write_confrim">确定</string>    
+	<string name="write_cancel">取消</string>    
     
     <string name="num">1111</string>
     <string name="duanzi_test">与原Activity中的Layout分块化,VCBase的分块化道理相同

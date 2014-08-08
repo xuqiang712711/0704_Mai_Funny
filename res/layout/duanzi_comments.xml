@@ -21,7 +21,8 @@
         layout="@layout/mitem_top" />
     <ListView 
         android:background="@color/white"
-        android:layout_margin="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
         android:layout_below="@+id/dz_comment_top"
         android:layout_above="@+id/dz_comment_bottom"
         android:layout_width="match_parent"

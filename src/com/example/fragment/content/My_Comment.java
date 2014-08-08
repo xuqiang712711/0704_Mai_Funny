@@ -136,9 +136,10 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 			}else {
 				holder = (ViewHolder) convertView.getTag();
 			}
+			
 			holder.name.setText((String)data.get(position).get("name"));
 			holder.content.setTextSize(Uris.Font_Size);
-			holder.content.setText((String)data.get(position).get("content"));
+			holder.content.setText((String)data.get(position).get("dz_user_name") + " : "+(String)data.get(position).get("content"));
 			holder.comment.setTextSize(Uris.Font_Size);
 			holder.comment.setText((String)data.get(position).get("comment"));
 			holder.time.setText((String)data.get(position).get("time"));

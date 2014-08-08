@@ -484,7 +484,8 @@ public class My_Userinfo_Edit extends Fragment implements OnClickListener{
 			break;
 		case R.id.my_edit_name:
 			et_input.setHint(user.getName());
-			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑昵称").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			new AlertDialog.Builder(getActivity()).setView(et_input).setTitle("编辑昵称")
+			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

@@ -63,7 +63,8 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			+ "name varchar,"
 			+ "icon varchar,"
 			+ "comment varchar,"
-			+ "time long"
+			+ "time long,"
+			+ "dz_user_name varchar"
 			+ ")";
 	
 	/**
@@ -151,10 +152,11 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	 * @param pid
 	 * @return
 	 */
-	public boolean insertUser_Comment(String content, int pid, String comment, User user){
+	public boolean insertUser_Comment(String dz_user_name,String content, int pid, String comment, User user){
 		db = getWritableDatabase();
 		try {
 			ContentValues cv = new ContentValues();
+			cv.put("dz_user_name", dz_user_name);
 			cv.put("content", content);
 			cv.put("pid", pid);
 			cv.put("comment", comment);
@@ -184,6 +186,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					String name = mCursor.getString(mCursor.getColumnIndex("name"));
 					String comment = mCursor.getString(mCursor.getColumnIndex("comment"));
 					String content = mCursor.getString(mCursor.getColumnIndex("content"));
+					String dz_user_name = mCursor.getString(mCursor.getColumnIndex("dz_user_name"));
 					int pid		  = mCursor.getInt(mCursor.getColumnIndex("pid"));
 					long time = mCursor.getLong(mCursor.getColumnIndex("time"));
 					Map<String, Object> map = new HashMap<String, Object>();
@@ -193,6 +196,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					map.put("comment", comment);
 					map.put("icon", icon_url);
 					map.put("time", StringUtils.getTime(time));
+					map.put("dz_user_name", dz_user_name);
 					data.add(map);
 				} while (mCursor.moveToNext());
 			}

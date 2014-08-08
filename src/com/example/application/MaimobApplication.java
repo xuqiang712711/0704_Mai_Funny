@@ -110,7 +110,7 @@ public class MaimobApplication extends Application{
 	 */
 	public static void  selectFontSize(Context context){
 		String font = (String) SharedPreferencesUtils.getParam(SharedPreferencesUtils.setting, context, 
-				SharedPreferencesUtils.setting_font, "naomal");
+				SharedPreferencesUtils.setting_font, "normal");
 		if (font.equals("small")) {
 			Uris.Font_Size = Uris.Font_Size_small;
 		}else if (font.equals("big")) {

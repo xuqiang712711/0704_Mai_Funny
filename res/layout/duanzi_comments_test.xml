@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/commit_write_top"
-        android:layout_margin="5dp"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
         android:autoLink="web"
         android:background="@color/my_back"
         android:gravity="top"
@@ -22,11 +24,22 @@
         android:imeOptions="actionDone"
         android:lineSpacingExtra="6.0dp" >
     </EditText>
-
-    <include 
+    <TextView 
+        android:text="222"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:background="@color/my_back"
+        android:id="@+id/duanzi_comments_edit_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/duanzi_comments_edit"
+        android:gravity="right"/>
+
+    <include 
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/duanzi_comments_edit_count"
         layout="@layout/zhuanfa"/>
     
     

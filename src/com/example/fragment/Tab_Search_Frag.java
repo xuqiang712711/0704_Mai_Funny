@@ -1,5 +1,6 @@
 package com.example.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,11 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pl.droidsonroids.gif.GifImageView;
+
 import com.example.AsyTask.MyTask_No_Result;
 import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
+import com.example.util.BitmapOptions;
 import com.example.util.CustomImage;
 import com.example.util.DialogToastUtil;
 import com.example.util.ImageUtil;
@@ -23,6 +27,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +39,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -45,7 +51,8 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	private View view;
 	private CustomImage trash, sex, neihan, funny, skip;
 	private TextView textView;
-	private ImageView imageView;
+	private ImageView imageView,hintImg;
+	private GifImageView gif;
 	private DisplayImageOptions options;
 	private JSONArray array = null;
 	private int flag_neihan = 1;
@@ -57,6 +64,8 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	private MyTask_No_Result task = null;
 	private ImageLoader imageLoader;
 	private int maxID;
+	private String text = null;
+	private String img = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,6 +118,8 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 
 		textView = (TextView) view.findViewById(R.id.my_check_content);
 		imageView = (ImageView) view.findViewById(R.id.my_check_image);
+		gif = (GifImageView)view.findViewById(R.id.my_check_gif);
+		hintImg = (ImageView)view.findViewById(R.id.my_check_hintImg);
 	}
 
 	private void setContent(CustomImage ci, int resImg, int resText) {
@@ -129,6 +140,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		neihan.setOnClickListener(this);
 		funny.setOnClickListener(this);
 		skip.setOnClickListener(this);
+		gif.setOnClickListener(this);
 	}
 
 	private Handler handler = new Handler() {
@@ -153,8 +165,6 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 	};
 	
 	private void ShowContent(){
-		String text = null;
-		String img = null;
 		try {
 			text = ((JSONObject) array.get(num)).getString("content");
 			img = ((JSONObject) array.get(num)).getString("img");
@@ -162,10 +172,33 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 			maxID  = id + 1;
 			Uris.max_check = maxID;
 			textView.setText(text);
+			textView.setTextSize(Uris.Font_Size);
+			gif.setVisibility(View.GONE);
+			hintImg.setVisibility(View.GONE);
+			imageView.setVisibility(View.GONE);
 			if (StringUtils.StringisPic(img)) {
-				MyLogger.jLog().i("img  " + img);
-				imageView.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(img, imageView, ImageUtil.getOption());
+				if ((img.substring(img.length() - 3, img.length())).equals("gif")) {
+					hintImg.setVisibility(View.VISIBLE);
+					gif.setVisibility(View.VISIBLE);
+					imageView.setVisibility(View.GONE);
+					imageLoader.displayImage(img, gif, options);
+					File imgFile = DiskCacheUtils.findInCache(img,
+							imageLoader.getDiskCache());
+					if (imgFile != null) {
+						int h = BitmapOptions.getWH(imgFile.toString(),
+								MaimobApplication.DeviceW);
+						FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
+						params.height = h;
+						params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+						gif.setLayoutParams(params);
+					}
+				}else {
+					MyLogger.jLog().i("img  " + img);
+					gif.setVisibility(View.GONE);
+					hintImg.setVisibility(View.GONE);
+					imageView.setVisibility(View.VISIBLE);
+					imageLoader.displayImage(img, imageView, ImageUtil.getOption());
+				}
 			}else {
 				MyLogger.jLog().i("img  no" + img);
 				imageView.setVisibility(View.GONE);
@@ -200,6 +233,9 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
+		case R.id.my_check_gif:
+			hintImg.setVisibility(View.GONE);
+			((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(img));
 		}
 	}
 	

@@ -17,27 +17,50 @@
         android:background="@color/gainsboro" >
 
         <RelativeLayout
-            android:background="@color/whitesmoke"
-            android:layout_margin="@dimen/margin_10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/whitesmoke" >
 
             <TextView
                 android:id="@+id/my_check_content"
-                style="@style/match"
+                style="@style/duanzi_content_textview"
                 android:layout_margin="5dp"
                 android:padding="3dp"
                 android:text="@string/my_Test" />
 
             <ImageView
-                android:layout_margin="@dimen/margin_5"
-                android:layout_centerInParent="true"
-                android:layout_below="@+id/my_check_content"
                 android:id="@+id/my_check_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/my_check_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/margin_5"
                 android:contentDescription="@null"
                 android:src="@drawable/maimob" />
+
+    <FrameLayout
+        android:layout_below="@+id/my_check_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_margin="@dimen/margin_10"
+            android:id="@+id/my_check_gif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart" />
+
+        <ImageView
+            android:id="@+id/my_check_hintImg"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/gifbutton_textpage_normal"
+            android:visibility="gone" />
+    </FrameLayout>
         </RelativeLayout>
     </ScrollView>
 

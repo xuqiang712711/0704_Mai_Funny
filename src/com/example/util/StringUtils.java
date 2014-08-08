@@ -390,7 +390,11 @@ public class StringUtils
 		time = sdf.format(date);
 		return time;
 	}
-	
+	/**
+	 * 网络上的文件是否是图片文件
+	 * @param imgpath
+	 * @return
+	 */
 	public static boolean StringisPic(String imgpath){
 		String imgArray [] = {"bmp","dib","gif","jfif","jpe","jpeg","jpg","png","tif","tiff","icon"};
 		for (int i = 0; i < imgArray.length; i++) {
@@ -400,4 +404,20 @@ public class StringUtils
 		}
 		return false;
 	}
+	/**
+	 * textview 
+	 * @param input
+	 * @return
+	 */
+	public static String ToDBC(String input) {  
+		   char[] c = input.toCharArray();  
+		   for (int i = 0; i< c.length; i++) {  
+		       if (c[i] == 12288) {  
+		         c[i] = (char) 32;  
+		         continue;  
+		       }if (c[i]> 65280&& c[i]< 65375)  
+		          c[i] = (char) (c[i] - 65248);  
+		       }  
+		   return new String(c);  
+		}  
 }

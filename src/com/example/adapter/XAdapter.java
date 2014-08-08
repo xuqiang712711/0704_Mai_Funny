@@ -237,7 +237,7 @@ public class XAdapter extends BaseAdapter{
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
 		holder.user_name.setText(name);
-		holder.content.setText(content);
+		holder.content.setText(StringUtils.ToDBC(content));
 		holder.content.setTextSize(Uris.Font_Size);
 		AddListen(holder, position);
 		

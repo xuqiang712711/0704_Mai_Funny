@@ -6,6 +6,7 @@
     
     <dimen name="Top_margin">15dp</dimen>
     <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
     <dimen name="margin_5">5dp</dimen>
     <dimen name="margin_20">20dp</dimen>
     
@@ -13,7 +14,9 @@
     <dimen name="duanzi_margin">5dp</dimen>
 	
     <dimen name="title">25dp</dimen>
-    <dimen name="ts_12">12sp</dimen>
+    <dimen name="ts_13">13sp</dimen>
+    <dimen name="ts_11">11sp</dimen>
+    <dimen name="ts_10">10sp</dimen>
     <!-- 字体：小 -->
     <dimen name="ts_15">15sp</dimen>
     <!-- 字体：中 -->

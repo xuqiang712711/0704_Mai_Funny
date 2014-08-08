@@ -10,6 +10,7 @@ public class mFragmentManage {
 	public static int Tag_My = 0;
 	public static int Tag_Userinfo = 1;
 	public static boolean Refresh_userInfo = false;
+	public static boolean Refresh_Comment = false;
 	
 	public static final int BACK_HOME = 342;
 	public static final int BACK_WRITE = 343;
