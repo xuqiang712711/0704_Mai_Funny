@@ -260,4 +260,11 @@ public class Duanzi implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Duanzi ["+ "pid=" + poid+"content="+content+"]";
+		
+	}
 }

@@ -23,6 +23,7 @@ import com.example.fragment.DuanZi_Hot.MyAsyTask;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.DialogToastUtil;
 import com.example.util.MyLogger;
@@ -52,6 +53,8 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 	private Dialog dialog;
 	private List<Duanzi> list;
 	private int maxID;
+	private Mai_DBhelper db;
+	private int add_count = 0;
 	
 	private Handler mHandler = new Handler(){
 		@Override
@@ -59,7 +62,7 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 			if (msg.what == Uris.MSG_CHANGEFONT) {
 				ChangeFontSize();
 			}else {
-				maxID += msg.what;
+				add_count += msg.what;
 				dialog.dismiss();
 				String json = (String) msg.obj;
 				updateListView(json);
@@ -97,18 +100,29 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 				android.R.color.holo_green_light,
 				android.R.color.holo_red_light);
 		initView();
-		maxID = Uris.max_dz_new;
-		inithttp();
+		if (list == null) {
+			list = new ArrayList<Duanzi>();
+		}
+		db = Mai_DBhelper.getInstance(getActivity());
+		list = db.selectALLDuanzi(1);
+		if (list.size() == 0) {
+			inithttp();
+			dialog.show();
+		}else {
+			adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
+			listView.setAdapter(adapter);
+		}
+		maxID = Uris.max_dz_hot;
 	}
 	
 	private void updateListView(String json){
-		list = setDuanziData.getListDuanzi(json, getActivity(), list, 2);
+		list = setDuanziData.getListDuanzi(json, getActivity(), list, 1);
 		adapter = new XAdapter(list, mHandler, MaimobApplication.mController, this, getActivity());
 		listView.setAdapter(adapter);
 		if (TabHandler != null) {
 			Message msg = Message.obtain();
 			msg.what = Uris.MSG_REFRESH;
-			TabHandler.sendMessage(msg);
+			TabHandler.sendMessageDelayed(msg, 1000);
 		}
 	}
 	
@@ -125,7 +139,6 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/uuid/YTBhYWYzYmEtOTI2NC0zZDRjLThlNDQtYjExOGQ2OWQ4NGJi/type/1/subType/3/maxID/" +maxID;
 		RequestDataTask requestData = new RequestDataTask(mHandler);
 		requestData.execute(postUri);
-		Uris.max_dz_new = maxID;
 	}
 	
 	
@@ -148,16 +161,23 @@ public class DuanZi_New extends Fragment implements OnRefreshListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
+				addDuanzi();
 				inithttp();
-				adapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
 			}
 		}, 5000);
 	}
 	
 	public void Refresh(Handler tabHandler){
-		inithttp();
-		adapter.notifyDataSetChanged();
 		this.TabHandler = tabHandler;
+		addDuanzi();
+		inithttp();
+	}
+	
+	private void addDuanzi(){
+		maxID = Uris.max_dz_hot;
+		maxID = 20+ maxID;
+		Uris.max_dz_hot = maxID;
+		MyLogger.jLog().i("  maxid  " + maxID + "~~~~" );
 	}
 }

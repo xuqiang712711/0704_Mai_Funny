@@ -59,7 +59,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	private Dialog dialog;
 	private List<Duanzi> list;
 	private int maxID;
-	private int add_count = 0;
+	private int add_count_hot = 0;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -68,8 +68,13 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 			}else {
 				dialog.dismiss();
 				String json = (String) msg.obj;
+				MyLogger.jLog().i("json  " + json);
+				if (json == null) {
+					return;
+				}
 				SetListData(json);
-				add_count = msg.what;
+				add_count_hot = msg.what;
+				MyLogger.jLog().i("______add_count_hot  " + add_count_hot);
 			}
 			
 		}
@@ -91,6 +96,8 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 			adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 			listView.setAdapter(adapter);
 		}else {
+			MyLogger.jLog().i("更新数据");
+			adapter.setData(list);
 			adapter.notifyDataSetChanged();
 		}
 		if (tabHandler != null) {
@@ -109,7 +116,6 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	
 	private void initHttp(){
 		RequestDataTask mTask = new RequestDataTask(handler);
-		maxID = Uris.max_img_hot;
 		MyLogger.jLog().i("maxid_new  " + maxID);
 		mTask.execute(Uris.Img_uri + maxID);
 	}
@@ -130,6 +136,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
 		list = db.selectALLDuanzi(3);
 		if (list.size() == 0) {
+			maxID = Uris.max_img_hot;
 			dialog.show();
 			initHttp();
 		}else {
@@ -162,20 +169,23 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 				// TODO Auto-generated method stub
 				refreshLayout.setRefreshing(false);
 				addDuanzi();
+				initHttp();
+				adapter.notifyDataSetChanged();
 			}
-		}, 5000);
+		}, 3000);
 	}
 	
 	public void Refresh(Handler tabHandler){
 		this.tabHandler = tabHandler;
 		addDuanzi();
+		initHttp();
+		adapter.notifyDataSetChanged();
 	}
 	
 	private void addDuanzi(){
-		maxID = add_count+ maxID;
-		Uris.max_dz_hot = maxID;
-		MyLogger.jLog().i("  maxid  " + maxID + "~~~~" );
-		initHttp();
-		adapter.notifyDataSetChanged();
+		maxID = Uris.max_img_hot;
+		MyLogger.jLog().i("  add_count_hot  " + add_count_hot + "~~~~" + "maxID  " +maxID);
+		maxID = add_count_hot+ maxID;
+		Uris.max_img_hot = maxID;
 	}
 }

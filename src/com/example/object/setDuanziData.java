@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.example.application.MaimobApplication;
 import com.example.sql.Mai_DBhelper;
+import com.example.util.MyLogger;
 
 public class setDuanziData {
 	private static String Tag = "setDuanziData";
@@ -43,6 +44,7 @@ public class setDuanziData {
 				Mai_DBhelper dBhelper = Mai_DBhelper.getInstance(context);
 				isNew = dBhelper.insertDuanziInfo(Integer.parseInt(poid), content, imageUrl, Integer.parseInt(cai), Integer.parseInt(zan)
 						, Integer.parseInt(comment), name, null, Integer.parseInt(user_id), tag);
+				MyLogger.jLog().i("插入段子  " + duanzi.toString() +"  isNew  " + isNew);
 				if (isNew) {
 					list.add(0, duanzi);
 				}

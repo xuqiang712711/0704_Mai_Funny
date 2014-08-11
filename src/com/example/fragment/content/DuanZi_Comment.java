@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -59,7 +61,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment";
 	private View view;
 	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img,iv_fav;
-	private TextView user_name,Zan_txt,Cai_txt,Hot_txt;
+	private TextView user_name,Zan_txt,Cai_txt,Hot_txt,Zan_add, Cai_add;
 	private TextView content;
 	private RelativeLayout Zan_layout, Cai_layout, Hot_layout;
 	private DisplayImageOptions options;
@@ -70,6 +72,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private List<Map<String, Object>> list;
 	private ComAdapter adapter;
 	private Mai_DBhelper db;
+	private Animation mAnimation;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -100,6 +103,13 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		}
 	}
 	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.up);
+	}
+	
 	@SuppressWarnings("unused")
 	private void initView(){
 //		mitem_top = (LinearLayout)view.findViewById(R.id.mitem_top);
@@ -127,7 +137,11 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		Zan_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_zan);
 		Cai_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_cai);
 		Hot_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_hot);
+		Zan_add = (TextView)view.findViewById(R.id.mitem_bottom_zan_tv_add);
+		Cai_add = (TextView)view.findViewById(R.id.mitem_bottom_cai_tv_add);
 		
+		Zan_add.setVisibility(View.GONE);
+		Cai_add.setVisibility(View.GONE);
 		iv_fav.setVisibility(View.GONE);
 		user_name.setText(duanzi.getUserName());
 		content.setText(duanzi.getContent());
@@ -229,6 +243,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.mitem_bottom_cai:
 			duanzi.CanPress(Duanzi.CAI, Cai_txt,Cai_img, getActivity());
+			Cai_add.setVisibility(View.VISIBLE);
+			Cai_add.startAnimation(mAnimation);
 			break;
 
 		case R.id.mitem_bottom_hot:
@@ -250,6 +266,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			break;
 		case R.id.mitem_bottom_zan:
 			duanzi.CanPress(Duanzi.ZAN, Zan_txt,Zan_img, getActivity());
+			Zan_add.setVisibility(View.VISIBLE);
+			Zan_add.startAnimation(mAnimation);
 			break;
 		case R.id.mitem_test_gif:
 			Log.e(Tag, "imgUri  " + duanzi.getImageUrl());

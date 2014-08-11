@@ -92,7 +92,6 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 //		dialog = new AlertDialog.Builder(getActivity()).setTitle("我是标题")
 		dialog = DialogToastUtil.createLoadingDialog(getActivity());
 		initView();
-		maxId = Uris.max_dz_hot;
 		db = Mai_DBhelper.getInstance(getActivity());
 		list = db.selectALLDuanzi(1);
 		myLogger.i("size  " + list.size());
@@ -103,6 +102,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 			adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 			listView.setAdapter(adapter);
 		}
+		maxId = Uris.max_dz_hot;
 	}
 	
 	@Override
@@ -195,7 +195,6 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 	
 	private void updateListView(String json){
 		list = setDuanziData.getListDuanzi(json,getActivity(), list, 1);
-		myLogger.i("list.size  " + list.size());
 		adapter = new XAdapter(list, handler, MaimobApplication.mController, this, getActivity());
 		myLogger.e("initAdapter");
 		if (adapter == null) {
@@ -206,7 +205,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 		if (TabHandler != null) {
 			Message msg = Message.obtain();
 			msg.what = Uris.MSG_REFRESH;
-			TabHandler.sendMessageDelayed(msg, 3000);
+			TabHandler.sendMessage(msg);
 		}
 	}
 	
@@ -223,17 +222,16 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 	
 	
 	public void inithttp(){
+		MyLogger.jLog().i("maxId_new  " + maxId);
 		String postUri = "http://md.maimob.net/index.php/player/FetchPost/"
 				+ "uuid/"+ Uris.uuid+"/type/1/subType/3/maxID/" + maxId;
 		new MyAsyTask().execute(postUri);
-		myLogger.i("http ");
 	}
 	
 	class MyAsyTask extends AsyncTask<String, Void, String>{
 
 		@Override
 		protected String doInBackground(String... params) {
-			myLogger.i("uri  " + params[0]);
 			return doHttpRequest(params[0]);
 		}
 		
@@ -243,7 +241,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 					Message message = Message.obtain();
 					try {
 						array = new JSONArray(result);
-						
+						myLogger.i("array  " +array.toString());
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -314,6 +312,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 		if (array == null) {
 			
 		}
+		maxId = Uris.max_dz_hot;
 		maxId = 20+ maxId;
 		Uris.max_dz_hot = maxId;
 		myLogger.i("  maxid  " + maxId + "~~~~" );

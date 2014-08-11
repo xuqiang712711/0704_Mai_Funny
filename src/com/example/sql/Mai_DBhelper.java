@@ -316,7 +316,6 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		mCursor = db.rawQuery("select * from duanzi_list_info where pid = ?", new String[]{String.valueOf(pid)});
 		try {
 			if (mCursor.moveToFirst()) {
-				Log.e(tag, "存在");
 				return true;
 			}
 			return false;

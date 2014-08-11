@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gainsboro"
     android:clickable="true" >
-	<include 
-	    android:id="@+id/duanzi_comments_top"
-	    layout="@layout/back_duanzi"/>
-	        <View 
-	            android:layout_alignBottom="@+id/duanzi_comments_top"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:background="@color/gray"/>
+	
     <include
-        android:background="@color/white"
+        android:id="@+id/duanzi_comments_top"
+        layout="@layout/back_duanzi" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_alignBottom="@+id/duanzi_comments_top"
+        android:background="@color/gray" />
+
+    <include
         android:id="@+id/dz_comment_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/duanzi_comments_top"
-        layout="@layout/mitem_top" />
-    <ListView 
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_marginBottom="@dimen/margin_5"
-        android:layout_below="@+id/dz_comment_top"
-        android:layout_above="@+id/dz_comment_bottom"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        layout="@layout/mitem_top"
+        android:background="@color/white" />
+
+    <ListView
+        android:id="@+id/duanzi_comment_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/duanzi_comment_listview">
-        
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/dz_comment_bottom"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@color/white" >
     </ListView>
 
     <include
         android:id="@+id/dz_comment_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/dz_comment_top"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
         layout="@layout/mitem_bottom" />
 
 </RelativeLayout>

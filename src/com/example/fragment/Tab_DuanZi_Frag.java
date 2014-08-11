@@ -52,7 +52,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 	private long exitTime = 0;
 	
 	private PopupWindow pop;// 0710Ìí¼Ó
-//	private FragmentManager mFM = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -65,8 +64,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-//		initView();
-//		selectTab(1);
 		initPop();
 		selectTab2(1);
 	}
@@ -81,11 +78,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 				MyLogger.jLog().i("hide is true");
 			}else {
 				MyLogger.jLog().i("hide is false");
-//				if (duanZi_Hot != null) {
-//					duanZi_Hot.ChangeFontSize();
-//				}else if (duanZi_New != null) {
-//					duanZi_New.ChangeFontSize();
-//				}
 				if (!duanZi_Hot.isHidden()) {
 					duanZi_Hot.ChangeFontSize();
 				}else if (!duanZi_New.isHidden()) {
@@ -176,10 +168,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 			int pop_w = pop.getWidth() / 2;
 			int w = pop_w - text_w ;
 			pop.showAsDropDown(v, -w, 10);
-			
-//			Drawable drawable = getActivity().getResources().getDrawable(R.drawable.up_arrow_titlebar);
-//			drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//			textView.setCompoundDrawables(null, null, null, drawable);
 			setArrow(2);
 			break;
 		case R.id.top_hot:
@@ -193,7 +181,6 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 			check_1 = false;
 			break;
 		case R.id.tab_refresh:
-//			iv_refresh.setImageResource(R.drawable.refresh_normal);
 			iv_refresh.startAnimation(animation);
 			if (check_1) {
 				duanZi_Hot.Refresh(Tabhandler);

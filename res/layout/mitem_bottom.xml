@@ -11,29 +11,42 @@
         android:background="@color/gery" />
 
     <LinearLayout
-        android:padding="@dimen/margin_5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal" >
 
         <RelativeLayout
             android:id="@+id/mitem_bottom_zan"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center" >
+            android:gravity="center_horizontal" >
 
             <ImageView
+                android:layout_centerInParent="true"
                 android:id="@+id/mitem_bottom_zan_img"
-				style="@style/duanzi_item_bottom_img"
+                style="@style/duanzi_item_bottom_img"
                 android:src="@drawable/ic_digg_normal" />
 
             <TextView
+                android:padding="1dp"
+                android:textSize="@dimen/ts_13"
+                android:layout_centerVertical="true"
                 android:id="@+id/mitem_bottom_zan_txt"
                 style="@style/duanzi_item_bottom_text"
                 android:layout_toRightOf="@+id/mitem_bottom_zan_img"
-                android:text="131" />
+                android:text="12" />
+
+            <TextView
+                android:layout_above="@+id/mitem_bottom_zan_txt"
+                android:layout_toRightOf="@+id/mitem_bottom_zan_img"
+                android:id="@+id/mitem_bottom_zan_tv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/duanzi_add_1"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/ts_13" />
+			
         </RelativeLayout>
 
         <View style="@style/item_line" />
@@ -41,8 +54,7 @@
         <RelativeLayout
             android:id="@+id/mitem_bottom_cai"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center" >
 
@@ -52,30 +64,41 @@
                 android:src="@drawable/ic_bury_normal" />
 
             <TextView
-                style="@style/duanzi_item_bottom_text"
                 android:id="@+id/mitem_bottom_cai_txt"
+                style="@style/duanzi_item_bottom_text"
                 android:layout_toRightOf="@+id/mitem_bottom_cai_img"
                 android:text="131" />
+
+            <TextView
+                android:id="@+id/mitem_bottom_cai_tv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/mitem_bottom_cai_txt"
+                android:layout_alignLeft="@+id/mitem_bottom_cai_txt"
+                android:text="@string/duanzi_add_1"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/ts_20"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <View style="@style/item_line" />
 
         <RelativeLayout
+            android:padding="@dimen/margin_10"
             android:id="@+id/mitem_bottom_hot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center" >
 
             <ImageView
-                style="@style/duanzi_item_bottom_img"
                 android:id="@+id/mitem_bottom_hot_img"
+                style="@style/duanzi_item_bottom_img"
                 android:src="@drawable/mai_comment" />
 
             <TextView
-                style="@style/duanzi_item_bottom_text"
                 android:id="@+id/mitem_bottom_hot_txt"
+                style="@style/duanzi_item_bottom_text"
                 android:layout_toRightOf="@+id/mitem_bottom_hot_img"
                 android:text="131" />
         </RelativeLayout>
@@ -83,10 +106,10 @@
         <View style="@style/item_line" />
 
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/bottom_more"
             android:layout_width="0dp"
             android:layout_height="20dp"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:src="@drawable/ic_more_action_normal_night" />
     </LinearLayout>

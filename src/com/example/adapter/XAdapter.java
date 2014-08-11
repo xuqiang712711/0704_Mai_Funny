@@ -58,6 +58,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.BaseAdapter;
@@ -82,6 +84,7 @@ public class XAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;
 	private String TAG = "XAdapter";
 	private PopupWindow window;
+	private Animation mAnimation;
 	
 	public static final int ZAN_NORMAL = 1;
 	public static final int ZAN_PRESSED = 2;
@@ -110,6 +113,13 @@ public class XAdapter extends BaseAdapter{
 		.build();
 		mInflater = LayoutInflater.from(context);
 		dBhelper = Mai_DBhelper.getInstance(context);
+		
+		mAnimation = AnimationUtils.loadAnimation(context, R.anim.up);
+		mAnimation.setFillAfter(true);
+	}
+	
+	public void setData(List<Duanzi> data){
+		this.mdata = data;
 	}
 	
 	@Override
@@ -153,6 +163,9 @@ public class XAdapter extends BaseAdapter{
 
 			holder.zan = (TextView) convertView.findViewById(R.id.mitem_bottom_zan_txt);
 			holder.cai = (TextView) convertView.findViewById(R.id.mitem_bottom_cai_txt);
+			
+			holder.zan_add = (TextView)convertView.findViewById(R.id.mitem_bottom_zan_tv_add);
+			holder.cai_add = (TextView)convertView.findViewById(R.id.mitem_bottom_cai_tv_add);
 			holder.hot = (TextView) convertView.findViewById(R.id.mitem_bottom_hot_txt);
 			holder.more = (ImageView) convertView.findViewById(R.id.bottom_more);
 			holder.layout_cai = (RelativeLayout)convertView.findViewById(R.id.mitem_bottom_cai);
@@ -232,7 +245,8 @@ public class XAdapter extends BaseAdapter{
 		}else {
 			holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_n);
 		}
-		
+		holder.cai_add.setVisibility(View.GONE);
+		holder.zan_add.setVisibility(View.GONE);
 		holder.cai.setText(cai);
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
@@ -257,6 +271,7 @@ public class XAdapter extends BaseAdapter{
 		holder.image.setOnClickListener(new mOnclick(position, holder));
 		holder.gif.setOnClickListener(new mOnclick(position, holder));
 		holder.iv_fav.setOnClickListener(new mOnclick(position, holder));
+		holder.image.setOnClickListener(new mOnclick(position, holder));
 		//未对头像、用户名进行监听
 	}
 	
@@ -276,6 +291,9 @@ public class XAdapter extends BaseAdapter{
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
+			case R.id.mitem_test_img:
+				switchFragment(mFragment, new DuanZi_Comment(), bundle);
+				break;
 			case R.id.mitem_top_fav:
 				if (duanzi.isFav()) {
 					duanzi.setFav(false);
@@ -316,6 +334,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			
 			case R.id.mitem_bottom_zan:
+//				holder.zan_add.clearAnimation();
 				if (duanzi.isZanPressed()== false) {
 					if (duanzi.isCaiPressed() == true) {
 						Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
@@ -323,12 +342,15 @@ public class XAdapter extends BaseAdapter{
 					}
 					duanzi.CanPress(Duanzi.ZAN, holder.zan, holder.zan_img, context);
 					ConnToServer.DohttpNoResult(ConnToServer.ZAN, duanzi.getPoid());
+					holder.zan_add.setVisibility(View.VISIBLE);
+					holder.zan_add.startAnimation(mAnimation);
 				} else {
 					Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
 				}
 				break;
 
 			case R.id.mitem_bottom_cai:
+//				holder.cai_add.clearAnimation();
 				if (duanzi.isCaiPressed() == false) {
 					if (duanzi.isZanPressed() == true) {
 						Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
@@ -336,6 +358,8 @@ public class XAdapter extends BaseAdapter{
 					}
 					duanzi.CanPress(Duanzi.CAI, holder.cai, holder.cai_img, context);
 					ConnToServer.DohttpNoResult(ConnToServer.CAI,duanzi.getPoid());
+					holder.cai_add.setVisibility(View.VISIBLE);
+					holder.cai_add.startAnimation(mAnimation);
 				} else {
 					Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
 				}
@@ -347,28 +371,7 @@ public class XAdapter extends BaseAdapter{
 				Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 						.show();
 				break;
-			case R.id.duanzi_comment_write_sina:
-//				duanzi.setMedia(Duanzi);
-//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
-				break;
-			case R.id.duanzi_comment_write_qzone:
-//				duanzi.setMedia(SHARE_MEDIA.RENREN);
-//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
-				break;
-			case R.id.duanzi_comment_write_tencent:
-//				duanzi.setMedia(SHARE_MEDIA.TENCENT);
-//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
-				break;
-			case R.id.duanzi_comment_write_douban:
-//				duanzi.setMedia(SHARE_MEDIA.DOUBAN);
-//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_More_Comment(), bundle);
-				break;
-				
-//			case R.id.duanzi_more_zhuanfa:
-//				duanzi.setNeedComment(false);
-//				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
-//				window.dismiss();
-//				break;
+
 			case R.id.duanzi_more_back:
 				window.dismiss();
 				break;
@@ -460,7 +463,7 @@ public class XAdapter extends BaseAdapter{
 	public static class ViewHolder{
 		GifImageView gif;
 		ImageView user_icon, more,image,iv_fav;
-		TextView user_name, content, comment;
+		TextView user_name, content, comment, zan_add, cai_add;
 		TextView cai, zan, hot;
 		ImageView cai_img, zan_img, hot_img, hint_img;
 		RelativeLayout layout_cai, layout_zan, layout_hot;
