@@ -38,7 +38,7 @@
                 android:text="12" />
 
             <TextView
-                android:layout_above="@+id/mitem_bottom_zan_txt"
+                android:layout_above="@+id/xwkkx_line"
                 android:layout_toRightOf="@+id/mitem_bottom_zan_img"
                 android:id="@+id/mitem_bottom_zan_tv_add"
                 android:layout_width="wrap_content"
@@ -46,7 +46,12 @@
                 android:text="@string/duanzi_add_1"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/ts_13" />
-			
+			<View 
+			    android:id="@+id/xwkkx_line"
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:background="#699669"
+			    android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <View style="@style/item_line" />

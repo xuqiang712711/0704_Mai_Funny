@@ -46,6 +46,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import android.content.Context;
+import android.graphics.AvoidXfermode.Mode;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -247,6 +248,8 @@ public class XAdapter extends BaseAdapter{
 		}
 		holder.cai_add.setVisibility(View.GONE);
 		holder.zan_add.setVisibility(View.GONE);
+		holder.cai_add.clearAnimation();
+		holder.zan_add.clearAnimation();
 		holder.cai.setText(cai);
 		holder.zan.setText(zan);
 		holder.hot.setText(hot);
@@ -334,7 +337,7 @@ public class XAdapter extends BaseAdapter{
 				break;
 			
 			case R.id.mitem_bottom_zan:
-//				holder.zan_add.clearAnimation();
+				MyLogger.jLog().i("position " + position + "  "  + duanzi.getContent());
 				if (duanzi.isZanPressed()== false) {
 					if (duanzi.isCaiPressed() == true) {
 						Toast.makeText(context, "你已经踩过", Toast.LENGTH_SHORT).show();
@@ -350,7 +353,6 @@ public class XAdapter extends BaseAdapter{
 				break;
 
 			case R.id.mitem_bottom_cai:
-//				holder.cai_add.clearAnimation();
 				if (duanzi.isCaiPressed() == false) {
 					if (duanzi.isZanPressed() == true) {
 						Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
