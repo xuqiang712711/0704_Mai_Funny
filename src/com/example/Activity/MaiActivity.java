@@ -17,7 +17,7 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
@@ -335,7 +335,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 			//当前属于栈顶
 			if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
 				if ((System.currentTimeMillis() - exitTime) > 2000) {
-					DialogToastUtil.toastShow(this, "再按一次退出程序");
+					PopUtils.toastShow(this, "再按一次退出程序");
 					exitTime = System.currentTimeMillis() ;
 				} else {
 					//保存浏览记录

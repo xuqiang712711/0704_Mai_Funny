@@ -2,17 +2,22 @@ package com.example.util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.AbsListView.LayoutParams;
 
+import com.example.adapter.XAdapter.ViewHolder;
 import com.example.tab.R;
 
-public class DialogToastUtil {
+public class PopUtils {
 	/**
 	 * loding dialog
 	 * @param context
@@ -41,5 +46,6 @@ public class DialogToastUtil {
     public static void toastShow(Context context, String msg) {
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
+    
 	
 }

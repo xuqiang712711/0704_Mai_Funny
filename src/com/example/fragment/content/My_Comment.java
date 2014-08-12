@@ -139,7 +139,14 @@ public class My_Comment extends Fragment implements OnClickListener,OnItemClickL
 			
 			holder.name.setText((String)data.get(position).get("name"));
 			holder.content.setTextSize(Uris.Font_Size);
-			holder.content.setText((String)data.get(position).get("dz_user_name") + " : "+(String)data.get(position).get("content"));
+			MyLogger.jLog().i("是否为图片  " + "是");
+			if (!((String)data.get(position).get("imgurl")).equals("")) {
+				holder.content.setText("图片");
+				MyLogger.jLog().i("是否为图片  " + "是");
+			}else {
+				MyLogger.jLog().i("是否为图片  " + "否");
+				holder.content.setText((String)data.get(position).get("dz_user_name") + " : "+(String)data.get(position).get("content"));
+			}
 			holder.comment.setTextSize(Uris.Font_Size);
 			holder.comment.setText((String)data.get(position).get("comment"));
 			holder.time.setText((String)data.get(position).get("time"));

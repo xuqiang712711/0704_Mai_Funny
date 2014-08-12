@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.object.mOauth;
 import com.example.tab.R;
+import com.example.util.MyLogger;
 import com.example.util.SerUser;
 import com.example.util.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -54,6 +56,7 @@ public class My_login_select extends Fragment{
 	private DuanZi_Comment_Write my_Write;
 	private Duanzi duanzi;
 	private boolean needRefresh = true;
+	private Bundle bundle;
 	int type;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,15 +70,14 @@ public class My_login_select extends Fragment{
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if (type == From_My) {
-			mFragmentManage.RefreshFrag(getActivity(), mFragmentManage.Tag_My);
-		}
+		MyLogger.jLog().i("type  " + type);
+		mFragmentManage.Refresh_userInfo = true;
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		Bundle bundle =getArguments();
+		bundle =getArguments();
 		type= bundle.getInt("xwkkx");
 		if (type == From_Duanzi) {
 			duanzi = (Duanzi) bundle.getSerializable("duanzi");
@@ -108,7 +110,8 @@ public class My_login_select extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				doOauth(SHARE_MEDIA.SINA, sina);
+//				doOauth(SHARE_MEDIA.SINA, sina);
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.SINA, 0, handler);
 			}
 		});
 		ImageView iv_2 = (ImageView)view.findViewById(R.id.my_select_tencent);
@@ -120,7 +123,7 @@ public class My_login_select extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				doOauth(SHARE_MEDIA.TENCENT, tencent);
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.TENCENT, 1, handler);
 			}
 		});
 		ImageView iv_3 = (ImageView)view.findViewById(R.id.my_select_douban);
@@ -170,8 +173,13 @@ public class My_login_select extends Fragment{
 				// TODO Auto-generated method stub
 				if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
                     Toast.makeText(getActivity(), "授权成功." + platform, Toast.LENGTH_SHORT).show();
-                    mOauth.editOauth(getActivity(), num);
-                    getUserInfo(platform);
+//                    mOauth.editOauth(getActivity(), num);
+//                    getUserInfo(platform);
+	                 if (type == From_Write) {
+	                	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
+					}else {
+						mFragmentManage.BackStatck(getActivity());
+					}
                 } else {
                     Toast.makeText(getActivity(), "授权失败", Toast.LENGTH_SHORT).show();
                 }
@@ -228,11 +236,6 @@ public class My_login_select extends Fragment{
 						}
 	                 }
 	                 editor.commit();
-	                 if (type == From_Write) {
-	                	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
-					}else {
-						mFragmentManage.BackStatck(getActivity());
-					}
 	                 User user= new User(name, icon, location, description, gender);
 //	                 User user= new User();
 //	                 user.setName(name);
@@ -247,4 +250,16 @@ public class My_login_select extends Fragment{
 			}
 		});
 	}
+	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+            if (type == From_Write) {
+        	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
+		}else {
+			mFragmentManage.BackStatck(getActivity());
+//			mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new DuanZi_Comment_Write(), bundle);
+			mFragmentManage.switch_write = true;
+		}
+		}
+	};
 }

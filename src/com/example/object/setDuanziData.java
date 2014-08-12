@@ -26,6 +26,9 @@ public class setDuanziData {
 		if (list == null) {
 			list = new  ArrayList<Duanzi>();
 		}
+		if (json == null) {
+			return list;
+		}
 		try {
 			JSONArray array = new JSONArray(json);
 			boolean isNew = false;

@@ -64,7 +64,8 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			+ "icon varchar,"
 			+ "comment varchar,"
 			+ "time long,"
-			+ "dz_user_name varchar"
+			+ "dz_user_name varchar,"
+			+ "imgurl varchar"
 			+ ")";
 	
 	/**
@@ -152,10 +153,11 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 	 * @param pid
 	 * @return
 	 */
-	public boolean insertUser_Comment(String dz_user_name,String content, int pid, String comment, User user){
+	public boolean insertUser_Comment(String dz_user_name,String content, int pid, String comment, User user, String imgUrl){
 		db = getWritableDatabase();
 		try {
 			ContentValues cv = new ContentValues();
+			cv.put("imgurl", imgUrl);
 			cv.put("dz_user_name", dz_user_name);
 			cv.put("content", content);
 			cv.put("pid", pid);
@@ -164,6 +166,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			cv.put("name", user.getName());
 			cv.put("icon", user.getIcon());
 			db.insert(DATABASE_NAME_COMMENT, "id", cv);
+			db.execSQL("update " + DATABASE_NAME_DUANZI + " set comment_count = comment_count + 1 where pid = ?", new String[]{String.valueOf(pid)});
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -182,6 +185,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 			mCursor = db.rawQuery("select * from "+DATABASE_NAME_COMMENT + " order by time desc", new String[]{});
 			if (mCursor.moveToFirst()) {
 				do {
+					String imgUrl = mCursor.getString(mCursor.getColumnIndex("imgurl"));
 					String icon_url = mCursor.getString(mCursor.getColumnIndex("icon"));
 					String name = mCursor.getString(mCursor.getColumnIndex("name"));
 					String comment = mCursor.getString(mCursor.getColumnIndex("comment"));
@@ -197,6 +201,7 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 					map.put("icon", icon_url);
 					map.put("time", StringUtils.getTime(time));
 					map.put("dz_user_name", dz_user_name);
+					map.put("imgurl", imgUrl);
 					data.add(map);
 				} while (mCursor.moveToNext());
 			}
@@ -480,4 +485,30 @@ public class Mai_DBhelper extends SQLiteOpenHelper{
 		return tag == 0?false:true;
 	}
 	
+	/**
+	 * 更改赞状态
+	 * @param pid
+	 */
+	public void updateZan(String pid){
+		db = getWritableDatabase();
+		db.execSQL("update " +DATABASE_NAME_DUANZI + " set boo_zan = 1 where pid = ?", new String[]{pid});
+		db.execSQL("update " +DATABASE_NAME_DUANZI + " set zan_count = zan_count + 1 where pid = ?", new String[]{pid});
+	}
+	/**
+	 * 更改踩状态
+	 * @param pid
+	 */
+	public void updateCai(String pid){
+		db = getWritableDatabase();
+		db.execSQL("update " +DATABASE_NAME_DUANZI + " set boo_cai = 1 where pid = ?", new String[]{pid});
+		db.execSQL("update " +DATABASE_NAME_DUANZI + " set cai_count = zan_count + 1 where pid = ?", new String[]{pid});
+	}
+	/**
+	 * 更改评论条数
+	 * @param pid
+	 */
+	public void updateComment(String pid){
+		db = getWritableDatabase();
+		db.execSQL("update " + DATABASE_NAME_DUANZI + " set comment_count = comment_count + 1 where pid = ?", new String[]{pid});
+	}
 }

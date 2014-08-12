@@ -7,7 +7,7 @@ import java.util.Map;
 import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.MyLogger;
 import com.example.util.ShareUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -72,7 +72,7 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 			map.put(share_Media, SHARE_MEDIA.DOUBAN);
 		}
 		
-		mDialog = DialogToastUtil.createLoadingDialog(getActivity());
+		mDialog = PopUtils.createLoadingDialog(getActivity());
 	}
 
 	@Override

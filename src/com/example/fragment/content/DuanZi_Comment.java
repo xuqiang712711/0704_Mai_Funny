@@ -61,8 +61,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private String Tag = "DuanZi_Comment";
 	private View view;
 	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img,iv_fav;
-	private TextView user_name,Zan_txt,Cai_txt,Hot_txt,Zan_add, Cai_add;
-	private TextView content;
+	private TextView user_name,Zan_txt,Cai_txt,Hot_txt,Zan_add, Cai_add,content;
 	private RelativeLayout Zan_layout, Cai_layout, Hot_layout;
 	private DisplayImageOptions options;
 	private Duanzi duanzi;
@@ -73,6 +72,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private ComAdapter adapter;
 	private Mai_DBhelper db;
 	private Animation mAnimation;
+	private 	Duanzi_Comments_Lv_head head;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -87,7 +87,8 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		super.onActivityCreated(savedInstanceState);
 		imageLoader = MaimobApplication.imageLoader;
 		duanzi = (Duanzi) getArguments().getSerializable("duanzi");
-		initView();
+//		initView();
+		initTopView();
 		initListView();
 	}
 	
@@ -95,13 +96,19 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		db = Mai_DBhelper.getInstance(getActivity());
 		list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
 		listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
-		if (list.size() != 0) {
-			adapter = new ComAdapter();
-			listView.setAdapter(adapter); 
-		}else {
-			listView.setVisibility(View.GONE);
-		}
+		adapter = new ComAdapter();
+		head = new Duanzi_Comments_Lv_head(getActivity());
+		head.addDuanzi(duanzi,this);
+		listView.addHeaderView(head);
+		listView.setAdapter(adapter);
+//		if (list.size() != 0) {
+//			adapter = new ComAdapter();
+//			listView.setAdapter(adapter); 
+//		}else {
+//			listView.setVisibility(View.GONE);
+//		}
 	}
+	
 	
 	@Override
 	public void onResume() {
@@ -110,126 +117,15 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		mAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.up);
 	}
 	
-	@SuppressWarnings("unused")
-	private void initView(){
-//		mitem_top = (LinearLayout)view.findViewById(R.id.mitem_top);
+	private void initTopView(){
 		TextView textView = (TextView)view.findViewById(R.id.top_text);
 		textView.setText(getResources().getString(R.string.app_name));
-//		Button back = (Button)view.findViewById(R.id.top_left);
-//		back.setText("");
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		TextView report = (TextView)view.findViewById(R.id.top_right_change2);
 		report.setVisibility(View.GONE);
-		
-		iv_fav = (ImageView)view.findViewById(R.id.mitem_top_fav);
-		hint_img = (ImageView)view.findViewById(R.id.mitem_hint_img);
-		gif = (GifImageView)view.findViewById(R.id.mitem_test_gif);
-		user_icon = (ImageView)view.findViewById(R.id.mitem_icon);
-		user_name = (TextView)view.findViewById(R.id.mitem_username);
-		content = (TextView)view.findViewById(R.id.mitem_test_content);
-		image = (ImageView)view.findViewById(R.id.mitem_test_img);
-		Cai_txt = (TextView)view.findViewById(R.id.mitem_bottom_cai_txt);
-		Zan_txt = (TextView)view.findViewById(R.id.mitem_bottom_zan_txt);
-		Hot_txt = (TextView)view.findViewById(R.id.mitem_bottom_hot_txt);
-		More = (ImageView)view.findViewById(R.id.bottom_more);
-		Cai_img = (ImageView)view.findViewById(R.id.mitem_bottom_cai_img);
-		Zan_img = (ImageView)view.findViewById(R.id.mitem_bottom_zan_img);
-		Zan_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_zan);
-		Cai_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_cai);
-		Hot_layout = (RelativeLayout)view.findViewById(R.id.mitem_bottom_hot);
-		Zan_add = (TextView)view.findViewById(R.id.mitem_bottom_zan_tv_add);
-		Cai_add = (TextView)view.findViewById(R.id.mitem_bottom_cai_tv_add);
-		
-		Zan_add.setVisibility(View.GONE);
-		Cai_add.setVisibility(View.GONE);
-		iv_fav.setVisibility(View.GONE);
-		user_name.setText(duanzi.getUserName());
-		content.setText(duanzi.getContent());
-		content.setTextSize(Uris.Font_Size);
-		Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getCai()) + 1));
-		
-		Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
-		Hot_txt.setText(duanzi.getComment());
-		
-		if (duanzi.isZanPressed()) {
-			Zan_img.setImageResource(R.drawable.ic_digg_pressed);
-			Zan_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
-		}else {
-			Zan_img.setImageResource(R.drawable.ic_digg_normal);
-			Zan_txt.setText(duanzi.getZan());
-		}
-		
-		if (duanzi.isCaiPressed()) {
-			Cai_img.setImageResource(R.drawable.ic_digg_pressed);
-			Cai_txt.setText(String.valueOf(Integer.parseInt(duanzi.getZan()) + 1));
-		}else {
-			Cai_img.setImageResource(R.drawable.ic_bury_normal);
-			Cai_txt.setText(duanzi.getCai());
-		}
-		More.setOnClickListener(this);
-		gif.setOnClickListener(this);
-		Zan_layout.setOnClickListener(this);
-		Cai_layout.setOnClickListener(this);
-		Hot_layout.setOnClickListener(this);
 		back.setOnClickListener(this);
-		report.setOnClickListener(this);
-		
-		String imgUri = duanzi.getImageUrl();
-		Log.e(Tag, "Imguri  " + imgUri);
-		if (imgUri != null && !imgUri.equals("")) {
-			String currImgUrl = StringUtils.checkImgPath(imgUri);
-			options = new DisplayImageOptions.Builder()
-			.imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-			.showImageOnLoading(R.drawable.maimob)
-			.showImageForEmptyUri(R.drawable.maimob)
-			.showImageOnFail(R.drawable.maimob).cacheInMemory(true)
-			.cacheOnDisk(true).considerExifParams(true)
-			.displayer(new SimpleBitmapDisplayer()).build();
-			image.setVisibility(View.VISIBLE);
-			String currName = StringUtils.checkImgPath(imgUri);
-			if (imgUri.substring(imgUri.length() - 3, imgUri.length()).equals("gif")) {
-//				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
-//						imageLoader.getDiskCache());
-//				if (imgFile != null && !imgFile.equals("")) {
-//					int ReqHeight = BitmapOptions.getWH(imgFile.toString(), MaimobApplication.DeviceW);
-//					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
-//					params.height = ReqHeight;
-//					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-//					gif.setLayoutParams(params);
-//				}
-//				hint_img.setVisibility(View.VISIBLE);
-//				image.setVisibility(View.GONE);
-//				gif.setVisibility(View.VISIBLE);
-//				imageLoader.displayImage(currName, gif, options);
-				
-
-				hint_img.setVisibility(View.VISIBLE);
-				gif.setVisibility(View.VISIBLE);
-				imageLoader.displayImage(currImgUrl, gif, options);
-				File imgFile = DiskCacheUtils.findInCache(duanzi.getImageUrl(),
-						imageLoader.getDiskCache());
-				if (imgFile != null) {
-					int h = BitmapOptions.getWH(imgFile.toString(),
-							MaimobApplication.DeviceW);
-					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
-					params.height = h;
-					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-					gif.setLayoutParams(params);
-				}else if (currImgUrl.startsWith("file")) {
-					int h = BitmapOptions.getWH(imgUri, MaimobApplication.DeviceW);
-					FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) gif.getLayoutParams();
-					params.height = h;
-					params.width = FrameLayout.LayoutParams.MATCH_PARENT;
-					gif.setLayoutParams(params);
-				}
-			}else {
-				hint_img.setVisibility(View.GONE);
-				gif.setVisibility(View.GONE);
-				imageLoader.displayImage(currName, image, options);
-			}
-		}
-		
 	}
+	
 	private void switchFrag(Fragment from, Fragment to){
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("duanzi", duanzi);
@@ -241,50 +137,13 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.mitem_bottom_cai:
-			duanzi.CanPress(Duanzi.CAI, Cai_txt,Cai_img, getActivity());
-			Cai_add.setVisibility(View.VISIBLE);
-			Cai_add.startAnimation(mAnimation);
-			break;
-
-		case R.id.mitem_bottom_hot:
-			Toast.makeText(getActivity(), "去评论", Toast.LENGTH_SHORT).show();
-			
-			duanzi.setNeedComment(true);
-			Bundle bundle = new Bundle();
-			bundle.putSerializable("duanzi", duanzi);
-			bundle.putInt("xwkkx", My_login_select.From_Duanzi);
-			if (User.UserIsExists(getActivity())) {
-				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new DuanZi_Comment_Write(), bundle);
-			}else {
-				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new My_login_select(), bundle);
-
-			}
-			break;
-		case R.id.bottom_more:
-
-			break;
-		case R.id.mitem_bottom_zan:
-			duanzi.CanPress(Duanzi.ZAN, Zan_txt,Zan_img, getActivity());
-			Zan_add.setVisibility(View.VISIBLE);
-			Zan_add.startAnimation(mAnimation);
-			break;
-		case R.id.mitem_test_gif:
-			Log.e(Tag, "imgUri  " + duanzi.getImageUrl());
-			if (duanzi.getImageUrl() != null && !duanzi.getImageUrl().equals("")) {
-				hint_img.setVisibility(View.GONE);
-				((GifImageView)v).setImageDrawable(StringUtils.checkImgPathForGif(duanzi.getImageUrl()));
-				
-			}
-			break;
 		case R.id.top_left_change:
 			mFragmentManage.BackStatck(getActivity());
 			break;
-		case R.id.top_right_change2:
-			mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new Duanzi_Report(), null);
-			break;
 		}
 	}
+	
+	
 	
 	class ComAdapter extends BaseAdapter{
 
@@ -363,6 +222,12 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		super.onHiddenChanged(hidden);
 		if (!hidden) {
 			MyLogger.jLog().i("不是隐藏");
+			if (mFragmentManage.switch_write) {
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("duanzi", duanzi);
+				mFragmentManage.SwitchFrag(getActivity(), DuanZi_Comment.this, new DuanZi_Comment_Write(), bundle);
+				mFragmentManage.switch_write = false;
+			}
 			RefreshData();
 		}else {
 			MyLogger.jLog().i("隐藏");
@@ -371,7 +236,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	
 	private void RefreshData(){
 		if (mFragmentManage.Refresh_Comment) {
-			Hot_txt.setText(String.valueOf(Integer.parseInt(duanzi.getComment())+1));
+			head.LayoutChange();
 			list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
 			MyLogger.jLog().i("size  " + list.size() +"  null?  " + listView == null);
 			if (list.size() == 1) {

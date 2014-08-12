@@ -25,7 +25,7 @@ import com.example.object.setDuanziData;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.CustomImage;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.HttpUtil;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
@@ -90,7 +90,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 				android.R.color.holo_green_light,
 				android.R.color.holo_red_light);
 //		dialog = new AlertDialog.Builder(getActivity()).setTitle("我是标题")
-		dialog = DialogToastUtil.createLoadingDialog(getActivity());
+		dialog = PopUtils.createLoadingDialog(getActivity());
 		initView();
 		db = Mai_DBhelper.getInstance(getActivity());
 		list = db.selectALLDuanzi(1);
@@ -217,6 +217,7 @@ public class DuanZi_Hot extends Fragment implements OnRefreshListener,OnItemClic
 			myLogger.i("hidden is true");
 		}else {
 			myLogger.i("hidden is false");
+			adapter.notifyDataSetChanged();
 		}
 	}
 	

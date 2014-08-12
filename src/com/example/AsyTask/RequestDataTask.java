@@ -47,9 +47,7 @@ public class RequestDataTask extends AsyncTask<String, Void, String>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (array2.length() == 0) {
-			Log.e("Tag", "result ЮЊПе");
-		}
+		MyLogger.jLog().i("array  " + array2);
 		if (mHandler != null) {
 			if (result != null) {
 				int maxID = 0;

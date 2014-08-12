@@ -24,7 +24,7 @@ import com.example.object.Duanzi;
 import com.example.object.setDuanziData;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -114,6 +114,18 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 		return view;
 	}
 	
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		if (!hidden) {
+			MyLogger.jLog().i("X_Hide");
+			adapter.notifyDataSetChanged();
+		}else {
+			
+		}
+	}
+	
 	private void initHttp(){
 		RequestDataTask mTask = new RequestDataTask(handler);
 		MyLogger.jLog().i("maxid_new  " + maxID);
@@ -124,7 +136,7 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		dialog = DialogToastUtil.createLoadingDialog(getActivity());
+		dialog = PopUtils.createLoadingDialog(getActivity());
 		
 		if (list == null) {
 			list = new ArrayList<Duanzi>();

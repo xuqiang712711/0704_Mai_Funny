@@ -109,6 +109,10 @@ public class User implements Serializable{
 		SharedPreferencesUtils.setParam("SerUser", context, "user", str);
 	}
 	
+	public static int platformIsExists(Context context, String platform){
+		return (Integer) SharedPreferencesUtils.getParam(SharedPreferencesUtils.platform, context, platform, 0);
+	}
+	
 	//查询是否存在用户
 	public static boolean UserIsExists(Context context){
 		return (Boolean) SharedPreferencesUtils.getParam("platform", context, "Exists", false);

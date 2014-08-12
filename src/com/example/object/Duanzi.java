@@ -2,6 +2,7 @@ package com.example.object;
 
 import java.io.Serializable;
 
+import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.tab.R.drawable;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -24,7 +25,7 @@ public class Duanzi implements Serializable {
 	public static final int ZAN_PRESSED = 202;
 	public static final int ZAN_NORMAL = 201;
 	public static final String ISZANED = "你已经赞过";
-	public static final String ISCAIED = "你已经踩过XXXXXXXX";
+	public static final String ISCAIED = "你已经踩过";
 	public static final int SHARE_MEDIA_SINA = 501;
 	public static final int SHARE_MEDIA_TENCENT = 502;
 	public static final int SHARE_MEDIA_RENREN = 503;
@@ -47,6 +48,7 @@ public class Duanzi implements Serializable {
 	private boolean isFav;		//是否收藏
 	private boolean needComment;  //是否需要发表评论到服务器
 	private long favTime;		//段子被收藏的时间
+	private Mai_DBhelper db;
 
 	public Duanzi(String imageUrl, String name, String head,String cai, String zan,
 			String content, String comment, String poid, boolean isZanPressed,
@@ -80,6 +82,8 @@ public class Duanzi implements Serializable {
 				txtview.setText(String.valueOf(Integer.parseInt(zan) +1));
 				zan = String.valueOf(Integer.parseInt(zan) +1);
 				setZanPressed(true);
+				db  = Mai_DBhelper.getInstance(context);
+				db.updateZan(poid);
 			}else {
 				ToastUtil.showToast(context, ISZANED);
 			}

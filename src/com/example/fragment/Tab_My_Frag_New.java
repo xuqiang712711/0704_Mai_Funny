@@ -290,6 +290,7 @@ private boolean userIsExists = false;
 	public void refresh(){
 		SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
 		String user_name = sp.getString("name", "");
+		MyLogger.jLog().i("name   " +user_name);
 		if (user_name.equals("")) {
 			unLogin.setVisibility(View.VISIBLE);
 			logined.setVisibility(View.GONE);
@@ -313,6 +314,8 @@ private boolean userIsExists = false;
 					SharedPreferencesUtils.user, ""));
 			if (mFragmentManage.Refresh_userInfo) {
 				if (!hidden) {
+					unLogin.setVisibility(View.GONE);
+					logined.setVisibility(View.VISIBLE);
 					MyLogger.jLog().i("刷新数据~~~~ " + user.getName());
 					tv_user_name.setText(user.getName());
 					tv_user_description.setText(user.getDescription());

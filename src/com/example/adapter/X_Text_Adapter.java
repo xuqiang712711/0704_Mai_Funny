@@ -118,7 +118,7 @@ public class X_Text_Adapter extends BaseAdapter{
 					.findViewById(R.id.mitem_test_content);
 
 			holder.zan_img = (ImageView)convertView.findViewById(R.id.mitem_bottom_zan_img);
-			holder.cai_img = (ImageView)convertView.findViewById(R.id.mitem_bottom_cai_img);
+			holder.cai_img = (ImageView)convertView.findViewById(R.id.mitem_bottom_cai_img_diao);
 			
 			holder.zan = (TextView) convertView.findViewById(R.id.mitem_bottom_zan_txt);
 			holder.cai = (TextView) convertView.findViewById(R.id.mitem_bottom_cai_txt);

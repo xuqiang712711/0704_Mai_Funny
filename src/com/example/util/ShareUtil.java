@@ -22,32 +22,33 @@ public class ShareUtil {
 	public static final int SHARE_SUC = 345;
 
 	/**
-	 * ·ÖÏí
+	 * åˆ†äº«
 	 * 
 	 * @param media
-	 *            ÀàĞÍ sina¡¢tencent¡¢renren¡¢douban
+	 *            ç±»å‹ sinaã€tencentã€renrenã€douban
 	 * @param editContent
-	 *            ÆÀÂÛ·ÖÏí
+	 *            è¯„è®ºåˆ†äº«
 	 * @param DuanziContent
-	 *            ÄÚÈİ·ÖÏí¡¢ÎÄ×Ö
+	 *            å†…å®¹åˆ†äº«ã€æ–‡å­—
 	 * @param imgUrl
-	 *            ÄÚÈİ·ÖÏí¡¢Í¼Æ¬
+	 *            å†…å®¹åˆ†äº«ã€å›¾ç‰‡ 
 	 * @param context
 	 */
 	public static void ShareToSocial(SHARE_MEDIA media, String editContent,
 			String DuanziContent, String imgUrl, final Context context,
 			final Handler mHandler) {
-		Log.i("FFF", "con  " + DuanziContent);
 		if (imgUrl != null) {
 			MaimobApplication.mController.setShareMedia(new UMImage(context,
 					imgUrl));
 		}
-		if (editContent != null && !editContent.equals("")) {
+		if (DuanziContent != null && !DuanziContent.equals("")) {
+			MyLogger.jLog().i("æˆ‘å±Œä½ å®¶å§");
 			MaimobApplication.mController.setShareContent(editContent + "//"
-					+ DuanziContent + "(À´×Ô@´óÂó¶Î×Ó)");
+					+ DuanziContent + "(æ¥è‡ª@å¤§éº¦æ®µå­)");
 		} else {
-			MaimobApplication.mController.setShareContent(DuanziContent
-					+ "(À´×Ô@´óÂó¶Î×Ó)");
+			MyLogger.jLog().i("æˆ‘å±Œä½ è€æ¯");
+			MaimobApplication.mController.setShareContent(editContent
+					+ "(æ¥è‡ª@å¤§éº¦æ®µå­)");
 		}
 		MaimobApplication.mController.directShare(context, media,
 				new SnsPostListener() {
@@ -55,7 +56,7 @@ public class ShareUtil {
 					@Override
 					public void onStart() {
 						// TODO Auto-generated method stub
-						Toast.makeText(context, "·ÖÏí¿ªÊ¼", Toast.LENGTH_SHORT)
+						Toast.makeText(context, "åˆ†äº«å¼€å§‹", Toast.LENGTH_SHORT)
 								.show();
 					}
 
@@ -64,10 +65,10 @@ public class ShareUtil {
 							SocializeEntity arg2) {
 						// TODO Auto-generated method stub
 						if (eCode == StatusCode.ST_CODE_SUCCESSED) {
-							Toast.makeText(context, "·ÖÏí³É¹¦", Toast.LENGTH_SHORT)
+							Toast.makeText(context, "åˆ†äº«æˆåŠŸ", Toast.LENGTH_SHORT)
 									.show();
 						} else {
-							Toast.makeText(context, "·ÖÏíÊ§°Ü", Toast.LENGTH_SHORT)
+							Toast.makeText(context, "åˆ†äº«å¤±è´¥", Toast.LENGTH_SHORT)
 									.show();
 						}
 						if (mHandler != null) {
@@ -80,7 +81,7 @@ public class ShareUtil {
 	}
 	
 	
-	public static void shareToWeiXin(Duanzi duanzi, Context context, Handler mHandler){
+	public static void shareToWeiXin(Duanzi duanzi, Context context){
 		UMWXHandler wxHandler = new UMWXHandler(context, APPID);
 		wxHandler.addToSocialSDK();
 		WeiXinShareContent weixinContent = new WeiXinShareContent();

@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.maiUtil.CustomHttpClient;
+import com.example.util.MyLogger;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class MyTask_No_Result extends AsyncTask<String, Void, Void> {
 	@Override
 	protected Void doInBackground(String... params) {
 		// TODO Auto-generated method stub
+		MyLogger.jLog().i("uri  " +params[0]);
 		return doHttpRequest(params[0]);
 	}
 

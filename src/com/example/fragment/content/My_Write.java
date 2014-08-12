@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -41,6 +42,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -59,7 +61,7 @@ import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.CommonUtils;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.EditUtil;
 import com.example.util.IMG_Compress;
 import com.example.util.MyLogger;
@@ -94,6 +96,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	private ImageView sina_img, tencent_img, qzone_img, douban;
 	private String editContent;
 	private Dialog loadDialog;
+	private InputMethodManager imm;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,7 +112,7 @@ public class My_Write extends Fragment implements OnClickListener{
 	}
 	
 	private void initView(){
-		loadDialog = DialogToastUtil.createLoadingDialog(getActivity());
+		loadDialog = PopUtils.createLoadingDialog(getActivity());
 		
 		sina_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_sina);
 		tencent_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_tencent);
@@ -131,6 +134,11 @@ public class My_Write extends Fragment implements OnClickListener{
 		submit = (TextView)view.findViewById(R.id.top_right_change2);
 		submit.setText(R.string.ActionBar_Submit);
 		editText = (EditText)view.findViewById(R.id.my_write_edit);
+		editText.requestFocus();
+		imm = (InputMethodManager) getActivity()
+				  .getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		
 		TextView textView = (TextView)view.findViewById(R.id.my_write_count);
 		mimageView = (ImageView)view.findViewById(R.id.my_write_image);
 		
@@ -195,12 +203,12 @@ public class My_Write extends Fragment implements OnClickListener{
 									editContent, null, currImgPath, getActivity(),null);
 						}
 						insertSQL(editContent, currImgPath);
-						backToHome();
+						backDuanzi();
 					}else {
-						DialogToastUtil.toastShow(getActivity(), "内容不能为空");
+						PopUtils.toastShow(getActivity(), "内容不能为空");
 					}
 				}else {
-					DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
+					PopUtils.toastShow(getActivity(), "网络错误,无法发送");
 				}
 			}
 		});
@@ -332,7 +340,8 @@ public class My_Write extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.top_left_change:
-			backToHome();
+			backShowDialog();
+			imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 			break;
 
 		case R.id.duanzi_comment_write_sina:
@@ -407,7 +416,7 @@ public class My_Write extends Fragment implements OnClickListener{
 		}
 	}
 	
-	private void backToHome(){
+	private void backShowDialog(){
 		MyLogger.jLog().i("xwkkx  " + editContent);
 		editContent = editText.getText().toString();
 		if (editContent != null && !editContent.equals("")) {
@@ -426,15 +435,18 @@ public class My_Write extends Fragment implements OnClickListener{
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
-					MaiActivity xyftest =(MaiActivity)getActivity();
-					xyftest.WriteBack(1);
+					backDuanzi();
 				}
 			}).show();
 		}else {
-			MaiActivity xyftest =(MaiActivity)getActivity();
-			xyftest.WriteBack(1);
+			backDuanzi();
 		}
 
+	}
+	
+	private void backDuanzi(){
+		MaiActivity xyftest =(MaiActivity)getActivity();
+		xyftest.WriteBack(1);
 	}
 	
 	private void insertSQL(String content, String imgurl){

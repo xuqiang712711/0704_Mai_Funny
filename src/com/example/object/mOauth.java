@@ -1,11 +1,20 @@
 package com.example.object;
 
+import java.util.Map;
+import java.util.Set;
+
 import com.example.application.MaimobApplication;
+import com.example.util.MyLogger;
+import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
+import com.example.util.User;
+import com.renn.rennsdk.param.GetUserParam;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.utils.OauthHelper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 /**
  * 平台账号绑定、注销
@@ -82,9 +92,18 @@ public class mOauth {
 					if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
 	                    Toast.makeText(context, "授权成功." + platform, Toast.LENGTH_SHORT).show();
 	                    editOauth(context, num);
-	                    Message msg = Message.obtain();
-	                    msg.what = 1;
-	                    mHandler.sendMessage(msg);
+
+	                    String user = (String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, context,
+	                            SharedPreferencesUtils.SerUser_user, "");
+	                    MyLogger.jLog().i("user  " + user +"   isNUll  "+ user.equals(""));
+	                    if (user.equals("")) {
+                    			getUserInfo(context, platform, mHandler);
+                    			mFragmentManage.Refresh_userInfo = true;
+						}else {
+		                    Message msg = Message.obtain();
+		                    msg.what = 1;
+		                    mHandler.sendMessage(msg);
+						}
 	                } else {
 	                    Toast.makeText(context, "授权失败", Toast.LENGTH_SHORT).show();
 	                }
@@ -97,4 +116,62 @@ public class mOauth {
 				}
 			});
 		}
+		
+		//将用户信息保存到sp,icon、name等信息将使用第一次用户绑定的社交账号信息
+		public static void getUserInfo(final Context context ,SHARE_MEDIA platform ,final Handler mHandler){
+			mController.getPlatformInfo(context, platform, new UMDataListener() {
+				
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					MyLogger.jLog().i("onStart");
+				}
+				
+				@Override
+				public void onComplete(int status, Map<String, Object> info) {
+					// TODO Auto-generated method stub
+					if(status == 200 && info != null){
+						MyLogger.jLog().i("onComplete");
+						 SharedPreferences sp = context.getSharedPreferences("user", Activity.MODE_PRIVATE);
+		                 Editor editor = sp.edit();
+		                 StringBuilder sb = new StringBuilder();
+		                 Set<String> keys = info.keySet();
+		                 int gender = 0;
+		                 String name = null;
+		                 String icon = null;
+		                 String location = null;
+		                 String description = null;
+		                 for(String key : keys){
+		                     sb.append(key+"="+info.get(key).toString()+"\r\n");
+		                     if (key.equals("description")) {
+		                    	 description = info.get(key).toString();
+								editor.putString("description", description);
+							}else if (key.equals("screen_name")) {
+								name = info.get(key).toString();
+								editor.putString("name", name);
+							}else if (key.equals("profile_image_url")) {
+								icon = info.get(key).toString();
+								editor.putString("icon", icon);
+							}else if (key.equals("location")) {
+								location = info.get(key).toString();
+								editor.putString("location", location);
+							}else if (key.equals("gender")) {
+								gender = (Integer) info.get(key);
+								editor.putInt("gender", gender);
+							}
+		                 }
+		                 editor.commit();
+		                 User user= new User(name, icon, location, description, gender);
+		                	 user.saveUser(context, SerUser.serializeUser(user));
+		                	 Message msg = Message.obtain();
+		                	 msg.what = 1;
+		                	 mHandler.sendMessage(msg);
+		          }else{
+		             Log.d("TestData","发生错误："+status);
+		          }
+				}
+			});
+		}
+		
+		
 }

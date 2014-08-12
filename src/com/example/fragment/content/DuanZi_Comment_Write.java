@@ -44,7 +44,8 @@ import com.example.object.Duanzi;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
-import com.example.util.DialogToastUtil;
+import com.example.util.MyLogger;
+import com.example.util.PopUtils;
 import com.example.util.EditUtil;
 import com.example.util.NetworkUtil;
 import com.example.util.SerUser;
@@ -52,6 +53,7 @@ import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
 import com.example.util.User;
+import com.facebook.widget.FacebookDialog.ShareDialogFeature;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -60,6 +62,7 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListene
 import com.umeng.socialize.facebook.controller.utils.ToastUtil;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.utils.OauthHelper;
 
 
 public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
@@ -124,6 +127,18 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
 		douban = (ImageView)view.findViewById(R.id.duanzi_comment_write_douban);
 		
+		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
+			sina_img.setImageResource(R.drawable.close_24);
+		}else if (!OauthHelper.isAuthenticatedAndTokenNotExpired(getActivity(), SHARE_MEDIA.RENREN)) {
+			MyLogger.jLog().i("tencent");
+			tencent_img.setImageResource(R.drawable.close_24);
+		}else if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.RENREN)) {
+			qzone_img.setImageResource(R.drawable.close_24);
+			MyLogger.jLog().i("renren");
+		}else if (!OauthHelper.isAuthenticatedAndTokenNotExpired(getActivity(), SHARE_MEDIA.DOUBAN)) {
+			douban.setImageResource(R.drawable.close_24);
+			MyLogger.jLog().i("douban");
+		}
 		sina_img.setOnClickListener(this);
 		tencent_img.setOnClickListener(this);
 		qzone_img.setOnClickListener(this);
@@ -131,7 +146,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		
 		editText = (EditText)view.findViewById(R.id.duanzi_comments_edit);
 		tv_edit_count = (TextView)view.findViewById(R.id.duanzi_comments_edit_count);
-		dialog = DialogToastUtil.createLoadingDialog(getActivity());
+		dialog = PopUtils.createLoadingDialog(getActivity());
 		new EditUtil(getActivity(), editText, tv_edit_count);
 	}
 	
@@ -189,7 +204,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.top_right_change2:
 			if (NetworkUtil.getNetworkState(getActivity()) == NetworkUtil.NONE) {
-				DialogToastUtil.toastShow(getActivity(), "网络错误,无法发送");
+				PopUtils.toastShow(getActivity(), "网络错误,无法发送");
 				break;
 			}
 			editContent = editText.getText().toString();
@@ -210,7 +225,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 				}else if (isCheck_douban) {
 					ShareUtil.ShareToSocial(SHARE_MEDIA.DOUBAN, editContent, duanziContent, null, getActivity(), handler);
 				}
-				insertComment(duanzi.getUserName(),duanziContent , Integer.parseInt(pid), editContent);
+				insertComment(imgUri,duanzi.getUserName(),duanziContent , Integer.parseInt(pid), editContent);
 			}else {
 				ToastUtil.showToast(getActivity(), "评论内容不能为空");
 			}
@@ -313,12 +328,12 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		}
 	}
 	
-	public void insertComment(String dz_userName, String duanziContent, int pid, String editContent) {
+	public void insertComment(String imgUrl,String dz_userName, String duanziContent, int pid, String editContent) {
 		User user = SerUser.deSerializationUser((String)SharedPreferencesUtils
 				.getParam(SharedPreferencesUtils.SerUser, getActivity(),
 						SharedPreferencesUtils.SerUser_user, ""));
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
-		db.insertUser_Comment(dz_userName, duanziContent, pid, editContent, user);
+		db.insertUser_Comment(dz_userName, duanziContent, pid, editContent, user,imgUrl);
 	}
 	
 }

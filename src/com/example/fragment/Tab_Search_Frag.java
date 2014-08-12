@@ -18,7 +18,7 @@ import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
 import com.example.util.CustomImage;
-import com.example.util.DialogToastUtil;
+import com.example.util.PopUtils;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.StringUtils;
@@ -147,7 +147,7 @@ public class Tab_Search_Frag extends Fragment implements OnClickListener {
 		public void handleMessage(android.os.Message msg) {
 			MyLogger.jLog().i("msg  " + msg.what);
 			if (msg.what == Uris.MSG_NOTIHING) {
-				DialogToastUtil.toastShow(getActivity(), "没有更多了");
+				PopUtils.toastShow(getActivity(), "没有更多了");
 			}else if (msg.what == Uris.MSG_UPDATE) {
 				
 			}else {
