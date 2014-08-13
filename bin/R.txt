@@ -1328,7 +1328,7 @@ int layout duanzi_comments 0x7f030005
 int layout duanzi_comments_items 0x7f030006
 int layout duanzi_comments_lv_head 0x7f030007
 int layout duanzi_comments_praise 0x7f030008
-int layout duanzi_comments_test 0x7f030009
+int layout duanzi_comments_write 0x7f030009
 int layout duanzi_item 0x7f03000a
 int layout duanzi_item_gif 0x7f03000b
 int layout duanzi_more_comment 0x7f03000c

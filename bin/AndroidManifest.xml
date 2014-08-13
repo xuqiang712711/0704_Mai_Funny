@@ -36,6 +36,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name="com.example.Activity.Dz_Comment_Write"></activity>
+        <!-- 我的 -->
+        <activity android:name="com.example.Activity.My_Comments"></activity>
+        <activity android:name="com.example.Activity.My_Favorite"></activity>
+        <activity android:name="com.example.Activity.My_InfoEdit"></activity>
+        <activity android:name="com.example.Activity.My_Pubilsh"></activity>
+        
+        
+        
         <activity android:name="com.example.Activity.OauthActivity" >
         </activity>
         <activity android:name="com.example.Activity.OneActivity" >

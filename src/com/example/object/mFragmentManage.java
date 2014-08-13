@@ -60,7 +60,11 @@ public class mFragmentManage {
 			xyftest.RefreshFragment(FragTag);
 		}
 	}
-	
+	/**
+	 * ·µ»Ø¶Î×ÓÒ³Ãæ
+	 * @param context
+	 * @param type
+	 */
 	public static void backHome(Context context, int type){
 		if (context == null) {
 			return;
@@ -69,6 +73,10 @@ public class mFragmentManage {
 			MaiActivity xyftest =(MaiActivity)context;
 			xyftest.WriteBack(type);
 		}
+	}
+	
+	public static void switchToActivity(){
+		
 	}
 	
 }

@@ -99,7 +99,7 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		view = inflater.inflate(R.layout.duanzi_comments_test, container, false);
+		view = inflater.inflate(R.layout.duanzi_comments_write, container, false);
 		return view;
 	}
 	

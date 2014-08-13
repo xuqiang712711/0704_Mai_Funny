@@ -266,6 +266,7 @@ public class XAdapter extends BaseAdapter{
 		holder.gif.setOnClickListener(new mOnclick(position, holder));
 		holder.iv_fav.setOnClickListener(new mOnclick(position, holder));
 		holder.image.setOnClickListener(new mOnclick(position, holder));
+		holder.content.setOnClickListener(new mOnclick(position, holder));
 		//未对头像、用户名进行监听
 	}
 	
@@ -287,6 +288,9 @@ public class XAdapter extends BaseAdapter{
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
+			case R.id.mitem_test_content:
+				switchFragment(mFragment, new DuanZi_Comment(), bundle);
+				break;
 			case R.id.mitem_test_img:
 				switchFragment(mFragment, new DuanZi_Comment(), bundle);
 				break;

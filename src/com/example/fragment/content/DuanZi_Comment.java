@@ -34,7 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.OauthActivity;
 import com.example.Activity.MaiActivity;
 import com.example.adapter.CommentAdapter;
 import com.example.application.MaimobApplication;

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.example.Activity.My_InfoEdit;
 import com.example.application.MaimobApplication;
 import com.example.object.User;
 import com.example.object.mFragmentManage;
@@ -250,7 +252,8 @@ public class My_userinfo extends Fragment implements OnClickListener{
 			break;
 
 		case R.id.my_userinfo_main:
-			mFragmentManage.SwitchFrag(getActivity(), My_userinfo.this, new My_Userinfo_Edit(), null);
+//			mFragmentManage.SwitchFrag(getActivity(), My_userinfo.this, new My_Userinfo_Edit(), null);
+			getActivity().startActivity(new Intent(getActivity(), My_InfoEdit.class));
 			break;
 		}
 	}

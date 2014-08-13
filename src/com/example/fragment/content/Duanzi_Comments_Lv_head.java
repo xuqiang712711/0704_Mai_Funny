@@ -4,6 +4,7 @@ import java.io.File;
 
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.Activity.Dz_Comment_Write;
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
 import com.example.object.User;
@@ -22,6 +23,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -211,6 +213,10 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 			}else {
 				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
 			}
+//			MyLogger.jLog().i("好久没有用过Activity了");
+//			Intent intent = new Intent(context, Dz_Comment_Write.class);
+//			intent.putExtras(bundle);
+//			context.startActivity(intent);
 			break;
 		case R.id.bottom_more:
 			initPop();

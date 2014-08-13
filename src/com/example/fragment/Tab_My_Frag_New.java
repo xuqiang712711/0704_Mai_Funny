@@ -3,8 +3,8 @@ package com.example.fragment;
 import java.util.List;
 import java.util.Set;
 
-import com.example.Activity.OauthActivity;
 import com.example.Activity.MaiActivity;
+import com.example.Activity.My_Comments;
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.More_Contact;
 import com.example.fragment.content.More_feedback;
@@ -159,7 +159,7 @@ private boolean userIsExists = false;
 		
 		setWidget(comment, R.string.my_comment, R.drawable.mai_write ,R.drawable.item_click_center,1);
 		setWidget(favorite, R.string.my_favorite, R.drawable.my_favorite_icon ,R.drawable.item_click_center, 1);
-		setWidget(message, R.string.my_message, R.drawable.my_message_icon, R.drawable.item_click_center, 1);
+		setWidget(message, R.string.my_nemo, R.drawable.my_message_icon, R.drawable.item_click_center, 1);
 		setWidget(publish, R.string.my_publish, R.drawable.my_publish_icon ,R.drawable.item_click_center, 1);
 		
 		TextView tv_Fav = (TextView)favorite.findViewById(R.id.my_tv_tv1);
@@ -223,6 +223,7 @@ private boolean userIsExists = false;
 			break;
 		case R.id.my_logined:
 			MyLogger.kLog().i("my_logined");
+			mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_userinfo(), null);
 			break;
 		case R.id.my_arrow:
 			Frag_userinfo = new My_userinfo();
@@ -246,10 +247,16 @@ private boolean userIsExists = false;
 
 		case R.id.my_comment_new:
 			if (User.UserIsExists(getActivity())) {
-				My_Comment comment = new My_Comment();
-				switchFragment(this, comment);
+//				My_Comment comment = new My_Comment();
+//				switchFragment(this, comment);
+				Intent intent = new Intent(getActivity(), My_Comments.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}else {
-				mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new My_login_select(), bundle);
+				Intent intent = new Intent(getActivity(), My_Comments.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 			Toast.makeText(getActivity(), "my_comment", Toast.LENGTH_SHORT).show();
 			break;
