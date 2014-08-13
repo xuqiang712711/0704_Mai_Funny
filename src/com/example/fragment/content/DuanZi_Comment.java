@@ -70,7 +70,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 	private ComAdapter adapter;
 	private Mai_DBhelper db;
 	private Animation mAnimation;
-	private 	Duanzi_Comments_Lv_head head;
+	private Duanzi_Comments_Lv_head head;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -96,15 +96,9 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
 		adapter = new ComAdapter();
 		head = new Duanzi_Comments_Lv_head(getActivity());
-		head.addDuanzi(duanzi,this);
+		head.addDuanzi(duanzi);
 		listView.addHeaderView(head);
 		listView.setAdapter(adapter);
-//		if (list.size() != 0) {
-//			adapter = new ComAdapter();
-//			listView.setAdapter(adapter); 
-//		}else {
-//			listView.setVisibility(View.GONE);
-//		}
 	}
 	
 	

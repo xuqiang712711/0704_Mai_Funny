@@ -5,6 +5,7 @@ import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.Dz_Comments;
 import com.example.Activity.MaiActivity;
 import com.example.AsyTask.RequestDataTask;
 import com.example.application.MaimobApplication;
@@ -75,8 +77,6 @@ public class XAdapter extends BaseAdapter{
 	private String TAG = "XAdapter";
 	private PopupWindow window;
 	private Animation mAnimation;
-	
-	private ImageView iv_weixin,iv_weixin_circle,iv_sina,iv_tencent,iv_renren,iv_douban,iv_qq,iv_qq_zone;
 	
 	public static final int ZAN_NORMAL = 1;
 	public static final int ZAN_PRESSED = 2;
@@ -373,8 +373,11 @@ public class XAdapter extends BaseAdapter{
 				break;
 
 			case R.id.mitem_bottom_hot:
-				DuanZi_Comment comment3 = new DuanZi_Comment();
-				switchFragment(mFragment, comment3, bundle);
+//				DuanZi_Comment comment3 = new DuanZi_Comment();
+//				switchFragment(mFragment, comment3, bundle);
+				Intent intent = new Intent(context, Dz_Comments.class);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
 				Toast.makeText(context, "点击热门  +  " + position, Toast.LENGTH_SHORT)
 						.show();
 				break;

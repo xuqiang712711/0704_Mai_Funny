@@ -5,6 +5,8 @@ import java.io.File;
 import pl.droidsonroids.gif.GifImageView;
 
 import com.example.Activity.Dz_Comment_Write;
+import com.example.Activity.Dz_Share_Write;
+import com.example.Activity.PlatformSelect;
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
 import com.example.object.User;
@@ -52,7 +54,6 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 	private Duanzi duanzi;
 	private ImageLoader imageLoader;
 	private Context context;
-	private Fragment mFragment;
 	private Animation mAnimation;
 	private PopupWindow window;
 	public Duanzi_Comments_Lv_head(Context context) {
@@ -63,9 +64,8 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 		this.context = context;
 	}
 	
-	public void addDuanzi(Duanzi duanzi,Fragment fragment){
+	public void addDuanzi(Duanzi duanzi){
 		this.duanzi = duanzi;
-		this.mFragment = fragment;
 		initView();
 	}
 	
@@ -195,6 +195,11 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 		// TODO Auto-generated method stub
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("duanzi", duanzi);
+		Intent intent_Write = new Intent(context, Dz_Share_Write.class);
+		intent_Write.putExtras(bundle);
+		Intent intent_Platform = new Intent(context, PlatformSelect.class);
+		intent_Platform.putExtras(bundle);
+		
 		switch (v.getId()) {
 		case R.id.mitem_bottom_cai:
 			mAnimation = AnimationUtils.loadAnimation(context, R.anim.up);
@@ -209,9 +214,13 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 			duanzi.setNeedComment(true);
 			bundle.putInt("xwkkx", My_login_select.From_Duanzi);
 			if (User.UserIsExists(context)) {
-				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
+				Intent intent = new Intent(context, Dz_Comment_Write.class);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
+//				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				context.startActivity(new Intent(context, PlatformSelect.class));
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
 			}
 //			MyLogger.jLog().i("好久没有用过Activity了");
 //			Intent intent = new Intent(context, Dz_Comment_Write.class);
@@ -246,9 +255,11 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 			window.dismiss();
 			if (User.UserIsExists(context)) {
 				duanzi.setMedia(Duanzi.SHARE_MEDIA_SINA);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				context.startActivity(intent_Write);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				context.startActivity(intent_Platform);
 			}
 			
 			break;
@@ -256,27 +267,33 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 			window.dismiss();
 			if (User.UserIsExists(context)) {
 				duanzi.setMedia(Duanzi.SHARE_MEDIA_TENCENT);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				context.startActivity(intent_Write);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				context.startActivity(intent_Platform);
 			}
 			break;
 		case R.id.duanzi_pop_renren:
 			window.dismiss();
 			if (User.UserIsExists(context)) {
 				duanzi.setMedia(Duanzi.SHARE_MEDIA_RENREN);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				context.startActivity(intent_Write);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				context.startActivity(intent_Platform);
 			}
 			break;
 		case R.id.duanzi_pop_douban:
 			window.dismiss();
 			if (User.UserIsExists(context)) {
 				duanzi.setMedia(Duanzi.SHARE_MEDIA_DOUBAN);
-				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+				context.startActivity(intent_Write);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				context.startActivity(intent_Platform);
 			}
 			
 			break;
@@ -287,6 +304,14 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 		case R.id.duanzi_more_back:
 			window.dismiss();
 			break;
+		}
+	}
+	
+	private void isOauth(boolean boo, Intent intent_Write, Intent intent_Platform){
+		if (boo) {
+			context.startActivity(intent_Write);
+		}else {
+			context.startActivity(intent_Platform);
 		}
 	}
 
