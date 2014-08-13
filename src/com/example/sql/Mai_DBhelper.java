@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.object.Duanzi;
+import com.example.object.User;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
-import com.example.util.User;
 
 import android.content.ContentValues;
 import android.content.Context;

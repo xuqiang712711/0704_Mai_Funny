@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/my_action_cotent" >
+    style="@style/my_action_cotent" 
+    android:background="@drawable/text_bg_noshape">
     
 	<TextView
 	    android:layout_marginLeft="10dp"

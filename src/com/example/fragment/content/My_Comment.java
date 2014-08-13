@@ -15,7 +15,6 @@ import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 
 import android.os.Bundle;
 import android.os.Handler;

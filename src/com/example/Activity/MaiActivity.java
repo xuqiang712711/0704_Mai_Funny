@@ -14,6 +14,7 @@ import com.example.fragment.content.My_login_select;
 import com.example.fragment.content.My_userInfo_vp_home;
 import com.example.fragment.content.My_userinfo;
 import com.example.object.Duanzi;
+import com.example.object.User;
 import com.example.object.mFragmentManage;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
@@ -21,7 +22,6 @@ import com.example.util.PopUtils;
 import com.example.util.MyLogger;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 
 import android.content.Intent;
 import android.os.Bundle;

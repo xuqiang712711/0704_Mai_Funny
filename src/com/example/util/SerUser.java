@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
 
+import com.example.object.User;
+
 public class SerUser {
 	private static MyLogger myLogger = MyLogger.jLog();
 	/**

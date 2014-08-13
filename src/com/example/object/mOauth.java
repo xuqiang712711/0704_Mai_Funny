@@ -3,19 +3,6 @@ package com.example.object;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.application.MaimobApplication;
-import com.example.util.MyLogger;
-import com.example.util.SerUser;
-import com.example.util.SharedPreferencesUtils;
-import com.example.util.User;
-import com.renn.rennsdk.param.GetUserParam;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.utils.OauthHelper;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +13,19 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.application.MaimobApplication;
+import com.example.util.MyLogger;
+import com.example.util.PopUtils;
+import com.example.util.SerUser;
+import com.example.util.SharedPreferencesUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
 /**
  * 平台账号绑定、注销
  * @author xieyifan
@@ -47,6 +47,34 @@ public class mOauth {
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_name, "");
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_description, "");
 			SharedPreferencesUtils.setParam(SharedPreferencesUtils.user, context, SharedPreferencesUtils.user_icon, "");
+		}
+		
+		public static void deletePlatform(final Context context,SHARE_MEDIA media, final Handler mHandler){
+			mController.deleteOauth(context, media, new SocializeClientListener() {
+				
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onComplete(int arg0, SocializeEntity arg1) {
+					// TODO Auto-generated method stub
+					MyLogger.jLog().i("code  " +arg0);
+					if (arg0 == 200) {
+						PopUtils.toastShow(context, "删除成功");
+						if (mHandler != null) {
+							Message msg = Message.obtain();
+							msg.what = 1;
+							mHandler.sendMessage(msg);
+						}
+					}else {
+						PopUtils.toastShow(context, "删除失败,稍后请重试");
+					}
+
+				}
+			});
 		}
 	
 		//将账号是否绑定信息保存到sp
@@ -83,7 +111,7 @@ public class mOauth {
 				@Override
 				public void onError(SocializeException arg0, SHARE_MEDIA arg1) {
 					// TODO Auto-generated method stub
-					
+
 				}
 				
 				@Override
@@ -100,9 +128,11 @@ public class mOauth {
                     			getUserInfo(context, platform, mHandler);
                     			mFragmentManage.Refresh_userInfo = true;
 						}else {
-		                    Message msg = Message.obtain();
-		                    msg.what = 1;
-		                    mHandler.sendMessage(msg);
+							if (mHandler != null) {
+								Message msg = Message.obtain();
+								msg.what = 1;
+								mHandler.sendMessage(msg);
+							}
 						}
 	                } else {
 	                    Toast.makeText(context, "授权失败", Toast.LENGTH_SHORT).show();

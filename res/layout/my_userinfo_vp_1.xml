@@ -34,33 +34,36 @@
         android:layout_below="@+id/my_userinfo_sec_main"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_height="wrap_content">
          <include 
+             android:background="#699669"
             layout="@layout/more_style1"
             android:id="@+id/my_userinfo_bind_sina"/>
         <include 
             layout="@layout/line_horizontal"/>
         <include 
+            android:background="@drawable/text_bg_noshape"
             layout="@layout/more_style1"
             android:id="@+id/my_userinfo_bind_tencent_wb"/>
         <include 
             layout="@layout/line_horizontal"/>
         <include 
+            android:background="@drawable/text_bg_noshape"
             layout="@layout/more_style1"
             android:id="@+id/my_userinfo_bind_renren"/>
         <include 
             layout="@layout/line_horizontal"/>
         <include 
+            android:background="@drawable/text_bg_noshape"
             layout="@layout/more_style1"
             android:id="@+id/my_userinfo_bind_douban"/>
     </LinearLayout>
     
     <Button 
+        android:background="@drawable/text_bg_noshape"
         android:layout_marginTop="@dimen/margin_10"
         android:id="@+id/my_unRegister"
         android:textSize="@dimen/ts_20"
-        android:background="@color/white"
         android:padding="@dimen/margin_10"
         android:layout_below="@+id/my_userinfo_sec_main_2"
         android:layout_width="match_parent"

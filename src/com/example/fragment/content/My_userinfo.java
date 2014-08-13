@@ -34,6 +34,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.application.MaimobApplication;
+import com.example.object.User;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
@@ -41,7 +42,6 @@ import com.example.util.MyLogger;
 import com.example.util.SerUser;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
-import com.example.util.User;
 
 public class My_userinfo extends Fragment implements OnClickListener{
 	private String Tag = "My_userinfo";

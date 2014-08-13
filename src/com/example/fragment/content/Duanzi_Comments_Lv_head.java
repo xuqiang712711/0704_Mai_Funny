@@ -6,6 +6,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
+import com.example.object.User;
 import com.example.object.mFragmentManage;
 import com.example.tab.R;
 import com.example.util.BitmapOptions;
@@ -14,7 +15,6 @@ import com.example.util.MyLogger;
 import com.example.util.ShareUtil;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;

@@ -41,7 +41,9 @@ import com.example.Activity.MaiActivity;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
+import com.example.object.User;
 import com.example.object.mFragmentManage;
+import com.example.object.mOauth;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.MyLogger;
@@ -52,7 +54,6 @@ import com.example.util.SerUser;
 import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 import com.facebook.widget.FacebookDialog.ShareDialogFeature;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -85,9 +86,13 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			dialog.dismiss();
-			mFragmentManage.Refresh_Comment = true;
-			mFragmentManage.BackStatck(getActivity());
+			if (msg.what == 1) {
+				platFormStatus();
+			}else {
+				dialog.dismiss();
+				mFragmentManage.Refresh_Comment = true;
+				mFragmentManage.BackStatck(getActivity());
+			}
 		}
 	};
 	@Override
@@ -127,18 +132,8 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		qzone_img = (ImageView)view.findViewById(R.id.duanzi_comment_write_qzone);
 		douban = (ImageView)view.findViewById(R.id.duanzi_comment_write_douban);
 		
-		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
-			sina_img.setImageResource(R.drawable.close_24);
-		}else if (!OauthHelper.isAuthenticatedAndTokenNotExpired(getActivity(), SHARE_MEDIA.RENREN)) {
-			MyLogger.jLog().i("tencent");
-			tencent_img.setImageResource(R.drawable.close_24);
-		}else if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.RENREN)) {
-			qzone_img.setImageResource(R.drawable.close_24);
-			MyLogger.jLog().i("renren");
-		}else if (!OauthHelper.isAuthenticatedAndTokenNotExpired(getActivity(), SHARE_MEDIA.DOUBAN)) {
-			douban.setImageResource(R.drawable.close_24);
-			MyLogger.jLog().i("douban");
-		}
+		platFormStatus();
+		
 		sina_img.setOnClickListener(this);
 		tencent_img.setOnClickListener(this);
 		qzone_img.setOnClickListener(this);
@@ -257,71 +252,55 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			}
 			break;
 		case R.id.duanzi_comment_write_sina:
-			if (!isCheck_sina) {
-				if (MaimobApplication.Jelly_Bean) {
-					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo2_72x72));
+			if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
+				if (!isCheck_sina) {
+					sina_img.setImageResource(R.drawable.weibo2_72x72);
+					isCheck_sina = true;
 				}else {
-					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo2_72x72));
+					sina_img.setImageResource(R.drawable.weibo_72x72);
+					isCheck_sina = false;
 				}
-				isCheck_sina = true;
 			}else {
-				if (MaimobApplication.Jelly_Bean) {
-					sina_img.setBackground(getResources().getDrawable(R.drawable.weibo_72x72));
-				}else {
-					sina_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.weibo_72x72));
-				}
-				isCheck_sina = false;
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.SINA, 0, handler);
 			}
+			
 			break;
 		case R.id.duanzi_comment_write_qzone:
-			if (!isCheck_qzone) {
-				if (MaimobApplication.Jelly_Bean) {
-					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren2_72x72));
+			if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.RENREN)) {
+				if (!isCheck_qzone) {
+					qzone_img.setImageResource(R.drawable.renren2_72x72);
+					isCheck_qzone = true;
 				}else {
-					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren2_72x72));
+					qzone_img.setImageResource(R.drawable.renren_72x72);
+					isCheck_qzone =false;
 				}
-				isCheck_qzone = true;
+
 			}else {
-				if (MaimobApplication.Jelly_Bean) {
-					qzone_img.setBackground(getResources().getDrawable(R.drawable.renren_72x72));
-				}else {
-					qzone_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.renren_72x72));
-				}
-				isCheck_qzone =false;
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.RENREN, 2, handler);
 			}
+				
 			break;
 		case R.id.duanzi_comment_write_tencent:
-			if (!isCheck_tencent) {
-				if (MaimobApplication.Jelly_Bean) {
-					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencent2_72x72));
+			if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.TENCENT)) {
+				if (!isCheck_tencent) {
+					tencent_img.setImageResource(R.drawable.tencent2_72x72);
+					isCheck_tencent = true;
 				}else {
-					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencent2_72x72));
+					tencent_img.setImageResource(R.drawable.tencen_72x72);
+					isCheck_tencent =false;
 				}
-				isCheck_tencent = true;
 			}else {
-				if (MaimobApplication.Jelly_Bean) {
-					tencent_img.setBackground(getResources().getDrawable(R.drawable.tencen_72x72));
-				}else {
-					tencent_img.setBackgroundDrawable(getResources().getDrawable(R.drawable.tencen_72x72));
-				}
-				isCheck_tencent =false;
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.TENCENT, 1, handler);
 			}
+
 			break;
 			
 		case R.id.duanzi_comment_write_douban:
 			if (!isCheck_douban) {
-				if (MaimobApplication.Jelly_Bean) {
-					douban.setBackground(getResources().getDrawable(R.drawable.douban2_72x72));
-				}else {
-					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban2_72x72));
-				}
+				douban.setImageResource(R.drawable.douban2_72x72);
 				isCheck_douban = true;
 			}else {
-				if (MaimobApplication.Jelly_Bean) {
-					douban.setBackground(getResources().getDrawable(R.drawable.douban_72x72));
-				}else {
-					douban.setBackgroundDrawable(getResources().getDrawable(R.drawable.douban_72x72));
-				}
+				douban.setImageResource(R.drawable.douban_72x72);
 				isCheck_douban =false;
 			}
 			break;
@@ -335,5 +314,29 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 		Mai_DBhelper db = Mai_DBhelper.getInstance(getActivity());
 		db.insertUser_Comment(dz_userName, duanziContent, pid, editContent, user,imgUrl);
 	}
-	
+	/**
+	 * 平台状态
+	 */
+	private void platFormStatus(){
+		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.RENREN)) {
+			qzone_img.setImageResource(R.drawable.close_24);
+		}else {
+			qzone_img.setImageResource(R.drawable.renren_72x72);
+		}
+		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.DOUBAN)) {
+			douban.setImageResource(R.drawable.close_24);
+		}else {
+			douban.setImageResource(R.drawable.douban_72x72);
+		}
+		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.TENCENT)) {
+			tencent_img.setImageResource(R.drawable.close_24);
+		}else {
+			tencent_img.setImageResource(R.drawable.tencen_72x72);
+		}
+		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
+			sina_img.setImageResource(R.drawable.close_24);
+		}else {
+			sina_img.setImageResource(R.drawable.weibo_72x72);
+		}
+	}
 }

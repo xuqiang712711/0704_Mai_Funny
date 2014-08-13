@@ -50,7 +50,6 @@ import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;

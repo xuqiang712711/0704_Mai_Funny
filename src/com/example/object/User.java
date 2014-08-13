@@ -1,4 +1,4 @@
-package com.example.util;
+package com.example.object;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.io.UnsupportedEncodingException;
+
+import com.example.util.MyLogger;
+import com.example.util.SharedPreferencesUtils;
 
 import android.content.Context;
 

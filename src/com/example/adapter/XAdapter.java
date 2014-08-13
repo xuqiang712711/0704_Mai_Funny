@@ -50,7 +50,6 @@ import com.example.util.ShareUtil;
 import com.example.util.SharedPreferencesUtils;
 import com.example.util.StringUtils;
 import com.example.util.Uris;
-import com.example.util.User;
 import com.facebook.widget.FacebookDialog.ShareDialogFeature;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
