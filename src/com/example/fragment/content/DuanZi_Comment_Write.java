@@ -296,13 +296,18 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 			break;
 			
 		case R.id.duanzi_comment_write_douban:
-			if (!isCheck_douban) {
-				douban.setImageResource(R.drawable.douban2_72x72);
-				isCheck_douban = true;
+			if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.DOUBAN)) {
+				if (!isCheck_douban) {
+					douban.setImageResource(R.drawable.douban2_72x72);
+					isCheck_douban = true;
+				}else {
+					douban.setImageResource(R.drawable.douban_72x72);
+					isCheck_douban =false;
+				}
 			}else {
-				douban.setImageResource(R.drawable.douban_72x72);
-				isCheck_douban =false;
+				mOauth.doOauth(getActivity(), SHARE_MEDIA.DOUBAN, 1, handler);
 			}
+			
 			break;
 		}
 	}
@@ -319,24 +324,25 @@ public class DuanZi_Comment_Write extends Fragment implements OnClickListener{
 	 */
 	private void platFormStatus(){
 		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.RENREN)) {
-			qzone_img.setImageResource(R.drawable.close_24);
+			qzone_img.setImageResource(R.drawable.renren_72x72_grey);
 		}else {
 			qzone_img.setImageResource(R.drawable.renren_72x72);
 		}
 		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.DOUBAN)) {
-			douban.setImageResource(R.drawable.close_24);
+			douban.setImageResource(R.drawable.douban_72x72_gery);
 		}else {
 			douban.setImageResource(R.drawable.douban_72x72);
 		}
 		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.TENCENT)) {
-			tencent_img.setImageResource(R.drawable.close_24);
+			tencent_img.setImageResource(R.drawable.tencent_72x72_grey);
 		}else {
 			tencent_img.setImageResource(R.drawable.tencen_72x72);
 		}
 		if (!OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
-			sina_img.setImageResource(R.drawable.close_24);
+			sina_img.setImageResource(R.drawable.weibo_72x72_grey);
 		}else {
 			sina_img.setImageResource(R.drawable.weibo_72x72);
 		}
 	}
+	//沉默
 }

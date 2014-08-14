@@ -64,10 +64,12 @@
             android:visibility="gone" />
     </FrameLayout>
     <ImageView 
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
         android:id="@+id/mitem_top_fav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tt_tab_bar_best_n"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/fav_0813_1"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

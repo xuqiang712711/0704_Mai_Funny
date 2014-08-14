@@ -222,6 +222,7 @@ private boolean userIsExists = false;
 			mFragmentManage.SwitchFrag(getActivity(), Tab_My_Frag_New.this, new More_feedback(), null);
 			break;
 		case R.id.my_logined:
+			switchFragment(this, new My_userinfo());
 			MyLogger.kLog().i("my_logined");
 			break;
 		case R.id.my_arrow:
@@ -309,7 +310,7 @@ private boolean userIsExists = false;
 		public void onHiddenChanged(boolean hidden) {
 			// TODO Auto-generated method stub
 			super.onHiddenChanged(hidden);
-			MyLogger.jLog().i("我叫你玉蝴蝶");
+			MyLogger.jLog().i("我叫你玉蝴蝶  " + mFragmentManage.Refresh_userInfo);
 			user = SerUser.deSerializationUser((String)SharedPreferencesUtils.getParam(SharedPreferencesUtils.SerUser, getActivity(),
 					SharedPreferencesUtils.user, ""));
 			if (mFragmentManage.Refresh_userInfo) {

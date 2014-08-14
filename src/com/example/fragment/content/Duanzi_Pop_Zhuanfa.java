@@ -94,7 +94,13 @@ public class Duanzi_Pop_Zhuanfa extends Fragment implements OnClickListener{
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			mDialog.dismiss();
-			mFragmentManage.BackStatck(getActivity());
+			if (mFragmentManage.switch_write) {
+				myLogger.i("µÄÈË");
+				mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_HOME);
+				mFragmentManage.switch_write = false;
+			}else {
+				mFragmentManage.BackStatck(getActivity());
+			}
 		}
 	};
 }

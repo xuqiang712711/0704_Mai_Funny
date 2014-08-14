@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_10"
-            android:src="@drawable/mai_refresh_3" />
+            android:src="@drawable/refresh_0813" />
 
 
     </RelativeLayout>

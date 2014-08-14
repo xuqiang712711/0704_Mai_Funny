@@ -21,6 +21,7 @@ import com.example.adapter.XAdapter;
 import com.example.application.MaimobApplication;
 import com.example.maiUtil.CustomHttpClient;
 import com.example.object.Duanzi;
+import com.example.object.mFragmentManage;
 import com.example.object.setDuanziData;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
@@ -125,6 +126,8 @@ public class Image_Hot extends Fragment implements OnRefreshListener{
 			
 		}
 	}
+	
+	
 	
 	private void initHttp(){
 		RequestDataTask mTask = new RequestDataTask(handler);

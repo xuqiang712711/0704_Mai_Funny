@@ -76,8 +76,6 @@ public class XAdapter extends BaseAdapter{
 	private PopupWindow window;
 	private Animation mAnimation;
 	
-	private ImageView iv_weixin,iv_weixin_circle,iv_sina,iv_tencent,iv_renren,iv_douban,iv_qq,iv_qq_zone;
-	
 	public static final int ZAN_NORMAL = 1;
 	public static final int ZAN_PRESSED = 2;
 	public static final int CAI_NORMAL = 3;
@@ -233,9 +231,9 @@ public class XAdapter extends BaseAdapter{
 		}
 		
 		if (duanzi.isFav()) {
-			holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_s);
+			holder.iv_fav.setImageResource(R.drawable.fav_0813_3);
 		}else {
-			holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_n);
+			holder.iv_fav.setImageResource(R.drawable.fav_0813_1);
 		}
 		holder.cai_add.setVisibility(View.GONE);
 		holder.zan_add.setVisibility(View.GONE);
@@ -295,13 +293,13 @@ public class XAdapter extends BaseAdapter{
 					duanzi.setFav(false);
 					dBhelper.cancelFav(Integer.parseInt(duanzi.getPoid()));
 					PopUtils.toastShow(context, "取消收藏成功");
-					holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_n);
+					holder.iv_fav.setImageResource(R.drawable.fav_0813_1);
 				}else {
 					dBhelper.updateFav(Integer.parseInt(duanzi.getPoid()));
 					Log.e(TAG, "FAV");
 					RequestDataTask reqTask = new RequestDataTask(adapterHandler);
 					reqTask.execute(ConnToServer.getUrl(ConnToServer.FAV, duanzi.getPoid()));
-					holder.iv_fav.setImageResource(R.drawable.tt_tab_bar_best_s);
+					holder.iv_fav.setImageResource(R.drawable.fav_0813_2);
 					duanzi.setFav(true);
 					boolean isZhuanfa = (Boolean) SharedPreferencesUtils.getParam("setting", context, "isZhuanfa", false);
 					//是否勾选设置中的收藏同时转发
@@ -383,52 +381,18 @@ public class XAdapter extends BaseAdapter{
 				break;
 			case R.id.duanzi_pop_Weixin_Circle:
 				ShareUtil.shareToWeiXinCircle(duanzi, context);
-				break;
+				break;	
 			case R.id.duanzi_pop_sina:
-				window.dismiss();
-				if (OauthHelper.isAuthenticated(context, SHARE_MEDIA.SINA)) {
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_SINA);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}else {
-					mOauth.doOauth(context, SHARE_MEDIA.SINA, 0, mHandler);
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_SINA);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}
-				
+				shareToPlatfrom(SHARE_MEDIA.SINA, duanzi, bundle, Duanzi.SHARE_MEDIA_SINA);
 				break;
 			case R.id.duanzi_pop_tencent:
-				window.dismiss();
-				if (OauthHelper.isAuthenticated(context, SHARE_MEDIA.TENCENT)) {
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_TENCENT);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}else {
-					mOauth.doOauth(context, SHARE_MEDIA.TENCENT, 1, mHandler);
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_TENCENT);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}
+				shareToPlatfrom(SHARE_MEDIA.TENCENT, duanzi, bundle, Duanzi.SHARE_MEDIA_TENCENT);
 				break;
 			case R.id.duanzi_pop_renren:
-				window.dismiss();
-				if (OauthHelper.isAuthenticated(context, SHARE_MEDIA.RENREN)) {
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_RENREN);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}else {
-					mOauth.doOauth(context, SHARE_MEDIA.RENREN, 2, mHandler);
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_RENREN);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}
+				shareToPlatfrom(SHARE_MEDIA.RENREN, duanzi, bundle,Duanzi.SHARE_MEDIA_RENREN);
 				break;
 			case R.id.duanzi_pop_douban:
-				window.dismiss();
-				if (OauthHelper.isAuthenticated(context, SHARE_MEDIA.DOUBAN)) {
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_DOUBAN);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}else {
-					mOauth.doOauth(context, SHARE_MEDIA.DOUBAN, 3, mHandler);
-					duanzi.setMedia(Duanzi.SHARE_MEDIA_DOUBAN);
-					mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
-				}
-				
+				shareToPlatfrom(SHARE_MEDIA.DOUBAN, duanzi, bundle, Duanzi.SHARE_MEDIA_DOUBAN);
 				break;
 			case R.id.duanzi_pop_qq:
 				break;
@@ -506,6 +470,26 @@ public class XAdapter extends BaseAdapter{
 	
 	private void Refresh(){
 		notifyDataSetChanged();
+	}
+	/**
+	 * 分享到社交平台 
+	 * @param media
+	 * @param duanzi
+	 * @param bundle
+	 */
+	private void shareToPlatfrom(SHARE_MEDIA media,Duanzi duanzi, Bundle bundle, int type){
+		if ((Boolean) SharedPreferencesUtils.getParam(SharedPreferencesUtils.platform, context, SharedPreferencesUtils.platform_Exists, false)) {
+			if (OauthHelper.isAuthenticated(context, media)) {
+				
+			}else {
+				mOauth.doOauth(context, media, 1, mHandler);
+			}
+		}else {
+			mOauth.doOauth(context, media, 1, mHandler);
+		}
+		duanzi.setMedia(type);
+		mFragmentManage.SwitchFrag(context, mFragment, new Duanzi_Pop_Zhuanfa(), bundle);
+		window.dismiss();
 	}
 	
 }

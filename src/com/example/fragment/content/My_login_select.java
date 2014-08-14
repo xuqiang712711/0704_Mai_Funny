@@ -71,7 +71,6 @@ public class My_login_select extends Fragment{
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		MyLogger.jLog().i("type  " + type);
-		mFragmentManage.Refresh_userInfo = true;
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -95,6 +94,8 @@ public class My_login_select extends Fragment{
 					mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_HOME);
 				}else {
 					mFragmentManage.BackStatck(getActivity());
+					MyLogger.jLog().i("à§à§à§  " );
+					mFragmentManage.Refresh_userInfo = false;
 				}
 			}
 		});
@@ -251,15 +252,23 @@ public class My_login_select extends Fragment{
 		});
 	}
 	
-	private Handler handler = new Handler(){
+	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-            if (type == From_Write) {
-        	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
-		}else {
-			mFragmentManage.BackStatck(getActivity());
-//			mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new DuanZi_Comment_Write(), bundle);
-			mFragmentManage.switch_write = true;
-		}
+			MyLogger.jLog().i("ÊÚÈ¨³É¹¦ + " +type);
+			if (type == From_Write) {
+				mFragmentManage.backHome(getActivity(),
+						mFragmentManage.BACK_WRITE);
+			} else if (type == From_Duanzi) {
+				mFragmentManage.switch_write = true;
+				mFragmentManage.BackStatck(getActivity());
+			} else if (type == From_My) {
+				mFragmentManage.Refresh_userInfo = true;
+				mFragmentManage.BackStatck(getActivity());
+			}else {
+				mFragmentManage.BackStatck(getActivity());
+//				mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new Duanzi_Pop_Zhuanfa(), bundle);
+				mFragmentManage.switch_write = true;
+			}
 		}
 	};
 }

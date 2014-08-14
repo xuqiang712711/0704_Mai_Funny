@@ -78,6 +78,12 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 				MyLogger.jLog().i("hide is true");
 			}else {
 				MyLogger.jLog().i("hide is false");
+				if (duanZi_Hot == null) {
+					MyLogger.jLog().i("duanzi_hot is null");
+				}
+				if (duanZi_New == null) {
+					MyLogger.jLog().i("duanzi_new  is null");
+				}
 				if (!duanZi_Hot.isHidden()) {
 					duanZi_Hot.ChangeFontSize();
 				}else if (!duanZi_New.isHidden()) {

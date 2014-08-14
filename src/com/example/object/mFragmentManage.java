@@ -9,9 +9,9 @@ import android.support.v4.app.Fragment;
 public class mFragmentManage {
 	public static int Tag_My = 0;
 	public static int Tag_Userinfo = 1;
-	public static boolean Refresh_userInfo = false;
-	public static boolean Refresh_Comment = false;
-	public static boolean switch_write = false;
+	public static boolean Refresh_userInfo = false;//跳转到用户页面，刷新数据
+	public static boolean Refresh_Comment = false;//跳转段子页面，刷新数据
+	public static boolean switch_write = false;//注册成功，跳转到编辑页面
 	
 	public static final int BACK_HOME = 342;
 	public static final int BACK_WRITE = 343;
