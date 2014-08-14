@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//res/values/colors.xml=UTF-8
+encoding//src/com/example/Activity/Dz_Comment_Write.java=UTF-8
 encoding//src/com/example/adapter/XAdapter.java=UTF-8
 encoding//src/com/example/fragment/DuanZi_Hot.java=UTF-8
 encoding//src/com/example/fragment/DuanZi_New.java=UTF-8
@@ -7,6 +8,7 @@ encoding//src/com/example/fragment/Image_Hot.java=UTF-8
 encoding//src/com/example/fragment/Tab_My_Frag.java=UTF-8
 encoding//src/com/example/fragment/Tab_My_Frag_New.java=UTF-8
 encoding//src/com/example/fragment/content/DuanZi_Comment_Write.java=UTF-8
+encoding//src/com/example/fragment/content/Duanzi_Comments_Lv_head.java=UTF-8
 encoding//src/com/example/fragment/content/My_Userinfo_Edit.java=UTF-8
 encoding//src/com/example/fragment/content/My_Write.java=UTF-8
 encoding//src/com/example/maiUtil/Base64Util.java=UTF-8

@@ -96,7 +96,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
 		adapter = new ComAdapter();
 		head = new Duanzi_Comments_Lv_head(getActivity());
-		head.addDuanzi(duanzi);
+		head.addDuanzi(duanzi,this);
 		listView.addHeaderView(head);
 		listView.setAdapter(adapter);
 	}

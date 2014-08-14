@@ -3,45 +3,34 @@ package com.example.Activity;
 import java.util.List;
 import java.util.Map;
 
-import pl.droidsonroids.gif.GifImageView;
 
 import com.example.application.MaimobApplication;
 import com.example.fragment.content.Duanzi_Comments_Lv_head;
-import com.example.fragment.content.DuanZi_Comment.ComViewHolder;
 import com.example.object.Duanzi;
 import com.example.sql.Mai_DBhelper;
 import com.example.tab.R;
 import com.example.util.ImageUtil;
 import com.example.util.MyLogger;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Dz_Comments extends BaseActivity  implements OnClickListener{
-	private ImageView user_icon,image,More,hint_img,Zan_img, Cai_img,iv_fav;
-	private TextView user_name,Zan_txt,Cai_txt,Hot_txt,Zan_add, Cai_add,content;
-	private RelativeLayout Zan_layout, Cai_layout, Hot_layout;
-	private DisplayImageOptions options;
 	private Duanzi duanzi;
-	private GifImageView gif;
-	private ImageLoader imageLoader;
 	private ListView listView;
 	private List<Map<String, Object>> list;
 	private ComAdapter adapter;
 	private Mai_DBhelper db;
-	private Animation mAnimation;
 	private Duanzi_Comments_Lv_head head;
+	private int result_Code = 333;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,21 +58,24 @@ public class Dz_Comments extends BaseActivity  implements OnClickListener{
 		listView = (ListView)findViewById(R.id.duanzi_comment_listview);
 		adapter = new ComAdapter();
 		head = new Duanzi_Comments_Lv_head(this);
-		head.addDuanzi(duanzi);
-		listView.addHeaderView(head);
-		listView.setAdapter(adapter);
+//		head.addDuanzi(duanzi,this);
+//		listView.addHeaderView(head);
+//		listView.setAdapter(adapter);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
+		if (v.getId() == R.id.top_left_change) {
+			Xlog.i("left _back");
+			finish();
+		}
 	}
 	
 	class ComAdapter extends BaseAdapter{
 
 		public ComAdapter(){
-			MyLogger.jLog().i("ComAdapter ");
+			
 		}
 		@Override
 		public int getCount() {
@@ -127,27 +119,30 @@ public class Dz_Comments extends BaseActivity  implements OnClickListener{
 					.get("icon"), holder.iv_icon, ImageUtil.getOption());
 			return convertView;
 		}
-
-		class mOnclick implements OnClickListener{
-			ComViewHolder holder;
-			public mOnclick( ComViewHolder holder){
-				this.holder = holder;
-			}
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				switch (v.getId()) {
-
-				default:
-					break;
-				}
-			}
-			
-		}
 	}
 	
 	public static class  ComViewHolder{
 		TextView tv_name, tv_time,tv_zan,tv_content;
 		ImageView iv_icon,iv_zan;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == result_Code) {
+			Xlog.i("activityforresult");
+			head.LayoutChange();
+			list = db.selectComFromID(Integer.parseInt(duanzi.getPoid()));
+			MyLogger.jLog().i("size  " + list.size() +"  null?  " + listView == null);
+//			if (list.size() == 1) {
+//				listView.setVisibility(View.VISIBLE);
+//				adapter = new ComAdapter();
+//				listView.setAdapter(adapter);
+//			}else {
+//				adapter.notifyDataSetChanged();
+//			}
+			adapter.notifyDataSetChanged();
+		}
 	}
 }
