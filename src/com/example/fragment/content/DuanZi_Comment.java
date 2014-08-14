@@ -96,7 +96,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		listView = (ListView)view.findViewById(R.id.duanzi_comment_listview);
 		adapter = new ComAdapter();
 		head = new Duanzi_Comments_Lv_head(getActivity());
-		head.addDuanzi(duanzi,this);
+//		head.addDuanzi(duanzi);
 		listView.addHeaderView(head);
 		listView.setAdapter(adapter);
 	}
@@ -213,7 +213,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onHiddenChanged(hidden);
 		if (!hidden) {
-			MyLogger.jLog().i("²»ÊÇÒþ²Ø");
+			MyLogger.jLog().i("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			if (mFragmentManage.switch_write) {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("duanzi", duanzi);
@@ -222,7 +222,7 @@ public class DuanZi_Comment extends Fragment implements OnClickListener{
 			}
 			RefreshData();
 		}else {
-			MyLogger.jLog().i("Òþ²Ø");
+			MyLogger.jLog().i("ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 	

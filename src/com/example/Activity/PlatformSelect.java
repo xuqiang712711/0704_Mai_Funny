@@ -120,15 +120,20 @@ public class PlatformSelect extends BaseActivity{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-            if (type == From_Write) {
-//        	 	mFragmentManage.backHome(this, mFragmentManage.BACK_WRITE);
-            	startActivity(new Intent(PlatformSelect.this, MaiActivity.class));
-		}else {
-//			mFragmentManage.BackStatck(this);
-			finish();
-//			mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new DuanZi_Comment_Write(), bundle);
-			mFragmentManage.switch_write = true;
-		}
+//			if (type == From_Write) {
+//				mFragmentManage.backHome(this,
+//						mFragmentManage.BACK_WRITE);
+//			} else if (type == From_Duanzi) {
+//				mFragmentManage.switch_write = true;
+//				mFragmentManage.BackStatck(getActivity());
+//			} else if (type == From_My) {
+//				mFragmentManage.Refresh_userInfo = true;
+//				mFragmentManage.BackStatck(getActivity());
+//			}else {
+//				mFragmentManage.BackStatck(getActivity());
+////				mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new Duanzi_Pop_Zhuanfa(), bundle);
+//				mFragmentManage.switch_write = true;
+//			}
 		}
 	};
 }

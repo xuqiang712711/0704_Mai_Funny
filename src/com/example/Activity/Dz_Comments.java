@@ -58,9 +58,9 @@ public class Dz_Comments extends BaseActivity  implements OnClickListener{
 		listView = (ListView)findViewById(R.id.duanzi_comment_listview);
 		adapter = new ComAdapter();
 		head = new Duanzi_Comments_Lv_head(this);
-//		head.addDuanzi(duanzi,this);
-//		listView.addHeaderView(head);
-//		listView.setAdapter(adapter);
+		head.addDuanzi(duanzi, this);
+		listView.addHeaderView(head);
+		listView.setAdapter(adapter);
 	}
 
 	@Override

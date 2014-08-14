@@ -57,7 +57,8 @@ public class My_login_select extends Fragment{
 	private Duanzi duanzi;
 	private boolean needRefresh = true;
 	private Bundle bundle;
-	int type;
+	private int type;
+	private int result_Code = 333;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class My_login_select extends Fragment{
 		}
 		
 		TextView title = (TextView)view.findViewById(R.id.top_text);
-		title.setText("Æ½Ì¨°ó¶¨");
+		title.setText("Æ½Ì¨ï¿½ï¿½");
 		ImageView back = (ImageView)view.findViewById(R.id.top_left_change);
 		back.setOnClickListener(new OnClickListener() {
 			
@@ -172,7 +173,7 @@ public class My_login_select extends Fragment{
 			public void onComplete(Bundle value, SHARE_MEDIA platform) {
 				// TODO Auto-generated method stub
 				if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
-                    Toast.makeText(getActivity(), "ÊÚÈ¨³É¹¦." + platform, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "ï¿½ï¿½È¨ï¿½É¹ï¿½." + platform, Toast.LENGTH_SHORT).show();
 //                    mOauth.editOauth(getActivity(), num);
 //                    getUserInfo(platform);
 	                 if (type == From_Write) {
@@ -181,7 +182,7 @@ public class My_login_select extends Fragment{
 						mFragmentManage.BackStatck(getActivity());
 					}
                 } else {
-                    Toast.makeText(getActivity(), "ÊÚÈ¨Ê§°Ü", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "ï¿½ï¿½È¨Ê§ï¿½ï¿½", Toast.LENGTH_SHORT).show();
                 }
 			}
 			
@@ -193,7 +194,7 @@ public class My_login_select extends Fragment{
 		});
 	}
 	
-	//½«ÓÃ»§ÐÅÏ¢±£´æµ½sp,icon¡¢nameµÈÐÅÏ¢½«Ê¹ÓÃµÚÒ»´ÎÓÃ»§°ó¶¨µÄÉç½»ÕËºÅÐÅÏ¢
+	//ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½æµ½sp,iconï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¹ï¿½Ãµï¿½Ò»ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ó¶¨µï¿½ï¿½ç½»ï¿½Ëºï¿½ï¿½ï¿½Ï¢
 	private void getUserInfo(SHARE_MEDIA platform){
 		mController.getPlatformInfo(getActivity(), platform, new UMDataListener() {
 			
@@ -245,7 +246,7 @@ public class My_login_select extends Fragment{
 //	                 user.setIcon(icon);
 	                	 user.saveUser(getActivity(), SerUser.serializeUser(user));
 	          }else{
-	             Log.d("TestData","·¢Éú´íÎó£º"+status);
+	             Log.d("TestData","ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+status);
 	          }
 			}
 		});
@@ -253,13 +254,7 @@ public class My_login_select extends Fragment{
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-            if (type == From_Write) {
-        	 	mFragmentManage.backHome(getActivity(), mFragmentManage.BACK_WRITE);
-		}else {
-			mFragmentManage.BackStatck(getActivity());
-//			mFragmentManage.SwitchFrag(getActivity(), My_login_select.this, new DuanZi_Comment_Write(), bundle);
-			mFragmentManage.switch_write = true;
-		}
+			
 		}
 	};
 }

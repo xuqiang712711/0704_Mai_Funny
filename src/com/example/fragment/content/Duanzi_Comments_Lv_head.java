@@ -4,6 +4,7 @@ import java.io.File;
 
 import pl.droidsonroids.gif.GifImageView;
 
+import com.example.Activity.Dz_Comment_Write;
 import com.example.application.MaimobApplication;
 import com.example.object.Duanzi;
 import com.example.object.User;
@@ -21,7 +22,9 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,6 +56,8 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 	private Fragment mFragment;
 	private Animation mAnimation;
 	private PopupWindow window;
+	private Activity activity;
+	private int request_code = 444;
 	public Duanzi_Comments_Lv_head(Context context) {
 		super(context);
 		view = LayoutInflater.from(context).inflate(R.layout.duanzi_comments_lv_head, null);
@@ -61,9 +66,10 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 		this.context = context;
 	}
 	
-	public void addDuanzi(Duanzi duanzi,Fragment fragment){
+	public void addDuanzi(Duanzi duanzi, Activity activity){
 		this.duanzi = duanzi;
-		this.mFragment = fragment;
+		this.activity = activity;
+//		this.mFragment = fragment;
 		initView();
 	}
 	
@@ -207,9 +213,12 @@ public class Duanzi_Comments_Lv_head extends RelativeLayout implements OnClickLi
 			duanzi.setNeedComment(true);
 			bundle.putInt("xwkkx", My_login_select.From_Duanzi);
 			if (User.UserIsExists(context)) {
-				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new DuanZi_Comment_Write(), bundle);
+				Intent intent = new Intent(context, Dz_Comment_Write.class);
+				activity.startActivity(intent);
 			}else {
-				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+//				mFragmentManage.SwitchFrag(context, mFragment, new My_login_select(), bundle);
+				activity.finish();
 			}
 			break;
 		case R.id.bottom_more:
