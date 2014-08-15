@@ -40,7 +40,9 @@ public class PlatformSelect extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_login_select);
 		Bundle bundle = this.getIntent().getExtras();
-		type= bundle.getInt("xwkkx");
+		if (bundle != null) {
+			type= bundle.getInt("xwkkx");
+		}
 		if (type == From_Duanzi) {
 			duanzi = (Duanzi) bundle.getSerializable("duanzi");
 		}

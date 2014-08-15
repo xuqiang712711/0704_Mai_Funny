@@ -40,12 +40,15 @@
         <activity android:name="com.example.Activity.Dz_Comment_Write"></activity>
         <activity android:name="com.example.Activity.Dz_Comments"></activity>
         <activity android:name="com.example.Activity.Dz_Share_Write"></activity>
+
+        <activity android:name="com.example.Activity.Write_Dz"></activity>
         
         <!-- 我的 -->
         <activity android:name="com.example.Activity.My_Comments"></activity>
         <activity android:name="com.example.Activity.My_Favorite"></activity>
         <activity android:name="com.example.Activity.My_InfoEdit"></activity>
         <activity android:name="com.example.Activity.My_Pubilsh"></activity>
+        <activity android:name="com.example.Activity.PlatformSelect"></activity>
         
         
         

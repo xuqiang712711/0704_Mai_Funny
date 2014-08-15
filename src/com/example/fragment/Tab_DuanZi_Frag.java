@@ -2,6 +2,8 @@ package com.example.fragment;
 
 import org.w3c.dom.Text;
 
+import com.example.Activity.Dz_Hot;
+import com.example.Activity.Dz_New;
 import com.example.Activity.MaiActivity;
 import com.example.maiUtil.Getuuid;
 import com.example.tab.R;
@@ -9,6 +11,7 @@ import com.example.tab.R.drawable;
 import com.example.util.MyLogger;
 import com.example.util.Uris;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
@@ -51,7 +54,7 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 	private Animation animation;
 	private long exitTime = 0;
 	
-	private PopupWindow pop;// 0710Ìí¼Ó
+	private PopupWindow pop;// 0710ï¿½ï¿½ï¿½
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -108,42 +111,54 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 		pop.setOnDismissListener(this);
 	}
 	
-	private void selectTab2(int index){
-		clearTextColor();
-		ft = getChildFragmentManager().beginTransaction();
-		hideFrag(ft);
-		switch (index) {
+//	private void selectTab2(int index){
+//		clearTextColor();
+//		ft = getChildFragmentManager().beginTransaction();
+//		hideFrag(ft);
+//		switch (index) {
+//		case 1:
+//			if (duanZi_Hot == null) {
+//				duanZi_Hot = new DuanZi_Hot();
+//				ft.add(R.id.duanzi_container, duanZi_Hot);
+//			}else {
+//				ft.show(duanZi_Hot);
+//			}
+//			text_hot.setTextColor(getResources().getColor(R.color.orange));
+//			Drawable drawable_hot = getActivity().getResources().getDrawable(R.drawable.mai_hot_cl);
+//			drawable_hot.setBounds(0, 0, drawable_hot.getMinimumWidth(), drawable_hot.getMinimumHeight());
+//			text_hot.setCompoundDrawables(drawable_hot, null, null, null);
+//			break;
+//
+//		case 2:
+//			if (duanZi_New == null) {
+//				duanZi_New = new DuanZi_New();
+//				ft.add(R.id.duanzi_container, duanZi_New);
+//			}else {
+//				ft.show(duanZi_New);
+//			}
+//			text_new.setTextColor(getResources().getColor(R.color.orange));
+//			Drawable drawable_new = getActivity().getResources().getDrawable(R.drawable.mai_new_cl);
+//			drawable_new.setBounds(0, 0, drawable_new.getMinimumWidth(), drawable_new.getMinimumHeight());
+//			text_new.setCompoundDrawables(drawable_new, null, null, null);
+//			break;
+//		}
+//		if (pop.isShowing()) {
+//			pop.dismiss();
+//		}
+//		SetTitle(index);
+//		ft.commit();
+//	}
+	
+	private void selectTab2(int tab){
+		switch (tab) {
 		case 1:
-			if (duanZi_Hot == null) {
-				duanZi_Hot = new DuanZi_Hot();
-				ft.add(R.id.duanzi_container, duanZi_Hot);
-			}else {
-				ft.show(duanZi_Hot);
-			}
-			text_hot.setTextColor(getResources().getColor(R.color.orange));
-			Drawable drawable_hot = getActivity().getResources().getDrawable(R.drawable.mai_hot_cl);
-			drawable_hot.setBounds(0, 0, drawable_hot.getMinimumWidth(), drawable_hot.getMinimumHeight());
-			text_hot.setCompoundDrawables(drawable_hot, null, null, null);
+			getActivity().startActivity(new Intent(getActivity(), Dz_Hot.class));
 			break;
 
 		case 2:
-			if (duanZi_New == null) {
-				duanZi_New = new DuanZi_New();
-				ft.add(R.id.duanzi_container, duanZi_New);
-			}else {
-				ft.show(duanZi_New);
-			}
-			text_new.setTextColor(getResources().getColor(R.color.orange));
-			Drawable drawable_new = getActivity().getResources().getDrawable(R.drawable.mai_new_cl);
-			drawable_new.setBounds(0, 0, drawable_new.getMinimumWidth(), drawable_new.getMinimumHeight());
-			text_new.setCompoundDrawables(drawable_new, null, null, null);
+			getActivity().startActivity(new Intent(getActivity(), Dz_New.class));
 			break;
 		}
-		if (pop.isShowing()) {
-			pop.dismiss();
-		}
-		SetTitle(index);
-		ft.commit();
 	}
 	
 	private void hideFrag(FragmentTransaction ft){
@@ -225,8 +240,8 @@ public class Tab_DuanZi_Frag extends Fragment implements OnClickListener, OnDism
 		}
 	};
 	/**
-	 * ÉèÖÃ¼ýÍ··½Ïò
-	 * @param tag	1¡¢ÏòÏÂ		2¡¢ÏòÉÏ
+	 * ï¿½ï¿½ï¿½Ã¼ï¿½Í·ï¿½ï¿½ï¿½ï¿½
+	 * @param tag	1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½		2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @return
 	 */
 	public void setArrow(int tag){

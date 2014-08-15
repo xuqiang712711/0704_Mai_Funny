@@ -80,7 +80,7 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		MaimobApplication.DeviceW = dm.widthPixels;
 		MaimobApplication.DeviceH = dm.heightPixels;
 		initView();
-		selectTab(1);
+		selectTab(3);
 	}
 
 	private void initView() {
@@ -151,19 +151,21 @@ public class MaiActivity extends FragmentActivity implements OnClickListener {
 		case 3:
 			if (User.UserIsExists(this)) {
 				myLogger.e("ÒÑ×¢²á");
-				my_Write = new My_Write();
-				fragtrain.add(R.id.content_container2, my_Write);
+//				my_Write = new My_Write();
+//				fragtrain.add(R.id.content_container2, my_Write);
+				this.startActivity(new Intent(this, Write_Dz.class));
 			}else {
 				myLogger.e("Î´×¢²á");
 				Bundle bundle = new Bundle();
 				bundle.putInt("xwkkx", My_login_select.From_Write);
-				if (login_select == null) {
-					login_select = new My_login_select();
-					login_select.setArguments(bundle);
-					fragtrain.add(R.id.content_container2, login_select);
-				}else {
-					fragtrain.show(login_select);
-				}
+//				if (login_select == null) {
+//					login_select = new My_login_select();
+//					login_select.setArguments(bundle);
+//					fragtrain.add(R.id.content_container2, login_select);
+//				}else {
+//					fragtrain.show(login_select);
+//				}
+				this.startActivity(new Intent(this, PlatformSelect.class));
 			}
 			break;
 		case 4:
